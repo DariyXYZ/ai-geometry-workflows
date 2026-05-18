@@ -14,6 +14,7 @@
 ## Структура
 
 - `index.html` — стартовая страница репозитория.
+- `NEWS.md` — короткий статус проекта и последние обновления.
 - `ai_geometry_research.html` — публичный командный отчет по направлению.
 - `ai_geometry_workplan.md` — рабочий план, сценарии, milestones и decisions needed.
 
