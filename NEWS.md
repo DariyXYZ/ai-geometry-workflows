@@ -1,5 +1,34 @@
 # Новости
 
+## 2026-05-18 (сессия 3 — Clear Model 4 postmortem)
+
+### Результат
+
+- Проведены 3 итерации реконструкции башни (`Clear Model 2/3/4`).
+- `Clear Model 4`: `isSolid=True`, `Manifold=True`, 6011 граней, bbox подтверждён.
+- Низ/подиум стал значительно лучше — использовались source sections и direct Brep conversion.
+- Башня деформирована: raw section lofting без seam alignment даёт "плавленый" результат.
+
+### Главный урок
+
+**Section extraction ≠ section correspondence.**
+Каждая Z-секция не должна выбирать свой шов и порядок вершин независимо.
+Нужен шаг `fit_architectural_sections` перед любым лофтингом башни.
+
+### Зафиксированные правила
+
+- Boolean union запрещён — молча удаляет массы; использовать appended Brep.
+- `isSolid=True` недостаточен как критерий качества.
+- Перед лофтингом: classify sides → assign anchors → resample → zone split → validate.
+
+### Обновлённый алгоритм (8 шагов)
+
+`scan_scene` → `classify_source_groups` → `extract_raw_sections` → `fit_architectural_sections` → `validate_section_correspondence` → `build_zone_lofts` → `append_or_export` → `review_capture_set`
+
+### Следующий шаг
+
+Реализовать `fit_architectural_sections` — это ключевой недостающий шаг перед Milestone 2.
+
 ## 2026-05-18 (сессия 2)
 
 ### Сделано

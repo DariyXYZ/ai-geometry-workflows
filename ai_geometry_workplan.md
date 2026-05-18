@@ -138,10 +138,49 @@
   - библиотечный модуль;
   - инструмент.
 
+## Lessons From Clear Model 4 (2026-05-18)
+
+Проведены 3 итерации реконструкции башни. Результат — частичный прогресс.
+
+### Что стало лучше
+
+- Низ/подиум реконструируется лучше, если использовать секции из источника, а не bbox.
+- Закрытые source meshes конвертируются в Brep напрямую — лучше сохраняют кривизну.
+- Boolean union надо избегать — он молча удаляет большие массы; вместо этого используем appended Brep.
+
+### Что всё ещё не работает
+
+- Башня деформируется при лофтинге: каждая секция выбирает шов и порядок вершин независимо.
+- Итог: диагональные cross-connections, "плавленый/скрученный" вид башни.
+- `isSolid=True` недостаточно — нужна архитектурная корреспонденция сторон.
+
+### Новый обязательный шаг: Section Correspondence
+
+`extract_sections` → **`fit_architectural_sections`** → `build_zone_lofts`
+
+`fit_architectural_sections` должен:
+
+1. определить длинные стороны фасада, закруглённые/скошенные углы;
+2. назначить stable corner/side anchors на каждом Z-уровне;
+3. пересемплировать секции с одного anchor, одним направлением;
+4. разделить стек на зоны: lower_shaft / mid_shaft / upper_shaft / crown_shoulder / roof_cap;
+5. отклонить билд, если correspodence не доказана.
+
+### Обновлённый алгоритм для Scenario 2
+
+1. `scan_scene` — все объекты включая hidden/locked
+2. `classify_source_groups` — tower / podium / ovals / base / supports / trash
+3. `extract_raw_sections` — несколько Z-срезов на группу
+4. `fit_architectural_sections` — упростить контуры, выровнять швы, убрать facade noise
+5. `validate_section_correspondence` — сравнить anchors и длины сторон между уровнями
+6. `build_zone_lofts` — lower/mid/upper/crown зоны отдельно
+7. `append_or_export` — appended Brep или watertight mesh (не boolean union)
+8. `review_capture_set` — top/front/back/perspective + section delta table
+
 ## Decisions Needed
 
 1. Script toolkit first или сразу custom Rhino MCP connector?
-2. Финальный output для анализа: mesh допустим или только Brep/solid polysurface?
+2. Финальный output для анализа: multiple closed Brep shells допустимы или нужен один watertight mesh?
 3. Какой кейс берем для Scenario 1?
 4. Где долгосрочно хранить шаблоны и бенчмарки?
 5. Кто утверждает переход из R&D в поддерживаемый инструмент?
