@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI и построение геометрии</title>
+  <style>
+    :root {
+      --bg: #f7f7f8;
+      --surface: rgba(255,255,255,0.86);
+      --surface-strong: #ffffff;
+      --text: #17181a;
+      --muted: #666b74;
+      --line: rgba(20,24,30,0.1);
+      --accent: #1f4fff;
+      --green: #17895a;
+      --orange: #b76412;
+      --purple: #7650c8;
+      --shadow: 0 20px 60px rgba(18, 23, 34, 0.08);
+      --shadow-soft: 0 8px 26px rgba(18, 23, 34, 0.06);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --maxw: 1240px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at 10% 12%, rgba(31,79,255,0.06), transparent 30%),
+        radial-gradient(circle at 92% 8%, rgba(118,80,200,0.06), transparent 30%),
+        linear-gradient(180deg, #fbfbfc 0%, #f1f2f4 100%);
+      color: var(--text);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+    }
+
+    body { padding: 24px 16px 56px; }
+    main { width: min(100%, var(--maxw)); margin: 0 auto; }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 22px;
+      padding: 14px 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.76);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 999px;
+    }
+    .nav a:hover { background: rgba(0,0,0,0.04); color: var(--text); }
+
+    .page {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.72);
+      border-radius: 36px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      padding: 40px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .hero {
+      min-height: calc(100vh - 142px);
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .hero-copy, .hero-side { display: flex; flex-direction: column; gap: 18px; }
+    .hero-copy { justify-content: center; }
+
+    .eyebrow {
+      width: fit-content;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.8);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, h4, p { margin: 0; }
+    h1 {
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+    }
+    h2 {
+      font-size: clamp(30px, 3.4vw, 48px);
+      line-height: 1.04;
+      letter-spacing: -0.035em;
+      margin-bottom: 14px;
+    }
+    h3 { font-size: 22px; line-height: 1.16; letter-spacing: -0.02em; }
+    h4 { font-size: 17px; line-height: 1.22; }
+    p { line-height: 1.55; }
+    .lead { font-size: 20px; line-height: 1.48; color: var(--muted); max-width: 920px; }
+    .small { font-size: 14px; line-height: 1.5; color: var(--muted); }
+
+    .grid-2, .grid-3, .grid-4 { display: grid; gap: 18px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card, .panel, .mini {
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+    .card { border-radius: var(--radius-xl); padding: 24px; }
+    .panel { border-radius: var(--radius-xl); padding: 28px; }
+    .mini { border-radius: var(--radius-lg); padding: 18px; }
+
+    .metric {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-height: 132px;
+    }
+    .metric strong {
+      font-size: 42px;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+    }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tag {
+      padding: 8px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+    li {
+      position: relative;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.48;
+      font-size: 15px;
+    }
+    li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.35;
+    }
+
+    .scenario {
+      display: grid;
+      grid-template-columns: 280px 1fr 260px;
+      gap: 18px;
+      align-items: stretch;
+      margin-top: 18px;
+    }
+    .scenario-head {
+      border-radius: 24px;
+      padding: 22px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+    }
+    .scenario-head.green { background: linear-gradient(135deg, var(--green), #1f6f99); }
+    .scenario-head.orange { background: linear-gradient(135deg, var(--orange), #a34843); }
+    .scenario-head span {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      opacity: 0.78;
+      margin-bottom: 12px;
+    }
+    .scenario-head h3 { color: #fff; }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .flow-step {
+      padding: 16px 14px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #fff;
+      min-height: 112px;
+    }
+    .flow-step strong { display: block; margin-bottom: 6px; font-size: 14px; }
+    .flow-step span { display: block; color: var(--muted); font-size: 13px; line-height: 1.42; }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: #fff;
+      box-shadow: var(--shadow-soft);
+      margin-top: 18px;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 960px; font-size: 14px; }
+    th, td {
+      padding: 15px 14px;
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+      line-height: 1.45;
+    }
+    th { color: var(--muted); background: #fbfbfc; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+    tr:last-child td { border-bottom: 0; }
+    th:last-child, td:last-child { border-right: 0; }
+
+    .decision {
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+    .decision strong { display: block; margin-bottom: 8px; }
+
+    @media (max-width: 980px) {
+      .hero, .grid-2, .grid-3, .grid-4, .scenario { grid-template-columns: 1fr; }
+      .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .page { padding: 26px; border-radius: 28px; }
+    }
+
+    @media (max-width: 620px) {
+      body { padding: 14px 10px 28px; }
+      .topbar { align-items: flex-start; border-radius: 24px; flex-direction: column; }
+      .nav { justify-content: flex-start; }
+      .flow { grid-template-columns: 1fr; }
+      .page { padding: 20px; border-radius: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="topbar">
+      <div class="brand">Computational Design Docs</div>
+      <div class="nav">
+        <a href="./index.html">Главная</a>
+        <a href="./strategy.html">Стратегия</a>
+        <a href="./operating_model.html">Операционная модель</a>
+      </div>
+    </nav>
+
+    <section class="page hero">
+      <div class="hero-copy">
+        <div class="eyebrow">R&amp;D направление</div>
+        <h1>AI и построение геометрии</h1>
+        <p class="lead">
+          План исследования и разработки рабочих сценариев, где нейросети помогают
+          интерпретировать входные данные, формировать параметры и управлять итерациями,
+          а Rhino, Grasshopper и CAD-ядра строят и проверяют геометрию.
+        </p>
+        <div class="tag-row">
+          <span class="tag">Rhino</span>
+          <span class="tag">Grasshopper</span>
+          <span class="tag">Aurox MCP</span>
+          <span class="tag">AI-assisted CAD</span>
+          <span class="tag">Validation-first</span>
+        </div>
+      </div>
+      <div class="hero-side">
+        <div class="grid-2">
+          <div class="card metric">
+            <strong>3</strong>
+            <span class="small">прикладных сценария для проверки на реальных задачах отдела</span>
+          </div>
+          <div class="card metric">
+            <strong>4</strong>
+            <span class="small">недели на первый цикл: рамка, readback, генерация, review</span>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Ключевой тезис</h3>
+          <p class="small" style="margin-top:10px;">
+            AI не должен быть единственным генератором финальной CAD-геометрии.
+            Практический путь: AI извлекает параметры и пишет/корректирует алгоритмы,
+            CAD-слой строит геометрию, валидатор проверяет результат.
+          </p>
+        </div>
+        <div class="grid-2">
+          <div class="mini">
+            <h4>Контур</h4>
+            <p class="small" style="margin-top:8px;">R&amp;D / пилот с переходом в шаблоны и инструменты.</p>
+          </div>
+          <div class="mini">
+            <h4>Статус</h4>
+            <p class="small" style="margin-top:8px;">Clarification -> In Progress после согласования первого бенчмарка.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="eyebrow">1. Постановка</div>
+      <h2>Что именно исследуем</h2>
+      <p class="lead">
+        Не абстрактное "AI делает 3D", а производственный pipeline для архитектурной геометрии:
+        от изображений, описаний, ТЭПов и существующих моделей до проверяемых Rhino/Grasshopper-результатов.
+      </p>
+
+      <div class="grid-3" style="margin-top:24px;">
+        <div class="card">
+          <h3>Интерпретация</h3>
+          <p class="small" style="margin-top:10px;">
+            AI читает описание, планы, фасады, референсы, существующую сцену и формирует
+            параметрическую постановку с допущениями.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Построение</h3>
+          <p class="small" style="margin-top:10px;">
+            Геометрия создается детерминированно: RhinoCommon, Grasshopper, скрипты,
+            CAD-as-code и управляемые шаблоны.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Проверка</h3>
+          <p class="small" style="margin-top:10px;">
+            Результат принимается только через метрики, оверлеи, сечения, bbox, watertight/solid
+            status и понятные review-captures.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="eyebrow">2. Сценарии</div>
+      <h2>Три рабочих направления</h2>
+      <p class="lead">Каждый сценарий развивается по одной логике, но с разной зрелостью и разными критериями качества.</p>
+
+      <div class="scenario">
+        <div class="scenario-head">
+          <span>Scenario 1</span>
+          <h3>Модель по изображениям и описанию</h3>
+        </div>
+        <div class="card">
+          <ul>
+            <li>Вход: план, фасад, перспективы, описание, размеры.</li>
+            <li>AI-контур: классификация источников, извлечение параметров, список допущений.</li>
+            <li>CAD-контур: blockout, проверка пропорций, затем детализация.</li>
+            <li>Главный риск: одно изображение не задает точную геометрию без размеров и приоритетов видов.</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h4>Судьба результата</h4>
+          <p class="small" style="margin-top:8px;">R&amp;D -> шаблон реконструкции по референсам.</p>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-head green">
+          <span>Scenario 2</span>
+          <h3>Упрощенная модель из сложной</h3>
+        </div>
+        <div class="card">
+          <ul>
+            <li>Вход: сложная Rhino-модель с панелями, мусором, дырами и лишней детализацией.</li>
+            <li>AI-контур: классификация объектов и выбор того, что сохранять для анализа.</li>
+            <li>CAD-контур: scan_scene, extract_sections, section-stack candidate, validation.</li>
+            <li>Главный риск: формально solid-модель может потерять крупную архитектурную форму.</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h4>Судьба результата</h4>
+          <p class="small" style="margin-top:8px;">R&amp;D -> библиотечный модуль / инструмент для аналитики.</p>
+        </div>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-head orange">
+          <span>Scenario 3</span>
+          <h3>Массинг по ТЭПам и описанию</h3>
+        </div>
+        <div class="card">
+          <ul>
+            <li>Вход: участок, GFA/FAR, этажность, высоты, ограничения, желаемые варианты.</li>
+            <li>AI-контур: перевод постановки в параметрическую таблицу и ревизии.</li>
+            <li>CAD-контур: генератор вариантов, метрики, сравнение, правки через параметры.</li>
+            <li>Главный плюс: сценарий наиболее измеримый и быстрее всего переводится в инструмент.</li>
+          </ul>
+        </div>
+        <div class="mini">
+          <h4>Судьба результата</h4>
+          <p class="small" style="margin-top:8px;">Шаблон -> поддерживаемый генератор вариантов.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="eyebrow">3. Общий pipeline</div>
+      <h2>Единый каркас вместо трех разрозненных экспериментов</h2>
+      <p class="lead">
+        Все сценарии должны работать через один процесс. Различаются только входные шаблоны,
+        методы извлечения параметров и критерии приемки.
+      </p>
+
+      <div class="flow">
+        <div class="flow-step"><strong>Intake</strong><span>Задача, владелец, контур, входные данные, ограничения.</span></div>
+        <div class="flow-step"><strong>Extract</strong><span>Параметры, сечения, размеры, допущения, неопределенности.</span></div>
+        <div class="flow-step"><strong>Plan</strong><span>Стратегия построения, стадии, гейты, тип финального output.</span></div>
+        <div class="flow-step"><strong>Build</strong><span>Построение текущей стадии, без преждевременной детализации.</span></div>
+        <div class="flow-step"><strong>Validate</strong><span>Метрики, оверлеи, сечения, bbox, watertight/solid checks.</span></div>
+        <div class="flow-step"><strong>Handoff</strong><span>Отчет, файлы, допуски, ограничения, решение о судьбе результата.</span></div>
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="eyebrow">4. Операционная модель</div>
+      <h2>Как оформить направление как задачу отдела</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Атрибут</th>
+              <th>Формулировка</th>
+              <th>Комментарий</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Название</td>
+              <td>AI Geometry Construction Workflows</td>
+              <td>Исследование и разработка рабочих сценариев построения CAD-геометрии с AI-помощником.</td>
+            </tr>
+            <tr>
+              <td>Контур</td>
+              <td>R&amp;D / пилот</td>
+              <td>С планируемым переходом успешных частей в шаблоны, библиотечные модули и инструменты.</td>
+            </tr>
+            <tr>
+              <td>Цель</td>
+              <td>Снизить хаос и ручную работу при создании, реконструкции и вариантизации архитектурной геометрии.</td>
+              <td>Фокус не на демо, а на повторяемой производственной пользе.</td>
+            </tr>
+            <tr>
+              <td>Ожидаемый результат</td>
+              <td>Workflow kit, 3 шаблона сценариев, benchmark cases, Rhino readback MVP.</td>
+              <td>Первый результат должен читать и валидировать геометрию, а не только строить красивую картинку.</td>
+            </tr>
+            <tr>
+              <td>Владелец</td>
+              <td>Дарий: исследование, прототипы, шаблоны; техreview с Леной; приоритеты и развилки с Петром.</td>
+              <td>Роли можно уточнить после первого review.</td>
+            </tr>
+            <tr>
+              <td>Статус</td>
+              <td>Clarification -> In Progress</td>
+              <td>Переход после согласования первого benchmark и формата результата.</td>
+            </tr>
+            <tr>
+              <td>Судьба результата</td>
+              <td>Сценарий 2 и 3: кандидаты в инструменты. Сценарий 1: R&amp;D / шаблон.</td>
+              <td>Финальное решение после 4-недельного пилота.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="eyebrow">5. Первый цикл</div>
+      <h2>План на 4 недели</h2>
+      <div class="grid-4">
+        <div class="card">
+          <h3>Неделя 1</h3>
+          <p class="small" style="margin-top:10px;">Оформить task card, три one-pager сценария, intake templates, JSON-схемы и benchmark list.</p>
+        </div>
+        <div class="card">
+          <h3>Неделя 2</h3>
+          <p class="small" style="margin-top:10px;">Сделать Rhino readback MVP: scan_scene, extract_sections, scene_scan.json, sections.csv, fixed captures.</p>
+        </div>
+        <div class="card">
+          <h3>Неделя 3</h3>
+          <p class="small" style="margin-top:10px;">Собрать первые генераторы: section-stack blockout и TEP-driven variant generator.</p>
+        </div>
+        <div class="card">
+          <h3>Неделя 4</h3>
+          <p class="small" style="margin-top:10px;">Провести review, показать демо, решить судьбу сценариев: hold, шаблон, модуль, инструмент.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="eyebrow">6. Решения для обсуждения</div>
+      <h2>Что нужно согласовать перед разработкой</h2>
+      <div class="grid-2">
+        <div class="decision">
+          <strong>Формат MVP</strong>
+          <p class="small">Делаем сначала script toolkit или сразу собственный Rhino MCP/connector?</p>
+        </div>
+        <div class="decision">
+          <strong>Тип финальной геометрии</strong>
+          <p class="small">Для аналитики допустим watertight mesh или всегда нужен один Brep / solid polysurface?</p>
+        </div>
+        <div class="decision">
+          <strong>Первый benchmark</strong>
+          <p class="small">Берем текущую сложную модель как основной кейс для Scenario 2?</p>
+        </div>
+        <div class="decision">
+          <strong>Место хранения</strong>
+          <p class="small">Где живут шаблоны: этот Git repo, IND Tools docs, Obsidian, Plancy или AI-платформа?</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
