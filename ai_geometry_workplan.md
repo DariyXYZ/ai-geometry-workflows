@@ -179,6 +179,19 @@
 
 ## Decisions Needed
 
+### Accepted 2026-05-19 - Feature-Preserving Mesh Reconstruction
+
+For Scenario 2, the next primary test path is plane/primitive-based polygonal surface reconstruction from mesh-derived point clouds.
+
+Primary stack:
+
+- CGAL Shape Detection / Efficient RANSAC for plane and primitive extraction;
+- CGAL Polygonal Surface Reconstruction for compact watertight polygonal output;
+- CGAL 3D Alpha Wrapping as a ShrinkWrap-style baseline;
+- quad remeshing only after solid/fidelity validation passes.
+
+See `decisions/2026-05-19-feature-preserving-mesh-reconstruction.md`.
+
 1. Script toolkit first или сразу custom Rhino MCP connector?
 2. Финальный output для анализа: multiple closed Brep shells допустимы или нужен один watertight mesh?
 3. Какой кейс берем для Scenario 1?

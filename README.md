@@ -17,6 +17,7 @@
 - `NEWS.md` — короткий статус проекта и последние обновления.
 - `ai_geometry_research.html` — публичный командный отчет по направлению.
 - `ai_geometry_workplan.md` — рабочий план, сценарии, milestones и decisions needed.
+- `decisions/2026-05-19-feature-preserving-mesh-reconstruction.md` — выбранный подход для Scenario 2: plane/primitive-based polygonal reconstruction from mesh-derived point clouds.
 
 ## Три сценария
 

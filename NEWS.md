@@ -1,5 +1,24 @@
 # Новости
 
+## 2026-05-19 (Scenario 2 — feature-preserving mesh reconstruction decision)
+
+### Решение
+
+- Для сценария high-poly fragmented Rhino model -> simplified solid model выбран следующий тестовый подход: plane/primitive-based polygonal surface reconstruction from mesh-derived point clouds.
+- Основной стек для проверки: CGAL Shape Detection / Efficient RANSAC + CGAL Polygonal Surface Reconstruction.
+- CGAL 3D Alpha Wrapping используется как baseline против Rhino ShrinkWrap.
+- Rhino QuadRemesh / Instant Meshes / QuadriFlow остаются secondary post-process после того, как закрытая форма и архитектурная fidelity уже доказаны.
+
+### Почему
+
+- ShrinkWrap закрывает модель, но сглаживает/портит sharp architectural corners.
+- VSA дает plane clusters и feature edges, но не делает watertight solid.
+- Pure quad remeshing не восстанавливает архитектурную топологию из дробной модели.
+
+### Артефакт
+
+- `decisions/2026-05-19-feature-preserving-mesh-reconstruction.md`
+
 ## 2026-05-18 (сессия 3 — Clear Model 4 postmortem)
 
 ### Результат
