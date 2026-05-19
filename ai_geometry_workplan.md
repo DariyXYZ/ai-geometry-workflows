@@ -42,9 +42,54 @@
 
 ### 2. Упрощенная модель из сложной
 
-Статус: R&D -> кандидат в инструмент.
+Статус: R&D — активная итерация (v6 завершён, v7 в плане).
 
-Первый результат:
+Ветка исследования: `scenario-2/mesh-simplification-research`
+
+Детальные логи: `scenario-2/mesh-simplification/APPROACH_LOG.md`
+
+#### Пройденные итерации
+
+| Версия | Метод | Статус |
+|--------|-------|--------|
+| ShrinkWrap | Marching cubes | ❌ мыльность, нет острых рёбер |
+| v1–v2 | Vertex slabs + PCA | ❌ рёбра фасада смещают результат |
+| v3 | World XY BBox per section | ❌ замкнут, но форма неверна |
+| v5 | True mesh-plane sections + RDP | ⚠️ лучше, но скручивается |
+| v6 | Template contour + scale per Z | ⚠️ высота исправлена, twist частично |
+| **v7** | Outer envelope + corner labels + zone split | 📋 в плане |
+
+#### Параллельные подходы
+
+- **VSA** (Variational Shape Approximation) — Python скрипт написан (`vsa_simplify.py`), тест ожидает OBJ экспорта из Rhino
+- **Feature line extraction** — ridge/valley lines через MeshLab / libigl — правильный примитив для ребристого фасада
+- **Curvature-guided adaptive sectioning** — адаптивные секции по пикам кривизны (GH Mesh Curvature)
+
+#### Корневые уроки
+
+1. `isClosed=True` ≠ архитектурная корректность
+2. Vertex slabs и BBox — неправильный класс инструментов
+3. True sections необходимы но недостаточны — нужна correspondence
+4. Outer envelope (alpha shape) убирает шум рёбер фасада
+5. Boolean union запрещён — молча удаляет геометрию
+6. Лофт через резкое изменение площади → явный zone split
+
+#### Текущий алгоритм (v7 target)
+
+```
+scan_scene
+→ classify_source_groups (tower / podium / ovals / base)
+→ extract_raw_sections (true mesh-plane, не vertex slabs)
+→ outer_envelope (alpha shape, alpha=2.0 m)
+→ detect_zone_breaks (area change > 15%)
+→ fit_corner_labels (nearest-neighbour к углам reference секции)
+→ build_zone_lofts (per zone, не через breakpoints)
+→ roof_cap (planar polygon, не loft)
+→ unweld_sharp_edges (dihedral > 25°)
+→ validate: BBox delta + section overlay + visual review
+```
+
+Первый результат (предыдущий):
 
 - `scan_scene`;
 - `classify_building_meshes`;
@@ -56,7 +101,9 @@
 
 - источник считывается вместе с hidden/locked объектами;
 - крупная форма и кривизна сохраняются;
-- watertight/solid статус подтвержден вместе с section/bbox delta report.
+- watertight/solid статус подтвержден вместе с section/bbox delta report;
+- отсутствие twist: major plan corners консистентны на всех Z уровнях;
+- зоны ствол / корона / крыша реконструированы раздельно.
 
 ### 3. Массинг по описанию, ТЭПам и правкам
 

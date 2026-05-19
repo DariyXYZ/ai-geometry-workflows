@@ -1,5 +1,37 @@
 # Новости
 
+## 2026-05-19 (сессия 4 — v5/v6 postmortem + VSA + form reading research)
+
+### Результат
+
+- v5 (true sections + RDP): лучше bbox-версий, но форма скручена — per-section RDP ломает correspondence.
+- v6 (template contour): высота исправлена, bbox верный, twist частично уменьшен. Известное ограничение: корона — placeholder.
+- Параллельно: реализован VSA-скрипт (`vsa_simplify.py`) для сегментации меша на плоские патчи.
+- Проведён ресёрч стратегий чтения формы: адаптивные секции, feature lines, RANSAC, alpha shape.
+
+### Корневой диагноз v5→v6 failure
+
+RDP-упрощение каждой секции независимо сохраняет разные локальные детали на разных уровнях → loft соединяет несовпадающие точки → twist. Решение: outer envelope (alpha shape) + corner label matching.
+
+### v7 направление
+
+1. Alpha shape (outer envelope) вместо RDP — убирает шум рёбер фасада
+2. Corner labels через nearest-neighbour к углам reference секции — гарантирует correspondence
+3. Zone split по area change > 15% — лофт в пределах зоны, корона отдельно
+
+### Form reading research
+
+- Корневая причина искажений: равномерные секции → пропускают зоны изменения формы
+- Стратегия 1: адаптивные секции по пикам Mean Curvature (GH Mesh Curvature component)
+- Стратегия 2: feature lines (ridge/valley) — правильный примитив для ребристого фасада (MeshLab / libigl)
+- Стратегия 3: RANSAC plane segmentation (Open3D) для плоских частей
+
+### Новая ветка
+
+`scenario-2/mesh-simplification-research` — полный лог итераций, решений и инструментов.
+
+---
+
 ## 2026-05-18 (сессия 3 — Clear Model 4 postmortem)
 
 ### Результат
