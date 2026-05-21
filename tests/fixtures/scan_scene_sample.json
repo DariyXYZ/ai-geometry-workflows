@@ -1,0 +1,37 @@
+{
+  "units": "meter",
+  "objects": [
+    {
+      "id": "tower",
+      "name": "Main Tower",
+      "type": "Mesh",
+      "layer": "Source",
+      "bbox": {"min": [0, 0, 0], "max": [40, 60, 180]},
+      "face_count": 10000
+    },
+    {
+      "id": "podium",
+      "name": "Oval Podium",
+      "type": "Mesh",
+      "layer": "Source",
+      "bbox": {"min": [-30, -20, 0], "max": [70, 80, 18]},
+      "face_count": 3000
+    },
+    {
+      "id": "column",
+      "name": "Support Column",
+      "type": "Mesh",
+      "layer": "Source",
+      "bbox": {"min": [5, 5, 0], "max": [8, 8, 35]},
+      "face_count": 500
+    },
+    {
+      "id": "panel",
+      "name": "Small Panel",
+      "type": "Mesh",
+      "layer": "Source",
+      "bbox": {"min": [10, 60, 30], "max": [11, 61, 33]},
+      "face_count": 20
+    }
+  ]
+}

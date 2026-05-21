@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-geometry-workflows"
+version = "0.1.0"
+description = "Case-based orchestration toolkit for AI-assisted CAD and Rhino geometry workflows."
+requires-python = ">=3.11"
+
+[project.scripts]
+ai-geo = "ai_geometry_toolkit.cli:main"
+
+[tool.setuptools]
+packages = ["ai_geometry_toolkit"]

@@ -1,199 +1,207 @@
-# AI Geometry Construction Workflows
+# AI Geometry Construction Workplan
 
-Рабочий пакет к публичному отчету `ai_geometry_research.html`.
+This repo tracks the transition from R&D experiments to a repeatable AI-assisted
+geometry workflow for architectural CAD, Rhino, Grasshopper, and CAD-as-code.
 
-## Контекст
+## Goal
 
-Направление оформляется по операционной модели отдела вычислительного проектирования:
+Build a practical toolchain where:
 
-- тип задачи: R&D / пилот;
-- владелец: Дарий на этапе исследования и прототипирования;
-- review: Петр по приоритетам и развилкам, Лена по архитектуре инструмента;
-- статус: Clarification -> In Progress после согласования первого benchmark;
-- судьба результата: шаблон, библиотечный модуль или инструмент по итогам пилота.
+- AI interprets inputs and proposes parameters;
+- deterministic CAD/Rhino/build123d tools create geometry;
+- validation gates decide whether a model can be accepted;
+- successful workflows become templates, modules, or supported tools.
 
-## Цель
+## Working Principle
 
-Проверить и систематизировать сценарии построения CAD-геометрии с помощью AI, где:
+Do not optimize for one impressive model. Optimize for repeatable cases with
+stored inputs, parameters, scripts, validation, captures, and handoff notes.
 
-- AI интерпретирует входные данные и формирует параметры;
-- Rhino / Grasshopper / RhinoCommon строят геометрию;
-- валидатор проверяет результат до принятия;
-- успешные сценарии переводятся в повторяемые шаблоны и инструменты.
+Core pipeline:
 
-## Сценарии
+```text
+intake -> extract -> plan -> build -> validate -> handoff
+```
 
-### 1. Модель по изображениям, планам, фасадам и описанию
+## Scenario 1 - Reference To Model
 
-Статус: R&D / шаблон.
+Input:
 
-Первый результат:
+- images;
+- plans;
+- facades/elevations;
+- drawings;
+- description;
+- known dimensions.
 
-- `reference_model_intake.md`;
-- `reference_model_params.schema.json`;
-- `reference_model_build.py`;
-- `reference_model_validation.md`.
+MVP output:
 
-Критерий успеха:
-
-- перед построением есть parameter table;
-- top/front/side пропорции проходят validation;
-- детализация не добавляется до прохождения blockout gate.
-
-### 2. Упрощенная модель из сложной
-
-Статус: R&D -> кандидат в инструмент.
-
-Первый результат:
-
-- `scan_scene`;
-- `classify_building_meshes`;
-- `extract_sections`;
-- `validate_candidate`;
-- fixed capture set.
-
-Критерий успеха:
-
-- источник считывается вместе с hidden/locked объектами;
-- крупная форма и кривизна сохраняются;
-- watertight/solid статус подтвержден вместе с section/bbox delta report.
-
-### 3. Массинг по описанию, ТЭПам и правкам
-
-Статус: шаблон -> кандидат в инструмент.
-
-Первый результат:
-
-- `massing_intake.md`;
-- `massing_params.schema.json`;
-- `variant_generator.py`;
-- `variant_metrics.csv`;
-- `revision_log.md`.
-
-Критерий успеха:
-
-- 5-10 вариантов строятся одним запуском;
-- метрики считаются автоматически;
-- пользовательские правки переводятся в изменения параметров.
-
-## Shared Pipeline
-
-`intake -> extract -> plan -> build -> validate -> handoff`
-
-Обязательные артефакты:
-
-- intake card;
 - parameter table;
-- build script;
-- validation report;
-- review captures;
-- handoff note.
+- blockout/massing model;
+- top/front/side validation;
+- detail only after blockout approval.
 
-## Первый practical milestone
+Development route:
 
-Создать `C:\VS Code\workfiles\rhino_workflow_kit`.
+1. Classify every source by authority: exterior plan, structural plan, facade,
+   side view, perspective, diagram.
+2. Extract dimensions and assumptions.
+3. Build blockout only.
+4. Validate plan/elevation/side proportions.
+5. Add detail after approval.
 
-Минимальный состав:
+Status: template/R&D. Stable enough for controlled blockout, not final
+photo-to-CAD automation.
 
-- `templates/reference_model_intake.md`;
-- `templates/cleanup_model_intake.md`;
-- `templates/massing_intake.md`;
-- `schemas/reference_model_params.schema.json`;
-- `schemas/cleanup_model_params.schema.json`;
-- `schemas/massing_params.schema.json`;
-- `scripts/rhino_runner.py`;
-- `scripts/scan_scene.py`;
-- `scripts/extract_sections.py`;
-- `reports/`.
+## Scenario 2 - Complex Rhino Model To Simplified Analysis Geometry
 
-## План на 4 недели
+Input:
 
-### Week 1
+- existing Rhino scene, `.3dm`, OBJ, or scan report;
+- source layers and object groups;
+- downstream analysis target.
 
-- согласовать task card;
-- выбрать benchmark cases;
-- создать workflow kit;
-- подготовить intake templates и schemas.
+MVP output:
 
-### Week 2
+- classified architectural parts;
+- section report;
+- closed simplified parts or watertight mesh;
+- bbox/section delta report;
+- fixed captures.
 
-- реализовать `scan_scene`;
-- реализовать `extract_sections`;
-- прогнать на текущей сложной Rhino-модели;
-- получить `scene_scan.json`, `sections.csv`, review captures.
+Current benchmark: `test_data_2.3dm`.
 
-### Week 3
+Accepted route:
 
-- собрать candidate blockout для Scenario 2;
-- собрать простой variant generator для Scenario 3;
-- добавить validation report.
+1. Scan scene including hidden and locked objects.
+2. Classify source into tower, podium, low blocks, supports, large bands, facade detail, noise.
+3. Extract sections per major part.
+4. Validate section correspondence before loft/build.
+5. Build closed simplified parts.
+6. Add only analysis-relevant detail.
+7. Validate source/candidate deltas and fixed captures.
 
-### Week 4
+Status: primary MVP. This is the first workflow to make testable as a real tool.
 
-- подготовить demo/review;
-- принять решение по судьбе сценариев:
-  - hold;
-  - заготовка;
-  - шаблон;
-  - библиотечный модуль;
-  - инструмент.
+## Scenario 3 - Massing From TEPs And Revisions
 
-## Lessons From Clear Model 4 (2026-05-18)
+Input:
 
-Проведены 3 итерации реконструкции башни. Результат — частичный прогресс.
+- site boundary;
+- GFA/FAR/height/floor count;
+- massing rules;
+- user revision requests.
 
-### Что стало лучше
+MVP output:
 
-- Низ/подиум реконструируется лучше, если использовать секции из источника, а не bbox.
-- Закрытые source meshes конвертируются в Brep напрямую — лучше сохраняют кривизну.
-- Boolean union надо избегать — он молча удаляет большие массы; вместо этого используем appended Brep.
+- 5-10 variants generated in one run;
+- metrics per variant;
+- comparison captures;
+- revision log as parameter deltas.
 
-### Что всё ещё не работает
+Development route:
 
-- Башня деформируется при лофтинге: каждая секция выбирает шов и порядок вершин независимо.
-- Итог: диагональные cross-connections, "плавленый/скрученный" вид башни.
-- `isSolid=True` недостаточно — нужна архитектурная корреспонденция сторон.
+1. Convert TEPs and description into `params.json`.
+2. Generate all variants in one script.
+3. Compute GFA/footprint/height/FAR proxy.
+4. Apply revisions as parameter deltas.
+5. Preserve scripts and metrics.
 
-### Новый обязательный шаг: Section Correspondence
+Status: strong candidate for a supported tool after Scenario 2 readback/validation
+is stable.
 
-`extract_sections` → **`fit_architectural_sections`** → `build_zone_lofts`
+## Route For This Iteration
 
-`fit_architectural_sections` должен:
+### Step 0 - Restore State
 
-1. определить длинные стороны фасада, закруглённые/скошенные углы;
-2. назначить stable corner/side anchors на каждом Z-уровне;
-3. пересемплировать секции с одного anchor, одним направлением;
-4. разделить стек на зоны: lower_shaft / mid_shaft / upper_shaft / crown_shoulder / roof_cap;
-5. отклонить билд, если correspodence не доказана.
+Done. Read Obsidian project notes, decisions, research, and local repos.
 
-### Обновлённый алгоритм для Scenario 2
+Key restored decisions:
 
-1. `scan_scene` — все объекты включая hidden/locked
-2. `classify_source_groups` — tower / podium / ovals / base / supports / trash
-3. `extract_raw_sections` — несколько Z-срезов на группу
-4. `fit_architectural_sections` — упростить контуры, выровнять швы, убрать facade noise
-5. `validate_section_correspondence` — сравнить anchors и длины сторон между уровнями
-6. `build_zone_lofts` — lower/mid/upper/crown зоны отдельно
-7. `append_or_export` — appended Brep или watertight mesh (не boolean union)
-8. `review_capture_set` — top/front/back/perspective + section delta table
+- use stage gates for reference modeling;
+- do not accept `isSolid=True` without source fidelity;
+- use part-aware reconstruction for complex architectural sources;
+- use `text-to-cad` as CAD-as-code backend, not as Rhino replacement.
 
-## Decisions Needed
+### Step 1 - Create Runnable Orchestration Layer
 
-### Accepted 2026-05-19 - Feature-Preserving Mesh Reconstruction
+Done initial MVP:
 
-For Scenario 2, the next primary test path is plane/primitive-based polygonal surface reconstruction from mesh-derived point clouds.
+- `ai_geometry_toolkit new-case`
+- `validate-case`
+- `route`
+- `classify-scan`
+- `audit-scan`
 
-Primary stack:
+### Step 2 - Connect Rhino/Aurox Readback
 
-- CGAL Shape Detection / Efficient RANSAC for plane and primitive extraction;
-- CGAL Polygonal Surface Reconstruction for compact watertight polygonal output;
-- CGAL 3D Alpha Wrapping as a ShrinkWrap-style baseline;
-- quad remeshing only after solid/fidelity validation passes.
+Next implementation:
 
-See `decisions/2026-05-19-feature-preserving-mesh-reconstruction.md`.
+- normalize `scan_scene.py` output into case reports;
+- copy the working scripts from `workfiles/rhino/workflow-kit` into this repo;
+- add a command that runs scan through Aurox when Rhino is open;
+- keep offline scan classification available for CI and review.
 
-1. Script toolkit first или сразу custom Rhino MCP connector?
-2. Финальный output для анализа: multiple closed Brep shells допустимы или нужен один watertight mesh?
-3. Какой кейс берем для Scenario 1?
-4. Где долгосрочно хранить шаблоны и бенчмарки?
-5. Кто утверждает переход из R&D в поддерживаемый инструмент?
+### Step 3 - Scenario 2 Real Test
+
+Target: `test_data_2.3dm`.
+
+Run:
+
+1. create cleanup case;
+2. scan source;
+3. classify groups;
+4. extract sections for tower/podium/low block/support groups;
+5. build `v4_refined_clean_massing`;
+6. validate by section deltas and fixed captures.
+
+Acceptance:
+
+- source object groups visible in report;
+- major closed parts preserved;
+- final output can be multiple closed shells;
+- no global repair is accepted without source fidelity.
+
+### Step 4 - Scenario 3 Variant Engine
+
+Add:
+
+- `generate-variants`;
+- `variant_metrics.csv`;
+- `revision_log.md`;
+- sample case.
+
+### Step 5 - Scenario 1 Controlled Reference Workflow
+
+Add:
+
+- source package template;
+- image/drawing authority table;
+- blockout-only build route;
+- proportion checklist.
+
+## Definition Of Done For MVP
+
+The tool is testable on real tasks when a user can run:
+
+```powershell
+python -m ai_geometry_toolkit new-case --scenario cleanup --name test_data_2 --source test_data_2.3dm --units m
+python -m ai_geometry_toolkit classify-scan .\cases\<case_id> --scan .\cases\<case_id>\reports\scene_scan.json
+python -m ai_geometry_toolkit route .\cases\<case_id>
+```
+
+and receive:
+
+- case folder;
+- parameter table;
+- classification;
+- development route;
+- validation report stub;
+- clear next Rhino build command.
+
+## Open Decisions
+
+1. Whether final Scenario 2 output must be one watertight mesh or may be multiple closed Brep/shell parts.
+2. Whether to package the Rhino side as scripts first or a Rhino plugin/connector.
+3. Which Scenario 1 benchmark should become the first public example.
+4. Who approves promotion from R&D to supported tool.
