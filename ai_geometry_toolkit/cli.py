@@ -92,6 +92,12 @@ def build_parser() -> argparse.ArgumentParser:
     audit.add_argument("--scan", default="")
     audit.set_defaults(func=cmd_audit_scan)
 
+    link_backend = sub.add_parser("link-backend", help="Attach an external geometry backend to a case.")
+    link_backend.add_argument("case")
+    link_backend.add_argument("--backend", required=True, choices=("text-to-cad",))
+    link_backend.add_argument("--repo", required=True, help="Path to the backend repository.")
+    link_backend.set_defaults(func=cmd_link_backend)
+
     return parser
 
 
@@ -190,6 +196,42 @@ def cmd_audit_scan(args: argparse.Namespace) -> int:
     output = case_root / "reports" / "scan_audit.md"
     output.write_text(scan_audit_markdown(scan_path, objects, classification), encoding="utf-8")
     print(output)
+    return 0
+
+
+def cmd_link_backend(args: argparse.Namespace) -> int:
+    case_root = resolve_case(args.case)
+    backend = str(args.backend)
+    repo = Path(args.repo).resolve()
+    if backend != "text-to-cad":
+        raise WorkflowError(f"unsupported backend: {backend}")
+    profile = text_to_cad_profile(repo)
+
+    paths = case_paths(case_root)
+    manifest = read_json(paths.manifest)
+    params = read_json(paths.params)
+    manifest.setdefault("paths", {})["textToCadBackend"] = "reports/backend_text_to_cad.md"
+    manifest.setdefault("backends", {})["text-to-cad"] = {
+        "repo": str(repo),
+        "profile": "reports/backend_text_to_cad.json",
+    }
+    params.setdefault("backends", {})["text-to-cad"] = {
+        "repo": str(repo),
+        "skillDir": profile["skillDir"],
+        "stepLauncher": profile["stepLauncher"],
+        "inspectLauncher": profile["inspectLauncher"],
+        "renderViewerDir": profile["renderViewerDir"],
+        "role": "parametric STEP backend for clean source-controlled parts and baseline candidates",
+    }
+
+    write_json(paths.manifest, manifest)
+    write_json(paths.params, params)
+    write_json(case_root / "reports" / "backend_text_to_cad.json", profile)
+    (case_root / "reports" / "backend_text_to_cad.md").write_text(
+        backend_markdown(manifest, profile),
+        encoding="utf-8",
+    )
+    print(case_root / "reports" / "backend_text_to_cad.md")
     return 0
 
 
@@ -403,6 +445,83 @@ def scan_audit_markdown(scan_path: Path, objects: list[dict[str, Any]], classifi
         ]
     )
     return "\n".join(lines)
+
+
+def text_to_cad_profile(repo: Path) -> dict[str, Any]:
+    if not repo.exists():
+        raise WorkflowError(f"text-to-cad repo does not exist: {repo}")
+    skill_dir = repo / "skills" / "cad"
+    required = [
+        repo / "README.md",
+        skill_dir / "SKILL.md",
+        skill_dir / "requirements.txt",
+        skill_dir / "scripts" / "step" / "cli.py",
+        skill_dir / "scripts" / "inspect" / "cli.py",
+        repo / "skills" / "render" / "scripts" / "viewer" / "package.json",
+    ]
+    missing = [path for path in required if not path.exists()]
+    if missing:
+        joined = ", ".join(str(path) for path in missing)
+        raise WorkflowError(f"text-to-cad repo is missing required files: {joined}")
+    return {
+        "schemaVersion": 1,
+        "backend": "text-to-cad",
+        "repo": str(repo),
+        "skillDir": str(skill_dir),
+        "stepLauncher": str(skill_dir / "scripts" / "step"),
+        "inspectLauncher": str(skill_dir / "scripts" / "inspect"),
+        "renderViewerDir": str(repo / "skills" / "render" / "scripts" / "viewer"),
+        "primaryArtifact": "STEP",
+        "sourceContract": "Python build123d source with gen_step() returning a closed part, compound, or assembly.",
+        "fitFor": [
+            "clean parametric parts",
+            "source-controlled STEP generation",
+            "closed simplified baseline candidates",
+            "secondary STL/3MF/DXF/GLB exports from a STEP-first model",
+        ],
+        "notFitFor": [
+            "direct repair of messy Rhino meshes",
+            "acceptance based only on visual renders",
+            "global mesh decimation as final Scenario 2 output",
+        ],
+    }
+
+
+def backend_markdown(manifest: dict[str, Any], profile: dict[str, Any]) -> str:
+    return f"""# text-to-cad Backend
+
+Case: `{manifest["caseId"]}`
+
+Backend repo: `{profile["repo"]}`
+
+## Role
+
+Use `text-to-cad` as a STEP-first CAD-as-code backend when the case needs a clean
+parametric source model. For Scenario 2 cleanup, this is useful for refined
+closed baseline candidates after scan classification and section extraction. It
+is not the source mesh repair backend.
+
+## Launchers
+
+```powershell
+python "{profile["stepLauncher"]}" path\\to\\candidate.py
+python "{profile["inspectLauncher"]}" refs path\\to\\candidate.step --facts --planes --positioning
+```
+
+## Contract
+
+- Keep editable source in the case `source/` or `scripts/` folder.
+- Define `gen_step()` and generate explicit STEP targets.
+- Validate generated STEP with facts, planes, positioning, and targeted measures.
+- Treat viewer links and snapshots as review aids, not validation by themselves.
+- Store generated artifacts under `artifacts/` until promoted.
+
+## Scenario 2 Boundary
+
+Use Rhino/Aurox for source `.3dm` scanning, part classification, section
+extraction, and source overlays. Use `text-to-cad` when the accepted route is to
+rebuild an architectural part or simplified shell from parameters.
+"""
 
 
 def classification_summary(classification: dict[str, Any]) -> str:

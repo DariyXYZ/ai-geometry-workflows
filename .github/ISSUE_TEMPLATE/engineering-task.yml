@@ -1,0 +1,49 @@
+name: Engineering task
+description: Track an implementation task for the AI geometry workflow toolkit.
+title: "[Task] "
+labels: ["task"]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What should change?
+      placeholder: Add a case-aware scan command that writes reports/scene_scan.json.
+    validations:
+      required: true
+  - type: dropdown
+    id: scenario
+    attributes:
+      label: Scenario
+      options:
+        - Scenario 1 - reference to model
+        - Scenario 2 - cleanup / simplified analysis geometry
+        - Scenario 3 - massing variants
+        - Shared tooling
+    validations:
+      required: true
+  - type: textarea
+    id: data
+    attributes:
+      label: Data or source files
+      description: Relevant case folders, Rhino files, reports, fixtures, or external repos.
+      placeholder: |
+        - cases/<case_id>/...
+        - C:\VS Code\workfiles\rhino\workflow-kit\...
+        - C:\VS Code\text-to-cad\...
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance checks
+      description: Commands, reports, or validation gates that must pass.
+      placeholder: |
+        - python -m unittest discover -s tests
+        - reports/sections.json created
+        - validation.md updated
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Links to docs, decisions, or error-ledger entries.

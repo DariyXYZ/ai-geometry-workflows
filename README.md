@@ -66,6 +66,14 @@ python -m ai_geometry_toolkit classify-scan .\cases\<case_id> `
   --scan "C:\VS Code\workfiles\rhino\workflow-kit\rhino_workflow_kit\reports\tower_bbox_classification.json"
 ```
 
+Attach the local `text-to-cad` checkout as a STEP-first backend:
+
+```powershell
+python -m ai_geometry_toolkit link-backend .\cases\<case_id> `
+  --backend text-to-cad `
+  --repo "C:\VS Code\text-to-cad"
+```
+
 The output is a reproducible case folder with:
 
 - `case.json`
@@ -73,11 +81,16 @@ The output is a reproducible case folder with:
 - `intake.md`
 - `reports/development_route.md`
 - `reports/source_classification.json`
+- `reports/backend_text_to_cad.md`
 - `reports/validation.md`
 
 ## Repository Map
 
 - `ai_geometry_toolkit/` - runnable orchestration CLI.
+- `docs/context-system.md` - rules for where project context, cases, errors, and decisions live.
+- `docs/project-data-map.md` - active data/source map across this repo, Rhino workfiles, Obsidian, and `text-to-cad`.
+- `docs/development-state.md` - current development status and next engineering steps.
+- `docs/error-ledger.md` - known failure modes and lessons not to repeat.
 - `ai_geometry_workplan.md` - project plan and development route.
 - `TEAM_UPDATE_2026-05-21.md` - current team-facing status.
 - `NEWS.md` - chronological project updates.
@@ -97,3 +110,16 @@ source geometry -> classify architectural parts -> reconstruct closed simplified
 Do not continue with global decimation, ShrinkWrap, Poisson, one global loft, or
 one hull/envelope as the final method. Direct mesh reduction remains useful only
 as diagnostic overlay.
+
+## Context And Data Rules
+
+Use `docs/context-system.md` before adding new data, ideas, errors, or generated
+runs. The short version:
+
+- shared truth goes into repo docs;
+- one modeling run goes into a case folder;
+- local smoke tests go into `.tmp_cases/`;
+- personal cross-repo memory goes into Obsidian;
+- known failures go into `docs/error-ledger.md`;
+- durable decisions go into `decisions/`.
+- GitHub work items should use the engineering task or failure/lesson issue templates.

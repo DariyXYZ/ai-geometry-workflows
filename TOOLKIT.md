@@ -16,6 +16,15 @@ separates those responsibilities:
   backend is a better fit.
 - The case folder stores the reproducible state and validation evidence.
 
+## Context Rails
+
+Before adding new durable project data, check:
+
+- `docs/context-system.md` - where to save context, cases, decisions, errors, and reports.
+- `docs/project-data-map.md` - which local folder or external repo owns each kind of data.
+- `docs/development-state.md` - current active lane and next implementation steps.
+- `docs/error-ledger.md` - known failures that should shape new implementation.
+
 ## Commands
 
 ```powershell
@@ -24,6 +33,7 @@ python -m ai_geometry_toolkit validate-case .\cases\<case_id>
 python -m ai_geometry_toolkit route .\cases\<case_id>
 python -m ai_geometry_toolkit classify-scan .\cases\<case_id> --scan path\to\scene_scan.json
 python -m ai_geometry_toolkit audit-scan .\cases\<case_id> --scan path\to\scene_scan.json
+python -m ai_geometry_toolkit link-backend .\cases\<case_id> --backend text-to-cad --repo "C:\VS Code\text-to-cad"
 ```
 
 ## Scenario 2 MVP Route
@@ -51,6 +61,17 @@ Use `text-to-cad` / build123d when:
 - the task starts from a clean parametric description;
 - source-controlled STEP generation is the main deliverable;
 - deterministic CAD-as-code is more important than existing Rhino scene context.
+
+Attach a local `text-to-cad` checkout to a case with `link-backend`. The command
+validates the expected CAD skill and render viewer files, then writes:
+
+- `reports/backend_text_to_cad.md` - human-readable backend contract;
+- `reports/backend_text_to_cad.json` - machine-readable paths and role;
+- `case.json` / `params.json` backend entries for reproducible follow-up runs.
+
+For Scenario 2, keep the boundary explicit: Rhino/Aurox owns `.3dm` scan,
+classification, source overlays, and section extraction; `text-to-cad` owns
+clean parameter-driven STEP candidates after the route is accepted.
 
 ## Near-Term Missing Pieces
 

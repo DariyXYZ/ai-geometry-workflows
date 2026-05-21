@@ -1,5 +1,31 @@
 # News
 
+## 2026-05-21 - Context Rails Added
+
+Added repo-level context normalization docs:
+
+- `docs/context-system.md`
+- `docs/project-data-map.md`
+- `docs/development-state.md`
+- `docs/error-ledger.md`
+- `.github/ISSUE_TEMPLATE/engineering-task.yml`
+- `.github/ISSUE_TEMPLATE/failure-lesson.yml`
+
+These files define where to save project state, case data, generated runs,
+errors, decisions, and personal Obsidian continuity. The goal is to make future
+development reloadable from the repo instead of from mixed chat history.
+
+## 2026-05-21 - text-to-cad Backend Linked
+
+Added `link-backend` to register a local `earthtojake/text-to-cad` checkout on a
+case. The command validates the expected CAD skill files, writes
+`reports/backend_text_to_cad.md` / `.json`, and records the backend in
+`case.json` and `params.json`.
+
+The boundary is explicit: Rhino/Aurox owns `.3dm` scan, source overlays,
+classification, and section extraction; `text-to-cad` owns clean STEP-first
+parametric candidates after a route is accepted.
+
 ## 2026-05-21 - First Runnable Orchestration MVP
 
 Added `ai_geometry_toolkit`, a case-based CLI for the AI Geometry Workflows repo.
@@ -11,6 +37,7 @@ Commands now available:
 - `route`
 - `classify-scan`
 - `audit-scan`
+- `link-backend`
 
 The first smoke test created a Scenario 2 cleanup case and classified an existing
 Rhino scan-like report into:

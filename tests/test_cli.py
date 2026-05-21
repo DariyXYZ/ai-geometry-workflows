@@ -76,6 +76,49 @@ class ToolkitCliTests(unittest.TestCase):
             self.assertEqual(validated.returncode, 1)
             self.assertIn("empty params.footprint.width_m", validated.stdout + validated.stderr)
 
+    def test_link_text_to_cad_backend_writes_profile(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            created = run_cli(
+                "new-case",
+                "--scenario",
+                "cleanup",
+                "--name",
+                "backend link",
+                "--root",
+                str(root),
+                "--source",
+                "sample.3dm",
+                "--units",
+                "m",
+            )
+            self.assertEqual(created.returncode, 0, created.stderr)
+            case = Path(created.stdout.strip())
+            repo = root / "text-to-cad"
+            for path in (
+                repo / "skills" / "cad" / "scripts" / "step",
+                repo / "skills" / "cad" / "scripts" / "inspect",
+                repo / "skills" / "render" / "scripts" / "viewer",
+            ):
+                path.mkdir(parents=True)
+            for path in (
+                repo / "README.md",
+                repo / "skills" / "cad" / "SKILL.md",
+                repo / "skills" / "cad" / "requirements.txt",
+                repo / "skills" / "cad" / "scripts" / "step" / "cli.py",
+                repo / "skills" / "cad" / "scripts" / "inspect" / "cli.py",
+                repo / "skills" / "render" / "scripts" / "viewer" / "package.json",
+            ):
+                path.write_text("stub\n", encoding="utf-8")
+
+            linked = run_cli("link-backend", str(case), "--backend", "text-to-cad", "--repo", str(repo))
+            self.assertEqual(linked.returncode, 0, linked.stdout + linked.stderr)
+            self.assertTrue((case / "reports" / "backend_text_to_cad.md").exists())
+            manifest = json.loads((case / "case.json").read_text(encoding="utf-8"))
+            params = json.loads((case / "params.json").read_text(encoding="utf-8"))
+            self.assertIn("text-to-cad", manifest["backends"])
+            self.assertEqual(params["backends"]["text-to-cad"]["repo"], str(repo.resolve()))
+
 
 if __name__ == "__main__":
     unittest.main()

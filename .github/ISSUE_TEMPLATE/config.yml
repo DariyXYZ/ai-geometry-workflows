@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Context system
+    url: https://github.com/DariyXYZ/ai-geometry-workflows/blob/main/docs/context-system.md
+    about: Read where to save project state, case data, decisions, and errors.

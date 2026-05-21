@@ -1,0 +1,40 @@
+name: Failure or lesson
+description: Record a modeling/tooling failure so the workflow does not repeat it.
+title: "[Failure] "
+labels: ["failure", "lesson"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the failed run, misleading result, or bad assumption.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Files, case IDs, screenshots, captures, scripts, reports, or command output.
+      placeholder: |
+        - workfiles/rhino/cad-mesh-reconstruction/add_test_data2_v12_...
+        - reports/validation.md
+        - capture path
+  - type: textarea
+    id: root-cause
+    attributes:
+      label: Root cause
+      description: What should future runs learn from this?
+    validations:
+      required: true
+  - type: textarea
+    id: new-rule
+    attributes:
+      label: New rule or guardrail
+      description: What should be added to docs/error-ledger.md, decisions, or validation?
+    validations:
+      required: true
+  - type: textarea
+    id: follow-up
+    attributes:
+      label: Follow-up task
+      description: Optional implementation or documentation action.

@@ -123,6 +123,13 @@ Key restored decisions:
 - use part-aware reconstruction for complex architectural sources;
 - use `text-to-cad` as CAD-as-code backend, not as Rhino replacement.
 
+Context rails added:
+
+- `docs/context-system.md`
+- `docs/project-data-map.md`
+- `docs/development-state.md`
+- `docs/error-ledger.md`
+
 ### Step 1 - Create Runnable Orchestration Layer
 
 Done initial MVP:
