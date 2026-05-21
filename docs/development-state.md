@@ -83,9 +83,9 @@ Last result: 3 tests passed.
 
 1. Migrate Rhino `scan_scene.py` into this repo.
    GitHub: https://github.com/DariyXYZ/ai-geometry-workflows/issues/1
-2. Migrate or wrap `extract_sections.py` into this repo and normalize section output into `reports/sections.json` / `reports/sections.csv`.
+2. Add `validate_candidate_vs_source`.
    GitHub: https://github.com/DariyXYZ/ai-geometry-workflows/issues/2
-3. Add `validate_candidate_vs_source`.
+3. Migrate or wrap `extract_sections.py` into this repo and normalize section output into `reports/sections.json` / `reports/sections.csv`.
    GitHub: https://github.com/DariyXYZ/ai-geometry-workflows/issues/3
 4. Build `v4_refined_clean_massing` as a real case.
 5. Promote stable case outputs only after validation reports exist.
@@ -95,8 +95,8 @@ Last result: 3 tests passed.
 Open starter issues:
 
 - #1 - Migrate Rhino scan readback into `ai_geometry_toolkit`.
-- #2 - Normalize section extraction reports for Scenario 2 cases.
-- #3 - Add candidate-vs-source validation report.
+- #2 - Add candidate-vs-source validation report.
+- #3 - Normalize section extraction reports for Scenario 2 cases.
 
 ## Not Active Right Now
 
