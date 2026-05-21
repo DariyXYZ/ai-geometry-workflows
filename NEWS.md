@@ -1,5 +1,24 @@
 # News
 
+## 2026-05-21 - Three Product Vectors Clarified
+
+Clarified the project framing across repo docs:
+
+- Scenario 1, Reference to model, is platform-facing long term. Build a reliable
+  local engine first, likely through Rhino, then translate it into the AI
+  platform where image-generation/reference workflows already exist.
+- Scenario 2, Complex model to simplified analysis geometry, is the first active
+  engineering MVP and mostly an internal Rhino production workflow for wind
+  comfort and later other analyses.
+- Scenario 3, Massing and revisions from TEPs, is Rhino-first early design
+  automation for scenes with context, red lines, underlays, rough massing,
+  constraints, TEPs, and references.
+
+`text-to-cad` is now documented as a reference/backend to adapt with
+architecture-specific source authority, facades, plans, elevations, generated
+references, and staged validation. It is not a replacement for Rhino scene
+understanding.
+
 ## 2026-05-21 - Context Rails Added
 
 Added repo-level context normalization docs:

@@ -68,11 +68,23 @@ Recommended report files:
 
 ## Active Boundary
 
-Rhino/Aurox owns `.3dm` scene readback, scan, overlays, section extraction, and
-Rhino visual review.
+Scenario 1 is platform-facing long term: build the reliable local engine first,
+likely through Rhino, then translate it into the AI platform where generated
+image/reference workflows already exist.
+
+Scenario 2 is internal Rhino production work: prepare architect models for wind
+comfort and later other analysis workflows.
+
+Scenario 3 is Rhino-first early design automation: revise or regenerate massing
+inside an active scene with context, red lines, underlays, rough massing, TEPs,
+constraints, and references.
+
+Rhino/Aurox owns `.3dm` scene readback, scan, overlays, section extraction,
+scene-context edits, and Rhino visual review.
 
 `text-to-cad` / build123d owns clean parametric source and STEP-first candidate
-generation.
+generation. It is a reference for Scenario 1 and a backend for clean candidates,
+not a replacement for Rhino scene understanding.
 
 `ai_geometry_toolkit` owns orchestration: cases, params, routes, backend links,
 normalization, validation reports, and handoff state.

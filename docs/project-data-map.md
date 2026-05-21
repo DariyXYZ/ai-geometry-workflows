@@ -26,7 +26,7 @@ working index, not an exhaustive dump.
 `C:\VS Code\text-to-cad`
 
 Role: clean external checkout of `earthtojake/text-to-cad`, used as a STEP-first
-CAD-as-code backend.
+CAD-as-code backend and reference implementation.
 
 Important paths:
 
@@ -35,8 +35,17 @@ Important paths:
 - `skills/cad/scripts/inspect`
 - `skills/render/scripts/viewer`
 
-Boundary: this backend is not a mesh cleanup engine. It should generate clean
-parametric candidates after source readback and section/classification gates.
+Boundary:
+
+- For Scenario 1, use it as a reference for text/reference-to-CAD mechanics, but
+  extend the architecture workflow with facades, plans, elevations, generated
+  images, and source-authority gates.
+- For Scenario 2, use it only after Rhino/Aurox has produced validated
+  parameters/sections for a clean STEP candidate.
+- For Scenario 3, use it where clean parametric massing candidates are useful,
+  while Rhino remains the active scene context.
+
+It is not a direct mesh cleanup engine.
 
 ## Rhino Source And Evidence
 

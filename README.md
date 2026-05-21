@@ -21,17 +21,25 @@ intake -> extract -> plan -> build -> validate -> handoff
 
 1. **Reference to model**  
    Build a model from images, plans, elevations, drawings, descriptions, and
-   known dimensions. The first accepted output is blockout/massing; detail comes
-   only after top/front/side proportion gates pass.
+   known dimensions. This is the future AI-platform scenario: first build a
+   stable engine locally, likely through Rhino, then translate it into the
+   platform format where image-generation models and reference packages are
+   already available. `text-to-cad` is a strong reference for this direction,
+   but the architecture version needs more support for facades, plans,
+   elevations, generated references, and source-authority gates.
 
 2. **Complex model to simplified analysis geometry**  
    Convert detailed Rhino geometry into simplified closed shells or watertight
-   analysis geometry. The current rule is part-aware reconstruction, not global
-   mesh repair.
+   analysis geometry. This is mostly an internal Rhino workflow for preparing
+   architect models before wind comfort and later other analyses. The current
+   rule is part-aware reconstruction, not global mesh repair.
 
 3. **Massing and revisions from TEPs**  
    Generate massing variants from description, site constraints, TEPs, FAR/GFA,
-   and user revisions. Revisions are parameter deltas, not manual geometry drift.
+   Rhino scene context, red lines, underlays, existing rough volumes, and user
+   revisions. This is also mainly Rhino-first: automate early project massing
+   changes, revise geometry from new constraints, and sometimes create a new
+   massing form from a reference.
 
 ## MVP Tool
 
@@ -99,7 +107,8 @@ The output is a reproducible case folder with:
 
 ## Current Status
 
-As of 2026-05-21, the priority is Scenario 2 on `test_data_2.3dm`.
+As of 2026-05-21, Scenario 2 is the first active engineering MVP on
+`test_data_2.3dm`, but the project deliberately tracks all three vectors.
 
 Accepted direction:
 

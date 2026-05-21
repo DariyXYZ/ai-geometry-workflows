@@ -27,7 +27,27 @@ Current uncommitted work:
 
 ## Active MVP
 
-Scenario 2 is the active MVP:
+There are three product vectors. Scenario 2 is only the first active engineering
+MVP, not the whole project.
+
+### Vector 1 - Reference To Model
+
+Target: future AI-platform integration.
+
+Build a reliable local engine first, likely through Rhino, then translate the
+workflow into the platform format. The platform already has image-generation
+models, so the engine must eventually accept references, generated images,
+facades, plans, elevations, descriptions, and known dimensions.
+
+`text-to-cad` is a reference and possible backend influence, but it needs
+architecture-specific extensions from our experience: source authority, facade
+and plan handling, staged massing gates, and architectural assembly rules.
+
+### Vector 2 - Complex Model To Simplified Analysis Geometry
+
+Target: internal Rhino production workflow.
+
+This is the first active engineering MVP:
 
 ```text
 complex Rhino source -> classified architectural parts -> reconstructed closed simplified parts -> section/view validation
@@ -48,6 +68,15 @@ test_data2_v3_clean_massing
 Baseline is closed and useful, but too abstract. Next candidate is
 `v4_refined_clean_massing`, built as a reproducible case rather than a loose
 Rhino script.
+
+### Vector 3 - Massing And Revisions From TEPs
+
+Target: Rhino-first early project automation.
+
+Typical inputs are an active Rhino scene with context, red lines, underlays,
+existing rough/black massing, TEPs, constraints, and user revision requests. The
+tool should revise massing by parameter deltas, generate alternatives, and
+sometimes create a new massing form from a reference.
 
 ## Implemented
 
@@ -100,10 +129,11 @@ Open starter issues:
 
 ## Not Active Right Now
 
-- Scenario 1 final reference-to-CAD automation.
-- Scenario 3 massing variant engine.
+- Scenario 1 platform integration.
+- Scenario 3 massing variant engine implementation.
 - Direct global mesh repair.
 - Packaging as Rhino plugin.
 - Public examples.
 
-These remain planned directions, not the current implementation lane.
+These remain planned directions, while Scenario 2 provides the first validation
+and readback foundation.

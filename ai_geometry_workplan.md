@@ -25,6 +25,13 @@ intake -> extract -> plan -> build -> validate -> handoff
 
 ## Scenario 1 - Reference To Model
 
+Product direction:
+
+This scenario is intended for integration into the broader AI platform. The
+platform already has multiple image-generation models available, so the goal is
+to build a reliable local engine first, likely through Rhino, and later translate
+that engine into the platform format.
+
 Input:
 
 - images;
@@ -50,10 +57,23 @@ Development route:
 4. Validate plan/elevation/side proportions.
 5. Add detail after approval.
 
-Status: template/R&D. Stable enough for controlled blockout, not final
-photo-to-CAD automation.
+`text-to-cad` relationship:
+
+`text-to-cad` is a useful reference for this direction, but the architecture
+engine needs additions from our Rhino/Aurox lessons: source authority, facades,
+plans, elevations, generated references, architectural stage gates, and richer
+model assembly rules.
+
+Status: platform-facing direction. Build and stabilize the engine locally first;
+platform integration comes later.
 
 ## Scenario 2 - Complex Rhino Model To Simplified Analysis Geometry
+
+Product direction:
+
+This scenario is mostly for internal Rhino-based production work. The immediate
+use case is preparing architect models for wind comfort analysis, then later
+other analysis workflows.
 
 Input:
 
@@ -81,13 +101,27 @@ Accepted route:
 6. Add only analysis-relevant detail.
 7. Validate source/candidate deltas and fixed captures.
 
-Status: primary MVP. This is the first workflow to make testable as a real tool.
+Status: first active engineering MVP. Keep it Rhino-first unless a later
+connector/plugin boundary is justified.
 
 ## Scenario 3 - Massing From TEPs And Revisions
+
+Product direction:
+
+This scenario is also mainly Rhino-first. Typical input is an existing scene
+with context, red lines, an underlay, a rough/black massing option, or some
+partial project geometry. The tool should revise or regenerate massing from new
+TEPs, constraints, and user requests. It can overlap with Scenario 1 when a
+reference image drives a new massing form, but the operating context is the
+active Rhino scene.
 
 Input:
 
 - site boundary;
+- Rhino scene context;
+- red lines / constraints;
+- underlay or reference geometry;
+- existing rough massing or black option;
 - GFA/FAR/height/floor count;
 - massing rules;
 - user revision requests.
@@ -107,8 +141,8 @@ Development route:
 4. Apply revisions as parameter deltas.
 5. Preserve scripts and metrics.
 
-Status: strong candidate for a supported tool after Scenario 2 readback/validation
-is stable.
+Status: Rhino-first production direction. Strong candidate for a supported tool
+after readback, validation, and parameter-delta workflows are stable.
 
 ## Route For This Iteration
 
