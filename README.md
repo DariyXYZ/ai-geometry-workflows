@@ -1,55 +1,93 @@
 # AI Geometry Workflows
 
-Working repository for AI-assisted CAD and architectural geometry workflows.
+Рабочий репозиторий для AI-assisted CAD, Rhino, Grasshopper и
+architecture-to-CAD workflows.
 
-The project is moving from one-off "Codex to Rhino model" experiments toward a
-repeatable, validation-first toolchain for real modeling tasks.
+Проект переводит разрозненные эксперименты "Codex сделал модель в Rhino" в
+повторяемый validation-first toolchain для реальных задач моделирования.
 
-## Current Direction
+## Текущее направление
 
-Use AI for interpretation, parameter extraction, code generation, routing, and
-iteration control. Use deterministic CAD/Rhino/build123d tools for geometry.
-No result is accepted until it passes source-derived validation gates.
+AI используется для:
 
-Core pipeline:
+- интерпретации входных данных;
+- извлечения параметров;
+- разложения модели на части;
+- генерации CAD/Rhino/build123d scripts;
+- routing и iteration control.
+
+Геометрию создают deterministic tools: Rhino, Aurox, build123d, CadQuery,
+OpenCascade и проверяемые Python/Rhino scripts.
+
+Ни один результат не считается принятым без source-derived validation.
+
+Базовый pipeline:
 
 ```text
 intake -> extract -> plan -> build -> validate -> handoff
 ```
 
-## Three Scenarios
+## Четыре рабочих слоя
 
-1. **Reference to model**  
-   Build a model from images, plans, elevations, drawings, descriptions, and
-   known dimensions. This is the future AI-platform scenario: first build a
-   stable engine locally, likely through Rhino, then translate it into the
-   platform format where image-generation models and reference packages are
-   already available. `text-to-cad` is a strong reference for this direction,
-   but the architecture version needs more support for facades, plans,
-   elevations, generated references, and source-authority gates.
+1. **Rhino/Aurox readback layer**
+   Скан сцены, source overlays, классификация объектов, sections, fixed review captures.
 
-2. **Complex model to simplified analysis geometry**  
-   Convert detailed Rhino geometry into simplified closed shells or watertight
-   analysis geometry. This is mostly an internal Rhino workflow for preparing
-   architect models before wind comfort and later other analyses. The current
-   rule is part-aware reconstruction, not global mesh repair.
+2. **Semantic sketch layer**
+   Новое исследовательское направление: Spellshape / Live OBJ как источник идеи
+   `semantic OBJ`. Цель - хранить rough mesh preview вместе с `#@` metadata:
+   parts, bbox, anchors, params, controls, locks, constraints.
 
-3. **Massing and revisions from TEPs**  
-   Generate massing variants from description, site constraints, TEPs, FAR/GFA,
-   Rhino scene context, red lines, underlays, existing rough volumes, and user
-   revisions. This is also mainly Rhino-first: automate early project massing
-   changes, revise geometry from new constraints, and sometimes create a new
-   massing form from a reference.
+3. **CAD-as-code backend layer**
+   `text-to-cad` / build123d как STEP-first backend для чистых parametric CAD
+   candidates.
 
-## MVP Tool
+4. **Case orchestration layer**
+   `ai_geometry_toolkit` создает case folders, manifests, routes, reports,
+   backend links и validation stubs.
 
-The repo now includes a first runnable orchestration layer:
+## Три продуктовых сценария
+
+### 1. Reference to model
+
+Построение модели из изображений, планов, фасадов/elevations, чертежей,
+описаний и известных размеров.
+
+Это долгосрочное направление для будущей интеграции в AI-платформу. Сначала
+строим надежный локальный движок через Rhino/build123d, затем переносим workflow
+в платформенный формат.
+
+### 2. Complex model to simplified analysis geometry
+
+Первый активный engineering MVP.
+
+Цель: превратить сложную Rhino/architect source geometry в simplified closed
+parts или watertight analysis geometry для wind comfort и других анализов.
+
+Принятое направление:
+
+```text
+source geometry -> classify architectural parts -> reconstruct closed simplified parts -> validate by sections/views
+```
+
+Не принимаем как финальный метод: global decimation, ShrinkWrap, Poisson, one
+global loft или one hull/envelope.
+
+### 3. Massing and revisions from TEPs
+
+Rhino-first автоматизация раннего массинга: active scene, context, red lines,
+underlays, rough/black massing, TEP, GFA/FAR/height constraints и правки
+пользователя.
+
+Цель: генерировать варианты, считать proxy metrics и применять revisions как
+parameter deltas.
+
+## Runnable MVP
 
 ```powershell
 python -m ai_geometry_toolkit --help
 ```
 
-Create a real case folder:
+Создать case folder:
 
 ```powershell
 python -m ai_geometry_toolkit new-case `
@@ -60,21 +98,21 @@ python -m ai_geometry_toolkit new-case `
   --downstream Ladybug
 ```
 
-Validate and route the case:
+Проверить и построить route:
 
 ```powershell
 python -m ai_geometry_toolkit validate-case .\cases\<case_id>
 python -m ai_geometry_toolkit route .\cases\<case_id>
 ```
 
-Classify a Rhino `scan_scene` report:
+Классифицировать Rhino `scan_scene` report:
 
 ```powershell
 python -m ai_geometry_toolkit classify-scan .\cases\<case_id> `
   --scan "C:\VS Code\workfiles\rhino\workflow-kit\rhino_workflow_kit\reports\tower_bbox_classification.json"
 ```
 
-Attach the local `text-to-cad` checkout as a STEP-first backend:
+Подключить локальный `text-to-cad` checkout:
 
 ```powershell
 python -m ai_geometry_toolkit link-backend .\cases\<case_id> `
@@ -82,7 +120,14 @@ python -m ai_geometry_toolkit link-backend .\cases\<case_id> `
   --repo "C:\VS Code\text-to-cad"
 ```
 
-The output is a reproducible case folder with:
+Импортировать Live OBJ-style semantic metadata:
+
+```powershell
+python -m ai_geometry_toolkit import-semantic-obj .\cases\<case_id> `
+  --source tests\fixtures\office_tower_semantic.live.obj
+```
+
+## Выходные артефакты case folder
 
 - `case.json`
 - `params.json`
@@ -90,45 +135,52 @@ The output is a reproducible case folder with:
 - `reports/development_route.md`
 - `reports/source_classification.json`
 - `reports/backend_text_to_cad.md`
+- `reports/semantic_parts.json`
+- `reports/semantic_parts.md`
+- `reports/semantic_plan.json`
+- `reports/semantic_validation.md`
 - `reports/validation.md`
 
-## Repository Map
+## Карта репозитория
 
 - `ai_geometry_toolkit/` - runnable orchestration CLI.
-- `docs/context-system.md` - rules for where project context, cases, errors, and decisions live.
-- `docs/project-data-map.md` - active data/source map across this repo, Rhino workfiles, Obsidian, and `text-to-cad`.
-- `docs/development-state.md` - current development status and next engineering steps.
-- `docs/error-ledger.md` - known failure modes and lessons not to repeat.
-- `ai_geometry_workplan.md` - project plan and development route.
-- `TEAM_UPDATE_2026-05-21.md` - current team-facing status.
-- `NEWS.md` - chronological project updates.
-- `decisions/` - accepted technical decisions.
+- `tests/` - unit tests and fixtures.
+- `docs/context-system.md` - куда сохранять project context, cases, errors и decisions.
+- `docs/project-data-map.md` - карта active data/source across repo, Rhino workfiles, Obsidian, `text-to-cad`, Spellshape/Live OBJ.
+- `docs/development-state.md` - текущий статус разработки и next engineering steps.
+- `docs/error-ledger.md` - известные failure modes.
+- `docs/reference-modeling-gates.md` - обязательные gates для Scenario 1: source authority, constructive grammar, missing-view check.
+- `docs/spellshape-live-obj-direction.md` - направление Spellshape / Live OBJ как semantic sketch layer.
+- `docs/external-repo-constructor-map.md` - карта внешних репозиториев StepanKukharskiy и элементов конструктора, которые можно встроить в pipeline.
+- `docs/development-directions-repo-fit.md` - матрица: какие внешние repo pieces полезны для Scenario 1, 2 и 3.
+- `ai_geometry_workplan.md` - roadmap по сценариям.
+- `TEAM_UPDATE_2026-05-21.md` - team-facing status snapshot.
+- `NEWS.md` - хронология изменений на русском.
+- `decisions/` - принятые technical decisions.
 - `ai_geometry_research.html` - public/team report page.
 
-## Current Status
+## Текущий статус
 
-As of 2026-05-21, Scenario 2 is the first active engineering MVP on
-`test_data_2.3dm`, but the project deliberately tracks all three vectors.
+На 2026-05-28 активный engineering MVP - Scenario 2 на `test_data_2.3dm`.
 
-Accepted direction:
+Следующие практические шаги:
 
-```text
-source geometry -> classify architectural parts -> reconstruct closed simplified parts -> validate by sections/views
-```
+1. Перенести Rhino `scan_scene.py` в `ai_geometry_toolkit`.
+2. Добавить `validate_candidate_vs_source`.
+3. Нормализовать section extraction reports.
+4. Построить `v4_refined_clean_massing` как reproducible case.
+5. Расширить `semantic_obj` / `live_obj_import`: planner -> build123d/Rhino
+   script candidate.
 
-Do not continue with global decimation, ShrinkWrap, Poisson, one global loft, or
-one hull/envelope as the final method. Direct mesh reduction remains useful only
-as diagnostic overlay.
+## Правила данных
 
-## Context And Data Rules
+Перед добавлением новых данных читать `docs/context-system.md`.
 
-Use `docs/context-system.md` before adding new data, ideas, errors, or generated
-runs. The short version:
+Коротко:
 
-- shared truth goes into repo docs;
-- one modeling run goes into a case folder;
-- local smoke tests go into `.tmp_cases/`;
-- personal cross-repo memory goes into Obsidian;
-- known failures go into `docs/error-ledger.md`;
-- durable decisions go into `decisions/`.
-- GitHub work items should use the engineering task or failure/lesson issue templates.
+- shared truth хранится в repo docs;
+- один modeling run хранится в case folder;
+- local smoke tests идут в `.tmp_cases/`;
+- личная cross-repo memory идет в Obsidian;
+- известные failures идут в `docs/error-ledger.md`;
+- durable decisions идут в `decisions/`.

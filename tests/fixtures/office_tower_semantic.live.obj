@@ -1,0 +1,57 @@
+#@scene
+#@units: meters
+#@up: z
+#@live_obj_version: 0.1
+
+o tower_main
+#@source: procedural
+#@type: extrude
+#@semantic: main 24 floor office tower mass
+#@params: width=28, depth=20, height=96, floors=24
+#@controls:
+#@ - slider key=floors label=Floors min=12 max=36 step=1
+#@ - slider key=height label=Height_m min=72 max=132 step=4
+#@bbox: min=[-14,-10,6] max=[14,10,102]
+#@anchor: id=base_center at=[0,0,6]
+#@anchor: id=roof_center at=[0,0,102]
+#@lock: footprint, height_ratio
+#@constraint: must_rest_on podium_oval
+
+o podium_oval
+#@source: procedural
+#@type: extrude
+#@semantic: oval podium base under the tower
+#@params: width=64, depth=38, height=6, profile=oval
+#@controls:
+#@ - slider key=width label=Podium_width_m min=48 max=80 step=2
+#@ - slider key=depth label=Podium_depth_m min=28 max=50 step=2
+#@bbox: min=[-32,-19,0] max=[32,19,6]
+#@anchor: id=center at=[0,0,3]
+#@lock: footprint
+
+o entrance_block_a
+#@source: procedural
+#@type: box
+#@semantic: first entrance volume attached to the oval podium
+#@params: width=12, depth=8, height=4
+#@bbox: min=[-24,-27,0] max=[-12,-19,4]
+#@anchor: id=door_center at=[-18,-27,0]
+#@constraint: must_touch podium_oval
+
+o entrance_block_b
+#@source: procedural
+#@type: box
+#@semantic: second entrance volume attached to the oval podium
+#@params: width=12, depth=8, height=4
+#@bbox: min=[12,-27,0] max=[24,-19,4]
+#@anchor: id=door_center at=[18,-27,0]
+#@constraint: must_touch podium_oval
+
+o facade_grid_hint
+#@source: procedural
+#@type: guide
+#@semantic: facade grid hint for 24 floors on the tower
+#@params: floor_count=24, bay_count_x=7, bay_count_y=5, floor_height=4
+#@bbox: min=[-14,-10,6] max=[14,10,102]
+#@hidden: true
+#@constraint: guide_only_not_final_solid

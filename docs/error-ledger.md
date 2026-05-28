@@ -52,6 +52,24 @@ admitted omission.
 Reference-driven architecture must pass massing/proportion gates before facade
 detail. Detail cannot rescue a wrong silhouette.
 
+### Do Not Guess One Envelope When The Building Has A Constructive Grammar
+
+Karlatornet showed a specific failure mode: treating a tower as one guessed
+continuous envelope produced a plausible but wrong form. The correct route was
+to identify the building grammar first: four square shafts in plan, central
+cross/gaps, facade-derived twist start/end datums, lofted twist sections, and
+mirrored/repeated quadrants.
+
+Before modeling reference architecture, ask:
+
+- What repeated primitives does the building appear to be made from?
+- Which view proves the plan grammar?
+- Which facade marks the vertical datums where the form changes?
+- Can one part be built from sections and then mirrored/arrayed?
+
+If the available views do not prove this, ask for more views instead of
+inventing an envelope.
+
 ### Plan Drawings Are Not Always Exterior Envelopes
 
 Structural/load/core plans can be narrower than the exterior massing envelope.

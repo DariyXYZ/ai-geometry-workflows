@@ -39,6 +39,41 @@ REQUIRED_PARAMS = {
 }
 
 CASE_DIRS = ("source", "reports", "captures", "artifacts", "scripts")
+KEY_VALUE_RE = re.compile(r"([A-Za-z_][A-Za-z0-9_-]*)=([\"'][^\"']*[\"']|\[[^\]]*\]|[^\s,]+)")
+SEMANTIC_SCENE_KEYS = {"scene", "units", "up", "live_obj_version", "workflow", "kernel_default"}
+SEMANTIC_PART_KEYS = {
+    "source",
+    "type",
+    "semantic",
+    "params",
+    "controls",
+    "bbox",
+    "anchor",
+    "anchors",
+    "lock",
+    "constraint",
+    "part",
+    "variant",
+    "hidden",
+    "post",
+    "ops",
+    "sdf",
+}
+ALLOWED_SEMANTIC_POST_OPS = {
+    "transform",
+    "symmetrize",
+    "mirror",
+    "array",
+    "deform",
+    "subdivide",
+    "smooth",
+    "simplify",
+    "snap_to_ground",
+    "center_origin",
+    "material",
+    "tag",
+}
+SEMANTIC_BUILD_METHODS = {"semantic_obj", "rhino_preview", "build123d_step", "guide_only", "manual_review"}
 
 
 @dataclass(frozen=True)
@@ -69,7 +104,7 @@ def build_parser() -> argparse.ArgumentParser:
     new_case.add_argument("--name", required=True)
     new_case.add_argument("--root", default="cases")
     new_case.add_argument("--source", default="")
-    new_case.add_argument("--units", default="m", choices=("mm", "m", "cm"))
+    new_case.add_argument("--units", default="m", choices=("mm", "m", "cm", "ft"))
     new_case.add_argument("--downstream", default="")
     new_case.set_defaults(func=cmd_new_case)
 
@@ -97,6 +132,15 @@ def build_parser() -> argparse.ArgumentParser:
     link_backend.add_argument("--backend", required=True, choices=("text-to-cad",))
     link_backend.add_argument("--repo", required=True, help="Path to the backend repository.")
     link_backend.set_defaults(func=cmd_link_backend)
+
+    semantic = sub.add_parser("import-semantic-obj", help="Import Live OBJ-style #@ metadata into semantic part reports.")
+    semantic.add_argument("case")
+    semantic.add_argument("--source", required=True, help="Path to a .live.obj or OBJ file with #@ metadata.")
+    semantic.add_argument("--output", default="", help="JSON output path. Defaults to reports/semantic_parts.json.")
+    semantic.add_argument("--markdown", default="", help="Markdown output path. Defaults to reports/semantic_parts.md.")
+    semantic.add_argument("--plan", default="", help="Planner JSON output path. Defaults to reports/semantic_plan.json.")
+    semantic.add_argument("--validation", default="", help="Validation Markdown output path. Defaults to reports/semantic_validation.md.")
+    semantic.set_defaults(func=cmd_import_semantic_obj)
 
     return parser
 
@@ -232,6 +276,42 @@ def cmd_link_backend(args: argparse.Namespace) -> int:
         encoding="utf-8",
     )
     print(case_root / "reports" / "backend_text_to_cad.md")
+    return 0
+
+
+def cmd_import_semantic_obj(args: argparse.Namespace) -> int:
+    case_root = resolve_case(args.case)
+    source = Path(args.source)
+    if not source.is_absolute():
+        source = (Path.cwd() / source).resolve()
+    if not source.exists():
+        raise WorkflowError(f"semantic OBJ source does not exist: {source}")
+
+    report = parse_semantic_obj(source)
+    report["sourceFile"] = rel_or_abs(source, case_root)
+    output = Path(args.output).resolve() if args.output else case_root / "reports" / "semantic_parts.json"
+    markdown = Path(args.markdown).resolve() if args.markdown else case_root / "reports" / "semantic_parts.md"
+    plan_path = Path(args.plan).resolve() if args.plan else case_root / "reports" / "semantic_plan.json"
+    validation_path = (
+        Path(args.validation).resolve() if args.validation else case_root / "reports" / "semantic_validation.md"
+    )
+    write_json(output, report)
+    write_json(plan_path, report["planner"])
+    markdown.parent.mkdir(parents=True, exist_ok=True)
+    markdown.write_text(semantic_parts_markdown(report), encoding="utf-8")
+    validation_path.parent.mkdir(parents=True, exist_ok=True)
+    validation_path.write_text(semantic_validation_markdown(report), encoding="utf-8")
+
+    paths = case_paths(case_root)
+    manifest = read_json(paths.manifest)
+    manifest.setdefault("paths", {})["semanticParts"] = rel_or_abs(output, case_root)
+    manifest.setdefault("paths", {})["semanticPartsReport"] = rel_or_abs(markdown, case_root)
+    manifest.setdefault("paths", {})["semanticPlan"] = rel_or_abs(plan_path, case_root)
+    manifest.setdefault("paths", {})["semanticValidation"] = rel_or_abs(validation_path, case_root)
+    write_json(paths.manifest, manifest)
+
+    print(output)
+    print(semantic_summary(report))
     return 0
 
 
@@ -522,6 +602,464 @@ Use Rhino/Aurox for source `.3dm` scanning, part classification, section
 extraction, and source overlays. Use `text-to-cad` when the accepted route is to
 rebuild an architectural part or simplified shell from parameters.
 """
+
+
+def parse_semantic_obj(path: Path) -> dict[str, Any]:
+    parts: list[dict[str, Any]] = []
+    scene: dict[str, Any] = {"metadata": {}}
+    current: dict[str, Any] | None = None
+    active_block = ""
+    vertex_count = 0
+    face_count = 0
+
+    def ensure_current(line_no: int) -> dict[str, Any]:
+        nonlocal current
+        if current is None:
+            current = new_semantic_part(f"unnamed_{line_no}")
+            parts.append(current)
+        return current
+
+    for line_no, raw_line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        line = raw_line.strip()
+        if not line:
+            continue
+        if line.startswith("o ") or line.startswith("g "):
+            name = line.split(maxsplit=1)[1].strip()
+            current = new_semantic_part(name)
+            parts.append(current)
+            active_block = ""
+            continue
+        if line.startswith("v "):
+            vertex_count += 1
+            if current is not None:
+                current["meshStats"]["vertices"] += 1
+            continue
+        if line.startswith("f "):
+            face_count += 1
+            if current is not None:
+                current["meshStats"]["faces"] += 1
+            continue
+        if not line.startswith("#@"):
+            continue
+
+        body = line[2:].strip()
+        if body.startswith("-"):
+            if active_block == "controls":
+                ensure_current(line_no)["controls"].append(parse_control_line(body[1:].strip()))
+            elif active_block == "anchors":
+                anchor = parse_anchor_body(body[1:].strip())
+                if anchor:
+                    ensure_current(line_no)["anchors"].append(anchor)
+            continue
+
+        key, value = split_metadata(body)
+        if current is None and key in SEMANTIC_SCENE_KEYS:
+            scene["metadata"][key] = value if value != "" else True
+            active_block = key
+            continue
+
+        target = ensure_current(line_no)
+        target["metadataKeys"].append({"key": key, "line": line_no})
+        active_block = key
+        if key == "source":
+            target["source"] = value
+        elif key == "semantic":
+            target["semantic"] = value
+        elif key == "params":
+            target["params"].update(parse_key_values(value))
+        elif key == "bbox":
+            target["bbox"] = parse_bbox(value)
+        elif key == "anchor":
+            anchor = parse_anchor_body(value)
+            if anchor:
+                target["anchors"].append(anchor)
+        elif key == "anchors":
+            pass
+        elif key == "controls":
+            pass
+        elif key == "lock":
+            target["locks"].extend(parse_list_value(value))
+        elif key == "constraint":
+            target["constraints"].append(value)
+        elif key == "part":
+            target["part"].update(parse_key_values(value))
+        elif key == "variant":
+            target["variants"].append(parse_key_values(value) or {"value": value})
+        elif key == "hidden":
+            target["hidden"] = parse_bool(value)
+        elif key == "type":
+            target["geometryType"] = value
+        elif key in {"post", "ops"}:
+            target["postOps"].append(parse_post_op(value))
+        elif key == "sdf":
+            target["executionHints"].append(key)
+        else:
+            target["metadata"][key] = value if value != "" else True
+    for part in parts:
+        part["cadHint"] = infer_cad_hint(part)
+        part["buildMethod"] = infer_build_method(part)
+        part["validationHints"] = semantic_validation_hints(part)
+
+    report = {
+        "schemaVersion": 1,
+        "createdAt": datetime.now().isoformat(timespec="seconds"),
+        "sourceKind": "live_obj_metadata",
+        "scene": scene,
+        "meshStats": {"vertices": vertex_count, "faces": face_count},
+        "parts": parts,
+        "summary": semantic_summary_dict(parts),
+        "method": "live_obj_metadata_parser_v1",
+        "limitations": [
+            "This importer reads intent metadata; it does not validate OBJ geometry.",
+            "Semantic parts are CAD build hints, not accepted CAD output.",
+            "STEP/3DM validation remains required before handoff.",
+        ],
+    }
+    report["validation"] = validate_semantic_report(report)
+    report["planner"] = semantic_planner(report)
+    return report
+
+
+def new_semantic_part(name: str) -> dict[str, Any]:
+    return {
+        "id": slugify(name).replace("-", "_"),
+        "name": name,
+        "source": "",
+        "geometryType": "",
+        "semantic": "",
+        "bbox": None,
+        "params": {},
+        "anchors": [],
+        "controls": [],
+        "locks": [],
+        "constraints": [],
+        "postOps": [],
+        "part": {},
+        "variants": [],
+        "hidden": False,
+        "executionHints": [],
+        "buildMethod": "",
+        "validationHints": [],
+        "meshStats": {"vertices": 0, "faces": 0},
+        "metadataKeys": [],
+        "metadata": {},
+        "cadHint": "",
+    }
+
+
+def split_metadata(body: str) -> tuple[str, str]:
+    if ":" in body:
+        key, value = body.split(":", 1)
+        return key.strip().lower(), value.strip()
+    parts = body.split(maxsplit=1)
+    if len(parts) == 1:
+        return parts[0].strip().lower(), ""
+    return parts[0].strip().lower(), parts[1].strip()
+
+
+def parse_key_values(body: str) -> dict[str, Any]:
+    parsed: dict[str, Any] = {}
+    for key, raw in KEY_VALUE_RE.findall(body):
+        parsed[key] = parse_semantic_value(raw.rstrip(","))
+    return parsed
+
+
+def parse_bbox(body: str) -> dict[str, list[float]] | None:
+    values = parse_key_values(body)
+    min_pt = values.get("min")
+    max_pt = values.get("max")
+    if is_vec3(min_pt) and is_vec3(max_pt):
+        return {"min": [float(v) for v in min_pt], "max": [float(v) for v in max_pt]}
+    return None
+
+
+def parse_anchor_body(body: str) -> dict[str, Any] | None:
+    values = parse_key_values(body)
+    anchor_id = values.get("id") or values.get("name")
+    at = values.get("at") or values.get("position")
+    if anchor_id and is_vec3(at):
+        return {"id": str(anchor_id), "at": [float(v) for v in at]}
+    if "=" in body:
+        key, raw = body.split("=", 1)
+        parsed = parse_semantic_value(raw)
+        if is_vec3(parsed):
+            return {"id": key.strip(), "at": [float(v) for v in parsed]}
+    return None
+
+
+def parse_control_line(body: str) -> dict[str, Any]:
+    parts = body.split(maxsplit=1)
+    kind = parts[0] if parts else "control"
+    attrs = parse_key_values(parts[1] if len(parts) > 1 else "")
+    attrs["kind"] = kind
+    return attrs
+
+
+def parse_post_op(body: str) -> dict[str, Any]:
+    parts = body.split(maxsplit=1)
+    op = parts[0].strip() if parts else ""
+    params = parse_key_values(parts[1] if len(parts) > 1 else "")
+    return {"op": op, "params": params}
+
+
+def parse_semantic_value(raw: str) -> Any:
+    value = raw.strip().strip(",")
+    if value.startswith('"') and value.endswith('"'):
+        return value[1:-1]
+    if value.startswith("'") and value.endswith("'"):
+        return value[1:-1]
+    if value.startswith("[") and value.endswith("]"):
+        try:
+            return json.loads(value)
+        except json.JSONDecodeError:
+            return value
+    lowered = value.lower()
+    if lowered in {"true", "false"}:
+        return lowered == "true"
+    try:
+        if any(ch in value for ch in ".eE"):
+            return float(value)
+        return int(value)
+    except ValueError:
+        return value
+
+
+def parse_list_value(value: str) -> list[str]:
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
+def parse_bool(value: str) -> bool:
+    return value.strip().lower() in {"true", "yes", "1", "on"}
+
+
+def is_vec3(value: Any) -> bool:
+    return isinstance(value, list) and len(value) == 3 and all(isinstance(v, (int, float)) for v in value)
+
+
+def semantic_summary_dict(parts: list[dict[str, Any]]) -> dict[str, Any]:
+    visible = [part for part in parts if not part.get("hidden")]
+    return {
+        "partCount": len(parts),
+        "visiblePartCount": len(visible),
+        "partsWithParams": sum(1 for part in parts if part.get("params")),
+        "partsWithBbox": sum(1 for part in parts if part.get("bbox")),
+        "partsWithAnchors": sum(1 for part in parts if part.get("anchors")),
+        "partsWithControls": sum(1 for part in parts if part.get("controls")),
+        "proceduralParts": sum(1 for part in parts if part.get("source") == "procedural"),
+        "guideParts": sum(1 for part in parts if part.get("hidden") or part.get("metadata", {}).get("guide") is True),
+        "partsWithPostOps": sum(1 for part in parts if part.get("postOps")),
+        "plannerReadyParts": sum(1 for part in parts if part.get("buildMethod") in SEMANTIC_BUILD_METHODS),
+    }
+
+
+def semantic_summary(report: dict[str, Any]) -> str:
+    summary = report.get("summary", {})
+    return ", ".join(f"{key}={summary.get(key, 0)}" for key in sorted(summary))
+
+
+def semantic_parts_markdown(report: dict[str, Any]) -> str:
+    validation = report.get("validation", {})
+    lines = [
+        "# Semantic Parts",
+        "",
+        f"- Source: `{report.get('sourceFile', '')}`",
+        f"- Parts: {report.get('summary', {}).get('partCount', 0)}",
+        f"- Method: `{report.get('method', '')}`",
+        f"- Validation status: `{validation.get('status', 'unknown')}`",
+        f"- Planner: `reports/semantic_plan.json`",
+        "",
+        "## CAD Route Hints",
+        "",
+    ]
+    for part in report.get("parts", []):
+        bbox = part.get("bbox") or {}
+        size = bbox_size(bbox) if valid_bbox(bbox) else None
+        kind = part.get("geometryType") or infer_cad_hint(part)
+        lines.extend(
+            [
+                f"### {part.get('id')}",
+                "",
+                f"- Name: `{part.get('name')}`",
+                f"- Source: `{part.get('source')}`",
+                f"- Semantic: {part.get('semantic') or '-'}",
+                f"- CAD hint: `{kind}`",
+                f"- Build method: `{part.get('buildMethod')}`",
+                f"- Params: `{json.dumps(part.get('params', {}), ensure_ascii=False)}`",
+                f"- BBox size: `{size}`",
+                f"- Anchors: {len(part.get('anchors', []))}",
+                f"- Controls: {len(part.get('controls', []))}",
+                f"- Post ops: `{json.dumps(part.get('postOps', []), ensure_ascii=False)}`",
+                f"- Constraints: {len(part.get('constraints', []))}",
+                "",
+            ]
+        )
+    lines.extend(
+        [
+            "## Gate",
+            "",
+            "- This report is only an intent extraction smoke test.",
+            "- Convert accepted parts into Rhino/build123d scripts before validating geometry.",
+            "- Do not accept OBJ mesh preview as final CAD.",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
+def semantic_validation_markdown(report: dict[str, Any]) -> str:
+    validation = report.get("validation", {})
+    lines = [
+        "# Semantic OBJ Validation",
+        "",
+        f"- Status: `{validation.get('status', 'unknown')}`",
+        f"- Errors: {len(validation.get('errors', []))}",
+        f"- Warnings: {len(validation.get('warnings', []))}",
+        "",
+        "## Errors",
+        "",
+    ]
+    errors = validation.get("errors", [])
+    lines.extend([f"- {error}" for error in errors] or ["- none"])
+    lines.extend(["", "## Warnings", ""])
+    warnings = validation.get("warnings", [])
+    lines.extend([f"- {warning}" for warning in warnings] or ["- none"])
+    lines.extend(
+        [
+            "",
+            "## Allowed Post Ops",
+            "",
+            "`" + "`, `".join(sorted(ALLOWED_SEMANTIC_POST_OPS)) + "`",
+            "",
+            "## Gate",
+            "",
+            "- `valid` means metadata is usable as pipeline input.",
+            "- It still does not mean geometry is accepted.",
+            "- Build and source-derived validation remain separate gates.",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
+def infer_cad_hint(part: dict[str, Any]) -> str:
+    semantic = str(part.get("semantic", "")).lower()
+    name = str(part.get("name", "")).lower()
+    if "oval" in semantic or "oval" in name or "podium" in semantic:
+        return "extrude_oval_or_rounded_profile"
+    if "grid" in semantic or "facade" in semantic:
+        return "guide_curves_or_panels"
+    if part.get("bbox"):
+        return "extrude_box_from_bbox"
+    return "manual_review"
+
+
+def infer_build_method(part: dict[str, Any]) -> str:
+    geometry_type = str(part.get("geometryType", "")).lower()
+    source = str(part.get("source", "")).lower()
+    if part.get("hidden") or geometry_type == "guide":
+        return "guide_only"
+    if source == "procedural" and geometry_type in {"box", "extrude"} and part.get("bbox"):
+        return "build123d_step"
+    if part.get("bbox"):
+        return "rhino_preview"
+    return "manual_review"
+
+
+def semantic_validation_hints(part: dict[str, Any]) -> list[str]:
+    hints: list[str] = []
+    if not part.get("bbox"):
+        hints.append("missing_bbox_blocks_direct_reconstruction")
+    if not part.get("params"):
+        hints.append("missing_params_limits_editability")
+    if not part.get("anchors") and not part.get("hidden"):
+        hints.append("missing_anchors_limits_relationship_validation")
+    if part.get("buildMethod") == "guide_only":
+        hints.append("guide_only_not_final_solid")
+    return hints
+
+
+def validate_semantic_report(report: dict[str, Any]) -> dict[str, Any]:
+    errors: list[str] = []
+    warnings: list[str] = []
+    scene_keys = set(report.get("scene", {}).get("metadata", {}).keys())
+    for key in sorted(scene_keys - SEMANTIC_SCENE_KEYS):
+        warnings.append(f"unknown scene metadata key: {key}")
+
+    for part in report.get("parts", []):
+        part_id = part.get("id", "unknown")
+        seen_keys = {entry.get("key") for entry in part.get("metadataKeys", [])}
+        for key in sorted(seen_keys - SEMANTIC_PART_KEYS):
+            warnings.append(f"{part_id}: unknown part metadata key: {key}")
+        if not part.get("bbox"):
+            warnings.append(f"{part_id}: missing bbox")
+        if not part.get("params") and not part.get("hidden"):
+            warnings.append(f"{part_id}: missing params")
+        if part.get("buildMethod") not in SEMANTIC_BUILD_METHODS:
+            errors.append(f"{part_id}: unsupported build method {part.get('buildMethod')!r}")
+        for post_op in part.get("postOps", []):
+            op = str(post_op.get("op", ""))
+            if op not in ALLOWED_SEMANTIC_POST_OPS:
+                warnings.append(f"{part_id}: unsupported post op: {op}")
+
+    status = "valid" if not errors else "invalid"
+    return {
+        "schemaVersion": 1,
+        "status": status,
+        "errors": errors,
+        "warnings": warnings,
+        "allowedPartKeys": sorted(SEMANTIC_PART_KEYS),
+        "allowedSceneKeys": sorted(SEMANTIC_SCENE_KEYS),
+        "allowedPostOps": sorted(ALLOWED_SEMANTIC_POST_OPS),
+        "allowedBuildMethods": sorted(SEMANTIC_BUILD_METHODS),
+    }
+
+
+def semantic_planner(report: dict[str, Any]) -> dict[str, Any]:
+    scene_meta = report.get("scene", {}).get("metadata", {})
+    planned_parts: list[dict[str, Any]] = []
+    for part in report.get("parts", []):
+        method = part.get("buildMethod") or "manual_review"
+        planned_parts.append(
+            {
+                "id": part.get("id"),
+                "role": part.get("semantic") or part.get("name"),
+                "method": method,
+                "dependencies": infer_dependencies(part),
+                "prompt": planner_prompt_for_part(part),
+                "controls": part.get("controls", []),
+                "controlPostOps": part.get("postOps", []),
+                "validationHints": part.get("validationHints", []),
+            }
+        )
+    return {
+        "schemaVersion": 1,
+        "scene": scene_meta.get("scene", "semantic OBJ import"),
+        "units": scene_meta.get("units", ""),
+        "up": scene_meta.get("up", ""),
+        "materials": [],
+        "parts": planned_parts,
+        "notes": [
+            "Generated from Live OBJ-style metadata.",
+            "Use guide_only parts for construction/reference only.",
+            "Use build123d_step parts as candidate script inputs, not accepted CAD.",
+        ],
+    }
+
+
+def infer_dependencies(part: dict[str, Any]) -> list[str]:
+    deps: list[str] = []
+    for constraint in part.get("constraints", []):
+        tokens = str(constraint).replace(",", " ").split()
+        if len(tokens) >= 2 and tokens[0].startswith("must_"):
+            deps.append(tokens[-1])
+    return sorted(set(dep for dep in deps if dep != part.get("id")))
+
+
+def planner_prompt_for_part(part: dict[str, Any]) -> str:
+    bbox = part.get("bbox")
+    bbox_note = f" bbox={bbox}" if bbox else ""
+    params = json.dumps(part.get("params", {}), ensure_ascii=False)
+    return f"Build only `{part.get('id')}` as {part.get('semantic') or part.get('name')}; params={params}.{bbox_note}"
 
 
 def classification_summary(classification: dict[str, Any]) -> str:

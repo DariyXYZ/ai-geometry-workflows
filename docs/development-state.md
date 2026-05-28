@@ -1,56 +1,25 @@
 # Development State
 
-Updated: 2026-05-21
+Обновлено: 2026-05-28
 
-## Current Status
-
-The project has moved from loose Rhino reconstruction experiments into a
-case-based orchestration tool.
-
-Active repo:
+## Активный репозиторий
 
 ```text
 C:\VS Code\workfiles\ai-geometry-workflows
 https://github.com/DariyXYZ/ai-geometry-workflows
 ```
 
-Current base commit:
+Проект перешел от loose Rhino experiments к case-based orchestration toolchain.
+
+## Текущее состояние
+
+Активный engineering MVP - Scenario 2:
 
 ```text
-99d1999 Add AI geometry workflow toolkit MVP
-```
-
-Current uncommitted work:
-
-- `link-backend` command for registering a local `text-to-cad` checkout.
-- Repo docs for context normalization and data maps.
-
-## Active MVP
-
-There are three product vectors. Scenario 2 is only the first active engineering
-MVP, not the whole project.
-
-### Vector 1 - Reference To Model
-
-Target: future AI-platform integration.
-
-Build a reliable local engine first, likely through Rhino, then translate the
-workflow into the platform format. The platform already has image-generation
-models, so the engine must eventually accept references, generated images,
-facades, plans, elevations, descriptions, and known dimensions.
-
-`text-to-cad` is a reference and possible backend influence, but it needs
-architecture-specific extensions from our experience: source authority, facade
-and plan handling, staged massing gates, and architectural assembly rules.
-
-### Vector 2 - Complex Model To Simplified Analysis Geometry
-
-Target: internal Rhino production workflow.
-
-This is the first active engineering MVP:
-
-```text
-complex Rhino source -> classified architectural parts -> reconstructed closed simplified parts -> section/view validation
+complex Rhino source
+-> classified architectural parts
+-> reconstructed closed simplified parts
+-> section/view validation
 ```
 
 Benchmark:
@@ -65,22 +34,67 @@ Accepted baseline:
 test_data2_v3_clean_massing
 ```
 
-Baseline is closed and useful, but too abstract. Next candidate is
-`v4_refined_clean_massing`, built as a reproducible case rather than a loose
-Rhino script.
+Baseline закрытый и полезный, но слишком абстрактный. Следующая цель -
+`v4_refined_clean_massing`, построенный как reproducible case, а не loose Rhino
+script.
 
-### Vector 3 - Massing And Revisions From TEPs
+## Архитектурные слои
 
-Target: Rhino-first early project automation.
+### 1. Rhino/Aurox readback
 
-Typical inputs are an active Rhino scene with context, red lines, underlays,
-existing rough/black massing, TEPs, constraints, and user revision requests. The
-tool should revise massing by parameter deltas, generate alternatives, and
-sometimes create a new massing form from a reference.
+Отвечает за:
 
-## Implemented
+- `.3dm` scan;
+- hidden/locked object inclusion;
+- source overlays;
+- architectural part classification;
+- section extraction;
+- fixed review captures.
 
-CLI:
+### 2. Semantic sketch / Live OBJ research
+
+Новое направление, добавлено 2026-05-28.
+
+Источник: https://github.com/StepanKukharskiy/live-obj
+
+Идея: использовать Spellshape / Live OBJ как источник паттерна для
+`semantic_obj`, где rough OBJ preview хранит рядом `#@` metadata: parts, bbox,
+anchors, params, controls, locks, constraints.
+
+Статус: исследовательское направление, не production dependency.
+
+Подробнее: `docs/spellshape-live-obj-direction.md`.
+
+Быстрая карта внешних репозиториев и элементов конструктора: `docs/external-repo-constructor-map.md`.
+
+Матрица применимости по трем направлениям: `docs/development-directions-repo-fit.md`.
+
+Обязательные gates для Scenario 1 reference modeling: `docs/reference-modeling-gates.md`.
+
+### 3. CAD-as-code backend
+
+`text-to-cad` / build123d отвечает за:
+
+- clean parametric source;
+- STEP-first candidate generation;
+- secondary exports when needed;
+- CAD-friendly reproducibility.
+
+Это не Rhino replacement и не mesh cleanup engine.
+
+### 4. Case orchestration
+
+`ai_geometry_toolkit` отвечает за:
+
+- case folders;
+- manifests and params;
+- backend registration;
+- routes;
+- validation reports.
+
+## Реализовано
+
+CLI commands:
 
 - `new-case`
 - `validate-case`
@@ -88,6 +102,7 @@ CLI:
 - `classify-scan`
 - `audit-scan`
 - `link-backend`
+- `import-semantic-obj`
 
 Case artifacts:
 
@@ -98,42 +113,77 @@ Case artifacts:
 - `reports/source_classification.json`
 - `reports/scan_audit.md`
 - `reports/backend_text_to_cad.md`
+- `reports/semantic_parts.json`
+- `reports/semantic_parts.md`
+- `reports/semantic_plan.json`
+- `reports/semantic_validation.md`
 - `reports/validation.md`
 
-Validation:
+## Product vectors
+
+### Vector 1 - Reference to model
+
+Цель: future AI-platform integration.
+
+Сначала строим надежный local engine через Rhino/build123d, затем переносим
+workflow в платформенный формат.
+
+Spellshape / Live OBJ может быть полезен здесь как upstream semantic sketch:
+prompt/reference -> named parts/controls/anchors -> CAD script.
+
+Перед геометрией обязательно фиксировать constructive grammar: из каких повторяемых частей собран объект, какие сечения/зеркала/arrays нужны, и каких ракурсов не хватает.
+
+### Vector 2 - Complex model to simplified analysis geometry
+
+Цель: internal Rhino production workflow.
+
+Это первый активный MVP. Основной риск - снова скатиться в global mesh repair.
+Не делать этого. Source fidelity важнее красивого watertight claim.
+
+### Vector 3 - Massing and revisions from TEPs
+
+Цель: Rhino-first early project automation.
+
+Входы: active scene, red lines, underlays, rough massing, TEPs, GFA/FAR/height
+constraints, user revisions.
+
+Spellshape / Live OBJ тоже может быть полезен как semantic draft layer для
+вариантов до build123d/Rhino reconstruction.
+
+## Следующие engineering steps
+
+1. Перенести Rhino `scan_scene.py` в этот repo.
+   GitHub: https://github.com/DariyXYZ/ai-geometry-workflows/issues/1
+2. Добавить `validate_candidate_vs_source`.
+   GitHub: https://github.com/DariyXYZ/ai-geometry-workflows/issues/2
+3. Перенести или обернуть `extract_sections.py` и нормализовать output в
+   `reports/sections.json` / `reports/sections.csv`.
+   GitHub: https://github.com/DariyXYZ/ai-geometry-workflows/issues/3
+4. Построить `v4_refined_clean_massing` как real case.
+5. Расширить прототип `semantic_obj`:
+   `reports/semantic_plan.json` -> build123d/Rhino candidate script.
+6. Следующие куски из `docs/external-repo-constructor-map.md`:
+   contour extraction и surgical patching.
+7. Использовать `docs/development-directions-repo-fit.md` перед выбором следующего направления, чтобы не тащить Scenario 1/3 инструменты в Scenario 2 cleanup.
+8. Для каждого Scenario 1 case перед build stage писать constructive grammar и missing-view check.
+9. Продвигать stable case outputs только после validation reports.
+
+## Проверка
 
 ```powershell
 python -m unittest discover -s tests
 ```
 
-Last result: 3 tests passed.
+Последний известный результат: 5 tests passed.
 
-## Next Engineering Steps
+## Не активно прямо сейчас
 
-1. Migrate Rhino `scan_scene.py` into this repo.
-   GitHub: https://github.com/DariyXYZ/ai-geometry-workflows/issues/1
-2. Add `validate_candidate_vs_source`.
-   GitHub: https://github.com/DariyXYZ/ai-geometry-workflows/issues/2
-3. Migrate or wrap `extract_sections.py` into this repo and normalize section output into `reports/sections.json` / `reports/sections.csv`.
-   GitHub: https://github.com/DariyXYZ/ai-geometry-workflows/issues/3
-4. Build `v4_refined_clean_massing` as a real case.
-5. Promote stable case outputs only after validation reports exist.
-
-## GitHub Tracking
-
-Open starter issues:
-
-- #1 - Migrate Rhino scan readback into `ai_geometry_toolkit`.
-- #2 - Add candidate-vs-source validation report.
-- #3 - Normalize section extraction reports for Scenario 2 cases.
-
-## Not Active Right Now
-
-- Scenario 1 platform integration.
-- Scenario 3 massing variant engine implementation.
-- Direct global mesh repair.
-- Packaging as Rhino plugin.
+- Полная platform integration для Scenario 1.
+- Полный Scenario 3 variant engine.
+- Прямой global mesh repair.
+- Packaging как Rhino plugin.
+- Зависимость от Spellshape API/UI.
 - Public examples.
 
-These remain planned directions, while Scenario 2 provides the first validation
-and readback foundation.
+Эти направления остаются в roadmap, но текущий foundation - readback,
+classification, staged build и validation.

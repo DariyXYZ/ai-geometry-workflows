@@ -1,7 +1,7 @@
 # Project Data Map
 
-This map explains where active data lives and what each folder means. It is a
-working index, not an exhaustive dump.
+Эта карта объясняет, где живут активные данные и что означает каждый источник.
+Это рабочий индекс, а не полный dump всего проекта.
 
 ## Active Repository
 
@@ -12,21 +12,22 @@ working index, not an exhaustive dump.
 | `ai_geometry_toolkit/` | Python CLI orchestration package | Active |
 | `tests/` | Unit tests and fixtures | Active |
 | `decisions/` | Accepted technical decisions | Active |
-| `docs/` | Shared context system and data map | Active |
+| `docs/` | Shared context system, data map, current directions | Active |
 | `.tmp_cases/` | Local smoke cases | Ignored |
 | `cases/` | Shareable real cases | Ignored until consciously promoted |
 | `README.md` | GitHub landing page | Active |
 | `TOOLKIT.md` | Runnable command reference | Active |
-| `NEWS.md` | Chronological updates | Active |
+| `NEWS.md` | Хронология изменений на русском | Active |
 | `ai_geometry_workplan.md` | Scenario roadmap | Active |
+| `docs/reference-modeling-gates.md` | Scenario 1 source/grammar/missing-view gates | Active |
 | `TEAM_UPDATE_2026-05-21.md` | Team-facing status snapshot | Active |
 
-## External Backend
+## External Backend: text-to-cad
 
 `C:\VS Code\text-to-cad`
 
-Role: clean external checkout of `earthtojake/text-to-cad`, used as a STEP-first
-CAD-as-code backend and reference implementation.
+Role: clean external checkout of `earthtojake/text-to-cad`, used as a
+STEP-first CAD-as-code backend and reference implementation.
 
 Important paths:
 
@@ -46,6 +47,41 @@ Boundary:
   while Rhino remains the active scene context.
 
 It is not a direct mesh cleanup engine.
+
+## External Research Source: Spellshape / Live OBJ
+
+Primary source:
+
+- https://spellshape.com/
+- https://github.com/StepanKukharskiy/live-obj
+
+Related sources:
+
+- https://github.com/StepanKukharskiy/spellshape
+- https://github.com/StepanKukharskiy/spellshape-format
+- https://github.com/StepanKukharskiy/spellshape-webapp
+- https://github.com/StepanKukharskiy/spellshape-three
+- https://github.com/StepanKukharskiy/spellshape-agent
+- https://github.com/StepanKukharskiy/2DPlanTo3D
+
+Role: source for the `semantic_obj` / Live OBJ direction. It should inform our
+intermediate representation, not become a hard dependency.
+
+Useful pattern:
+
+```text
+standard OBJ mesh
++ ignored-by-default #@ metadata
+-> semantic part table
+-> build123d / Rhino reconstruction
+-> STEP / 3DM validation
+```
+
+Repo document:
+
+- `docs/spellshape-live-obj-direction.md`
+- `docs/external-repo-constructor-map.md` - repo-by-repo map and reusable constructor pieces.
+- `docs/development-directions-repo-fit.md` - scenario-by-scenario usefulness matrix.
 
 ## Rhino Source And Evidence
 

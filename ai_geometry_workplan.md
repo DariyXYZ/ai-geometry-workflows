@@ -1,21 +1,23 @@
 # AI Geometry Construction Workplan
 
-This repo tracks the transition from R&D experiments to a repeatable AI-assisted
-geometry workflow for architectural CAD, Rhino, Grasshopper, and CAD-as-code.
+Этот repo фиксирует переход от R&D экспериментов к повторяемому AI-assisted
+geometry workflow для architectural CAD, Rhino, Grasshopper и CAD-as-code.
 
 ## Goal
 
-Build a practical toolchain where:
+Собрать практический toolchain, где:
 
 - AI interprets inputs and proposes parameters;
+- semantic sketch layer сохраняет parts/anchors/controls до CAD;
 - deterministic CAD/Rhino/build123d tools create geometry;
 - validation gates decide whether a model can be accepted;
 - successful workflows become templates, modules, or supported tools.
 
 ## Working Principle
 
-Do not optimize for one impressive model. Optimize for repeatable cases with
-stored inputs, parameters, scripts, validation, captures, and handoff notes.
+Не оптимизировать под одну впечатляющую модель. Оптимизировать под repeatable
+cases со сохраненными inputs, parameters, scripts, validation, captures и
+handoff notes.
 
 Core pipeline:
 
@@ -66,6 +68,21 @@ model assembly rules.
 
 Status: platform-facing direction. Build and stabilize the engine locally first;
 platform integration comes later.
+
+Spellshape / Live OBJ relationship:
+
+Spellshape is not a replacement for `text-to-cad`. It is a useful source for an
+upstream semantic sketch format:
+
+```text
+reference / prompt
+-> Live OBJ-like semantic parts
+-> normalized part table
+-> build123d / Rhino script
+-> STEP / 3DM validation
+```
+
+See `docs/spellshape-live-obj-direction.md`.
 
 ## Scenario 2 - Complex Rhino Model To Simplified Analysis Geometry
 
@@ -144,6 +161,12 @@ Development route:
 Status: Rhino-first production direction. Strong candidate for a supported tool
 after readback, validation, and parameter-delta workflows are stable.
 
+Semantic OBJ note:
+
+Scenario 3 can use a Live OBJ-like layer for rough massing variants before they
+become strict Rhino/build123d candidates. The useful artifact is not a final OBJ
+mesh, but extracted named parts, bbox, anchors, params and controls.
+
 ## Route For This Iteration
 
 ### Step 0 - Restore State
@@ -173,6 +196,7 @@ Done initial MVP:
 - `route`
 - `classify-scan`
 - `audit-scan`
+- `link-backend`
 
 ### Step 2 - Connect Rhino/Aurox Readback
 
@@ -221,6 +245,19 @@ Add:
 - blockout-only build route;
 - proportion checklist.
 
+### Step 6 - Semantic OBJ / Live OBJ Import
+
+New research route:
+
+- use `StepanKukharskiy/live-obj` as source reference;
+- parse OBJ objects and `#@` metadata;
+- write `reports/semantic_parts.json`;
+- convert semantic parts into Rhino/build123d candidate scripts;
+- keep STEP/3DM validation as the acceptance gate.
+
+This is intentionally upstream of CAD. It should improve planning and control
+extraction without replacing the CAD backend.
+
 ## Definition Of Done For MVP
 
 The tool is testable on real tasks when a user can run:
@@ -246,3 +283,4 @@ and receive:
 2. Whether to package the Rhino side as scripts first or a Rhino plugin/connector.
 3. Which Scenario 1 benchmark should become the first public example.
 4. Who approves promotion from R&D to supported tool.
+5. Whether `semantic_obj` should be a small importer command or a formal case backend type.

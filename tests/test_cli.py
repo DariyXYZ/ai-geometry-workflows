@@ -76,6 +76,25 @@ class ToolkitCliTests(unittest.TestCase):
             self.assertEqual(validated.returncode, 1)
             self.assertIn("empty params.footprint.width_m", validated.stdout + validated.stderr)
 
+    def test_new_case_accepts_feet_for_drawing_based_cases(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            created = run_cli(
+                "new-case",
+                "--scenario",
+                "reference",
+                "--name",
+                "drawing in feet",
+                "--root",
+                str(root),
+                "--units",
+                "ft",
+            )
+            self.assertEqual(created.returncode, 0, created.stderr)
+            case = Path(created.stdout.strip())
+            params = json.loads((case / "params.json").read_text(encoding="utf-8"))
+            self.assertEqual(params["units"], "ft")
+
     def test_link_text_to_cad_backend_writes_profile(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -118,6 +137,91 @@ class ToolkitCliTests(unittest.TestCase):
             params = json.loads((case / "params.json").read_text(encoding="utf-8"))
             self.assertIn("text-to-cad", manifest["backends"])
             self.assertEqual(params["backends"]["text-to-cad"]["repo"], str(repo.resolve()))
+
+    def test_import_semantic_obj_writes_part_table(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            created = run_cli(
+                "new-case",
+                "--scenario",
+                "reference",
+                "--name",
+                "office tower semantic smoke",
+                "--root",
+                str(root),
+                "--units",
+                "m",
+            )
+            self.assertEqual(created.returncode, 0, created.stderr)
+            case = Path(created.stdout.strip())
+            source = ROOT / "tests" / "fixtures" / "office_tower_semantic.live.obj"
+
+            imported = run_cli("import-semantic-obj", str(case), "--source", str(source))
+            self.assertEqual(imported.returncode, 0, imported.stdout + imported.stderr)
+            data = json.loads((case / "reports" / "semantic_parts.json").read_text(encoding="utf-8"))
+            self.assertEqual(data["summary"]["partCount"], 5)
+            self.assertEqual(data["summary"]["visiblePartCount"], 4)
+            self.assertEqual(data["summary"]["partsWithBbox"], 5)
+            self.assertEqual(data["summary"]["partsWithAnchors"], 4)
+            self.assertEqual(data["summary"]["partsWithControls"], 2)
+            self.assertEqual(data["validation"]["status"], "valid")
+
+            parts = {part["id"]: part for part in data["parts"]}
+            self.assertEqual(parts["tower_main"]["params"]["floors"], 24)
+            self.assertEqual(parts["tower_main"]["bbox"]["max"][2], 102.0)
+            self.assertEqual(parts["tower_main"]["buildMethod"], "build123d_step")
+            self.assertEqual(parts["facade_grid_hint"]["hidden"], True)
+            self.assertEqual(parts["facade_grid_hint"]["buildMethod"], "guide_only")
+            self.assertTrue((case / "reports" / "semantic_parts.md").exists())
+            self.assertTrue((case / "reports" / "semantic_plan.json").exists())
+            self.assertTrue((case / "reports" / "semantic_validation.md").exists())
+            plan = json.loads((case / "reports" / "semantic_plan.json").read_text(encoding="utf-8"))
+            self.assertEqual(len(plan["parts"]), 5)
+            self.assertIn("podium_oval", parts["tower_main"]["constraints"][0])
+
+    def test_import_semantic_obj_validates_unknown_keys_and_post_ops(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            created = run_cli(
+                "new-case",
+                "--scenario",
+                "reference",
+                "--name",
+                "semantic validation",
+                "--root",
+                str(root),
+                "--units",
+                "m",
+            )
+            self.assertEqual(created.returncode, 0, created.stderr)
+            case = Path(created.stdout.strip())
+            source = root / "bad.live.obj"
+            source.write_text(
+                "\n".join(
+                    [
+                        "#@scene",
+                        "#@units: meters",
+                        "o test_part",
+                        "#@source: procedural",
+                        "#@type: box",
+                        "#@params: width=1, depth=1, height=1",
+                        "#@bbox: min=[0,0,0] max=[1,1,1]",
+                        "#@banana: surprise",
+                        "#@post: teleport distance=10",
+                        "v 0 0 0",
+                        "f 1 1 1",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+
+            imported = run_cli("import-semantic-obj", str(case), "--source", str(source))
+            self.assertEqual(imported.returncode, 0, imported.stdout + imported.stderr)
+            data = json.loads((case / "reports" / "semantic_parts.json").read_text(encoding="utf-8"))
+            warnings = "\n".join(data["validation"]["warnings"])
+            self.assertEqual(data["validation"]["status"], "valid")
+            self.assertIn("unknown part metadata key: banana", warnings)
+            self.assertIn("unsupported post op: teleport", warnings)
 
 
 if __name__ == "__main__":

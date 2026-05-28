@@ -24,6 +24,8 @@ Before adding new durable project data, check:
 - `docs/project-data-map.md` - which local folder or external repo owns each kind of data.
 - `docs/development-state.md` - current active lane and next implementation steps.
 - `docs/error-ledger.md` - known failures that should shape new implementation.
+- `docs/reference-modeling-gates.md` - Scenario 1 source authority, constructive grammar, and missing-view checks.
+- `docs/external-repo-constructor-map.md` - quick map of reusable constructor pieces from Spellshape / Live OBJ related repositories.
 
 ## Commands
 
@@ -34,7 +36,33 @@ python -m ai_geometry_toolkit route .\cases\<case_id>
 python -m ai_geometry_toolkit classify-scan .\cases\<case_id> --scan path\to\scene_scan.json
 python -m ai_geometry_toolkit audit-scan .\cases\<case_id> --scan path\to\scene_scan.json
 python -m ai_geometry_toolkit link-backend .\cases\<case_id> --backend text-to-cad --repo "C:\VS Code\text-to-cad"
+python -m ai_geometry_toolkit import-semantic-obj .\cases\<case_id> --source path\to\model.live.obj
 ```
+
+## Semantic OBJ Smoke Test
+
+`import-semantic-obj` reads Live OBJ-style `#@` metadata and writes:
+
+- `reports/semantic_parts.json` - machine-readable part table;
+- `reports/semantic_parts.md` - CAD route hints and acceptance gate notes.
+- `reports/semantic_plan.json` - decomposed part planner for the next build step;
+- `reports/semantic_validation.md` - metadata/post-op validation gate.
+
+Minimal smoke fixture:
+
+```powershell
+python -m ai_geometry_toolkit new-case --scenario reference --name "office tower semantic smoke" --root .tmp_cases --units m
+python -m ai_geometry_toolkit import-semantic-obj .\.tmp_cases\<case_id> --source tests\fixtures\office_tower_semantic.live.obj
+```
+
+Optional Rhino preview when Aurox is running:
+
+```powershell
+python scripts\build_semantic_smoke_rhino.py .\.tmp_cases\<case_id>\reports\semantic_parts.json
+```
+
+This preview is a smoke artifact only. It creates massing boxes, an oval podium
+loft, and facade guide curves in Rhino. It is not final CAD validation.
 
 ## Scenario 2 MVP Route
 
@@ -78,5 +106,6 @@ clean parameter-driven STEP candidates after the route is accepted.
 - Rhino-backed `scan_scene` integration inside this repo.
 - `extract_sections` output normalization.
 - `validate_candidate_vs_source` metrics.
+- `semantic_plan.json -> build123d/Rhino candidate script` generator.
 - Scenario 3 variant generator and metrics writer.
 - Scenario 1 reference package template with source image/drawing authority.

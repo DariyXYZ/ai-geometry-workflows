@@ -22,6 +22,7 @@ Do not store durable project state only in chat history.
 | Roadmap and open decisions | `ai_geometry_workplan.md`, `decisions/` | Decisions get dated files. |
 | Data/source map | `docs/project-data-map.md` | Update when folders or source roles change. |
 | Known failures and lessons | `docs/error-ledger.md` | Record enough to avoid repeating work. |
+| Reference modeling gates | `docs/reference-modeling-gates.md` | Constructive grammar before geometry. |
 | Tool commands and backend contracts | `TOOLKIT.md` | Keep runnable. |
 | Chronological updates | `NEWS.md` | One entry per material change. |
 | One modeling run | `cases/<case_id>/` | Tracked only when ready to share. |
@@ -65,6 +66,19 @@ Recommended report files:
 - If a next step changes, update `docs/development-state.md`.
 - If a tradeoff becomes accepted policy, add a dated decision in `decisions/`.
 - If the change only helps local continuity, update the Obsidian control center.
+
+## Reference Modeling Rule
+
+Scenario 1 must pass `constructive grammar before geometry`.
+
+Required sequence:
+
+```text
+source authority -> constructive grammar -> section/repetition strategy -> missing-view check -> geometry -> compare
+```
+
+If the available views do not prove the constructive grammar, ask for more views
+instead of inventing a plausible envelope.
 
 ## Active Boundary
 
