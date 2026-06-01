@@ -91,3 +91,38 @@ inner cross/facade completion
 
 This is the required mental model for similar reference-driven towers.
 
+## Grove at Grand Bay Lesson
+
+For towers where the source gives several rotated orthogonal floor sections,
+the correct intermediate-floor strategy is:
+
+```text
+authoritative floor sections
+-> temporary loft
+-> Rhino Contour at floor elevations
+-> hide loft
+-> build final slabs from contour curves
+```
+
+This avoids the common error of creating warped intermediate floors by
+resampling corners or interpolating curve parameters manually. The final model
+must treat the contour curves as exact floor plates. Any podium, underlay, or
+reference plate must stay below the first-floor datum and must not compress or
+occlude the tower.
+
+### Slab Edge Is Not Glass Line
+
+For balcony towers such as Grove at Grand Bay, the section contour usually
+describes the exterior slab or balcony edge, not the glazing line. The build
+order must keep these separate:
+
+```text
+Contour curve
+-> thick floor slab / balcony plate
+-> inward-offset glass plane
+-> exterior rail / edge profile
+```
+
+If the glass is placed coplanar with the contour edge, the balconies disappear
+and the facade reads as a flat box. Scripts must preserve slab thickness and
+balcony offset before adding facade transparency.

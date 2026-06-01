@@ -75,6 +75,43 @@ inventing an envelope.
 Structural/load/core plans can be narrower than the exterior massing envelope.
 Classify source authority before using plan dimensions as final footprint.
 
+### Do Not Reconstruct Orthogonal Floor Plates From Resampled Corners
+
+Grove at Grand Bay exposed a repeatable failure mode: when a tower twists
+between orthogonal rectangular floor plates, resampling source rectangles and
+aligning arbitrary curve parameters can create warped, non-orthogonal
+intermediate floors. That is wrong even if the overall twist silhouette looks
+plausible.
+
+Correct workflow for this family:
+
+1. Loft only the authoritative control sections, for example floor 1, floor 14,
+   and roof.
+2. Use Rhino `Contour` on that temporary lofted surface/polysurface to generate
+   horizontal floor-section curves at the required elevations.
+3. Hide or delete the temporary loft mass.
+4. Build slabs, balcony edges, rails, and glass lines directly from the
+   resulting contour curves.
+
+Do not rebuild those contour curves from guessed corners, bbox rectangles, or
+newly sampled point order. The contour curves are the source of truth.
+
+### Do Not Put Glass On The Slab Edge For Balcony Towers
+
+Grove at Grand Bay exposed a second failure after the contour workflow was
+fixed: the glass plane was placed flush with the exterior contour. That erased
+the balcony depth even though the floor outlines were correct.
+
+Correct interpretation:
+
+- contour curve = exterior slab / balcony edge;
+- floor slab = real thickness, not a zero-thickness surface;
+- glass facade = inward offset from the contour;
+- rail / edge profile = outer contour or near outer contour.
+
+For buildings with projecting balconies, always model slab edge, glass line,
+and railing as separate systems.
+
 ## Context Management
 
 ### Loose Scripts Hide Decisions
