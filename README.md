@@ -112,6 +112,14 @@ python -m ai_geometry_toolkit classify-scan .\cases\<case_id> `
   --scan "C:\VS Code\workfiles\rhino\workflow-kit\rhino_workflow_kit\reports\tower_bbox_classification.json"
 ```
 
+Сравнить source и candidate scan перед acceptance:
+
+```powershell
+python -m ai_geometry_toolkit validate-candidate .\cases\<case_id> `
+  --source-scan .\cases\<case_id>\reports\scene_scan.json `
+  --candidate-scan .\cases\<case_id>\reports\candidate_scan.json
+```
+
 Подключить локальный `text-to-cad` checkout:
 
 ```powershell
@@ -134,6 +142,8 @@ python -m ai_geometry_toolkit import-semantic-obj .\cases\<case_id> `
 - `intake.md`
 - `reports/development_route.md`
 - `reports/source_classification.json`
+- `reports/candidate_validation.json`
+- `reports/candidate_validation.md`
 - `reports/backend_text_to_cad.md`
 - `reports/semantic_parts.json`
 - `reports/semantic_parts.md`
@@ -170,10 +180,9 @@ python -m ai_geometry_toolkit import-semantic-obj .\cases\<case_id> `
 Следующие практические шаги:
 
 1. Перенести Rhino `scan_scene.py` в `ai_geometry_toolkit`.
-2. Добавить `validate_candidate_vs_source`.
-3. Нормализовать section extraction reports.
-4. Построить `v4_refined_clean_massing` как reproducible case.
-5. Расширить `semantic_obj` / `live_obj_import`: planner -> build123d/Rhino
+2. Нормализовать section extraction reports.
+3. Построить `v4_refined_clean_massing` как reproducible case.
+4. Расширить `semantic_obj` / `live_obj_import`: planner -> build123d/Rhino
    script candidate.
 
 ## Правила данных

@@ -1,5 +1,26 @@
 # Новости
 
+## 2026-06-01 - Добавлен первый `validate-candidate` gate
+
+В CLI добавлена команда `validate-candidate` для Scenario 2 cleanup workflow.
+Она сравнивает source scan и candidate scan по scene bbox, size и center deltas,
+пишет:
+
+- `reports/candidate_validation.json`;
+- `reports/candidate_validation.md`.
+
+Это первый численный gate для проверки candidate/source соответствия перед
+acceptance. Он не заменяет архитектурную проверку: даже `pass` требует
+section/profile deltas, source overlays, fixed captures и review по частям.
+
+Обновлено:
+
+- `ai_geometry_toolkit/cli.py`
+- `tests/test_cli.py`
+- `README.md`
+- `TOOLKIT.md`
+- `docs/development-state.md`
+
 ## 2026-06-01 - Добавлено правило вертикальных сечений для Karlatornet-подобных форм
 
 Зафиксирован новый урок по выбору метода построения. Не каждую скрученную башню

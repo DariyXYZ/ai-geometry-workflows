@@ -105,6 +105,7 @@ CLI commands:
 - `route`
 - `classify-scan`
 - `audit-scan`
+- `validate-candidate`
 - `link-backend`
 - `import-semantic-obj`
 
@@ -116,6 +117,8 @@ Case artifacts:
 - `reports/development_route.md`
 - `reports/source_classification.json`
 - `reports/scan_audit.md`
+- `reports/candidate_validation.json`
+- `reports/candidate_validation.md`
 - `reports/backend_text_to_cad.md`
 - `reports/semantic_parts.json`
 - `reports/semantic_parts.md`
@@ -158,7 +161,8 @@ Spellshape / Live OBJ тоже может быть полезен как semanti
 
 1. Перенести Rhino `scan_scene.py` в этот repo.
    GitHub: https://github.com/DariyXYZ/ai-geometry-workflows/issues/1
-2. Добавить `validate_candidate_vs_source`.
+2. Расширить `validate_candidate_vs_source` от bbox/center gate до
+   section/profile-aware validation.
    GitHub: https://github.com/DariyXYZ/ai-geometry-workflows/issues/2
 3. Перенести или обернуть `extract_sections.py` и нормализовать output в
    `reports/sections.json` / `reports/sections.csv`.

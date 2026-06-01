@@ -35,6 +35,7 @@ python -m ai_geometry_toolkit validate-case .\cases\<case_id>
 python -m ai_geometry_toolkit route .\cases\<case_id>
 python -m ai_geometry_toolkit classify-scan .\cases\<case_id> --scan path\to\scene_scan.json
 python -m ai_geometry_toolkit audit-scan .\cases\<case_id> --scan path\to\scene_scan.json
+python -m ai_geometry_toolkit validate-candidate .\cases\<case_id> --source-scan path\to\source_scan.json --candidate-scan path\to\candidate_scan.json
 python -m ai_geometry_toolkit link-backend .\cases\<case_id> --backend text-to-cad --repo "C:\VS Code\text-to-cad"
 python -m ai_geometry_toolkit import-semantic-obj .\cases\<case_id> --source path\to\model.live.obj
 ```
@@ -74,7 +75,8 @@ loft, and facade guide curves in Rhino. It is not final CAD validation.
 6. Extract sections per major architectural part.
 7. Validate section correspondence before any loft/build.
 8. Build closed simplified parts.
-9. Produce source/candidate deltas and fixed captures.
+9. Run `validate-candidate` for first bbox/center deltas.
+10. Produce section deltas and fixed captures before acceptance.
 
 ## Backend Strategy
 
@@ -105,7 +107,7 @@ clean parameter-driven STEP candidates after the route is accepted.
 
 - Rhino-backed `scan_scene` integration inside this repo.
 - `extract_sections` output normalization.
-- `validate_candidate_vs_source` metrics.
+- Section/profile-aware `validate_candidate_vs_source` metrics beyond bbox.
 - `semantic_plan.json -> build123d/Rhino candidate script` generator.
 - Scenario 3 variant generator and metrics writer.
 - Scenario 1 reference package template with source image/drawing authority.

@@ -127,6 +127,29 @@ def build_parser() -> argparse.ArgumentParser:
     audit.add_argument("--scan", default="")
     audit.set_defaults(func=cmd_audit_scan)
 
+    validate_candidate = sub.add_parser(
+        "validate-candidate",
+        help="Compare source and candidate scan bbox metrics and write validation reports.",
+    )
+    validate_candidate.add_argument("case")
+    validate_candidate.add_argument("--source-scan", default="", help="Source scan JSON. Defaults to case reports.")
+    validate_candidate.add_argument("--candidate-scan", required=True, help="Candidate scan JSON to validate.")
+    validate_candidate.add_argument(
+        "--size-tolerance",
+        type=float,
+        default=0.05,
+        help="Allowed relative scene-size delta per axis. Default: 0.05.",
+    )
+    validate_candidate.add_argument(
+        "--center-tolerance",
+        type=float,
+        default=0.05,
+        help="Allowed relative scene-center delta per axis. Default: 0.05.",
+    )
+    validate_candidate.add_argument("--output", default="", help="JSON output path.")
+    validate_candidate.add_argument("--markdown", default="", help="Markdown output path.")
+    validate_candidate.set_defaults(func=cmd_validate_candidate)
+
     link_backend = sub.add_parser("link-backend", help="Attach an external geometry backend to a case.")
     link_backend.add_argument("case")
     link_backend.add_argument("--backend", required=True, choices=("text-to-cad",))
@@ -241,6 +264,44 @@ def cmd_audit_scan(args: argparse.Namespace) -> int:
     output.write_text(scan_audit_markdown(scan_path, objects, classification), encoding="utf-8")
     print(output)
     return 0
+
+
+def cmd_validate_candidate(args: argparse.Namespace) -> int:
+    case_root = resolve_case(args.case)
+    source_scan = resolve_scan_path(case_root, args.source_scan)
+    candidate_scan = resolve_input_path(args.candidate_scan)
+    source_report = read_json(source_scan)
+    candidate_report = read_json(candidate_scan)
+    source_objects = normalize_scan_objects(source_report)
+    candidate_objects = normalize_scan_objects(candidate_report)
+    if not source_objects:
+        raise WorkflowError(f"source scan has no objects with bbox: {source_scan}")
+    if not candidate_objects:
+        raise WorkflowError(f"candidate scan has no objects with bbox: {candidate_scan}")
+
+    report = candidate_validation_report(
+        source_scan=source_scan,
+        candidate_scan=candidate_scan,
+        source_objects=source_objects,
+        candidate_objects=candidate_objects,
+        size_tolerance=float(args.size_tolerance),
+        center_tolerance=float(args.center_tolerance),
+    )
+    output = Path(args.output).resolve() if args.output else case_root / "reports" / "candidate_validation.json"
+    markdown = Path(args.markdown).resolve() if args.markdown else case_root / "reports" / "candidate_validation.md"
+    write_json(output, report)
+    markdown.parent.mkdir(parents=True, exist_ok=True)
+    markdown.write_text(candidate_validation_markdown(report), encoding="utf-8")
+
+    paths = case_paths(case_root)
+    manifest = read_json(paths.manifest)
+    manifest.setdefault("paths", {})["candidateValidation"] = rel_or_abs(output, case_root)
+    manifest.setdefault("paths", {})["candidateValidationReport"] = rel_or_abs(markdown, case_root)
+    write_json(paths.manifest, manifest)
+
+    print(output)
+    print(f"status={report['status']} maxSizeDelta={report['summary']['maxSizeDelta']} maxCenterDelta={report['summary']['maxCenterDelta']}")
+    return 0 if report["status"] == "pass" else 1
 
 
 def cmd_link_backend(args: argparse.Namespace) -> int:
@@ -381,6 +442,15 @@ def resolve_scan_path(case_root: Path, raw: str) -> Path:
         if candidate.exists():
             return candidate
     raise WorkflowError("scan path not provided and no default report exists")
+
+
+def resolve_input_path(raw: str) -> Path:
+    path = Path(raw)
+    if not path.is_absolute():
+        path = (Path.cwd() / path).resolve()
+    if not path.exists():
+        raise WorkflowError(f"input path does not exist: {path}")
+    return path
 
 
 def normalize_scan_objects(report: dict[str, Any]) -> list[dict[str, Any]]:
@@ -524,6 +594,124 @@ def scan_audit_markdown(scan_path: Path, objects: list[dict[str, Any]], classifi
             "",
         ]
     )
+    return "\n".join(lines)
+
+
+def candidate_validation_report(
+    *,
+    source_scan: Path,
+    candidate_scan: Path,
+    source_objects: list[dict[str, Any]],
+    candidate_objects: list[dict[str, Any]],
+    size_tolerance: float,
+    center_tolerance: float,
+) -> dict[str, Any]:
+    source_bbox = union_bbox([obj["bbox"] for obj in source_objects])
+    candidate_bbox = union_bbox([obj["bbox"] for obj in candidate_objects])
+    source_size = bbox_size(source_bbox)
+    candidate_size = bbox_size(candidate_bbox)
+    source_center = bbox_center(source_bbox)
+    candidate_center = bbox_center(candidate_bbox)
+    size_delta = relative_axis_delta(source_size, [candidate_size[i] - source_size[i] for i in range(3)])
+    center_delta = relative_axis_delta(source_size, [candidate_center[i] - source_center[i] for i in range(3)])
+    size_failures = [axis for axis, value in size_delta.items() if value > size_tolerance]
+    center_failures = [axis for axis, value in center_delta.items() if value > center_tolerance]
+    status = "pass" if not size_failures and not center_failures else "fail"
+    source_classification = classify_objects(source_objects)
+    candidate_classification = classify_objects(candidate_objects)
+    return {
+        "schemaVersion": 1,
+        "createdAt": datetime.now().isoformat(timespec="seconds"),
+        "status": status,
+        "sourceScan": str(source_scan),
+        "candidateScan": str(candidate_scan),
+        "tolerances": {
+            "size": size_tolerance,
+            "center": center_tolerance,
+        },
+        "source": {
+            "objectCount": len(source_objects),
+            "bbox": source_bbox,
+            "size": source_size,
+            "center": source_center,
+            "classSummary": source_classification.get("summary", {}),
+        },
+        "candidate": {
+            "objectCount": len(candidate_objects),
+            "bbox": candidate_bbox,
+            "size": candidate_size,
+            "center": candidate_center,
+            "classSummary": candidate_classification.get("summary", {}),
+        },
+        "deltas": {
+            "size": size_delta,
+            "center": center_delta,
+            "objectCount": len(candidate_objects) - len(source_objects),
+            "classSummary": class_summary_delta(
+                source_classification.get("summary", {}),
+                candidate_classification.get("summary", {}),
+            ),
+        },
+        "failures": {
+            "sizeAxes": size_failures,
+            "centerAxes": center_failures,
+        },
+        "summary": {
+            "maxSizeDelta": round(max(size_delta.values(), default=0.0), 6),
+            "maxCenterDelta": round(max(center_delta.values(), default=0.0), 6),
+        },
+        "limitations": [
+            "BBox validation is a first numeric gate, not architectural acceptance.",
+            "Pass still requires source-derived sections, fixed captures, and part review.",
+            "Use this before claiming that closed candidate geometry matches the source.",
+        ],
+    }
+
+
+def relative_axis_delta(reference: list[float], candidate_or_delta: list[float]) -> dict[str, float]:
+    axes = ("x", "y", "z")
+    deltas: dict[str, float] = {}
+    for i, axis in enumerate(axes):
+        denominator = max(abs(float(reference[i])), 1e-9)
+        deltas[axis] = round(abs(float(candidate_or_delta[i])) / denominator, 6)
+    return deltas
+
+
+def class_summary_delta(source: dict[str, Any], candidate: dict[str, Any]) -> dict[str, int]:
+    keys = sorted(set(source) | set(candidate))
+    return {key: int(candidate.get(key, 0)) - int(source.get(key, 0)) for key in keys}
+
+
+def candidate_validation_markdown(report: dict[str, Any]) -> str:
+    lines = [
+        "# Candidate Validation",
+        "",
+        f"- Status: `{report.get('status')}`",
+        f"- Source scan: `{report.get('sourceScan')}`",
+        f"- Candidate scan: `{report.get('candidateScan')}`",
+        f"- Size tolerance: {report.get('tolerances', {}).get('size')}",
+        f"- Center tolerance: {report.get('tolerances', {}).get('center')}",
+        "",
+        "## Scene Metrics",
+        "",
+        f"- Source size: `{report.get('source', {}).get('size')}`",
+        f"- Candidate size: `{report.get('candidate', {}).get('size')}`",
+        f"- Size deltas: `{report.get('deltas', {}).get('size')}`",
+        f"- Center deltas: `{report.get('deltas', {}).get('center')}`",
+        f"- Object count delta: {report.get('deltas', {}).get('objectCount')}",
+        "",
+        "## Failures",
+        "",
+        f"- Size axes: `{report.get('failures', {}).get('sizeAxes', [])}`",
+        f"- Center axes: `{report.get('failures', {}).get('centerAxes', [])}`",
+        "",
+        "## Gate",
+        "",
+        "- This check only compares source/candidate scan metrics.",
+        "- Passing this report does not accept the geometry.",
+        "- Continue with sections, source overlays, and fixed captures before handoff.",
+        "",
+    ]
     return "\n".join(lines)
 
 

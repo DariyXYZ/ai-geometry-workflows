@@ -179,6 +179,52 @@ class ToolkitCliTests(unittest.TestCase):
             self.assertEqual(len(plan["parts"]), 5)
             self.assertIn("podium_oval", parts["tower_main"]["constraints"][0])
 
+    def test_validate_candidate_compares_source_and_candidate_scan_metrics(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            created = run_cli(
+                "new-case",
+                "--scenario",
+                "cleanup",
+                "--name",
+                "candidate validation",
+                "--root",
+                str(root),
+                "--source",
+                "source.3dm",
+                "--units",
+                "m",
+            )
+            self.assertEqual(created.returncode, 0, created.stderr)
+            case = Path(created.stdout.strip())
+            source = ROOT / "tests" / "fixtures" / "scan_scene_sample.json"
+            candidate = root / "candidate_scan.json"
+            candidate.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
+
+            validated = run_cli("validate-candidate", str(case), "--source-scan", str(source), "--candidate-scan", str(candidate))
+            self.assertEqual(validated.returncode, 0, validated.stdout + validated.stderr)
+            report = json.loads((case / "reports" / "candidate_validation.json").read_text(encoding="utf-8"))
+            self.assertEqual(report["status"], "pass")
+            self.assertEqual(report["summary"]["maxSizeDelta"], 0.0)
+            self.assertTrue((case / "reports" / "candidate_validation.md").exists())
+
+            bad = json.loads(source.read_text(encoding="utf-8"))
+            bad["objects"][0]["bbox"]["max"][2] = 120
+            bad_candidate = root / "bad_candidate_scan.json"
+            bad_candidate.write_text(json.dumps(bad), encoding="utf-8")
+            failed = run_cli(
+                "validate-candidate",
+                str(case),
+                "--source-scan",
+                str(source),
+                "--candidate-scan",
+                str(bad_candidate),
+            )
+            self.assertEqual(failed.returncode, 1)
+            failed_report = json.loads((case / "reports" / "candidate_validation.json").read_text(encoding="utf-8"))
+            self.assertEqual(failed_report["status"], "fail")
+            self.assertIn("z", failed_report["failures"]["sizeAxes"])
+
     def test_import_semantic_obj_validates_unknown_keys_and_post_ops(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
