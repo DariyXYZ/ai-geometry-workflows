@@ -1,6 +1,6 @@
 # Development State
 
-Обновлено: 2026-05-28
+Обновлено: 2026-06-01
 
 ## Активный репозиторий
 
@@ -10,6 +10,10 @@ https://github.com/DariyXYZ/ai-geometry-workflows
 ```
 
 Проект перешел от loose Rhino experiments к case-based orchestration toolchain.
+На 2026-06-01 добавлен переносимый context layer: `AGENTS.md`,
+`docs/START_HERE.md`, `docs/repository-map.md` и `docs/source-repos/`.
+Цель - чтобы новый AI-чат мог восстановить workflow из repo без Obsidian и
+истории переписки.
 
 ## Текущее состояние
 
@@ -167,6 +171,8 @@ Spellshape / Live OBJ тоже может быть полезен как semanti
 7. Использовать `docs/development-directions-repo-fit.md` перед выбором следующего направления, чтобы не тащить Scenario 1/3 инструменты в Scenario 2 cleanup.
 8. Для каждого Scenario 1 case перед build stage писать constructive grammar и missing-view check.
 9. Продвигать stable case outputs только после validation reports.
+10. Поддерживать `AGENTS.md`, `docs/START_HERE.md` и `docs/source-repos/` как
+    минимальный контекст для нового чата.
 
 ## Проверка
 

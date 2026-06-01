@@ -143,14 +143,18 @@ python -m ai_geometry_toolkit import-semantic-obj .\cases\<case_id> `
 
 ## Карта репозитория
 
+- `AGENTS.md` - короткий стартовый контекст для AI/code agent без истории чата.
+- `docs/START_HERE.md` - главный маршрут чтения для нового чата или нового компьютера.
 - `ai_geometry_toolkit/` - runnable orchestration CLI.
 - `tests/` - unit tests and fixtures.
+- `docs/repository-map.md` - карта структуры repo: что читать первым, что не читать без нужды.
 - `docs/context-system.md` - куда сохранять project context, cases, errors и decisions.
 - `docs/project-data-map.md` - карта active data/source across repo, Rhino workfiles, Obsidian, `text-to-cad`, Spellshape/Live OBJ.
 - `docs/development-state.md` - текущий статус разработки и next engineering steps.
 - `docs/error-ledger.md` - известные failure modes.
 - `docs/reference-modeling-gates.md` - обязательные gates для Scenario 1: source authority, constructive grammar, missing-view check.
 - `docs/spellshape-live-obj-direction.md` - направление Spellshape / Live OBJ как semantic sketch layer.
+- `docs/source-repos/` - сжатые карточки внешних репозиториев: что брать, где применять, что не тащить.
 - `docs/external-repo-constructor-map.md` - карта внешних репозиториев StepanKukharskiy и элементов конструктора, которые можно встроить в pipeline.
 - `docs/development-directions-repo-fit.md` - матрица: какие внешние repo pieces полезны для Scenario 1, 2 и 3.
 - `ai_geometry_workplan.md` - roadmap по сценариям.
