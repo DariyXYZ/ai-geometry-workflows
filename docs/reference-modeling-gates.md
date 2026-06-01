@@ -91,6 +91,32 @@ inner cross/facade completion
 
 This is the required mental model for similar reference-driven towers.
 
+### Vertical Section Strategy
+
+Karlatornet-like twisted shaft forms should not be forced into horizontal
+section stacks when the visible grammar is four vertical primitives whose side
+faces twist through a middle zone. For this family, the simpler and more
+faithful route is:
+
+```text
+primitive shaft blocks
+-> vertical guide/profile curves on one shaft or facade side
+-> loft the transition surface between lower and upper vertical profiles
+-> mirror/repeat the solved part into the other quadrants
+-> complete the central cross/gaps
+```
+
+Use horizontal contours for validation or floor/facade checking only after the
+vertical face logic is understood. If the source proves that floor plates are
+the controlling geometry, use a horizontal-contour workflow instead.
+
+Rule of thumb:
+
+```text
+Grove at Grand Bay = horizontal floor contour problem
+Karlatornet = vertical face/profile loft problem
+```
+
 ## Grove at Grand Bay Lesson
 
 For towers where the source gives several rotated orthogonal floor sections,

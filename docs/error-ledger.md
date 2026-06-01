@@ -70,6 +70,21 @@ Before modeling reference architecture, ask:
 If the available views do not prove this, ask for more views instead of
 inventing an envelope.
 
+### Do Not Force Horizontal Sections Onto A Vertical-Profile Problem
+
+The later Karlatornet correction showed that a twist is not always best modeled
+from horizontal floor sections. If the form is made from repeated vertical
+primitives and the deformation is readable as a surface between vertical edge
+or facade curves, build from vertical guides, loft the face/transition, then
+mirror or repeat the solved part.
+
+Forcing this family into horizontal slices can create unnecessary corner
+correspondence problems and a wrong mental model. Decide the section direction
+from the building grammar:
+
+- Grove at Grand Bay: horizontal contour floor plates.
+- Karlatornet-like four-shaft tower: vertical guide curves, loft, mirror.
+
 ### Plan Drawings Are Not Always Exterior Envelopes
 
 Structural/load/core plans can be narrower than the exterior massing envelope.

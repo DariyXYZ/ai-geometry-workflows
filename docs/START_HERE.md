@@ -50,6 +50,10 @@ Current hard lessons:
 
 - Karlatornet: do not guess one envelope; identify repeated shafts, gaps,
   twist datums, loft sections, and mirror/repeat logic.
+- Karlatornet update: if the form reads as repeated vertical shafts with
+  twisting facade faces, start from primitive shafts plus vertical guide curves,
+  loft the transition surface, then mirror/repeat. Do not force a horizontal
+  section stack unless floor plates are proven to control the geometry.
 - Grove at Grand Bay: for rotating orthogonal floor plates, derive intermediate
   floors by Rhino `Contour` from temporary lofts. Use contour curves as slab
   edges, offset glass inward, and give slabs thickness.

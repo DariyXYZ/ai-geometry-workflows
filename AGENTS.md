@@ -29,6 +29,10 @@ Then choose the scenario-specific read set from `docs/START_HERE.md`.
 control sections -> temporary loft -> Rhino Contour -> final floor contours
 ```
 
+- Choose section direction by constructive grammar. Grove-style balcony towers
+  use horizontal Contour floor plates. Karlatornet-like four-shaft twists use
+  primitive shafts, vertical guide/profile curves, lofted transition surfaces,
+  and mirror/repeat logic.
 - For balcony towers, the contour curve is the slab/balcony edge, not the glass
   line. Offset glass inward and give slabs real thickness.
 
