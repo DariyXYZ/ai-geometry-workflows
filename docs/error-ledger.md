@@ -111,6 +111,83 @@ Correct workflow for this family:
 Do not rebuild those contour curves from guessed corners, bbox rectangles, or
 newly sampled point order. The contour curves are the source of truth.
 
+### User-Prepared Rhino Curves Override Approximate Parametric Sections
+
+Infinity Tower/SOM exposed a related failure mode: when the user has already
+drawn the actual floor contour, core curve, and height axis in Rhino, those
+curves are the source authority. Do not replace them with a simplified square,
+rectangle, or generic chamfered section just because the building can be
+described as "one section rotating with height."
+
+Correct workflow:
+
+1. Read the visible source curves from Rhino.
+2. Classify them as floor contour, core, and height/twist axis.
+3. Verify units and height from the axis.
+4. Transform copies of the exact floor contour through height.
+5. Build loft/floor/facade guides from those transformed copies.
+
+Approximate parametric sections are only acceptable when no source curve exists.
+
+### Do Not Turn A Cut-Out Section Into An Organic Blob
+
+The Shanghai Tower-style twist case exposed another source-grammar failure: a
+soft triangular floor plate with a corner cut-out must not be modeled as a
+round/polar blob with a radial dent. The reference grammar is closer to:
+
+```text
+soft triangle
+minus rotated square/diamond cutter at one corner
+-> cutter depth changes by height
+-> four control sections
+-> loft validation
+-> Contour floors only after the form is accepted
+```
+
+If the cut-out is represented only as a smooth radial depression, the tower
+becomes a "dumpling" shape and loses the triangular plan logic. Build the
+section as a constructive 2D profile first, with explicit cutter lips and inner
+cut edges. Then rotate/taper the whole profile through height.
+
+### Construction Curves Must Actually Drive The Cut
+
+The next Shanghai Tower iteration improved the massing by using four soft
+triangular control sections over 632 m with a 180 degree twist. The section
+read correctly as triangular again, and the corner cut became sharp enough to
+produce the intended spiral groove.
+
+The remaining error was subtler: rotated square cutters were drawn next to the
+sections, but the notch itself was still produced by separate scripted points.
+That makes the square a diagram, not a source authority. If the intended
+grammar is:
+
+```text
+soft triangle minus rotated square
+```
+
+then the final section curve must be derived from that operation. Use a real
+2D boolean/trim/intersection workflow where possible, or compute the same
+intersection explicitly. Do not show a cutter while using unrelated notch
+coordinates, because the model can look close while encoding the wrong rule.
+
+### Do Not Draw Primitive Logic As A Point Cloud
+
+A broader modeling mistake behind the same case was trying to hand-draw the
+final section with many coordinates. That loses the logic of the model. In CAD
+and Rhino workflows, the strongest path is often to build with primitives and
+operations:
+
+```text
+triangle / rectangle / circle / guide primitive
+-> NURBS smoothing or rebuild
+-> trim / boolean / split / offset
+-> loft / sweep / contour / array
+```
+
+Use points to define primitives, control curves, or resample proven source
+geometry. Do not use raw point lists as a substitute for a known primitive
+operation such as "square cuts triangle" or "offset glass from slab edge."
+
 ### Do Not Put Glass On The Slab Edge For Balcony Towers
 
 Grove at Grand Bay exposed a second failure after the contour workflow was
@@ -126,6 +203,39 @@ Correct interpretation:
 
 For buildings with projecting balconies, always model slab edge, glass line,
 and railing as separate systems.
+
+### Do Not Add Secondary Elements Before Shell Fit And Support Are Accepted
+
+The Flock chapel shell case produced a medium-success massing: the roof read as
+a wave/ribbon concrete shell with alternating crests and valleys. That was the
+right family of form.
+
+The failed gates were:
+
+1. Secondary elements were premature. Glass, posts, and mullions were generated
+   before the shell was accepted. They protruded below the shell, did not follow
+   the real envelope, and made the model look less trustworthy.
+2. Plan fit was off. The shell was too long relative to the scaled Rhino
+   underlay. A scaled plan is source authority for footprint and must be checked
+   before capture or detail.
+3. Support logic was missing. The shell should bear on the concrete folded
+   plinth/support elements visible in plan and sections. It must not read as
+   floating above the ground plane.
+
+Correct order for similar shell cases:
+
+```text
+scaled plan footprint
+-> section-derived crest/valley heights
+-> shell surface only
+-> fit check against plan underlay
+-> concrete folds / plinth supports at contact lines
+-> thickness / rim
+-> glass and posts after shell/support acceptance
+```
+
+If secondary elements appear below the shell or outside the accepted envelope,
+delete them and return to the massing/support gate.
 
 ## Context Management
 

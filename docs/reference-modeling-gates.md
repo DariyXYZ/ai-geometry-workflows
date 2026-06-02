@@ -39,6 +39,8 @@ If the grammar is unknown, stop and ask for more views or declare assumptions.
 
 Pick the build strategy before scripting:
 
+- compose primitives and use modeling operations: trim, boolean, offset, loft,
+  sweep, contour, mirror, array;
 - build one part and mirror/repeat;
 - loft sections through known datums;
 - extrude a footprint;
@@ -48,6 +50,20 @@ Pick the build strategy before scripting:
 
 Do not model one outer envelope when the building is visibly composed from
 repeated or mirrored parts.
+
+Do not draw a complex architectural section as a blind point cloud when it can
+be built from primitives. A stronger modeling sequence is usually:
+
+```text
+primitive frame
+-> curve/surface smoothing if needed
+-> trim/boolean/cut with explicit cutters
+-> transform/repeat/loft
+```
+
+Point-by-point construction is acceptable for final resampling or for curves
+extracted from a source, but it should not replace the building's constructive
+operations.
 
 ## Gate 3 - Missing View Check
 
@@ -152,3 +168,84 @@ Contour curve
 If the glass is placed coplanar with the contour edge, the balconies disappear
 and the facade reads as a flat box. Scripts must preserve slab thickness and
 balcony offset before adding facade transparency.
+
+## Infinity Tower Lesson
+
+When the user has already prepared Rhino curves for a reference case, those
+curves are the highest source authority for the parts they represent. For
+Infinity Tower / SOM, the user supplied:
+
+```text
+floor contour curve
+core circle
+vertical 300 m axis
+```
+
+The correct constructive grammar is:
+
+```text
+one exact floor contour
+-> repeated through height
+-> rotated around the core/axis
+-> lofted primary shaft
+-> floor/facade guides derived from the same transformed contours
+```
+
+Do not replace the supplied contour with an approximate square, rectangle,
+trapezoid, or generic chamfered section. The phrase "one section rotates with
+height" describes the transformation, not permission to invent the section.
+
+Required pre-build readback for similar Rhino-prepared cases:
+
+1. list visible curves;
+2. classify floor/core/axis;
+3. verify units and axis height;
+4. only then generate transformed copies and loft.
+
+## Shanghai Tower-Style Cut Section Lesson
+
+For a Shanghai Tower-style twisting shaft, the plan grammar is not a rounded
+blob. Treat the source as a small constructive sequence:
+
+```text
+triangle frame
+-> softened triangular floor plate
+-> rotated square cutter at one corner
+-> square subtracts the corner cut
+-> 4 primary control sections
+-> 180 degree twist over 632 m
+-> loft validation
+-> Contour floors only after the form is accepted
+```
+
+Gate requirement: if a cutter is part of the grammar, it must drive the final
+curve. A visible square beside the section is not enough. The section outline
+must come from `soft triangle minus square`, either with Rhino trim/boolean
+operations or an explicit 2D intersection algorithm. Separate hand-authored
+notch points are only acceptable as a temporary sketch and must be labelled as
+such.
+
+## Flock Chapel Shell Lesson
+
+For low shell buildings with a scaled plan underlay and section datums, the
+source authority split is:
+
+```text
+plan = footprint, shell length/depth, support/plinth locations
+sections = crest and valley heights, ground/contact logic
+photos = visual reading of wave shell, material, rim thickness
+```
+
+Do not add glass, mullions, timber posts, stairs, or other secondary elements
+until the shell passes the footprint and support gates. The acceptance order is:
+
+```text
+fit shell to scaled plan
+-> validate crest/valley heights from sections
+-> place concrete folds / plinth supports under low contact lines
+-> add shell thickness and rim
+-> only then add glass/posts under the accepted shell
+```
+
+A shell that reads visually close but is too long on the plan or floats above
+its folded concrete supports is a medium-success massing, not an accepted model.
