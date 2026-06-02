@@ -65,6 +65,40 @@ python scripts\build_semantic_smoke_rhino.py .\.tmp_cases\<case_id>\reports\sema
 This preview is a smoke artifact only. It creates massing boxes, an oval podium
 loft, and facade guide curves in Rhino. It is not final CAD validation.
 
+## RhinoCommon Helper
+
+Use the RhinoCommon helper when a modeling step should use native Rhino
+operations instead of approximating geometry with point lists.
+
+```powershell
+python scripts\rhino_common_helper.py list-ops
+python scripts\rhino_common_helper.py read-visible-curves
+python scripts\rhino_common_helper.py --dry-run read-visible-curves
+```
+
+Examples:
+
+```powershell
+python scripts\rhino_common_helper.py make-soft-closed-curve `
+  --points "[[0,0,0],[8,0,0],[10,5,0],[5,9,0],[0,5,0]]" `
+  --degree 3
+
+python scripts\rhino_common_helper.py curve-difference-2d `
+  --boundary "[[0,0,0],[10,0,0],[10,10,0],[0,10,0]]" `
+  --cutter "[[6,4,0],[12,4,0],[12,8,0],[6,8,0]]"
+
+python scripts\rhino_common_helper.py contour-brep `
+  --object-id "<rhino-object-guid>" `
+  --z-min 0 `
+  --z-max 300 `
+  --interval 3.2
+```
+
+Rhino must be open with Aurox MCP running. The helper calls Aurox
+`execute_csharp`, so it can grow into any small RhinoCommon operation we need:
+trim, split, boolean, contour, rebuild, intersections, loft seams, and source
+curve extraction.
+
 ## Scenario 2 MVP Route
 
 1. Create a cleanup case.

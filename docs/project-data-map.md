@@ -11,6 +11,7 @@
 | --- | --- | --- |
 | `ai_geometry_toolkit/` | Python CLI orchestration package | Active |
 | `tests/` | Unit tests and fixtures | Active |
+| `scripts/rhino_common_helper.py` | Aurox `execute_csharp` runner for native RhinoCommon operations | Active |
 | `decisions/` | Accepted technical decisions | Active |
 | `docs/` | Shared context system, data map, current directions | Active |
 | `.tmp_cases/` | Local smoke cases | Ignored |

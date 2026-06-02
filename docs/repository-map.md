@@ -20,6 +20,7 @@ This file tells a new user or AI agent what to read and what to ignore.
 | `docs/error-ledger.md` | Known failure modes and fixes. |
 | `docs/context-system.md` | Where to store decisions, cases, reports, and temporary work. |
 | `docs/project-data-map.md` | Where source data and related repos live. |
+| `docs/rhino-common-helper.md` | Native RhinoCommon helper layer through Aurox `execute_csharp`. |
 | `decisions/` | Dated accepted decisions. Read relevant files only. |
 
 ## External Repo Library
@@ -40,7 +41,7 @@ This file tells a new user or AI agent what to read and what to ignore.
 | --- | --- |
 | `ai_geometry_toolkit/` | Case-based CLI and orchestration code. |
 | `tests/` | Unit tests and fixtures. |
-| `scripts/` | Utility scripts when promoted out of experiments. |
+| `scripts/` | Utility scripts when promoted out of experiments, including RhinoCommon helpers. |
 | `TOOLKIT.md` | CLI contract and command notes. |
 
 ## Usually Do Not Read First

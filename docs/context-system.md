@@ -96,6 +96,11 @@ constraints, and references.
 Rhino/Aurox owns `.3dm` scene readback, scan, overlays, section extraction,
 scene-context edits, and Rhino visual review.
 
+`scripts/rhino_common_helper.py` owns native RhinoCommon operations that are
+too precise or too broad for the small typed Aurox tool set: curve trims,
+booleans, intersections, contours, NURBS rebuilds, and custom C# operations.
+Aurox remains the transport layer; RhinoCommon is the native modeling layer.
+
 `text-to-cad` / build123d owns clean parametric source and STEP-first candidate
 generation. It is a reference for Scenario 1 and a backend for clean candidates,
 not a replacement for Rhino scene understanding.

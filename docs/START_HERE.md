@@ -120,6 +120,9 @@ scene/context
 - Build massing first, detail second.
 - Validate with source-derived dimensions, section datums, and screenshots.
 - Preserve user-created source geometry and hidden references.
+- Use `scripts/rhino_common_helper.py` for native Rhino operations that should
+  not be approximated with point drawing: trim, split, boolean, intersections,
+  contours, NURBS rebuild, and custom RhinoCommon C#.
 
 ## External Repositories
 

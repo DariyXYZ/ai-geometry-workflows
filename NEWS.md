@@ -1,5 +1,33 @@
 # Новости
 
+## 2026-06-02 - Added RhinoCommon helper layer for native Rhino operations
+
+Added a first runnable RhinoCommon helper runner:
+
+```text
+scripts/rhino_common_helper.py
+```
+
+The helper uses Aurox `execute_csharp` as the transport and executes native
+RhinoCommon code inside the active Rhino document. This is the preferred route
+for operations that should not be approximated by point drawing:
+
+- visible source curve readback;
+- soft closed NURBS/control-point curves;
+- 2D curve boolean difference;
+- Brep contours;
+- custom C# operations through `run-csharp`.
+
+Updated:
+
+- `docs/rhino-common-helper.md`
+- `docs/context-system.md`
+- `docs/repository-map.md`
+- `docs/START_HERE.md`
+- `docs/project-data-map.md`
+- `TOOLKIT.md`
+- `tests/test_cli.py`
+
 ## 2026-06-01 - Flock chapel shell: medium-success massing, failed support/fit/detail gates
 
 The new shell-roof case reached a medium-success state: the generated roof

@@ -20,6 +20,15 @@ def run_cli(*args: str, cwd: Path = ROOT) -> subprocess.CompletedProcess[str]:
     )
 
 
+def run_helper(*args: str, cwd: Path = ROOT) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        [sys.executable, "scripts/rhino_common_helper.py", *args],
+        cwd=str(cwd),
+        text=True,
+        capture_output=True,
+    )
+
+
 class ToolkitCliTests(unittest.TestCase):
     def test_new_cleanup_case_validate_route_and_classify(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -268,6 +277,27 @@ class ToolkitCliTests(unittest.TestCase):
             self.assertEqual(data["validation"]["status"], "valid")
             self.assertIn("unknown part metadata key: banana", warnings)
             self.assertIn("unsupported post op: teleport", warnings)
+
+    def test_rhino_common_helper_lists_ops_and_dry_runs(self) -> None:
+        listed = run_helper("list-ops")
+        self.assertEqual(listed.returncode, 0, listed.stdout + listed.stderr)
+        self.assertIn("read-visible-curves", listed.stdout)
+        self.assertIn("curve-difference-2d", listed.stdout)
+
+        dry = run_helper("--dry-run", "read-visible-curves")
+        self.assertEqual(dry.returncode, 0, dry.stdout + dry.stderr)
+        self.assertIn("visible_curves", dry.stdout)
+        self.assertIn("RhinoDoc", dry.stdout)
+
+        soft = run_helper(
+            "--dry-run",
+            "make-soft-closed-curve",
+            "--points",
+            "[[0,0,0],[8,0,0],[10,5,0],[5,9,0],[0,5,0]]",
+        )
+        self.assertEqual(soft.returncode, 0, soft.stdout + soft.stderr)
+        self.assertIn("Curve.CreateControlPointCurve", soft.stdout)
+        self.assertIn("RC_HELPER_curves", soft.stdout)
 
 
 if __name__ == "__main__":
