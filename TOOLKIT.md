@@ -24,8 +24,8 @@ Before adding new durable project data, check:
 - `docs/project-data-map.md` - which local folder or external repo owns each kind of data.
 - `docs/development-state.md` - current active lane and next implementation steps.
 - `docs/error-ledger.md` - known failures that should shape new implementation.
-- `docs/reference-modeling-gates.md` - Scenario 1 source authority, constructive grammar, and missing-view checks.
-- `docs/external-repo-constructor-map.md` - quick map of reusable constructor pieces from Spellshape / Live OBJ related repositories.
+- `docs/scenarios/reference-modeling-gates.md` - Scenario 1 source authority, constructive grammar, and missing-view checks.
+- `docs/research/external-repo-constructor-map.md` - quick map of reusable constructor pieces from Spellshape / Live OBJ related repositories.
 
 ## Commands
 

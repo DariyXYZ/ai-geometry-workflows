@@ -1,0 +1,23 @@
+{
+  "bbox_m": [
+    -32.9,
+    -26.9,
+    0.0,
+    32.9,
+    26.8,
+    180.0
+  ],
+  "cell_pitch_m": 6.0,
+  "dimensions_m": [
+    65.7,
+    53.7,
+    180.0
+  ],
+  "floor_height_m": 3.6,
+  "gross_area_m2": 103968.0,
+  "max_floors": 50,
+  "max_height_m": 180.0,
+  "solid_cell_size_m": 5.7,
+  "terrace_caps": 11,
+  "voxel_stacks": 90
+}

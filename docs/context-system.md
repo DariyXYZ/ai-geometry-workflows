@@ -19,10 +19,10 @@ Do not store durable project state only in chat history.
 | Information | Save it here | Notes |
 | --- | --- | --- |
 | Current public project state | `README.md`, `docs/development-state.md` | Keep concise and current. |
-| Roadmap and open decisions | `ai_geometry_workplan.md`, `decisions/` | Decisions get dated files. |
+| Current roadmap and open decisions | `docs/development-state.md`, `decisions/` | Decisions get dated files. Historical roadmap snapshots live in `archive/reports/`. |
 | Data/source map | `docs/project-data-map.md` | Update when folders or source roles change. |
 | Known failures and lessons | `docs/error-ledger.md` | Record enough to avoid repeating work. |
-| Reference modeling gates | `docs/reference-modeling-gates.md` | Constructive grammar before geometry. |
+| Reference modeling gates | `docs/scenarios/reference-modeling-gates.md` | Constructive grammar before geometry. |
 | Tool commands and backend contracts | `TOOLKIT.md` | Keep runnable. |
 | Chronological updates | `NEWS.md` | One entry per material change. |
 | One modeling run | `cases/<case_id>/` | Tracked only when ready to share. |

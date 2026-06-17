@@ -1,0 +1,65 @@
+{
+  "V7": {
+    "bars": [
+      {
+        "base_plate_m2": 540.0,
+        "floors": 15,
+        "height_m": 57.6,
+        "name": "V7_Cascade_Slice_01_CityHigh",
+        "nominal_depth_m": 15.0
+      },
+      {
+        "base_plate_m2": 630.0,
+        "floors": 14,
+        "height_m": 54.0,
+        "name": "V7_Cascade_Slice_02",
+        "nominal_depth_m": 15.0
+      },
+      {
+        "base_plate_m2": 690.0,
+        "floors": 13,
+        "height_m": 50.4,
+        "name": "V7_Cascade_Slice_03",
+        "nominal_depth_m": 15.0
+      },
+      {
+        "base_plate_m2": 448.0,
+        "floors": 11,
+        "height_m": 43.2,
+        "name": "V7_Cascade_Slice_04",
+        "nominal_depth_m": 14.0
+      },
+      {
+        "base_plate_m2": 420.0,
+        "floors": 9,
+        "height_m": 36.0,
+        "name": "V7_Cascade_Slice_05_River",
+        "nominal_depth_m": 14.0
+      },
+      {
+        "base_plate_m2": 288.0,
+        "floors": 7,
+        "height_m": 28.8,
+        "name": "V7_Cascade_Slice_06_RiverLow",
+        "nominal_depth_m": 12.0
+      }
+    ],
+    "bbox": [
+      -26.0,
+      642.0,
+      122.4,
+      746.4
+    ],
+    "description": "unified BIG-like eco cascade: one simple low landscape platform plus a rhythmic chain of shallow residential slices stepping down toward the river",
+    "dimensions_m": [
+      148.4,
+      104.4,
+      57.6
+    ],
+    "floors_by_contour": 16,
+    "gross_area_m2": 39717.1,
+    "height_m": 57.6,
+    "layer": "TEP_Massing_V7_Unity_River_Cascade",
+    "platform_floors": 1
+  }
+}

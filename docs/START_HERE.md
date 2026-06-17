@@ -11,11 +11,18 @@ semantic OBJ experiments, and analysis-geometry cleanup.
 
 Read:
 
-1. `NEWS.md` - newest rules and project changes.
-2. `docs/reference-modeling-gates.md` - how to think before modeling.
-3. `docs/error-ledger.md` - mistakes that must not repeat.
-4. `docs/repository-map.md` - where everything lives.
-5. `docs/source-repos/README.md` - compressed memory of external repositories.
+1. `AI_NAVIGATOR.md` - portable entrypoint for any AI agent.
+2. `NEWS.md` - newest rules and project changes.
+3. `docs/library-index.md` - reusable strategy, pattern, source, and tool libraries.
+4. `docs/case-library.md` - successful, partial, and failed cases.
+5. `docs/scenarios/reference-modeling-gates.md` - how to think before modeling.
+6. `docs/error-ledger.md` - mistakes that must not repeat.
+7. `docs/obsidian-knowledge-map.md` - useful Obsidian research, tests, and errors
+   not fully migrated into compact repo pages.
+8. `docs/cases/recent-rhino-case-lessons.md` - recent Rhino/Aurox case results,
+   video scripts, and fresh mistakes.
+9. `docs/repository-map.md` - where everything lives.
+10. `docs/source-repos/README.md` - compressed memory of external repositories.
 
 If using an AI agent, point it at `AGENTS.md` first.
 
@@ -28,7 +35,7 @@ facades, elevations, dimensions, or underlays.
 
 Read:
 
-- `docs/reference-modeling-gates.md`
+- `docs/scenarios/reference-modeling-gates.md`
 - `docs/error-ledger.md`
 - `decisions/2026-05-28-constructive-grammar-before-reference-modeling.md`
 - `decisions/2026-06-01-grove-contour-derived-floor-plates.md`
@@ -57,6 +64,9 @@ Current hard lessons:
 - Grove at Grand Bay: for rotating orthogonal floor plates, derive intermediate
   floors by Rhino `Contour` from temporary lofts. Use contour curves as slab
   edges, offset glass inward, and give slabs thickness.
+- Recent video/reference cases: read `docs/cases/recent-rhino-case-lessons.md` for
+  the Infinity, Shanghai-style twist, Flock shell, symmetric stepped tower,
+  Aqua Tower, and Absolute World lessons before modeling or replaying them.
 
 ### Scenario 2 - Complex Model To Simplified Analysis Geometry
 
@@ -90,13 +100,21 @@ Avoid:
 
 ### Scenario 3 - Massing And Revisions From TEPs
 
-Use when the task is: generate or revise early massing from TEP, GFA/FAR,
-height, underlays, redlines, and user edits.
+Use when the task is: generate, revise, or review early massing/building
+proposals from TEP, GFA/FAR, height, underlays, redlines, user edits, or city
+approval checklist criteria.
 
 Read:
 
+- `docs/scenarios/tep-massing-scenario-subtypes.md`
+- `docs/scenarios/architecture-compliance-check.md`
+- `docs/libraries/massing-decision-library.md`
+- `docs/libraries/form-operator-library.md`
+- `docs/libraries/moscow-architecture-approval-checklist.md`
+- `docs/errors/moscow-bc-massing-error-library.md`
+- `docs/libraries/moscow-bc-site-zoning-patterns.md`
 - `docs/development-state.md`
-- `docs/development-directions-repo-fit.md`
+- `docs/research/development-directions-repo-fit.md`
 - `docs/source-repos/live-obj.md`
 - `docs/source-repos/spellshape-three-format.md`
 
@@ -104,12 +122,29 @@ Mandatory flow:
 
 ```text
 scene/context
--> constraints and TEP
--> named parts and parameters
--> generated variants
--> proxy metrics
--> surgical revisions
+-> classify Scenario 3 subtype
+-> if 3A/3B/3C: zoning / constraints / TEP / operators / variants
+-> if 3D: Rhino evidence / views / checklist criteria / approval risks
+-> movement/open-space/visual checks
+-> optional TEP/norm checks only when requested and sourced
+-> surgical revisions or compliance report
 ```
+
+For Moscow BC-style sites, do not generate geometry until the public spine,
+service edge, open-space type, buildable bands, height anchors, and at least one
+site-reasoned architectural operator are declared.
+
+Subscenario split:
+
+- `3A`: zoning, footprints, and entries are already given. Keep zoning as source
+  authority and work on form, height, TEP, and constraints.
+- `3B`: only plot and entries/access are given. First propose zoning and
+  tentative footprints, then wait for zoning approval before architecture.
+- `3C`: plot plus existing massing iteration are given. Use source massing as
+  TEP/gabarit anchor and improve image/form in roughly the same scale.
+- `3D`: existing building/massing/proposal needs review against an architecture
+  approval checklist. Inspect Rhino evidence and score criteria before
+  redesigning.
 
 ## Rhino/Aurox Modeling Rules
 
@@ -123,6 +158,9 @@ scene/context
 - Use `scripts/rhino_common_helper.py` for native Rhino operations that should
   not be approximated with point drawing: trim, split, boolean, intersections,
   contours, NURBS rebuild, and custom RhinoCommon C#.
+- For video/replay modeling, preserve the user-selected camera unless asked,
+  slow down visible construction, keep the model grounded, and remove obsolete
+  helper lines before the final pass.
 
 ## External Repositories
 
@@ -141,6 +179,7 @@ local source card first
 
 Every meaningful session should leave the repo better for the next fresh chat:
 
+- follow `docs/repo-maintenance-guide.md`;
 - update `NEWS.md`;
 - add or update one rule in `docs/`;
 - add a decision if a tradeoff became policy;

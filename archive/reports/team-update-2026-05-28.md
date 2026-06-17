@@ -21,7 +21,7 @@ layer, not as a replacement for our CAD backend.
 
 New direction document:
 
-- `docs/spellshape-live-obj-direction.md`
+- `docs/research/spellshape-live-obj-direction.md`
 
 Updated organizing docs:
 
@@ -29,7 +29,7 @@ Updated organizing docs:
 - `NEWS.md`
 - `docs/development-state.md`
 - `docs/project-data-map.md`
-- `ai_geometry_workplan.md`
+- `archive/reports/ai-geometry-workplan.md`
 
 ## Spellshape / Live OBJ Decision
 

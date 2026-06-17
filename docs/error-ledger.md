@@ -2,6 +2,52 @@
 
 This file records known failure modes so future work does not repeat them.
 
+## Moscow BC Massing
+
+See also:
+
+- `docs/errors/moscow-bc-massing-error-library.md`
+- `docs/libraries/moscow-bc-site-zoning-patterns.md`
+
+### Numeric Constraint Pass Is Not Massing Acceptance
+
+The 2026-06-16 Moscow BC variants `AI_BC_V01`, `AI_BC_V02`, and `AI_BC_V03`
+passed boundary, INSO, floor-module, and approximate GFA checks, but still
+failed architecturally. The main issue was site zoning: low bars cut through
+the plot, pedestrian movement became awkward, and the open spaces were leftover
+gaps rather than designed public space.
+
+Correct order:
+
+```text
+site zoning
+-> public spine and service edge
+-> buildable bands
+-> tower/base relationships
+-> architectural operator
+-> hard constraint and TEP validation
+```
+
+### Do Not Use Low Bars To Recover Area If They Cut Movement
+
+Long low volumes can define an address edge or courtyard edge. They fail when
+they behave as walls across the natural pedestrian desire line. Reserve the
+public spine before placing massing.
+
+### Box-Only Variants Are Rejected
+
+For Moscow BC early massing, every variant needs at least one named
+architectural operator tied to a site reason: rounded/soft corners, rotation,
+chamfer, cut-out, public void, setback, taper, or top-shape change. Plain boxes
+that only satisfy TEP are not acceptable.
+
+### Accidental Intersections Are Not Stylobates
+
+A tower and a bar touching or overlapping is not a podium strategy unless the
+relationship is declared and legible. Either make a true public stylobate with
+towers sitting fully on it, keep separate blocks with real spacing, or create a
+clear gate/bridge condition.
+
 ## Scenario 2 Mesh Cleanup
 
 ### `isSolid=True` Is Not Acceptance
@@ -236,6 +282,64 @@ scaled plan footprint
 
 If secondary elements appear below the shell or outside the accepted envelope,
 delete them and return to the massing/support gate.
+
+### Do Not Taper A Fixed-Envelope Stepped Tower
+
+The symmetric stepped residential tower case looked simple but exposed a
+repeatable error: stacked plans can change shape without changing their overall
+envelope. The user supplied three plan types and clarified the grammar:
+
+```text
+cross
+-> half-cross
+-> rectangle
+-> half-cross
+-> cross
+```
+
+The model should remain inside the same 27 m x 38.9 m bbox at every band and
+stay vertically symmetric. Earlier attempts changed the band footprint sizes,
+which made the building taper toward the center even though the source drawings
+did not support that. Another run placed all floors at one Z level, proving
+that vertical band placement must be validated explicitly.
+
+Correct workflow:
+
+```text
+draw all authoritative plan types at the same bbox
+-> extrude each band at its actual Z interval
+-> check vertical symmetry
+-> add context massing only after the main stack is correct
+```
+
+### Video Replay Scripts Must Respect The User Camera And Ground Contact
+
+The Aqua Tower and Absolute World video demonstrators showed that a modeling
+script for capture has different acceptance criteria from a static model. The
+geometry still must be correct, but the visible build sequence matters too.
+
+Failure modes:
+
+- moving the camera after the user has already framed the shot;
+- leaving the building floating above the base plate;
+- keeping oversized podiums or stale red construction lines after they stop
+  explaining the build;
+- creating the whole model too quickly for video capture.
+
+Correct workflow:
+
+```text
+preserve current view
+-> build slowly enough for screen recording
+-> keep base thin unless source says otherwise
+-> ground the tower on the base/site plate
+-> delete or hide obsolete helpers
+```
+
+For Aqua Tower-like slab towers, floor-by-floor wavy slabs plus a simple core
+can be a strong video massing. For Absolute World-like towers, repeated
+elliptical floor rings plus gradual rotation and vertical guide lines are
+enough for a clear demonstrator.
 
 ## Context Management
 

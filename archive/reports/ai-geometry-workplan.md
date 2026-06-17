@@ -82,7 +82,7 @@ reference / prompt
 -> STEP / 3DM validation
 ```
 
-See `docs/spellshape-live-obj-direction.md`.
+See `docs/research/spellshape-live-obj-direction.md`.
 
 ## Scenario 2 - Complex Rhino Model To Simplified Analysis Geometry
 

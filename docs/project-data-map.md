@@ -1,31 +1,56 @@
 # Project Data Map
 
-Эта карта объясняет, где живут активные данные и что означает каждый источник.
-Это рабочий индекс, а не полный dump всего проекта.
+This map explains where active data, source memory, external repos, and
+historical artifacts live. It is an index, not a full dump of the project.
 
 ## Active Repository
 
-`C:\VS Code\workfiles\ai-geometry-workflows`
+Root:
+
+```text
+C:\VS Code\workfiles\ai-geometry-workflows
+```
 
 | Path | Role | Status |
 | --- | --- | --- |
+| `AI_NAVIGATOR.md` | Portable first page for AI agents | Active |
+| `AGENTS.md` | Compact agent instructions | Active |
+| `README.md` | Human-facing overview | Active |
+| `NEWS.md` | Chronological project change log | Active |
+| `TOOLKIT.md` | Runnable command reference | Active |
 | `ai_geometry_toolkit/` | Python CLI orchestration package | Active |
 | `tests/` | Unit tests and fixtures | Active |
-| `scripts/rhino_common_helper.py` | Aurox `execute_csharp` runner for native RhinoCommon operations | Active |
-| `decisions/` | Accepted technical decisions | Active |
-| `docs/` | Shared context system, data map, current directions | Active |
+| `scripts/rhino_common_helper.py` | RhinoCommon helper through Aurox `execute_csharp` | Active |
+| `scripts/moscow_bc_massing/` | Current Moscow BC massing scripts and candidate data | Active project folder |
+| `decisions/` | Accepted dated technical decisions | Active |
+| `docs/` | Shared knowledge library | Active |
+| `archive/` | Old reports and one-off experiments | Historical |
 | `.tmp_cases/` | Local smoke cases | Ignored |
-| `cases/` | Shareable real cases | Ignored until consciously promoted |
-| `README.md` | GitHub landing page | Active |
-| `TOOLKIT.md` | Runnable command reference | Active |
-| `NEWS.md` | Хронология изменений на русском | Active |
-| `ai_geometry_workplan.md` | Scenario roadmap | Active |
-| `docs/reference-modeling-gates.md` | Scenario 1 source/grammar/missing-view gates | Active |
-| `TEAM_UPDATE_2026-05-21.md` | Team-facing status snapshot | Active |
+| `cases/` | Shareable real cases when consciously promoted | Ignored by default |
+
+## Active Docs Structure
+
+| Path | Role |
+| --- | --- |
+| `docs/START_HERE.md` | Scenario read sets |
+| `docs/repository-map.md` | Repo structure |
+| `docs/library-index.md` | Strategy, pattern, source, and tool index |
+| `docs/case-library.md` | Reusable case memory |
+| `docs/error-ledger.md` | Cross-scenario failure modes |
+| `docs/obsidian-knowledge-map.md` | Obsidian research and import backlog |
+| `docs/scenarios/` | Workflow gates and scenario-specific strategy |
+| `docs/libraries/` | Architectural and massing pattern libraries |
+| `docs/cases/` | Detailed case lessons and handoffs |
+| `docs/errors/` | Domain-specific anti-pattern libraries |
+| `docs/tools/` | Tool/backend notes |
+| `docs/research/` | Compressed research and direction synthesis |
+| `docs/source-repos/` | External repository cards |
 
 ## External Backend: text-to-cad
 
-`C:\VS Code\text-to-cad`
+```text
+C:\VS Code\text-to-cad
+```
 
 Role: clean external checkout of `earthtojake/text-to-cad`, used as a
 STEP-first CAD-as-code backend and reference implementation.
@@ -39,19 +64,18 @@ Important paths:
 
 Boundary:
 
-- For Scenario 1, use it as a reference for text/reference-to-CAD mechanics, but
-  extend the architecture workflow with facades, plans, elevations, generated
-  images, and source-authority gates.
+- For Scenario 1, use it as a reference for text/reference-to-CAD mechanics,
+  then extend it with source-authority gates and architectural grammar.
 - For Scenario 2, use it only after Rhino/Aurox has produced validated
-  parameters/sections for a clean STEP candidate.
-- For Scenario 3, use it where clean parametric massing candidates are useful,
-  while Rhino remains the active scene context.
+  parameters or sections for a clean candidate.
+- For Scenario 3, use it only where clean parametric massing candidates are
+  useful; Rhino remains the active scene context.
 
 It is not a direct mesh cleanup engine.
 
-## External Research Source: Spellshape / Live OBJ
+## External Research: Spellshape / Live OBJ
 
-Primary source:
+Primary sources:
 
 - https://spellshape.com/
 - https://github.com/StepanKukharskiy/live-obj
@@ -65,31 +89,24 @@ Related sources:
 - https://github.com/StepanKukharskiy/spellshape-agent
 - https://github.com/StepanKukharskiy/2DPlanTo3D
 
-Role: source for the `semantic_obj` / Live OBJ direction. It should inform our
+Role: source for the `semantic_obj` / Live OBJ direction. It should inform the
 intermediate representation, not become a hard dependency.
 
-Useful pattern:
+Repo summaries:
 
-```text
-standard OBJ mesh
-+ ignored-by-default #@ metadata
--> semantic part table
--> build123d / Rhino reconstruction
--> STEP / 3DM validation
-```
-
-Repo document:
-
-- `docs/spellshape-live-obj-direction.md`
-- `docs/external-repo-constructor-map.md` - repo-by-repo map and reusable constructor pieces.
-- `docs/development-directions-repo-fit.md` - scenario-by-scenario usefulness matrix.
+- `docs/research/spellshape-live-obj-direction.md`
+- `docs/research/external-repo-constructor-map.md`
+- `docs/research/development-directions-repo-fit.md`
+- `docs/source-repos/`
 
 ## Rhino Source And Evidence
 
-`C:\VS Code\workfiles\rhino\workflow-kit`
+```text
+C:\VS Code\workfiles\rhino\workflow-kit
+```
 
-Role: older working Rhino workflow kit. Scripts here should be migrated or
-wrapped into `ai_geometry_toolkit` instead of copied ad hoc.
+Role: older Rhino workflow kit. Scripts here should be migrated or wrapped into
+`ai_geometry_toolkit` instead of copied ad hoc.
 
 Useful paths:
 
@@ -98,43 +115,40 @@ Useful paths:
 - `rhino_workflow_kit/scripts/fit_architectural_sections.py`
 - `rhino_workflow_kit/reports/tower_bbox_classification.json`
 
-`C:\VS Code\workfiles\rhino\cad-mesh-reconstruction`
+```text
+C:\VS Code\workfiles\rhino\cad-mesh-reconstruction
+```
 
 Role: Scenario 2 attempt history and failure evidence.
 
 Useful paths:
 
-- `build_test_data2_clean_massing_v3.py` - closed baseline, too abstract.
-- `add_test_data2_v*_*.py` - failed/diagnostic reconstruction attempts.
-- `cad_mesh_reconstruction_status.json` - historical status.
+- `build_test_data2_clean_massing_v3.py`
+- `add_test_data2_v*_*.py`
+- `cad_mesh_reconstruction_status.json`
 
-Do not delete these until their lessons are captured in `docs/error-ledger.md`
-or a dated decision.
+Do not delete these until their lessons are captured in repo docs or dated
+decisions.
 
-## Shared Docs
+## Obsidian Vault
 
-`C:\VS Code\workfiles\computational-design-docs`
+```text
+C:\Users\dariy.n\Documents\Obsidian Vault
+```
 
-Role: team-facing reports and broader computational-design documentation.
+Use Obsidian for branch-independent context and raw research memory. Use repo
+docs for portable operating memory.
 
-Relevant files:
+Start with:
 
-- `ai_geometry_research.html`
-- `ai_geometry_workplan.md`
-- `README.md`
-- `index.html`
+- `docs/obsidian-knowledge-map.md`
 
-## Durable Personal Context
+## Archive
 
-`C:\Users\dariy.n\Documents\Obsidian Vault`
+| Path | Role |
+| --- | --- |
+| `archive/reports/` | Old public/team reports and roadmap snapshots |
+| `archive/rhino-experiments-2026-06/` | One-off Rhino scripts and generated PNG/JSON outputs |
 
-Primary notes:
-
-- `01 Dashboard/Codex Workspace Control Center.md`
-- `30 Projects/Skills and Publishing/Rhino Aurox Modeling/Project - Rhino Aurox Modeling Skill.md`
-- `30 Projects/Skills and Publishing/Rhino Aurox Modeling/AI Geometry Tool Iteration 2026-05-21.md`
-- `40 Decisions/Decision - Feature Preserving Mesh Reconstruction Path.md`
-- `40 Decisions/Decision - Rhino Reference Modeling Stage Gates.md`
-
-Use Obsidian for branch-independent context and reload instructions. Use repo
-docs for shared project truth.
+Archive files are not part of the normal AI read path. Promote useful lessons
+into `docs/`, `decisions/`, or `NEWS.md`.

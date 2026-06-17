@@ -1,5 +1,232 @@
 # Новости
 
+## 2026-06-17 - Added Scenario 3D architecture approval checklist review
+
+Added a new Scenario 3 subscenario for checking an existing building or massing
+proposal against city/architecture approval criteria:
+
+```text
+3D - architecture compliance checklist review
+```
+
+Source checklist:
+
+```text
+C:\Users\dariy.n\Downloads\2026_06_13_ДГП_Чек_лист_оценки_архитектурного_объекта_2.pdf
+```
+
+Added:
+
+- `docs/scenarios/architecture-compliance-check.md`
+- `docs/libraries/moscow-architecture-approval-checklist.md`
+
+Promoted workflow:
+
+```text
+connect Rhino MCP
+-> inspect scene, units, context, bbox, roof, entries, frontage, parking
+-> review main viewpoints and top/roof view
+-> classify object as visual / contextual / unknown
+-> score checklist criteria as pass / fail / not_enough_data / not_applicable
+-> separate design checklist review from optional TEP/norm checks
+-> report approval risks and recommended fixes
+```
+
+Updated Scenario 3 routing, massing decision rules, library index, repository
+map, and AI navigator.
+
+Later refinement:
+
+- rendered all 15 PDF pages as visual reference screenshots in
+  `archive/reference/dgp-architecture-checklist-2026-06-13/`;
+- added visual example signals to
+  `docs/libraries/moscow-architecture-approval-checklist.md`;
+- added percentage scoring: architectural image %, urban planning %, weighted
+  total %, and evidence coverage %;
+- made five review views the minimum evidence set: north, south, east, west,
+  and orthogonal top plan;
+- promoted the core interpretation from the presentation: the city evaluates a
+  complete urban image, not only facade appearance.
+
+## 2026-06-16 - Cleaned repo architecture for active AI workflow use
+
+Reorganized the repository into a stable active/archived structure:
+
+```text
+docs/scenarios/
+docs/libraries/
+docs/cases/
+docs/errors/
+docs/tools/
+docs/research/
+archive/reports/
+archive/rhino-experiments-2026-06/
+```
+
+Root now keeps only entrypoints, package/tooling files, and active project
+metadata. Historical public reports, old team updates, and one-off Rhino
+experiment scripts/outputs were moved to `archive/`.
+
+Added:
+
+- `docs/README.md`
+- `archive/README.md`
+- `scripts/README.md`
+
+Rewrote:
+
+- `README.md`
+- `docs/project-data-map.md`
+
+Updated links and maintenance rules across the repo so future knowledge can be
+added natively into the right folder instead of piling up in the root.
+
+## 2026-06-16 - Imported useful Obsidian massing memory into repo navigation
+
+Scanned the Obsidian vault for AI geometry, Moscow massing, Rhino/Aurox,
+testing, research, and error notes. Added a durable repo bridge:
+
+```text
+docs/obsidian-knowledge-map.md
+docs/libraries/form-operator-library.md
+docs/libraries/massing-decision-library.md
+```
+
+Promoted useful Obsidian lessons into the repo:
+
+- massing decision order must go from site/context to footprint, public space,
+  massing family, operators, risk, then CAD parameters;
+- every Scenario 3 variant needs a site-reasoned form operator, not plain boxes
+  or decorative moves;
+- Rhino pilot/test iterations v2-v8 are now referenced as case memory;
+- visual typology catalog, site-footprint system, image-to-CAD protocol, and
+  GhCrowdFlow movement research are listed as future imports.
+
+Updated:
+
+- `AI_NAVIGATOR.md`
+- `docs/START_HERE.md`
+- `docs/library-index.md`
+- `docs/case-library.md`
+- `docs/repository-map.md`
+
+## 2026-06-16 - Started universal AI architecture library structure
+
+Added the first navigation and maintenance layer for using this repo as a
+portable architecture/geometry memory system for any AI agent:
+
+```text
+AI_NAVIGATOR.md
+docs/library-index.md
+docs/case-library.md
+docs/repo-maintenance-guide.md
+```
+
+The repo is now explicitly organized around:
+
+- scenario strategies;
+- pattern and form libraries;
+- successful and failed case memory;
+- error and anti-pattern libraries;
+- compressed external source-repo knowledge;
+- Rhino/Aurox/build123d workflow gates.
+
+Updated:
+
+- `README.md`
+- `docs/START_HERE.md`
+- `docs/repository-map.md`
+
+## 2026-06-16 - Moscow BC massing zoning failure promoted to error library
+
+Added two durable Scenario 3 massing documents:
+
+```text
+docs/errors/moscow-bc-massing-error-library.md
+docs/libraries/moscow-bc-site-zoning-patterns.md
+```
+
+The 2026-06-16 `AI_BC_V01-V03` Rhino variants passed numeric checks
+(boundary, INSO, floor module, approximate GFA) but failed the design review:
+low bars cut pedestrian movement, V02 had accidental building intersections,
+the variants created narrow leftover gaps, and all variants were too box-like.
+
+Promoted rule:
+
+```text
+zoning skeleton first
+-> public spine/service edge/buildable bands/height anchors
+-> architectural operator
+-> geometry
+-> hard constraints and TEP validation
+```
+
+Updated:
+
+- `docs/error-ledger.md`
+- `docs/START_HERE.md`
+- `docs/repository-map.md`
+- `docs/cases/moscow-bc-massing-modeling-brief-2026-06-16.md`
+
+## 2026-06-16 - Split Scenario 3 into TEP/massing subscenarios
+
+Added:
+
+```text
+docs/scenarios/tep-massing-scenario-subtypes.md
+```
+
+Scenario 3 now starts by classifying the task:
+
+- `3A`: zoning, footprints, and entries are already given. Preserve them and
+  work on building form, height, TEP, and constraints.
+- `3B`: only plot boundary and entries/access are given. First create zoning
+  and tentative footprints, then get zoning approval before architecture.
+- `3C`: plot plus existing massing iteration are given. Use the source massing
+  as the TEP/gabarit anchor and focus on image/form revision.
+
+Updated:
+
+- `docs/START_HERE.md`
+- `docs/repository-map.md`
+- `docs/development-state.md`
+- `docs/libraries/moscow-bc-site-zoning-patterns.md`
+
+## 2026-06-04 - Preserved recent Rhino/Aurox case memory for fresh chats
+
+Added a compact durable case-memory file:
+
+```text
+docs/cases/recent-rhino-case-lessons.md
+```
+
+It records the latest results, techniques, and mistakes from:
+
+- Infinity Tower / SOM;
+- Shanghai Tower-style twisted shaft;
+- Flock chapel shell;
+- symmetric stepped residential tower;
+- Aqua Tower / Studio Gang video demonstrator;
+- Absolute World Towers video demonstrator.
+
+Key rules promoted:
+
+- user-prepared Rhino curves can be the highest source authority;
+- soft triangular twist sections must be built from primitive/cutter logic, not
+  organic point blobs;
+- shell cases must pass footprint/support gates before glass and posts;
+- fixed-envelope stepped towers must not taper when the plan types change;
+- video replay scripts must preserve the user camera, slow construction down,
+  ground the building, and remove obsolete helper geometry.
+
+Updated:
+
+- `AGENTS.md`
+- `docs/START_HERE.md`
+- `docs/repository-map.md`
+- `docs/error-ledger.md`
+- Obsidian: `30 Projects/AI CAD Platform/AI CAD Platform - Current Status.md`
+
 ## 2026-06-02 - Added RhinoCommon helper layer for native Rhino operations
 
 Added a first runnable RhinoCommon helper runner:
@@ -20,7 +247,7 @@ for operations that should not be approximated by point drawing:
 
 Updated:
 
-- `docs/rhino-common-helper.md`
+- `docs/tools/rhino-common-helper.md`
 - `docs/context-system.md`
 - `docs/repository-map.md`
 - `docs/START_HERE.md`
@@ -51,7 +278,7 @@ glass/posts only after the shell/support relationship is accepted.
 Updated:
 
 - `docs/error-ledger.md`
-- `docs/reference-modeling-gates.md`
+- `docs/scenarios/reference-modeling-gates.md`
 - `decisions/2026-06-01-flock-chapel-shell-medium-success.md`
 
 ## 2026-06-01 - Shanghai Tower v5: square cutter must be the actual section boolean
@@ -77,7 +304,7 @@ actual square/triangle intersection or an equivalent explicit 2D trim operation.
 Updated:
 
 - `docs/error-ledger.md`
-- `docs/reference-modeling-gates.md`
+- `docs/scenarios/reference-modeling-gates.md`
 - `decisions/2026-06-01-shanghai-tower-square-cutter-source-grammar.md`
 
 ## 2026-06-01 - Зафиксирован урок Shanghai Tower: cut-out section, not organic blob
@@ -122,7 +349,7 @@ visible source curves
 Обновлено:
 
 - `docs/error-ledger.md`
-- `docs/reference-modeling-gates.md`
+- `docs/scenarios/reference-modeling-gates.md`
 - `decisions/2026-06-01-infinity-tower-user-rhino-curves-source-authority.md`
 
 ## 2026-06-01 - Добавлен первый `validate-candidate` gate
@@ -171,7 +398,7 @@ section/profile deltas, source overlays, fixed captures и review по част�
 
 - `AGENTS.md`
 - `docs/START_HERE.md`
-- `docs/reference-modeling-gates.md`
+- `docs/scenarios/reference-modeling-gates.md`
 - `docs/error-ledger.md`
 - Obsidian: `50 Research/Karlatornet Vertical Section Loft Workflow 2026-06-01.md`
 
@@ -218,7 +445,7 @@ section/profile deltas, source overlays, fixed captures и review по част�
 
 Обновлено:
 
-- `docs/reference-modeling-gates.md`
+- `docs/scenarios/reference-modeling-gates.md`
 - `docs/error-ledger.md`
 - `decisions/2026-06-01-grove-contour-derived-floor-plates.md`
 - Obsidian: `50 Research/Grove Contour Floor Plates 2026-06-01.md`
@@ -231,7 +458,7 @@ section/profile deltas, source overlays, fixed captures и review по част�
 
 Добавлено:
 
-- `docs/reference-modeling-gates.md`
+- `docs/scenarios/reference-modeling-gates.md`
 - `decisions/2026-05-28-constructive-grammar-before-reference-modeling.md`
 - обновления в `docs/error-ledger.md`, `docs/context-system.md`, `docs/development-state.md`
 - Obsidian note: `50 Research/Constructive Grammar Before Geometry 2026-05-28.md`
@@ -253,7 +480,7 @@ source authority
 
 Добавлен быстрый индекс по репозиториям StepanKukharskiy, чтобы не перечитывать их заново при поиске полезных элементов конструктора:
 
-- `docs/external-repo-constructor-map.md`
+- `docs/research/external-repo-constructor-map.md`
 - Obsidian: `50 Research/External Repo Constructor Map for Text-to-CAD 2026-05-28.md`
 
 В карту вынесены источники и конкретные reusable pieces:
@@ -284,7 +511,7 @@ source authority
 
 ## 2026-05-28 - Разложена полезность внешних repo pieces по трем направлениям
 
-Добавлен документ `docs/development-directions-repo-fit.md`.
+Добавлен документ `docs/research/development-directions-repo-fit.md`.
 
 Вывод:
 
@@ -326,7 +553,7 @@ prompt / reference / intent
 Использовать его как источник паттерна для собственного `semantic_obj` /
 `live_obj_import` этапа.
 
-Документ направления: `docs/spellshape-live-obj-direction.md`.
+Документ направления: `docs/research/spellshape-live-obj-direction.md`.
 
 ## 2026-05-28 - Пройден первый smoke test `semantic_obj`
 

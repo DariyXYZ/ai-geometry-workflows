@@ -363,7 +363,7 @@ Adaption for us:
 
 ## Repo-by-Repo Usefulness
 
-Scenario-specific fit is tracked separately in `docs/development-directions-repo-fit.md`.
+Scenario-specific fit is tracked separately in `docs/research/development-directions-repo-fit.md`.
 
 | Repo | Usefulness | Why |
 | --- | --- | --- |

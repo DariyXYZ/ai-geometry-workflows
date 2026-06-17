@@ -5,11 +5,12 @@ continue the geometry workflow without chat history or Obsidian.
 
 Read these files first, in this order:
 
-1. `docs/START_HERE.md`
-2. `NEWS.md`
-3. `docs/reference-modeling-gates.md`
-4. `docs/error-ledger.md`
-5. `docs/repository-map.md`
+1. `AI_NAVIGATOR.md`
+2. `docs/START_HERE.md`
+3. `NEWS.md`
+4. `docs/repository-map.md`
+5. `docs/library-index.md`
+6. `docs/error-ledger.md`
 
 Then choose the scenario-specific read set from `docs/START_HERE.md`.
 
@@ -35,6 +36,10 @@ control sections -> temporary loft -> Rhino Contour -> final floor contours
   and mirror/repeat logic.
 - For balcony towers, the contour curve is the slab/balcony edge, not the glass
   line. Offset glass inward and give slabs real thickness.
+- Recent Rhino/Aurox case memory lives in
+  `docs/cases/recent-rhino-case-lessons.md`. Read it before replaying or extending
+  Infinity Tower, Shanghai Tower-style twists, Flock chapel shells, symmetric
+  stepped towers, Aqua Tower, or Absolute World Towers.
 
 ## Current Product Vectors
 
@@ -42,23 +47,26 @@ control sections -> temporary loft -> Rhino Contour -> final floor contours
    elevations, dimensions, and Rhino underlays.
 2. `Complex model to simplified analysis geometry`: simplify existing Rhino
    architecture into validated analysis geometry.
-3. `Massing and revisions from TEPs`: generate and revise early massing from
-   constraints, redlines, underlays, and metrics.
+3. `Massing, TEPs, and checklist review`: generate, revise, or review early
+   massing/building proposals from constraints, redlines, underlays, metrics,
+   and architecture approval checklist criteria.
 
 ## External Repo Memory
 
 Do not reread external repositories blindly. Start from:
 
 - `docs/source-repos/README.md`
-- `docs/external-repo-constructor-map.md`
-- `docs/development-directions-repo-fit.md`
+- `docs/research/external-repo-constructor-map.md`
+- `docs/research/development-directions-repo-fit.md`
 
 Use external GitHub only when the source card says the local summary is
 insufficient.
 
 ## Where To Save New Knowledge
 
-- New durable workflow rule: `docs/reference-modeling-gates.md`
+- New durable workflow rule: `docs/scenarios/reference-modeling-gates.md`
+- New massing/checklist subscenario: `docs/scenarios/tep-massing-scenario-subtypes.md`
+- Architecture approval checklist review: `docs/scenarios/architecture-compliance-check.md`
 - Failure or repeated mistake: `docs/error-ledger.md`
 - Accepted tradeoff/decision: `decisions/YYYY-MM-DD-short-title.md`
 - External repo finding: `docs/source-repos/`

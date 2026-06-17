@@ -1,0 +1,44 @@
+{
+  "V6": {
+    "bbox": [
+      -25.0,
+      645.0,
+      122.0,
+      747.0
+    ],
+    "description": "fragmented eco-residential massing: three slim cascading towers on a broken two-floor stylobate, with view gaps and river-facing terraces",
+    "dimensions_m": [
+      147.0,
+      102.0,
+      64.8
+    ],
+    "floors_by_contour": 18,
+    "gross_area_m2": 38612.0,
+    "height_m": 64.8,
+    "layer": "TEP_Massing_V6_Cascade_Towers",
+    "podium_floors": 2,
+    "towers": [
+      {
+        "floors": 12,
+        "height_m": 50.4,
+        "name": "V6_West_Cascade_Tower",
+        "nominal_depth_m": 18.0,
+        "typical_plate_m2": 900.0
+      },
+      {
+        "floors": 16,
+        "height_m": 64.8,
+        "name": "V6_Central_View_Tower",
+        "nominal_depth_m": 17.0,
+        "typical_plate_m2": 816.0
+      },
+      {
+        "floors": 11,
+        "height_m": 46.8,
+        "name": "V6_River_Cascade_Tower",
+        "nominal_depth_m": 16.0,
+        "typical_plate_m2": 672.0
+      }
+    ]
+  }
+}

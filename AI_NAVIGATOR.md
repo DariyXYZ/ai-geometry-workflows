@@ -1,0 +1,160 @@
+# AI Navigator
+
+This repository is a portable architecture and geometry workflow library for AI
+agents. It should give a new model enough structure to think architecturally,
+use Rhino/Aurox or another CAD bridge responsibly, avoid known failures, and add
+new reusable knowledge after each project.
+
+Use this file as the first page when giving the repo to any AI.
+
+## What This Repo Is
+
+The repo combines five kinds of memory:
+
+1. **Scenario strategies** - workflows for different task types.
+2. **Pattern libraries** - architectural approaches, form operators, zoning
+   patterns, and modeling grammars.
+3. **Case library** - successful, partial, and failed Rhino/CAD experiments.
+4. **Error library** - bad patterns, repeated mistakes, and rejection gates.
+5. **Source-repo memory** - compressed notes from external repositories so an AI
+   does not reread everything from scratch.
+
+The goal is not to store every chat transcript. The goal is to preserve reusable
+decision structure.
+
+## Fast Load For Any AI
+
+Read in this order:
+
+1. `AI_NAVIGATOR.md` - this file.
+2. `docs/START_HERE.md` - scenario read sets.
+3. `docs/repository-map.md` - where things live.
+4. `docs/library-index.md` - pattern, strategy, source, and tool libraries.
+5. `docs/case-library.md` - known successful and failed cases.
+6. `docs/error-ledger.md` - mistakes that must not repeat.
+7. `docs/obsidian-knowledge-map.md` - useful vault research not fully migrated.
+8. `NEWS.md` - newest changes and promoted rules.
+
+Then load only the scenario-specific documents. Do not read the whole repo by
+default.
+
+## Scenario Router
+
+### Scenario 1 - Reference To Model
+
+Use when building architecture from photos, plans, elevations, dimensions,
+underlays, text descriptions, or reference images.
+
+Read:
+
+- `docs/scenarios/reference-modeling-gates.md`
+- `docs/cases/recent-rhino-case-lessons.md`
+- relevant `decisions/`
+
+First question:
+
+```text
+What is the source authority, and what constructive grammar makes the object?
+```
+
+### Scenario 2 - Complex Model To Simplified Analysis Geometry
+
+Use when simplifying an existing Rhino/architecture model for wind comfort,
+analysis geometry, or clean massing.
+
+Read:
+
+- `docs/development-state.md`
+- `docs/error-ledger.md`
+- `decisions/2026-05-19-feature-preserving-mesh-reconstruction.md`
+- `decisions/2026-05-20-nurbs-restart-from-named-rails.md`
+
+First question:
+
+```text
+What architectural parts must be preserved, and which details can be discarded?
+```
+
+### Scenario 3 - Massing And Revisions From TEPs
+
+Use when generating, revising, or reviewing early massing/building proposals
+from plot boundary, TEP/GFA/FAR, height constraints, red lines, INSO,
+underlays, user feedback, or approval checklist criteria.
+
+Read:
+
+- `docs/scenarios/tep-massing-scenario-subtypes.md`
+- `docs/libraries/massing-decision-library.md`
+- `docs/libraries/form-operator-library.md`
+- `docs/scenarios/architecture-compliance-check.md`
+- `docs/libraries/moscow-architecture-approval-checklist.md`
+- `docs/libraries/moscow-bc-site-zoning-patterns.md`
+- `docs/errors/moscow-bc-massing-error-library.md`
+
+First question:
+
+```text
+Is this 3A fixed zoning, 3B plot-plus-entries, 3C existing-massing revision,
+or 3D checklist/compliance review?
+```
+
+## Non-Negotiable Operating Rules
+
+- Do not invent geometry before classifying the scenario.
+- Do not treat numeric validation as design acceptance.
+- Do not use facade/detail to hide wrong massing.
+- Do not replace user-provided source geometry, footprints, entries, or curves
+  with generic parametric guesses.
+- Preserve source and context layers in Rhino.
+- If using Rhino/Aurox, validate by scene units, bbox/sections, source
+  authority, and visible review state.
+- If a case reveals a reusable failure, add it to an error library before
+  moving on.
+
+## Where To Look
+
+| Need | Start here |
+| --- | --- |
+| Quick scenario choice | `docs/START_HERE.md` |
+| Repository structure | `docs/repository-map.md` |
+| Pattern and strategy library | `docs/library-index.md` |
+| Obsidian research map | `docs/obsidian-knowledge-map.md` |
+| Massing decision order | `docs/libraries/massing-decision-library.md` |
+| Massing form operators | `docs/libraries/form-operator-library.md` |
+| Approval checklist review | `docs/scenarios/architecture-compliance-check.md` |
+| Moscow architecture checklist | `docs/libraries/moscow-architecture-approval-checklist.md` |
+| Successful/failed examples | `docs/case-library.md` |
+| Known mistakes | `docs/error-ledger.md` |
+| Recent Rhino lessons | `docs/cases/recent-rhino-case-lessons.md` |
+| Accepted decisions | `decisions/` |
+| External repo memory | `docs/source-repos/` |
+| Current technical state | `docs/development-state.md` |
+| How to add knowledge | `docs/repo-maintenance-guide.md` |
+
+## Knowledge Shape
+
+When adding reusable knowledge, prefer one of these forms:
+
+```text
+strategy: when to use, inputs, workflow, acceptance
+pattern: intent, geometry logic, constraints, examples, failure modes
+case: context, result, what worked, what failed, promoted rules
+error: symptom, cause, detection, correction, gate
+decision: accepted tradeoff, date, reason, consequences
+source card: external repo idea, usable pieces, non-goals
+```
+
+## Rhino/Aurox Session Rule
+
+Before modeling or checklist review:
+
+1. Read the scenario-specific gate.
+2. Inspect source layers and units.
+3. Decide what is source authority.
+4. Define the validation gates.
+5. Build the smallest useful geometry, or collect checklist evidence if this is
+   a review task.
+6. Validate numerically, visually, and against checklist criteria when relevant.
+7. Record reusable results back into this repo.
+
+This repo should make the AI slower at the start and much less random later.

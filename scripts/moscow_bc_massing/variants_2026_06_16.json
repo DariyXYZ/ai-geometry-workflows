@@ -1,0 +1,53 @@
+{
+  "target_gfa": 228917.306,
+  "variants": [
+    {
+      "layer": "AI_BC_V01",
+      "color": [65, 125, 165],
+      "strategy": "envelope_following_field",
+      "parts": [
+        {"name": "V01_SW_high_plate", "cx": 248, "cy": 4378, "w": 28, "d": 42, "rot": 0, "floors": 32},
+        {"name": "V01_south_mid_high", "cx": 318, "cy": 4414, "w": 30, "d": 42, "rot": 0, "floors": 42},
+        {"name": "V01_west_mid_high", "cx": 190, "cy": 4422, "w": 26, "d": 36, "rot": 0, "floors": 36},
+        {"name": "V01_central_plate", "cx": 263, "cy": 4500, "w": 28, "d": 40, "rot": 0, "floors": 26},
+        {"name": "V01_mid_terrace", "cx": 349, "cy": 4518, "w": 36, "d": 38, "rot": 0, "floors": 18},
+        {"name": "V01_inner_low_plate", "cx": 382, "cy": 4453, "w": 24, "d": 40, "rot": 0, "floors": 12},
+        {"name": "V01_east_low_block", "cx": 443, "cy": 4516, "w": 34, "d": 34, "rot": 0, "floors": 8},
+        {"name": "V01_north_low_bar", "cx": 440, "cy": 4584, "w": 30, "d": 38, "rot": 0, "floors": 14},
+        {"name": "V01_public_base_west", "cx": 275, "cy": 4448, "w": 120, "d": 22, "rot": 0, "floors": 2},
+        {"name": "V01_public_base_east", "cx": 382, "cy": 4555, "w": 118, "d": 22, "rot": 0, "floors": 2}
+      ]
+    },
+    {
+      "layer": "AI_BC_V02",
+      "color": [145, 105, 70],
+      "strategy": "urban_frame_with_accents",
+      "parts": [
+        {"name": "V02_south_address_bar", "cx": 275, "cy": 4415, "w": 140, "d": 18, "rot": 0, "floors": 12},
+        {"name": "V02_central_frame_bar", "cx": 328, "cy": 4490, "w": 126, "d": 20, "rot": 0, "floors": 12},
+        {"name": "V02_north_frame_bar", "cx": 360, "cy": 4575, "w": 110, "d": 18, "rot": 0, "floors": 10},
+        {"name": "V02_east_low_bar", "cx": 430, "cy": 4534, "w": 76, "d": 18, "rot": 0, "floors": 8},
+        {"name": "V02_SW_accent", "cx": 240, "cy": 4382, "w": 30, "d": 42, "rot": 0, "floors": 48},
+        {"name": "V02_south_mid_accent", "cx": 315, "cy": 4410, "w": 30, "d": 40, "rot": 0, "floors": 38},
+        {"name": "V02_north_marker", "cx": 350, "cy": 4570, "w": 26, "d": 36, "rot": 0, "floors": 13},
+        {"name": "V02_east_low_marker", "cx": 470, "cy": 4546, "w": 28, "d": 22, "rot": 0, "floors": 7},
+        {"name": "V02_public_base", "cx": 345, "cy": 4520, "w": 146, "d": 28, "rot": 0, "floors": 2}
+      ]
+    },
+    {
+      "layer": "AI_BC_V03",
+      "color": [90, 145, 95],
+      "strategy": "compact_base_moderated_dominant",
+      "parts": [
+        {"name": "V03_moderated_dominant", "cx": 230, "cy": 4385, "w": 32, "d": 42, "rot": 0, "floors": 50},
+        {"name": "V03_secondary_high", "cx": 325, "cy": 4418, "w": 32, "d": 42, "rot": 0, "floors": 38},
+        {"name": "V03_central_shoulder", "cx": 260, "cy": 4495, "w": 36, "d": 42, "rot": 0, "floors": 26},
+        {"name": "V03_mid_shoulder", "cx": 355, "cy": 4525, "w": 38, "d": 38, "rot": 0, "floors": 17},
+        {"name": "V03_north_low_volume", "cx": 445, "cy": 4580, "w": 30, "d": 38, "rot": 0, "floors": 9},
+        {"name": "V03_compact_base_west", "cx": 300, "cy": 4450, "w": 150, "d": 24, "rot": 0, "floors": 4},
+        {"name": "V03_compact_base_north", "cx": 375, "cy": 4560, "w": 120, "d": 24, "rot": 0, "floors": 4},
+        {"name": "V03_compact_base_east", "cx": 440, "cy": 4525, "w": 54, "d": 28, "rot": 0, "floors": 4}
+      ]
+    }
+  ]
+}

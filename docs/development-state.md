@@ -67,13 +67,13 @@ anchors, params, controls, locks, constraints.
 
 Статус: исследовательское направление, не production dependency.
 
-Подробнее: `docs/spellshape-live-obj-direction.md`.
+Подробнее: `docs/research/spellshape-live-obj-direction.md`.
 
-Быстрая карта внешних репозиториев и элементов конструктора: `docs/external-repo-constructor-map.md`.
+Быстрая карта внешних репозиториев и элементов конструктора: `docs/research/external-repo-constructor-map.md`.
 
-Матрица применимости по трем направлениям: `docs/development-directions-repo-fit.md`.
+Матрица применимости по трем направлениям: `docs/research/development-directions-repo-fit.md`.
 
-Обязательные gates для Scenario 1 reference modeling: `docs/reference-modeling-gates.md`.
+Обязательные gates для Scenario 1 reference modeling: `docs/scenarios/reference-modeling-gates.md`.
 
 ### 3. CAD-as-code backend
 
@@ -154,6 +154,17 @@ prompt/reference -> named parts/controls/anchors -> CAD script.
 Входы: active scene, red lines, underlays, rough massing, TEPs, GFA/FAR/height
 constraints, user revisions.
 
+Scenario 3 is split into subtypes in `docs/scenarios/tep-massing-scenario-subtypes.md`:
+
+- `3A`: zoning, footprints, and entries are already given. Keep them as source
+  authority and work on building form, height, TEP, and constraints.
+- `3B`: only plot boundary and entries/access are given. First propose zoning
+  and tentative footprints, then wait for zoning approval before architectural
+  form work.
+- `3C`: plot plus existing massing iteration are given. Use the existing
+  massing as TEP/gabarit anchor and improve image/form in roughly the same
+  scale.
+
 Spellshape / Live OBJ тоже может быть полезен как semantic draft layer для
 вариантов до build123d/Rhino reconstruction.
 
@@ -170,9 +181,9 @@ Spellshape / Live OBJ тоже может быть полезен как semanti
 4. Построить `v4_refined_clean_massing` как real case.
 5. Расширить прототип `semantic_obj`:
    `reports/semantic_plan.json` -> build123d/Rhino candidate script.
-6. Следующие куски из `docs/external-repo-constructor-map.md`:
+6. Следующие куски из `docs/research/external-repo-constructor-map.md`:
    contour extraction и surgical patching.
-7. Использовать `docs/development-directions-repo-fit.md` перед выбором следующего направления, чтобы не тащить Scenario 1/3 инструменты в Scenario 2 cleanup.
+7. Использовать `docs/research/development-directions-repo-fit.md` перед выбором следующего направления, чтобы не тащить Scenario 1/3 инструменты в Scenario 2 cleanup.
 8. Для каждого Scenario 1 case перед build stage писать constructive grammar и missing-view check.
 9. Продвигать stable case outputs только после validation reports.
 10. Поддерживать `AGENTS.md`, `docs/START_HERE.md` и `docs/source-repos/` как

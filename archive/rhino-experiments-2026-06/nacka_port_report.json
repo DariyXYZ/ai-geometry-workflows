@@ -1,0 +1,14 @@
+{
+  "facade_bay_m": 3.6,
+  "floor_to_floor_m": 3.3,
+  "left_tower_floors": 31,
+  "left_tower_height_m": 102.3,
+  "notes": "Approximate reconstruction from provided model image and sections; facade grid is simplified on key visible faces.",
+  "overall_bbox_estimate_m": [
+    155,
+    105,
+    112.2
+  ],
+  "right_tower_floors": 34,
+  "right_tower_height_m": 112.2
+}

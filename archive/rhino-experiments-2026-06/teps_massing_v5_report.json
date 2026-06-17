@@ -1,0 +1,23 @@
+{
+  "V5": {
+    "avg_floor_plate_m2": 5282.5,
+    "base_floor_plate_m2": 5941.5,
+    "bbox": [
+      -26.0,
+      642.0,
+      100.0,
+      743.0
+    ],
+    "description": "calm BIG-inspired eco-residential cascade: regular floor plates, continuous river-facing balcony terraces, no twisted facades",
+    "dimensions_m": [
+      126.0,
+      101.0,
+      57.6
+    ],
+    "floors_by_contour": 16,
+    "gross_area_m2": 84519.5,
+    "height_m": 57.6,
+    "layer": "TEP_Massing_V5_BIG_River_Cascade",
+    "top_floor_plate_m2": 4662.6
+  }
+}

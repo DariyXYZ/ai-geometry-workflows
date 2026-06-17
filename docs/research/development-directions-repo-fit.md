@@ -26,7 +26,7 @@ Scenario 1 starts from images, plans, elevations, drawings, generated references
 First gate: identify the constructive grammar before building geometry. For a
 tower, this may be "four repeated square shafts around a cross" rather than
 "one outer envelope". If the grammar cannot be proven from the supplied views,
-request more views before modeling. See `docs/reference-modeling-gates.md`.
+request more views before modeling. See `docs/scenarios/reference-modeling-gates.md`.
 
 Most useful pieces:
 

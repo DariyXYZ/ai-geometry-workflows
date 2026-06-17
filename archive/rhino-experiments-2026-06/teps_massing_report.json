@@ -1,0 +1,56 @@
+{
+  "V1": {
+    "bbox": [
+      -28.0,
+      642.0,
+      118.0,
+      744.0
+    ],
+    "description": "single tapered fan volume, terraces and prow pulled toward the river",
+    "dimensions_m": [
+      146.0,
+      102.0,
+      64.8
+    ],
+    "floors_by_contour": 18,
+    "gross_area_m2": 86229.4,
+    "height_m": 64.8,
+    "layer": "TEP_Massing_V1_River_Fan"
+  },
+  "V2": {
+    "bbox": [
+      -30.0,
+      647.0,
+      127.0,
+      746.0
+    ],
+    "description": "two terraced wings frame a central river-view court",
+    "dimensions_m": [
+      157.0,
+      99.0,
+      50.4
+    ],
+    "floors_by_contour": 14,
+    "gross_area_m2": 48792.6,
+    "height_m": 50.4,
+    "layer": "TEP_Massing_V2_Terraced_Crescent"
+  },
+  "V3": {
+    "bbox": [
+      -25.0,
+      650.0,
+      129.0,
+      748.0
+    ],
+    "description": "two slender markers leave a clear view slot to the river",
+    "dimensions_m": [
+      154.0,
+      98.0,
+      68.4
+    ],
+    "floors_by_contour": 19,
+    "gross_area_m2": 41202.1,
+    "height_m": 68.4,
+    "layer": "TEP_Massing_V3_Twin_Beacons"
+  }
+}
