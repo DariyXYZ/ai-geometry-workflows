@@ -1,5 +1,30 @@
 # Новости
 
+## 2026-06-17 - Refined architecture checklist reporting after Flow_Model_V2 review
+
+Updated Scenario 3D after reviewing `Flow_Model_V2.3dm` against the Moscow
+architecture checklist.
+
+Key corrections:
+
+- reports must start with the PDF checklist criteria, not with free-form
+  architectural commentary;
+- classify object type first: `Видовой / Средовой / Не определено`;
+- for a free-standing **Видовой** object, do not mechanically penalize lack of
+  dense street frontage unless the site condition actually requires it;
+- use binary `yes/no` for factual criteria such as two presented variants,
+  architectural lighting, or visible surface parking;
+- use exact evidence-based percentages for visual criteria instead of converting
+  `pass/partial/fail` to round `100/50/0`;
+- avoid vague report phrases such as "пятый фасад решен частично"; state what
+  is visible and what is missing.
+
+Updated:
+
+- `docs/scenarios/architecture-compliance-check.md`
+- `docs/libraries/moscow-architecture-approval-checklist.md`
+- `docs/error-ledger.md`
+
 ## 2026-06-17 - Added Scenario 3D architecture approval checklist review
 
 Added a new Scenario 3 subscenario for checking an existing building or massing

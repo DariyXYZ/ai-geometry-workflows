@@ -63,7 +63,7 @@ connect Rhino MCP
 -> collect building bbox, heights, footprint, roof state, entries, public edges
 -> capture/review evidence views: north, south, east, west, orthogonal top plan
 -> classify object as visual / contextual / unknown
--> score each checklist criterion: 0 / 0.5 / 1 plus status
+-> score each checklist criterion from visible evidence, with exact percentages
 -> separate visual-architectural, urban-planning, TEP/normative issues
 -> calculate group and total compliance percentage
 -> write approval-risk report with evidence and recommended fixes
@@ -115,17 +115,28 @@ Use the checklist library as the base criteria. Group findings into:
 
 ## Percentage Scoring
 
-Use percentages in addition to `pass/fail` so variants can be compared quickly.
+Use percentages in addition to `yes/no/not_enough_data` so variants can be
+compared quickly. Do not mechanically convert four statuses into 0/50/100.
+Set the percentage from the current evidence and explain the specific missing
+items.
 
 Score each applicable criterion:
 
 | Status | Score |
 | --- | --- |
-| `pass` | `1.0` |
-| `partial` | `0.5` |
-| `fail` | `0.0` |
+| `yes` | 85-100% |
+| `mostly_yes` | 65-84% |
+| `mixed` | 35-64% |
+| `mostly_no` | 1-34% |
+| `no` | 0% |
 | `not_enough_data` | excluded from compliance percent, but counted as evidence risk |
 | `not_applicable` | excluded |
+
+Use `yes/no` when the criterion is binary and cannot be responsibly ranked:
+for example "2+ variants are presented" or "architectural lighting is
+presented". Use percentages when the criterion is visual-quality based:
+silhouette, material diversity, fifth facade, entry accents, permeability, and
+similar items.
 
 Formula:
 
@@ -148,6 +159,55 @@ Use equal weights inside each group unless the user asks for custom weighting.
 Optional TEP/norm checks are reported separately and must not silently change
 the design-checklist percentage.
 
+## Object Type First
+
+Always classify the object before scoring. The first report line should state:
+
+```text
+Тип объекта: Видовой / Средовой / Не определено
+```
+
+For a **Видовой** object, the main architectural evidence is visibility from
+important viewpoints, silhouette, uniqueness of volume, crown/parapet logic,
+fifth facade, and all-side readability. A free-standing tower on a broad site
+must not be over-penalized for not forming a dense continuous street frontage.
+
+For a **Средовой** object, fit into the surrounding street/block fabric,
+continuous active frontage, ground-floor relationship, and calm context
+compatibility become more important.
+
+`Застройка формирует фронт улицы` applies directly when the project is part of
+a dense frontage along a main street, square, or urban corridor. For a
+free-standing visual object, report it as "not the primary criterion for this
+site type" and only score it if the available site context proves that a street
+front should be formed.
+
+## Report Order
+
+Start with the exact PDF checklist order. Do not start with a free-form design
+opinion.
+
+```text
+Тип объекта
+Критерии оценки архитектурного облика
+Критерии градостроительной оценки
+Итоговая оценка
+Общий вывод
+Что исправить первым
+```
+
+Each criterion line should be concrete:
+
+```text
+Наличие «пятого фасада» — 67%
+Крыши не выглядят случайными или техническими: верх башни проработан, кровля
+стилобата читается аккуратно. Не показаны графический дизайн кровли, скрытие
+инженерии и декоративные элементы на кровле стилобата.
+```
+
+Avoid vague wording such as "решено частично" without saying what is present
+and what is missing.
+
 ## Output Format
 
 ```yaml
@@ -168,8 +228,8 @@ checklist_results:
   architectural_image:
     criterion_id:
       criterion_ru:
-      status: pass | fail | not_enough_data | not_applicable
-      score: 1.0 | 0.5 | 0.0 | null
+      status: yes | mostly_yes | mixed | mostly_no | no | not_enough_data | not_applicable
+      score_percent: 0-100 | null
       evidence:
       risk:
       fix:

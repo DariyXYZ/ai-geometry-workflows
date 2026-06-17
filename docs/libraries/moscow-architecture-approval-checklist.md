@@ -51,6 +51,37 @@ The checklist separates objects by visual role:
 If object type is unclear, mark it as `unknown` and evaluate criteria with
 explicit evidence limits.
 
+### Type-Sensitive Reading
+
+Do not score every criterion with the same weight for every site.
+
+For **Видовые объекты**, the presentation emphasizes visibility from major
+streets, intersections, MCD/MCC/rail lines, embankments, water objects,
+significant urban objects, main streets, and squares. The main evidence is:
+
+- silhouette;
+- uniqueness of volume;
+- crown/parapet logic;
+- fifth facade;
+- all-side readability;
+- entry and evening image where the public approaches the building.
+
+For **Средовые объекты**, the presentation emphasizes objects located inside
+quarters or behind the frontage of main streets. The main evidence is:
+
+- fit into the surrounding fabric;
+- active and continuous street frontage when relevant;
+- ground-floor relationship;
+- permeability;
+- absence of surface parking;
+- clear separation of public and private areas.
+
+`Застройка формирует фронт улицы` is most direct for dense urban frontage along
+main streets or squares. A free-standing visual object on a broad open site may
+not form a continuous street wall by design; in that case, report the criterion
+as secondary and explain whether a street frontage is actually expected by the
+site condition.
+
 ## Architectural Image Criteria
 
 | criterion_id | criterion_ru | What To Look For | Evidence |
@@ -75,18 +106,28 @@ explicit evidence limits.
 
 ## Result Scale
 
-Use statuses and numeric scores:
+Use statuses and numeric scores, but avoid artificial 0/50/100 scoring. A
+visual criterion can be 62%, 67%, 82%, etc. when the evidence supports that
+level.
 
 | Status | Score | Meaning |
 | --- | --- | --- |
-| `pass` | `1.0` | Criterion is supported by visible/measurable evidence |
-| `partial` | `0.5` | Criterion is partly met but weak, incomplete, or not fully proven |
-| `fail` | `0.0` | Criterion is not met or clearly weak |
+| `yes` | 85-100% | Criterion is strongly supported by visible/measurable evidence |
+| `mostly_yes` | 65-84% | Criterion is generally met, with specific missing proof or weak spots |
+| `mixed` | 35-64% | Criterion is present but incomplete or uneven |
+| `mostly_no` | 1-34% | Only weak traces of the criterion are visible |
+| `no` | 0% | Criterion is not met or not presented |
 | `not_enough_data` | `null` | Model/package lacks enough evidence to judge |
 | `not_applicable` | `null` | Criterion does not apply to this object/type/stage |
 
 Do not use a simple green check if the evidence is missing. Missing package
 information is a review risk.
+
+Use binary `yes/no` where ranking is not meaningful:
+
+- `Представлено 2 и более варианта архитектурного решения`;
+- `Архитектурная подсветка`, if no night image or lighting concept is present;
+- `Отсутствие плоскостных парковок`, when surface parking is clearly visible.
 
 Report:
 
@@ -119,6 +160,8 @@ checklist percentage unless the user explicitly asks for a combined score.
 | Poor permeability | Long bars or closed blocks cut movement/light | Open route, split mass, improve courtyard/stylobate logic |
 | Surface parking visible | Ground plane used for storage parking | Move parking underground/multilevel; keep only short stops/drop-off |
 | Facade/material unknown | Massing stage has no image package | Mark as missing data and request facade/material concept |
+| Wrong object-type weighting | A visual/free-standing object is judged as dense street frontage, or a contextual object is judged only by skyline | Classify `Видовой / Средовой` first, then apply criteria by site condition |
+| Vague fifth facade note | Report says "partly solved" without evidence | State what is visible on the roof and exactly what is missing: roof graphics, decorative structures, hidden engineering |
 
 ## Visual Example Signals From PDF
 
@@ -186,6 +229,19 @@ this feature?" It should ask:
 Does the project communicate a city-facing architectural idea,
 and is that idea proven from all sides, from above, and at ground level?
 ```
+
+## Session Lesson - Flow_Model_V2 2026-06-17
+
+The review of `Flow_Model_V2.3dm` exposed three reporting mistakes to avoid:
+
+1. Do not mechanically penalize a free-standing **Видовой** object for not
+   forming a dense street frontage. In that case, `Застройка формирует фронт
+   улицы` is secondary unless the site clearly requires a frontage.
+2. Do not convert `pass/partial/fail` into round 100/50/0 values. Review the
+   five views and assign a specific percentage from evidence.
+3. Do not write vague phrases such as "пятый фасад решен частично". Say plainly:
+   what roof elements are present, what engineering/graphic/decorative roof
+   evidence is missing, and why the percentage is not higher.
 
 ## Review Template
 

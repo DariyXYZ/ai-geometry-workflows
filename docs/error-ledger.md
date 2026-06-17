@@ -91,6 +91,61 @@ Crown slabs, facade systems, and roof elements must come from source evidence or
 an explicit simplification rule. Busy invented geometry is worse than a clean
 admitted omission.
 
+## Scenario 3D Architecture Compliance
+
+### Classify Видовой / Средовой Before Scoring
+
+The Flow_Model_V2 review showed that checklist criteria cannot be applied with
+the same weight to every site. A free-standing tower on a broad open site can be
+a strong **Видовой** object even if it does not form a dense continuous street
+front. For visual objects, silhouette, unique volume, crown/parapet logic,
+fifth facade, and all-side readability are primary. For contextual objects,
+street frontage and fit into the block fabric carry more weight.
+
+Before scoring, write:
+
+```text
+Тип объекта: Видовой / Средовой / Не определено
+```
+
+Then explain which criteria are primary or secondary for that type and site
+condition.
+
+### Do Not Convert Checklist Results Into Round Buckets
+
+The first Flow_Model_V2 report used too many `100%` and `50%` values because it
+converted `pass/partial/fail` directly into numbers. This made the review look
+mechanical and less credible.
+
+Correct workflow:
+
+```text
+five views and measurable evidence
+-> criterion-specific judgement
+-> exact percent from evidence
+-> short reason for the missing percent
+```
+
+Use binary `yes/no` where the criterion is factual, for example whether two
+variants or architectural lighting are presented. Use exact percentages for
+visual-quality criteria.
+
+### Do Not Use Vague Phrases In Approval Reports
+
+Phrases like "пятый фасад решен частично" are not useful by themselves. The
+report must state what is visible and what is missing.
+
+Better:
+
+```text
+Крыши не выглядят случайными или техническими: верх башни проработан, кровля
+стилобата читается аккуратно. Не показаны графический дизайн кровли, скрытие
+инженерии и декоративные элементы на кровле стилобата.
+```
+
+Use the original Russian checklist criteria first, then concise evidence-based
+comments.
+
 ## Reference Modeling
 
 ### Massing Before Detail
