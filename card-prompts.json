@@ -1,0 +1,38 @@
+[
+  {
+    "id": "card_01",
+    "title": "Референс / фото / текст → 3D модель",
+    "prompt": "minimal architectural schematic diagram, isometric view, dark background #0c0e13, three stacked flat rectangular input cards on the left labeled as data layers, single converging arrow pointing right, one large white isometric 3D building volume box on the right, blue accent color #4F7CFF, clean vector illustration style, no texture no photo, flat 2.5D schematic, white geometry on dark",
+    "negative": "photorealistic, people, trees, sky, shadows, complex texture, color gradients, noisy background, text labels"
+  },
+  {
+    "id": "card_02",
+    "title": "Только участок → зонирование → массинг",
+    "prompt": "minimal urban planning diagram, isometric view, dark background #0c0e13, left side irregular site boundary polygon outline in green #00D4AA dashed lines, right side two white isometric 3D building volumes of different heights placed on a ground plane, one tall tower one low bar, green accent #00D4AA, clean schematic illustration, architectural massing concept diagram, flat minimal style",
+    "negative": "photorealistic, people, trees, roads, complex texture, color gradients, text labels, shadows"
+  },
+  {
+    "id": "card_03",
+    "title": "Даны футпринты → массинг под ТЭП",
+    "prompt": "minimal architectural extrusion diagram, isometric view, dark background #0c0e13, left side two small flat floor plan footprint rectangles as isometric mini-cubes, horizontal dashed green line across top representing height constraint TEP limit, right side three white isometric 3D buildings extruded to different heights staggered in depth — tall, medium, short — green accent #00D4AA, clean schematic vector illustration",
+    "negative": "photorealistic, people, trees, complex texture, color gradients, text labels, shadows"
+  },
+  {
+    "id": "card_04",
+    "title": "Дан массинг → варианты форм",
+    "prompt": "minimal architectural massing variants diagram, isometric view, dark background #0c0e13, left side one large white isometric 3D building block source massing, arrow pointing right, right side three smaller white isometric 3D building variants with different forms — one short and wide, one tall and narrow, one with chamfered corner — yellow accent #F0B429, clean schematic vector illustration",
+    "negative": "photorealistic, people, trees, complex texture, color gradients, text labels, shadows"
+  },
+  {
+    "id": "card_05",
+    "title": "Готовая модель → оценка по критериям",
+    "prompt": "minimal architectural assessment diagram, isometric view, dark background #0c0e13, center one white isometric 3D building volume, dashed purple bounding box overlay surrounding the building, three horizontal criteria lines with dot markers on the right side of the box indicating evaluation checkpoints, purple accent #A78BFA, clean schematic vector illustration, evaluation review concept",
+    "negative": "photorealistic, people, trees, complex texture, color gradients, text labels, shadows"
+  },
+  {
+    "id": "card_06",
+    "title": "Сложная модель → расчётная геометрия",
+    "prompt": "minimal geometric simplification diagram, isometric view, dark background #0c0e13, left side complex irregular jagged 3D wireframe geometry with many intersecting diagonal faces and lines in orange #FF6B4A, arrow pointing right, right side clean simple white isometric 3D rectangular box building volume, orange accent #FF6B4A, before-after transformation concept, clean schematic vector illustration",
+    "negative": "photorealistic, people, trees, complex texture, color gradients, text labels, shadows"
+  }
+]

@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM + Rhino — AI Geometry Workflows</title>
+<style>
+  :root {
+    --bg: #0c0e13;
+    --surface: #131620;
+    --surface2: #191d29;
+    --border: #232739;
+    --accent: #4f7cff;
+    --green: #00d4aa;
+    --orange: #ff6b4a;
+    --yellow: #f0b429;
+    --purple: #a78bfa;
+    --text: #edf0f8;
+    --text2: #7a84a0;
+    --text3: #3d4459;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
+
+  /* Deck */
+  .deck { width: 100%; height: 100vh; position: relative; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; padding: 52px 72px 96px; overflow: hidden; }
+  .slide.active { display: flex; }
+
+  /* Nav */
+  .nav {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 16px;
+    background: rgba(19,22,32,0.94); border: 1px solid var(--border);
+    border-radius: 40px; padding: 9px 20px; backdrop-filter: blur(16px); z-index: 100;
+  }
+  .nav button {
+    background: none; border: 1px solid var(--border); color: var(--text2);
+    border-radius: 6px; padding: 4px 14px; cursor: pointer; font-size: 13px; transition: all .15s;
+  }
+  .nav button:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .nav button:disabled { opacity: .22; cursor: default; }
+  .nav button:disabled:hover { background: none; color: var(--text2); border-color: var(--border); }
+  #slide-counter { font-size: 12px; color: var(--text2); min-width: 48px; text-align: center; }
+
+  /* Progress dots */
+  .dots { display: flex; gap: 5px; align-items: center; }
+  .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border); transition: all .2s; cursor: pointer; }
+  .dot.active { background: var(--accent); width: 14px; border-radius: 3px; }
+
+  /* Screenshot frame */
+  .shot {
+    background: var(--surface); border: 1.5px dashed var(--border); border-radius: 12px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    color: var(--text3); position: relative; overflow: hidden;
+  }
+  .shot::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, rgba(79,124,255,0.04) 0%, transparent 70%); pointer-events: none; }
+  .shot svg { opacity: .2; }
+  .shot-label { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; font-family: monospace; color: var(--text3); }
+
+  /* Cover */
+  .cover-bg {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(79,124,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(79,124,255,0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 80% at 25% 50%, rgba(0,0,0,1) 0%, transparent 100%);
+    pointer-events: none;
+  }
+  .cover-glow { position: absolute; top: -300px; left: -200px; width: 1000px; height: 900px; background: radial-gradient(ellipse, rgba(79,124,255,0.09) 0%, transparent 60%); pointer-events: none; }
+
+  /* Typography */
+  .label { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; }
+  .t-huge { font-size: 70px; font-weight: 800; line-height: 1.0; letter-spacing: -.03em; color: #fff; }
+  .t-xl   { font-size: 48px; font-weight: 700; line-height: 1.1; letter-spacing: -.025em; color: #fff; }
+  .t-lg   { font-size: 34px; font-weight: 700; line-height: 1.2; letter-spacing: -.02em; color: #fff; }
+  .t-md   { font-size: 22px; font-weight: 400; line-height: 1.45; color: var(--text2); }
+  .t-sm   { font-size: 16px; line-height: 1.6; color: var(--text2); }
+
+  /* Badge */
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700; letter-spacing: .08em; padding: 4px 11px;
+    border-radius: 20px;
+  }
+  .b-blue   { background: rgba(79,124,255,.14); color: #7fa8ff; }
+  .b-green  { background: rgba(0,212,170,.12); color: #34d9b4; }
+  .b-orange { background: rgba(255,107,74,.12); color: #ff8a70; }
+  .b-yellow { background: rgba(240,180,41,.12); color: #f0c96a; }
+  .b-purple { background: rgba(167,139,250,.12); color: #c4b0fd; }
+  .b-gray   { background: rgba(90,100,128,.18); color: var(--text2); }
+
+  /* Flow chips */
+  .flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 7px; padding: 7px 14px; font-size: 14px; font-weight: 500; color: var(--text); white-space: nowrap; }
+  .chip-accent { border-color: rgba(79,124,255,.35); color: #7fa8ff; background: rgba(79,124,255,.08); }
+  .chip-green  { border-color: rgba(0,212,170,.3); color: #34d9b4; background: rgba(0,212,170,.06); }
+  .chip-orange { border-color: rgba(255,107,74,.3); color: #ff8a70; background: rgba(255,107,74,.06); }
+  .chip-yellow { border-color: rgba(240,180,41,.3); color: #f0c96a; background: rgba(240,180,41,.06); }
+  .chip-purple { border-color: rgba(167,139,250,.3); color: #c4b0fd; background: rgba(167,139,250,.06); }
+  .flow-arr { color: var(--text3); font-size: 18px; flex-shrink: 0; }
+
+  /* Helpers */
+  .row { display: flex; gap: 0; align-items: flex-start; }
+  .col { display: flex; flex-direction: column; }
+  .fill { flex: 1; min-width: 0; }
+  .mt8 { margin-top: 8px; } .mt12 { margin-top: 12px; } .mt16 { margin-top: 16px; }
+  .mt20 { margin-top: 20px; } .mt28 { margin-top: 28px; }
+  .divider { width: 40px; height: 3px; border-radius: 2px; background: var(--accent); }
+
+  /* List items */
+  .li { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid rgba(35,39,57,.8); font-size: 15px; color: var(--text2); line-height: 1.5; }
+  .li:last-child { border-bottom: none; }
+  .li b { color: var(--text); }
+
+  /* Card */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 22px; }
+  .note { background: rgba(79,124,255,.06); border: 1px solid rgba(79,124,255,.2); border-radius: 10px; padding: 14px 18px; font-size: 14px; color: var(--text2); line-height: 1.6; }
+
+  /* Media system */
+  .media-frame {
+    --media-gap: 8px;
+    width: min(100%, calc(100vh - 240px));
+    aspect-ratio: 1 / 1;
+    display: grid;
+    gap: var(--media-gap);
+    align-self: center;
+  }
+  .media-frame.media-single { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+  .media-frame.media-stack { grid-template-columns: 1fr; grid-template-rows: repeat(2, minmax(0, 1fr)); }
+  .media-frame.media-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); }
+  .media-cell {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: 9px;
+  }
+  .media-cell > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .media-label {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    background: rgba(13,15,20,0.82);
+    backdrop-filter: blur(6px);
+    border-radius: 5px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: .04em;
+  }
+  .media-label.is-accent { color: #34d9b4; }
+
+  /* Overview cards */
+  .ov-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1;
+  }
+  .ov-title { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.3; }
+  .ov-in, .ov-out { font-size: 12px; color: var(--text2); }
+  .ov-in span, .ov-out span { font-weight: 600; }
+
+  /* Direction number */
+  .dir-num { font-size: 11px; font-weight: 700; font-family: monospace; letter-spacing: .06em; color: var(--text3); margin-bottom: 14px; }
+
+  /* Big advantages */
+  .adv { display: flex; align-items: flex-start; gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--border); }
+  .adv:last-child { border-bottom: none; }
+  .adv-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .adv-head { font-size: 21px; font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 5px; }
+  .adv-sub  { font-size: 14px; color: var(--text2); line-height: 1.55; }
+
+  /* Sys items */
+  .sys { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .sys-type { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 8px; }
+  .sys-title { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .sys-desc { font-size: 13px; color: var(--text2); line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- ══ 01 · COVER ══ -->
+<div class="slide active">
+  <div class="cover-glow"></div>
+  <div class="cover-bg"></div>
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:1;max-width:840px;">
+    <div class="label">IND Studio · R&amp;D · 2026</div>
+    <div class="t-huge">LLM&nbsp;+&nbsp;Rhino</div>
+    <div class="t-huge" style="color:var(--accent);">AI Geometry</div>
+    <div class="t-huge">Workflows</div>
+    <div class="divider" style="margin:32px 0 0;"></div>
+    <div class="t-md" style="margin-top:20px;max-width:560px;">
+      Как языковые модели помогают создавать, уточнять и проверять архитектурную геометрию в Rhino
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:32px;">
+      <span class="badge b-blue">6 направлений</span>
+      <span class="badge b-green">12+ кейсов</span>
+      <span class="badge b-orange">Библиотека ошибок</span>
+      <span class="badge b-gray">Claude · Rhino · Aurox</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 02 · ЧТО ЭТО ══ -->
+<div class="slide">
+  <div class="label">Что такое эта связка</div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+
+    <div class="col" style="gap:20px;">
+      <div class="t-lg">LLM читает задачу —<br>Rhino строит геометрию</div>
+      <div class="t-sm">
+        Языковая модель (Claude, GPT и др.) переводит текстовое описание, фотографии или параметры в Rhino Python / C# скрипт. Скрипт исполняется в 3D — и появляется геометрия.
+      </div>
+      <div style="font-size:18px;color:var(--text);line-height:1.5;margin-top:4px;">
+        Не рисуем вручную.<br>
+        <span style="color:var(--accent);">Описываем → получаем → итерируем.</span>
+      </div>
+      <div class="note" style="margin-top:8px;">
+        Aurox / MCP-сервер запускает скрипт прямо в открытом Rhino-файле — видишь результат сразу. Новый вариант — один промпт.
+      </div>
+    </div>
+
+    <div class="col" style="gap:12px;">
+      <div class="card" style="gap:12px;display:flex;flex-direction:column;">
+        <div style="font-size:11px;letter-spacing:.1em;color:var(--text2);font-weight:600;">ПОТОК</div>
+        <div style="background:rgba(79,124,255,.1);border:1px solid rgba(79,124,255,.25);border-radius:8px;padding:14px 18px;font-size:16px;font-weight:600;text-align:center;">
+          Задача / референс
+        </div>
+        <div style="text-align:center;color:var(--text3);font-size:24px;">↓</div>
+        <div style="background:rgba(0,212,170,.07);border:1px solid rgba(0,212,170,.2);border-radius:8px;padding:14px 18px;font-size:16px;font-weight:600;text-align:center;color:#34d9b4;">
+          LLM — Claude / GPT / …
+        </div>
+        <div style="text-align:center;color:var(--text3);font-size:24px;">↓</div>
+        <div style="background:rgba(255,107,74,.07);border:1px solid rgba(255,107,74,.2);border-radius:8px;padding:14px 18px;font-size:16px;font-weight:600;text-align:center;color:#ff8a70;">
+          Python / C# скрипт
+        </div>
+        <div style="text-align:center;color:var(--text3);font-size:24px;">↓</div>
+        <div style="background:rgba(240,180,41,.07);border:1px solid rgba(240,180,41,.2);border-radius:8px;padding:14px 18px;font-size:16px;font-weight:600;text-align:center;color:#f0c96a;">
+          Rhino → 3D геометрия
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 03 · ВСЕ НАПРАВЛЕНИЯ ══ -->
+<div class="slide">
+  <div class="label">Обзор</div>
+  <div class="t-lg" style="margin-bottom:8px;">Шесть направлений применения</div>
+  <div class="t-sm" style="margin-bottom:28px;">Каждое — отдельный шаблон с входными данными, процессом и результатом</div>
+
+  <div style="flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:14px;">
+
+    <div class="ov-card" style="border-color:rgba(79,124,255,.3);">
+      <div class="badge b-blue" style="align-self:flex-start;">01</div>
+      <div class="ov-title">Референс / фото / текст<br>→ 3D модель</div>
+      <svg viewBox="0 0 240 90" style="width:100%;height:90px;display:block;margin:6px 0 2px;" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><marker id="m01" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#4F7CFF"/></marker></defs>
+        <rect x="2" y="6" width="56" height="16" rx="2" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+        <polyline points="9,18 16,11 22,15 28,10 38,18" stroke="rgba(255,255,255,.28)" stroke-width=".9" fill="none"/>
+        <rect x="2" y="36" width="56" height="16" rx="2" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+        <line x1="22" y1="37" x2="22" y2="51" stroke="rgba(255,255,255,.2)" stroke-width=".7"/>
+        <line x1="35" y1="37" x2="35" y2="51" stroke="rgba(255,255,255,.2)" stroke-width=".7"/>
+        <line x1="3" y1="44" x2="57" y2="44" stroke="rgba(255,255,255,.2)" stroke-width=".7"/>
+        <rect x="2" y="66" width="56" height="16" rx="2" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+        <line x1="9" y1="70" x2="50" y2="70" stroke="rgba(255,255,255,.22)" stroke-width=".9"/>
+        <line x1="9" y1="75" x2="44" y2="75" stroke="rgba(255,255,255,.16)" stroke-width=".9"/>
+        <line x1="9" y1="80" x2="38" y2="80" stroke="rgba(255,255,255,.12)" stroke-width=".9"/>
+        <line x1="58" y1="14" x2="72" y2="44" stroke="rgba(79,124,255,.4)" stroke-width=".9"/>
+        <line x1="58" y1="44" x2="72" y2="44" stroke="rgba(79,124,255,.4)" stroke-width=".9"/>
+        <line x1="58" y1="74" x2="72" y2="44" stroke="rgba(79,124,255,.4)" stroke-width=".9"/>
+        <line x1="72" y1="44" x2="88" y2="44" stroke="#4F7CFF" stroke-width="1.5" marker-end="url(#m01)"/>
+        <polygon points="178,20 194,11 194,75 178,84" fill="rgba(79,124,255,.08)" stroke="rgba(79,124,255,.6)" stroke-width="1.2"/>
+        <polygon points="96,20 112,11 194,11 178,20" fill="rgba(79,124,255,.22)" stroke="#4F7CFF" stroke-width="1.2"/>
+        <polygon points="96,20 178,20 178,84 96,84" fill="rgba(79,124,255,.14)" stroke="#4F7CFF" stroke-width="1.2"/>
+      </svg>
+      <div class="flow" style="margin-top:auto;">
+        <div class="chip" style="font-size:12px;">фото · план · текст</div>
+        <div class="flow-arr">→</div>
+        <div class="chip chip-accent" style="font-size:12px;">3D Rhino</div>
+      </div>
+    </div>
+
+    <div class="ov-card" style="border-color:rgba(0,212,170,.25);">
+      <div class="badge b-green" style="align-self:flex-start;">02</div>
+      <div class="ov-title">Только участок<br>→ зонирование → массинг</div>
+      <svg viewBox="0 0 240 90" style="width:100%;height:90px;display:block;margin:6px 0 2px;" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><marker id="m02" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#00D4AA"/></marker></defs>
+        <polygon points="6,12 46,8 62,28 56,70 14,72 4,44" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.25)" stroke-width="1.2"/>
+        <line x1="66" y1="42" x2="82" y2="42" stroke="#00D4AA" stroke-width="1.5" marker-end="url(#m02)"/>
+        <line x1="86" y1="86" x2="206" y2="86" stroke="rgba(255,255,255,.12)" stroke-width=".8"/>
+        <polygon points="138,52 152,45 152,80 138,87" fill="rgba(0,212,170,.07)" stroke="rgba(0,212,170,.5)" stroke-width="1.1"/>
+        <polygon points="88,52 102,45 152,45 138,52" fill="rgba(0,212,170,.2)" stroke="#00D4AA" stroke-width="1.1"/>
+        <polygon points="88,52 138,52 138,87 88,87" fill="rgba(0,212,170,.13)" stroke="#00D4AA" stroke-width="1.1"/>
+        <polygon points="202,16 216,9 216,70 202,77" fill="rgba(0,212,170,.07)" stroke="rgba(0,212,170,.5)" stroke-width="1.1"/>
+        <polygon points="150,16 164,9 216,9 202,16" fill="rgba(0,212,170,.24)" stroke="#00D4AA" stroke-width="1.1"/>
+        <polygon points="150,16 202,16 202,77 150,77" fill="rgba(0,212,170,.15)" stroke="#00D4AA" stroke-width="1.1"/>
+      </svg>
+      <div class="flow" style="margin-top:auto;">
+        <div class="chip" style="font-size:12px;">граница + ТЭП</div>
+        <div class="flow-arr">→</div>
+        <div class="chip chip-green" style="font-size:12px;">зонирование + объёмы</div>
+      </div>
+    </div>
+
+    <div class="ov-card" style="border-color:rgba(0,212,170,.25);">
+      <div class="badge b-green" style="align-self:flex-start;">03</div>
+      <div class="ov-title">Даны футпринты<br>→ массинг под ТЭП</div>
+      <svg viewBox="0 0 240 90" style="width:100%;height:90px;display:block;margin:6px 0 2px;" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><marker id="m03" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#00D4AA"/></marker></defs>
+        <polygon points="36,60 60,60 66,54 42,54" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+        <polygon points="36,60 42,54 42,68 36,68" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+        <polygon points="36,68 42,68 60,68 54,74" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+        <polygon points="36,68 60,68 60,74 36,74" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
+        <polygon points="6,76 28,76 34,70 12,70" fill="rgba(255,255,255,.07)" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+        <polygon points="6,76 12,70 12,84 6,84" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.18)" stroke-width="1"/>
+        <polygon points="6,84 12,84 28,84 22,90" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.16)" stroke-width="1"/>
+        <polygon points="6,84 28,84 28,90 6,90" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
+        <line x1="68" y1="72" x2="82" y2="72" stroke="#00D4AA" stroke-width="1.5" marker-end="url(#m03)"/>
+        <line x1="86" y1="14" x2="208" y2="14" stroke="#00D4AA" stroke-width="1.2" stroke-dasharray="7 3"/>
+        <polygon points="190,46 204,39 204,70 190,77" fill="rgba(0,212,170,.07)" stroke="rgba(0,212,170,.5)" stroke-width="1"/>
+        <polygon points="158,46 172,39 204,39 190,46" fill="rgba(0,212,170,.2)" stroke="#00D4AA" stroke-width="1"/>
+        <polygon points="158,46 190,46 190,77 158,77" fill="rgba(0,212,170,.13)" stroke="#00D4AA" stroke-width="1"/>
+        <polygon points="146,38 160,31 160,68 146,75" fill="rgba(0,212,170,.07)" stroke="rgba(0,212,170,.5)" stroke-width="1"/>
+        <polygon points="112,38 126,31 160,31 146,38" fill="rgba(0,212,170,.2)" stroke="#00D4AA" stroke-width="1"/>
+        <polygon points="112,38 146,38 146,75 112,75" fill="rgba(0,212,170,.13)" stroke="#00D4AA" stroke-width="1"/>
+        <polygon points="106,28 120,21 120,80 106,87" fill="rgba(0,212,170,.07)" stroke="rgba(0,212,170,.5)" stroke-width="1"/>
+        <polygon points="86,28 100,21 120,21 106,28" fill="rgba(0,212,170,.24)" stroke="#00D4AA" stroke-width="1"/>
+        <polygon points="86,28 106,28 106,87 86,87" fill="rgba(0,212,170,.15)" stroke="#00D4AA" stroke-width="1"/>
+      </svg>
+      <div class="flow" style="margin-top:auto;">
+        <div class="chip" style="font-size:12px;">футпринты + ТЭП</div>
+        <div class="flow-arr">→</div>
+        <div class="chip chip-green" style="font-size:12px;">форма + варианты</div>
+      </div>
+    </div>
+
+    <div class="ov-card" style="border-color:rgba(240,180,41,.25);">
+      <div class="badge b-yellow" style="align-self:flex-start;">04</div>
+      <div class="ov-title">Дан массинг<br>→ варианты форм</div>
+      <svg viewBox="0 0 240 90" style="width:100%;height:90px;display:block;margin:6px 0 2px;" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><marker id="m04" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#F0B429"/></marker></defs>
+        <polygon points="58,18 72,11 72,74 58,81" fill="rgba(240,180,41,.08)" stroke="rgba(240,180,41,.6)" stroke-width="1.2"/>
+        <polygon points="4,18 18,11 72,11 58,18" fill="rgba(240,180,41,.22)" stroke="#F0B429" stroke-width="1.2"/>
+        <polygon points="4,18 58,18 58,81 4,81" fill="rgba(240,180,41,.14)" stroke="#F0B429" stroke-width="1.2"/>
+        <line x1="76" y1="44" x2="92" y2="44" stroke="#F0B429" stroke-width="1.5" marker-end="url(#m04)"/>
+        <polygon points="126,56 138,50 138,78 126,84" fill="rgba(240,180,41,.07)" stroke="rgba(240,180,41,.4)" stroke-width="1"/>
+        <polygon points="98,56 110,50 138,50 126,56" fill="rgba(240,180,41,.16)" stroke="#F0B429" stroke-width="1"/>
+        <polygon points="98,56 126,56 126,84 98,84" fill="rgba(240,180,41,.11)" stroke="#F0B429" stroke-width="1"/>
+        <polygon points="166,16 178,10 178,70 166,76" fill="rgba(240,180,41,.07)" stroke="rgba(240,180,41,.4)" stroke-width="1"/>
+        <polygon points="136,16 148,10 178,10 166,16" fill="rgba(240,180,41,.2)" stroke="#F0B429" stroke-width="1"/>
+        <polygon points="136,16 166,16 166,76 136,76" fill="rgba(240,180,41,.13)" stroke="#F0B429" stroke-width="1"/>
+        <polygon points="212,38 224,32 224,72 212,78" fill="rgba(240,180,41,.07)" stroke="rgba(240,180,41,.4)" stroke-width="1"/>
+        <polygon points="186,38 198,32 224,32 212,38" fill="rgba(240,180,41,.16)" stroke="#F0B429" stroke-width="1"/>
+        <polygon points="186,38 212,38 212,78 186,78" fill="rgba(240,180,41,.11)" stroke="#F0B429" stroke-width="1"/>
+      </svg>
+      <div class="flow" style="margin-top:auto;">
+        <div class="chip" style="font-size:12px;">существующий массинг</div>
+        <div class="flow-arr">→</div>
+        <div class="chip chip-yellow" style="font-size:12px;">2–3 альтернативы</div>
+      </div>
+    </div>
+
+    <div class="ov-card" style="border-color:rgba(167,139,250,.25);">
+      <div class="badge b-purple" style="align-self:flex-start;">05</div>
+      <div class="ov-title">Готовая модель<br>→ оценка по критериям</div>
+      <svg viewBox="0 0 240 90" style="width:100%;height:90px;display:block;margin:6px 0 2px;" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><marker id="m05" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#A78BFA"/></marker></defs>
+        <polygon points="66,18 80,11 80,68 66,75" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.2)" stroke-width="1.1"/>
+        <polygon points="4,18 18,11 80,11 66,18" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.22)" stroke-width="1.1"/>
+        <polygon points="4,18 66,18 66,75 4,75" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.22)" stroke-width="1.1"/>
+        <line x1="84" y1="42" x2="100" y2="42" stroke="#A78BFA" stroke-width="1.5" marker-end="url(#m05)"/>
+        <polygon points="174,18 188,11 188,68 174,75" fill="rgba(167,139,250,.08)" stroke="rgba(167,139,250,.6)" stroke-width="1.1"/>
+        <polygon points="106,18 120,11 188,11 174,18" fill="rgba(167,139,250,.2)" stroke="#A78BFA" stroke-width="1.1"/>
+        <polygon points="106,18 174,18 174,75 106,75" fill="rgba(167,139,250,.13)" stroke="#A78BFA" stroke-width="1.1"/>
+        <rect x="102" y="6" width="90" height="72" rx="3" fill="none" stroke="rgba(167,139,250,.26)" stroke-width="1" stroke-dasharray="6 3"/>
+        <line x1="106" y1="36" x2="174" y2="36" stroke="rgba(167,139,250,.5)" stroke-width="1" stroke-dasharray="5 2"/>
+        <line x1="106" y1="52" x2="174" y2="52" stroke="rgba(167,139,250,.5)" stroke-width="1" stroke-dasharray="5 2"/>
+        <line x1="106" y1="66" x2="174" y2="66" stroke="rgba(167,139,250,.5)" stroke-width="1" stroke-dasharray="5 2"/>
+        <circle cx="178" cy="36" r="2.5" fill="rgba(167,139,250,.7)"/>
+        <circle cx="178" cy="52" r="2.5" fill="rgba(167,139,250,.55)"/>
+        <circle cx="178" cy="66" r="2.5" fill="rgba(167,139,250,.4)"/>
+      </svg>
+      <div class="flow" style="margin-top:auto;">
+        <div class="chip" style="font-size:12px;">модель в Rhino</div>
+        <div class="flow-arr">→</div>
+        <div class="chip chip-purple" style="font-size:12px;">чек-лист ДГП</div>
+      </div>
+    </div>
+
+    <div class="ov-card" style="border-color:rgba(255,107,74,.25);">
+      <div class="badge b-orange" style="align-self:flex-start;">06</div>
+      <div class="ov-title">Сложная модель<br>→ расчётная геометрия</div>
+      <svg viewBox="0 0 240 90" style="width:100%;height:90px;display:block;margin:6px 0 2px;" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs><marker id="m06" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto"><polygon points="0 0,7 2.5,0 5" fill="#FF6B4A"/></marker></defs>
+        <polygon points="6,14 26,6 48,16 64,10 72,32 64,58 44,70 20,62 4,46 10,24" fill="rgba(255,107,74,.04)" stroke="rgba(255,107,74,.28)" stroke-width="1.1"/>
+        <line x1="8" y1="14" x2="44" y2="70" stroke="rgba(255,255,255,.1)" stroke-width=".7"/>
+        <line x1="26" y1="6" x2="20" y2="62" stroke="rgba(255,255,255,.09)" stroke-width=".7"/>
+        <line x1="48" y1="16" x2="4" y2="46" stroke="rgba(255,255,255,.09)" stroke-width=".7"/>
+        <line x1="64" y1="10" x2="44" y2="70" stroke="rgba(255,255,255,.09)" stroke-width=".7"/>
+        <line x1="10" y1="24" x2="64" y2="58" stroke="rgba(255,255,255,.09)" stroke-width=".7"/>
+        <line x1="4" y1="46" x2="64" y2="10" stroke="rgba(255,255,255,.07)" stroke-width=".7"/>
+        <line x1="26" y1="6" x2="72" y2="32" stroke="rgba(255,255,255,.07)" stroke-width=".7"/>
+        <line x1="10" y1="24" x2="48" y2="16" stroke="rgba(255,255,255,.07)" stroke-width=".7"/>
+        <line x1="76" y1="42" x2="92" y2="42" stroke="#FF6B4A" stroke-width="1.5" marker-end="url(#m06)"/>
+        <polygon points="180,18 196,10 196,72 180,80" fill="rgba(255,107,74,.08)" stroke="rgba(255,107,74,.6)" stroke-width="1.2"/>
+        <polygon points="98,18 114,10 196,10 180,18" fill="rgba(255,107,74,.22)" stroke="#FF6B4A" stroke-width="1.2"/>
+        <polygon points="98,18 180,18 180,80 98,80" fill="rgba(255,107,74,.14)" stroke="#FF6B4A" stroke-width="1.2"/>
+      </svg>
+      <div class="flow" style="margin-top:auto;">
+        <div class="chip" style="font-size:12px;">детальная Rhino</div>
+        <div class="flow-arr">→</div>
+        <div class="chip chip-orange" style="font-size:12px;">расчётная геометрия</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ 04 · РЕФЕРЕНС → МОДЕЛЬ ══ -->
+<div class="slide">
+  <div class="label">Направление 01</div>
+  <div style="flex:1;display:grid;grid-template-columns:1.5fr 1fr;gap:40px;align-items:center;">
+
+    <div class="media-frame media-single" style="margin:auto;">
+      <div class="media-cell">
+        <img src="assets/skyscrapers_01.jpg" alt="">
+      </div>
+    </div>
+
+    <div class="col" style="gap:18px;">
+      <div class="badge b-blue">01 · Из референса в модель</div>
+      <div class="t-lg" style="font-size:30px;">Фото, план, текст<br>→ 3D модель в Rhino</div>
+      <div class="flow">
+        <div class="chip" style="font-size:13px;">фото / план / описание</div>
+        <div class="flow-arr">→</div>
+        <div class="chip chip-accent" style="font-size:13px;">3D геометрия</div>
+      </div>
+      <div class="col" style="gap:0;margin-top:4px;">
+        <div class="li"><span>📌</span><span><b>Karlatornet</b> — 4 шахты + крест + лофт + зеркало</span></div>
+        <div class="li"><span>📌</span><span><b>Grove at Grand Bay</b> — Contour из временного лофта</span></div>
+        <div class="li"><span>📌</span><span><b>Aqua Tower</b> — волновые балконы поэтажно</span></div>
+        <div class="li"><span>📌</span><span><b>Absolute World</b> — эллипс + вращение</span></div>
+      </div>
+      <div class="note" style="margin-top:4px;">
+        Сначала — конструктивная грамматика здания.<br>
+        Затем — скрипт. Не угадывать оболочку.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 05 · ТОЛЬКО УЧАСТОК → ЗОНИРОВАНИЕ → МАССИНГ ══ -->
+<div class="slide">
+  <div class="label">Направление 02</div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1.45fr;gap:36px;align-items:start;">
+
+    <div class="col" style="gap:16px;padding-top:4px;">
+      <div class="badge b-green">02 · Только участок (3B)</div>
+      <div class="t-lg" style="font-size:30px;">Участок + ТЭП<br>→ зонирование<br>→ массинг</div>
+
+      <div class="col" style="gap:8px;margin-top:4px;">
+        <div style="font-size:12px;color:var(--text2);font-weight:600;letter-spacing:.08em;margin-bottom:2px;">ВХОДНЫЕ ДАННЫЕ</div>
+        <div class="flow" style="flex-wrap:wrap;gap:6px;">
+          <div class="chip" style="font-size:12px;">граница участка</div>
+          <div class="chip" style="font-size:12px;">входы / доступ</div>
+          <div class="chip" style="font-size:12px;">ИНСО / красные линии</div>
+          <div class="chip" style="font-size:12px;">ТЭП цели</div>
+        </div>
+      </div>
+
+      <div class="col" style="gap:0;margin-top:2px;">
+        <div class="li"><span style="color:var(--green);">1</span><span><b style="color:#fff;">Исходные данные</b> — участок, окружение, ТЭП</span></div>
+        <div class="li"><span style="color:var(--green);">2</span><span><b style="color:#fff;">Зонирование</b> — входы, движение, функциональные зоны</span></div>
+        <div class="li"><span style="color:var(--green);">3</span><span><b style="color:#fff;">Габариты зданий</b> — объёмы в пределах ИНСО и ТЭП</span></div>
+        <div class="li"><span style="color:var(--green);">4</span><span><b style="color:#fff;">Массинг</b> — финальная форма с учётом ограничений</span></div>
+      </div>
+
+      <div class="note">Сначала зонирование участка, затем согласование, потом уже архитектура.</div>
+    </div>
+
+    <!-- 2×2 grid of screenshots -->
+    <div class="media-frame media-grid" style="margin-left:auto;">
+      <div class="media-cell">
+        <img src="assets/massing_01.jpg" alt="">
+        <div class="media-label">Исходные данные</div>
+      </div>
+      <div class="media-cell">
+        <img src="assets/massing_02.jpg" alt="">
+        <div class="media-label">Зонирование</div>
+      </div>
+      <div class="media-cell">
+        <img src="assets/massing_03.jpg" alt="">
+        <div class="media-label">Габариты зданий</div>
+      </div>
+      <div class="media-cell">
+        <img src="assets/massing_04.jpg" alt="">
+        <div class="media-label is-accent">Массинг</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ 06 · ДАНЫ ФУТПРИНТЫ → МЭССИНГ ══ -->
+<div class="slide">
+  <div class="label">Направление 03</div>
+  <div style="flex:1;display:grid;grid-template-columns:1.5fr 1fr;gap:40px;align-items:center;">
+
+    <div class="media-frame media-stack">
+      <div class="media-cell">
+        <img src="assets/ViewCapture20260618_181824.jpg" alt="">
+        <div class="media-label">Футпринты</div>
+      </div>
+      <div class="media-cell">
+        <img src="assets/ViewCapture20260618_183609.jpg" alt="">
+        <div class="media-label is-accent">Объёмы</div>
+      </div>
+    </div>
+
+    <div class="col" style="gap:18px;">
+      <div class="badge b-green">03 · Даны футпринты (3A)</div>
+      <div class="t-lg" style="font-size:30px;">Готовое зонирование<br>→ форма и объёмы</div>
+
+      <div class="col" style="gap:8px;">
+        <div style="font-size:13px;color:var(--text2);font-weight:600;letter-spacing:.06em;margin-bottom:4px;">ВХОДНЫЕ ДАННЫЕ</div>
+        <div class="flow" style="flex-wrap:wrap;gap:7px;">
+          <div class="chip" style="font-size:12px;">футпринты</div>
+          <div class="chip" style="font-size:12px;">входы / маршруты</div>
+          <div class="chip" style="font-size:12px;">ТЭП цели</div>
+          <div class="chip" style="font-size:12px;">высотная огибающая</div>
+        </div>
+      </div>
+
+      <div class="col" style="gap:0;">
+        <div class="li"><span style="color:var(--green);">→</span><span>Футпринты утверждены — не трогаем</span></div>
+        <div class="li"><span style="color:var(--green);">→</span><span>Считаем, сколько не хватает до ТЭП, распределяем высоты</span></div>
+        <div class="li"><span style="color:var(--green);">→</span><span>Применяем форм-операторы (chamfer, taper, void…)</span></div>
+        <div class="li"><span style="color:var(--green);">→</span><span>Проверяем ИНСО, модули этажей, движение</span></div>
+      </div>
+
+      <div class="note">
+        Зонирование уже утверждено — двигаем только форму и высоты. Не переизобретать планировку.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 07 · ДАН МЭССИНГ → ВАРИАНТЫ ══ -->
+<div class="slide">
+  <div class="label">Направление 04</div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1.5fr;gap:40px;align-items:center;">
+
+    <div class="col" style="gap:18px;">
+      <div class="badge b-yellow">04 · Дан массинг (3C)</div>
+      <div class="t-lg" style="font-size:30px;">Существующий массинг<br>→ варианты форм</div>
+
+      <div class="col" style="gap:8px;">
+        <div style="font-size:13px;color:var(--text2);font-weight:600;letter-spacing:.06em;margin-bottom:4px;">ВХОДНЫЕ ДАННЫЕ</div>
+        <div class="flow" style="flex-wrap:wrap;gap:7px;">
+          <div class="chip" style="font-size:12px;">итерация массинга</div>
+          <div class="chip" style="font-size:12px;">ИНСО / ограничения</div>
+          <div class="chip" style="font-size:12px;">задание на форму</div>
+        </div>
+      </div>
+
+      <div class="col" style="gap:0;">
+        <div class="li"><span style="color:var(--yellow);">→</span><span>Исходный массинг = якорь ТЭП и габарита</span></div>
+        <div class="li"><span style="color:var(--yellow);">→</span><span>Сохраняем плотность, меняем форму и образ</span></div>
+        <div class="li"><span style="color:var(--yellow);">→</span><span>Применяем явные архитектурные операторы</span></div>
+        <div class="li"><span style="color:var(--yellow);">→</span><span>Выходим с 2–3 вариантами с дельтами от исходника</span></div>
+      </div>
+
+      <div class="note">
+        Задача — лучший образ и иерархия в том же масштабе. Не начинать зонирование с нуля.
+      </div>
+    </div>
+
+    <div class="media-frame media-stack" style="margin-left:auto;">
+      <div class="media-cell">
+        <img src="assets/ViewCapture20260618_183609.jpg" alt="">
+        <div class="media-label">Исходный массинг</div>
+      </div>
+      <div class="media-cell">
+        <img src="assets/ViewCapture20260618_192507.jpg" alt="">
+        <div class="media-label is-accent">Варианты форм</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 08 · ГОТОВАЯ МОДЕЛЬ → ОЦЕНКА ДГП ══ -->
+<div class="slide">
+  <div class="label">Направление 05</div>
+  <div style="flex:1;display:grid;grid-template-columns:1.5fr 1fr;gap:40px;align-items:center;">
+
+    <div class="shot" style="aspect-ratio:1/1;width:min(100%, calc(100vh - 240px));margin:auto;">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+      <div class="shot-label">скриншот 05 — ревью / чек-лист</div>
+    </div>
+
+    <div class="col" style="gap:18px;">
+      <div class="badge b-purple">05 · Оценка по критериям (3D)</div>
+      <div class="t-lg" style="font-size:30px;">Готовая модель<br>→ чек-лист ДГП</div>
+
+      <div class="col" style="gap:0;">
+        <div class="li"><span style="color:var(--purple);">→</span><span>Классификация: <b>Видовой</b> или <b>Средовой</b> объект</span></div>
+        <div class="li"><span style="color:var(--purple);">→</span><span>5 ракурсов + кровля, собираем данные</span></div>
+        <div class="li"><span style="color:var(--purple);">→</span><span>Оценка силуэта, фасада, пятого фасада, входов</span></div>
+        <div class="li"><span style="color:var(--purple);">→</span><span>Фронт улицы, проницаемость, паркинг</span></div>
+        <div class="li"><span style="color:var(--purple);">→</span><span>Отчёт: % по критериям + риски + что исправить первым</span></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;">
+        <div style="background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:8px;padding:12px 14px;font-size:13px;text-align:center;">
+          <div style="font-size:20px;font-weight:800;color:#c4b0fd;margin-bottom:4px;">70%</div>
+          <div style="color:var(--text2);">Арх. облик</div>
+        </div>
+        <div style="background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:8px;padding:12px 14px;font-size:13px;text-align:center;">
+          <div style="font-size:20px;font-weight:800;color:#c4b0fd;margin-bottom:4px;">30%</div>
+          <div style="color:var(--text2);">Градостроительство</div>
+        </div>
+      </div>
+
+      <div class="note" style="border-color:rgba(167,139,250,.25);">
+        Не генерировать новую форму до завершения ревью. Сначала — собрать всё нужное из Rhino-сцены.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 09 · СЛОЖНАЯ МОДЕЛЬ → ANALYSIS GEO ══ -->
+<div class="slide">
+  <div class="label">Направление 06</div>
+  <div style="flex:1;display:grid;grid-template-columns:1fr 1.5fr;gap:40px;align-items:center;">
+
+    <div class="col" style="gap:18px;">
+      <div class="badge b-orange">06 · Подготовка к расчёту</div>
+      <div class="t-lg" style="font-size:30px;">Детальная модель<br>→ расчётная геометрия</div>
+
+      <div class="col" style="gap:8px;">
+        <div style="font-size:13px;color:var(--text2);font-weight:600;letter-spacing:.06em;margin-bottom:4px;">ВХОДНЫЕ ДАННЫЕ</div>
+        <div class="flow" style="flex-wrap:wrap;gap:7px;">
+          <div class="chip" style="font-size:12px;">Rhino .3dm</div>
+          <div class="chip" style="font-size:12px;">архитектурная модель</div>
+          <div class="chip" style="font-size:12px;">Ladybug / CFD задача</div>
+        </div>
+      </div>
+
+      <div class="col" style="gap:0;">
+        <div class="li"><span style="color:var(--orange);">1</span><span>Разбираем → определяем части здания</span></div>
+        <div class="li"><span style="color:var(--orange);">2</span><span>Пересобираем по частям и зонам</span></div>
+        <div class="li"><span style="color:var(--orange);">3</span><span>Проверяем: габарит, секции, пропорции</span></div>
+        <div class="li"><span style="color:var(--orange);">4</span><span>Выдаём чистую геометрию для расчёта</span></div>
+      </div>
+
+      <div class="note" style="border-color:rgba(255,107,74,.2);">
+        Флаг замкнутости ≠ приёмка. CombineIdentical и упрощение меша — только диагностика, не финальный шаг.
+      </div>
+    </div>
+
+    <div class="shot" style="aspect-ratio:1/1;width:min(100%, calc(100vh - 240px));margin:auto;">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+      <div class="shot-label">скриншот 06 — расчётная геометрия</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 10 · ЗАЧЕМ ЭТО ══ -->
+<div class="slide">
+  <div class="label">Зачем</div>
+  <div class="t-lg" style="margin-bottom:36px;">Что даёт эта связка</div>
+
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:0;">
+    <div class="adv">
+      <div class="adv-icon" style="background:rgba(79,124,255,.13);">⚡</div>
+      <div>
+        <div class="adv-head">Скорость итераций</div>
+        <div class="adv-sub">Новый вариант массинга — один промпт. Не часы руками, а минуты.</div>
+      </div>
+    </div>
+    <div class="adv">
+      <div class="adv-icon" style="background:rgba(0,212,170,.1);">🔁</div>
+      <div>
+        <div class="adv-head">Повторяемость</div>
+        <div class="adv-sub">Скрипт воспроизводимый. Любое решение можно перезапустить, откатить или передать коллеге.</div>
+      </div>
+    </div>
+    <div class="adv">
+      <div class="adv-icon" style="background:rgba(240,180,41,.1);">📚</div>
+      <div>
+        <div class="adv-head">Знания накапливаются</div>
+        <div class="adv-sub">Ошибки кодифицированы. AI не повторяет одни и те же провалы в следующей сессии.</div>
+      </div>
+    </div>
+    <div class="adv">
+      <div class="adv-icon" style="background:rgba(167,139,250,.1);">✓</div>
+      <div>
+        <div class="adv-head">Готовность к согласованию</div>
+        <div class="adv-sub">Чек-лист ДГП встроен в процесс — AI собирает обоснование и указывает риски до отправки.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 11 · СИСТЕМА ══ -->
+<div class="slide">
+  <div class="label">Как это устроено</div>
+  <div class="t-lg" style="margin-bottom:6px;">Это не набор промптов.<br>Это система знаний.</div>
+  <div class="t-sm" style="margin-bottom:28px;max-width:620px;">Репозиторий — портативная память для AI-агента. Любая новая сессия читает его и не начинает с нуля.</div>
+
+  <div style="display:flex;gap:14px;flex:1;align-items:start;">
+    <div class="sys">
+      <div class="sys-type" style="color:var(--accent);">Сценарии</div>
+      <div class="sys-title">Контрольные шаги</div>
+      <div class="sys-desc">Обязательные ворота перед генерацией. Источник → Грамматика → Стратегия → Геометрия.</div>
+    </div>
+    <div class="sys">
+      <div class="sys-type" style="color:var(--green);">Паттерны</div>
+      <div class="sys-title">Библиотека форм</div>
+      <div class="sys-desc">15 операторов (chamfer, taper, void, rotation…) с причинами применения и зонировочные паттерны БЦ.</div>
+    </div>
+    <div class="sys">
+      <div class="sys-type" style="color:var(--yellow);">Кейсы</div>
+      <div class="sys-title">12+ разборов</div>
+      <div class="sys-desc">Karlatornet, Aqua Tower, Grove, Flock Chapel — что сработало, что нет, извлечённые правила.</div>
+    </div>
+    <div class="sys">
+      <div class="sys-type" style="color:var(--orange);">Ошибки</div>
+      <div class="sys-title">8 кодов ошибок</div>
+      <div class="sys-desc">MBC-E01–E08. Числовая проверка ≠ архитектурный результат. Зонирование до массинга. Архитектурный приём обязателен.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 24px;display:flex;align-items:center;gap:16px;">
+    <div style="font-size:26px;flex-shrink:0;">→</div>
+    <div style="font-size:17px;color:var(--text2);line-height:1.5;">
+      Репо <strong style="color:#fff;">замедляет старт</strong> (обязательные ворота) и
+      <strong style="color:#fff;">убирает случайность</strong> — AI знает, чего не делать
+    </div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<!-- Nav -->
+<div class="nav">
+  <button id="btn-prev" onclick="changeSlide(-1)" disabled>← Назад</button>
+  <div class="dots" id="dots"></div>
+  <span id="slide-counter">1 / 11</span>
+  <button id="btn-next" onclick="changeSlide(1)">Далее →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let cur = 0;
+
+  const dotsEl = document.getElementById('dots');
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n) {
+    slides[cur].classList.remove('active');
+    dotsEl.children[cur].classList.remove('active');
+    cur = Math.max(0, Math.min(total - 1, n));
+    slides[cur].classList.add('active');
+    dotsEl.children[cur].classList.add('active');
+    document.getElementById('slide-counter').textContent = (cur + 1) + ' / ' + total;
+    document.getElementById('btn-prev').disabled = cur === 0;
+    document.getElementById('btn-next').disabled = cur === total - 1;
+  }
+
+  function changeSlide(d) { goTo(cur + d); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+    if (e.key === 'ArrowLeft')                    { e.preventDefault(); changeSlide(-1); }
+  });
+</script>
+</body>
+</html>
