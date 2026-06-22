@@ -142,6 +142,7 @@ components, sliders, or RhinoMCP `g1_*` workflows.
 Read:
 
 - `docs/tools/grasshopper-workflow.md`
+- `docs/tools/grasshopper-csharp-script-nodes.md` for C# Script nodes
 - `docs/tools/grasshopper-mcp-smoke.md`
 - `docs/errors/grasshopper-mcp-error-library.md`
 - `docs/libraries/grasshopper-pattern-library.md`

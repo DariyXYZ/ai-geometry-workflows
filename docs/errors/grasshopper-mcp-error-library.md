@@ -120,27 +120,85 @@ Required gate:
 
 Do not mistake empty Rhino document object count for failed GH preview.
 
-## GH-006 - Script Component Source Setter Missing
+## GH-006 - Direct `g1_*` Script Source Setter Missing
 
 Symptom:
 
 `C# Script` or `Python 3 Script` can be placed and wired, but no exposed MCP
-tool can set the component's code body.
+`g1_*` tool can set the component's code body.
 
 Cause:
 
 Current g1 tool surface exposes placement/wiring/solve but not script-source
-editing.
+editing. Source editing may still be available indirectly through the
+Grasshopper .NET API.
 
 Correction:
 
 Store paste-ready script bodies in `scripts/grasshopper/` and use them manually
-or through a future reliable source-setting bridge.
+or through a proven source-setting bridge.
 
 Required gate:
 
 When a script component matters, commit its script body to the repo.
-## GH-007 - Ambiguous Duplicate Components
+
+## GH-007 - Programmatic `SetSource` Can Keep Wrong IO
+
+Symptom:
+
+The Rhino 8 C# Script component accepts source through `SetSource(string)`, but
+the component still shows default inputs/outputs such as:
+
+```text
+x
+y
+out
+a
+```
+
+and `TryGetSource` shows that `RunScript(...)` has been rewritten to the
+default signature.
+
+Cause:
+
+Programmatic source assignment into
+`RhinoCodePluginGH.Components.CSharpComponent` is not equivalent to manually
+pasting a classic `GH_ScriptInstance` script into the component editor. The
+component may preserve the existing IO contract unless its expected source
+format and parameter update path are proven.
+
+Detection:
+
+After `SetSource(...)`, inspect:
+
+```text
+TryGetSource
+Params.Input
+Params.Output
+```
+
+Do not rely on `SetSource` returning without error.
+
+Correction:
+
+Use `docs/tools/grasshopper-csharp-script-nodes.md`. Keep the code as a
+paste-ready script in `scripts/grasshopper/examples/`, or use a legacy/dedicated
+component route only after a tiny source-and-IO smoke test succeeds.
+
+Required gate:
+
+For any automated source injection, prove this sequence first:
+
+```text
+SetSource
+-> SetParametersFromScript
+-> inspect IO names
+-> solve tiny script
+```
+
+If the IO names are wrong, stop before building the production graph.
+
+## GH-008 - Ambiguous Duplicate Components
 
 Symptom:
 

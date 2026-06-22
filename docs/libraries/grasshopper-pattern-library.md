@@ -118,6 +118,44 @@ Failure modes:
 - source setter unavailable;
 - script body uses ambiguous RhinoCommon APIs without local verification.
 
+## Pattern - C# Script Node Preflight
+
+When to use:
+
+Every Grasshopper C# Script component task.
+
+Read:
+
+```text
+docs/tools/grasshopper-csharp-script-nodes.md
+```
+
+Logic:
+
+```text
+detect Rhino/GH version
+-> confirm units
+-> choose modern C# Script vs legacy C# component
+-> write GH_ScriptInstance-compatible code
+-> store code in scripts/grasshopper/examples/
+-> if automating source injection, prove IO after SetSource
+```
+
+Acceptance:
+
+- C# 9.0-compatible script;
+- `using Rhino;` included when `RhinoDoc` is used;
+- output names are meaningful;
+- script compiles when pasted into the target component;
+- automated source injection is used only after IO names are inspected.
+
+Failure modes:
+
+- default `x/y/out/a` IO remains after `SetSource`;
+- `Brep.CreateFromExtrusion` generated for Rhino 8 C#;
+- `Extrusion.CreateExtrusion` typed as `Extrusion` without verification;
+- script exists only in the chat and is lost after the session.
+
 ## Pattern - Rhino Source Curves To GH Graph
 
 When to use:

@@ -27,6 +27,7 @@ ideas, and tools without rereading every document.
 | `docs/libraries/moscow-architecture-approval-checklist.md` | Moscow architecture approval checklist criteria: visual image, urban frontage, permeability, parking | Active |
 | `docs/scenarios/reference-modeling-gates.md` | Source authority, constructive grammar, section direction, massing-before-detail | Active |
 | `docs/tools/grasshopper-workflow.md` | Grasshopper automation workflow through RhinoMCP: scan, smoke graph, build, validate | Active |
+| `docs/tools/grasshopper-csharp-script-nodes.md` | C# Script node rules imported from local skill: GH_ScriptInstance shape, RhinoCommon gotchas, source-injection gates | Active |
 | `docs/libraries/grasshopper-pattern-library.md` | Reusable Grasshopper graph/script patterns and acceptance gates | Draft active |
 | `docs/cases/recent-rhino-case-lessons.md` | Case-derived rules for twist towers, shells, stepped towers, video replay | Active |
 | `docs/obsidian-knowledge-map.md` | Map of useful Obsidian research, tests, postmortems, and future imports | Active index |
@@ -109,6 +110,7 @@ local source card
 | `docs/tools/rhino-mcp-backends.md` | Rhino backend policy: McNeel RhinoMCP by default; Aurox/other plugins only by request |
 | `docs/tools/rhino-common-helper.md` | Native RhinoCommon helper path for backend-specific operations |
 | `docs/tools/grasshopper-workflow.md` | Full Grasshopper MCP workflow: capability scan, smoke, graph strategy, validation |
+| `docs/tools/grasshopper-csharp-script-nodes.md` | Grasshopper C# Script node workflow, C# 9 baseline, RhinoCommon gotchas, source-injection validation |
 | `docs/tools/grasshopper-mcp-smoke.md` | Grasshopper MCP capability scan and smoke graph workflow |
 | `TOOLKIT.md` | CLI contract and commands |
 | `ai_geometry_toolkit/` | Runnable orchestration code |

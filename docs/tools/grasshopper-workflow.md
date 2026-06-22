@@ -68,9 +68,13 @@ Number Slider B
 -> C# Script component inputs x/y
 ```
 
-At the current RhinoMCP tool level, placing and wiring `C# Script` and
-`Python 3 Script` components works. A dedicated `set script source` operation
-is not exposed yet, so keep script bodies as paste-ready files under:
+At the current RhinoMCP `g1_*` tool level, placing and wiring `C# Script` and
+`Python 3 Script` components works. Source editing is not exposed as a direct
+`g1_*` operation. Rhino 8 components may expose `SetSource(...)` through the
+Grasshopper .NET API, but this route must be smoke-tested before production
+because it can accept code while keeping the wrong default `x/y/out/a` IO.
+
+Keep script bodies as paste-ready files under:
 
 ```text
 scripts/grasshopper/
@@ -78,6 +82,12 @@ scripts/grasshopper/
 
 Use `scripts/grasshopper/examples/point_sum_csharp.cs` as the first C# script
 body example.
+
+For C# Script work, read:
+
+```text
+docs/tools/grasshopper-csharp-script-nodes.md
+```
 
 ## Graph Strategy
 
@@ -158,3 +168,6 @@ Use RhinoCommon inside a C# or Python script component when:
 For third-party Rhino/GH plugins, use their components only after a component
 search and a small smoke solve. For non-trivial geometry, prefer RhinoCommon
 script logic over opaque plugin helper chains.
+
+For Grasshopper C# Script nodes, follow the dedicated node rules in
+`docs/tools/grasshopper-csharp-script-nodes.md`.
