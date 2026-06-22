@@ -18,6 +18,8 @@ scripts/grasshopper/smoke/          tiny smoke tests and selectors
 | `examples/spiral_tower_csharp.cs` | First architecture case: parametric spiral skyscraper massing. |
 | `examples/simple_xy_point_csharp.cs` | Minimal `x/y/a` fallback for modern C# Script source-assignment smoke tests. |
 | `examples/subd_zaha_tower_csharp.cs` | SubD tower generator used to test Rhino 8 C# Script and SubD output. |
+| `examples/voxel_seed_skyscraper_csharp.cs` | Seed-driven voxel skyscraper with fast mesh preview, optional Brep boxes, facade lines, and plugin guide curves. |
+| `examples/voxel_seed_skyscraper_graph.md` | Companion native/Pufferfish/Weaverbird/Human/Elefront graph recipe for the voxel skyscraper script. |
 
 ## Rules
 
