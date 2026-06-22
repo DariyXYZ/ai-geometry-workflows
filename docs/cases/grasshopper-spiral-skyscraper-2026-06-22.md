@@ -106,9 +106,40 @@ Recommended slider ranges:
 
 ## Test Status
 
-Repository setup is complete. Grasshopper runtime validation still needs the
-manual paste route or a proven source-assignment bridge because the first
-programmatic `SetSource` route kept wrong default IO.
+RhinoCommon logic: runtime-validated 2026-06-22. The `RunScript` body was ported
+to `run_python` (the stable layer; `run_csharp`/`g1_*` were avoided per GH-009 /
+GH-012) and executed against a fresh Rhino 8 slot in a meters document. All
+acceptance gates passed and the geometry was baked to a `SpiralTower` layer.
+
+```yaml
+rhino_version: 8.30.26103.11001
+slot_port: 10502
+units: Meters
+tolerance: 0.001
+plates_built: 42 / 42
+extrude_fails: 0
+cap_fails: 0
+first_slab_z: 0.0
+total_height_m: 163.8
+base_scale: 1.0
+top_scale: 0.72
+rails_count: 4
+core_is_solid: true
+baked_objects: 47   # 42 plates + 4 rails + 1 core
+bbox: [-20.93, -20.61, 0] .. [20.93, 20.61, 163.8]
+viewport: perspective / Shaded, visibleObjectCount 47
+```
+
+Grasshopper C# Script node delivery still uses the manual paste route — the
+logic is proven, but in-canvas source assignment remains blocked (see Known
+Limitations). The validation confirms the RhinoCommon code is correct before any
+paste.
+
+Connection issues hit and logged during this session: GH-009 (`g1_*` crashes an
+adopted slot), GH-010 (`MCPStart`, not `MCPConnect`), GH-011 (competing
+`rhino-mcp-router` from claude.exe + codex.exe -> plugin double-write), GH-012
+(`run_csharp`/RhinoCode wedges the plugin handler). Lead validation with
+`run_python`, keep a single MCP client per Rhino.
 
 ## Known Limitations
 

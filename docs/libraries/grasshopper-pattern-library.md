@@ -20,12 +20,13 @@ Logic:
 
 ```text
 list_slots
--> if empty, ask the user to run MCPConnect in Rhino
+-> if empty, ask the user to run MCPStart in Rhino (GH-010)
 -> run_python version/units/object_count
 -> get_commands Grasshopper/Script/Python
--> g1_search_components
+-> component lookup via run_python or documented GUIDs (NOT g1_search_components
+   on an adopted slot; it crashes Rhino, GH-009)
 -> confirm Grasshopper is open, or ask the user to open it manually
--> smoke graph
+-> validate C# logic via run_csharp before manual paste
 ```
 
 Acceptance:
@@ -37,8 +38,8 @@ Acceptance:
 
 Failure modes:
 
-- no Rhino slot because `MCPConnect` was not run;
-- component search without GH document;
+- no Rhino slot because `MCPStart` was not run;
+- `g1_search_components` crashing an adopted slot (GH-009);
 - ambiguous duplicate component names.
 
 ## Pattern - Manual First, Batch Later

@@ -23,7 +23,8 @@ capability scan
 Always start with the same preflight:
 
 1. `mcp__rhino.list_slots`
-   - If no slot is present, ask the user to run `MCPConnect` in Rhino.
+   - If no slot is present, ask the user to run `MCPStart` in Rhino (see GH-010;
+     the command is `MCPStart`, not `MCPConnect`).
    - Do not launch Rhino or Grasshopper automatically unless the user explicitly
      asks for it.
 2. `mcp__rhino.run_python` for:
@@ -35,10 +36,13 @@ Always start with the same preflight:
    - `Grasshopper`
    - `Script`
    - `Python`
-4. `mcp__rhino.g1_search_components` for the required component families.
-5. Confirm Grasshopper access through a light component search or by asking the
-   user to open Grasshopper manually.
-6. Place a tiny smoke graph and solve before building the real graph.
+4. Component lookup: do NOT call `g1_search_components` on a user-started
+   (adopted) slot — it crashes Rhino (see GH-009). Query the GH component server
+   from `run_python`, or rely on documented GUIDs.
+5. Confirm Grasshopper access by asking the user to open Grasshopper manually.
+6. Validate C# Script node logic via `run_csharp` (bake-and-inspect) before any
+   manual paste. Reserve `g1_*` canvas automation for slots the user explicitly
+   asked to spawn.
 
 Do not start with a large graph. A failed five-node graph is cheap. A failed
 hundred-node graph is a fog machine.
