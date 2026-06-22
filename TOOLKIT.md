@@ -114,9 +114,10 @@ Fast smoke sequence:
 
 ```text
 list_slots
+-> if empty, ask the user to run MCPConnect in Rhino
 -> run_python Rhino version / units / object count
 -> g1_search_components for Script, A+B, Construct Point
--> g1_start
+-> confirm Grasshopper is open, or ask the user to open it manually
 -> place sliders
 -> place Construct Point
 -> connect X/Y/Z

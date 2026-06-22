@@ -20,10 +20,11 @@ Logic:
 
 ```text
 list_slots
+-> if empty, ask the user to run MCPConnect in Rhino
 -> run_python version/units/object_count
 -> get_commands Grasshopper/Script/Python
 -> g1_search_components
--> g1_start
+-> confirm Grasshopper is open, or ask the user to open it manually
 -> smoke graph
 ```
 
@@ -36,7 +37,7 @@ Acceptance:
 
 Failure modes:
 
-- `g1_start` timeout;
+- no Rhino slot because `MCPConnect` was not run;
 - component search without GH document;
 - ambiguous duplicate component names.
 

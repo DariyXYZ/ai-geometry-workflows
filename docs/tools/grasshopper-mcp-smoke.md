@@ -8,6 +8,7 @@ Use this before relying on Grasshopper automation through RhinoMCP.
 
 ```text
 mcp__rhino.list_slots
+-> if empty, ask the user to run MCPConnect in Rhino
 -> mcp__rhino.run_python for Rhino version, units, object count
 -> mcp__rhino.get_commands for Grasshopper, Script, Python
 -> mcp__rhino.g1_search_components for required GH objects
@@ -55,8 +56,8 @@ scripts/grasshopper/examples/point_sum_csharp.cs
 ## Known Tool Notes
 
 - `g1_start` can time out on an already-busy Rhino command queue. If this
-  happens, use a fresh Rhino slot for the smoke test instead of closing a user's
-  active work file.
+  happens, ask the user to open Grasshopper manually instead of closing,
+  spawning, or replacing the user's active Rhino slot.
 - `g1_apply_graph` can fail with a generic error. Place and wire objects one by
   one to get actionable diagnostics.
 - `Panel` may behave as a value source for wiring in this MCP surface. Use

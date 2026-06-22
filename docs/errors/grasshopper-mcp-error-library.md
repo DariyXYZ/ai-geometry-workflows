@@ -23,8 +23,9 @@ Grasshopper may be loaded even though `g1_start` timed out.
 
 Correction:
 
-For production work, avoid closing a user's active slot. Spawn a fresh slot for
-Grasshopper smoke tests, or ask the user to close the stuck command manually.
+For production work, avoid closing or spawning slots unless the user explicitly
+asks for it. Ask the user to open Grasshopper manually, then reconnect with
+`MCPConnect` if needed.
 
 Required gate:
 
@@ -48,7 +49,8 @@ exists.
 
 Correction:
 
-Run `g1_start` on a fresh or idle slot, then place a tiny graph.
+Ask the user to open Grasshopper manually in the connected Rhino slot, then
+place a tiny graph.
 
 Required gate:
 

@@ -23,6 +23,9 @@ capability scan
 Always start with the same preflight:
 
 1. `mcp__rhino.list_slots`
+   - If no slot is present, ask the user to run `MCPConnect` in Rhino.
+   - Do not launch Rhino or Grasshopper automatically unless the user explicitly
+     asks for it.
 2. `mcp__rhino.run_python` for:
    - Rhino version
    - document name
@@ -33,7 +36,8 @@ Always start with the same preflight:
    - `Script`
    - `Python`
 4. `mcp__rhino.g1_search_components` for the required component families.
-5. `mcp__rhino.g1_start` on a fresh or confirmed-idle slot.
+5. Confirm Grasshopper access through a light component search or by asking the
+   user to open Grasshopper manually.
 6. Place a tiny smoke graph and solve before building the real graph.
 
 Do not start with a large graph. A failed five-node graph is cheap. A failed
@@ -105,7 +109,7 @@ Choose the smallest graph type that can prove the task:
 ## Build Order
 
 ```text
-1. Open or create GH canvas
+1. Ask the user to open Rhino and Grasshopper, then run `MCPConnect`
 2. Place named sliders first
 3. Place standard components
 4. Wire one chain
