@@ -57,6 +57,7 @@ to rediscover the same lesson.
 | Case | Status | Main lesson | Read |
 | --- | --- | --- | --- |
 | Grasshopper spiral skyscraper 2026-06-22 | `tooling` | First architecture C# Script node case: one source-controlled node plus sliders is the fastest baseline for parametric tower massing; pending manual GH paste test. | `docs/cases/grasshopper-spiral-skyscraper-2026-06-22.md`, `scripts/grasshopper/examples/spiral_tower_csharp.cs`, `docs/tools/grasshopper-csharp-script-nodes.md` |
+| Grasshopper voxel skyscraper 2026-06-22 | `accepted` | Successful seed-driven voxel tower: use a controlled architectural mask plus Pufferfish `Voxel Mesh`; do not confuse it with random `Populate 3D` voxel clouds. | `docs/cases/grasshopper-voxel-skyscraper-2026-06-22.md`, `scripts/grasshopper/examples/voxel_seed_skyscraper_csharp.cs`, `scripts/grasshopper/examples/voxel_seed_skyscraper_graph.md` |
 | Grasshopper MCP smoke 2026-06-22 | `tooling` | Use capability scan, fresh slot, manual placement/wiring, Construct Point smoke, and repo-stored script bodies. | `docs/cases/grasshopper-mcp-smoke-2026-06-22.md`, `docs/tools/grasshopper-workflow.md`, `docs/errors/grasshopper-mcp-error-library.md` |
 | Grasshopper C# SetSource IO 2026-06-22 | `tooling` | `SetSource` can accept code while preserving wrong default `x/y/out/a` IO; inspect IO and solve a tiny script before trusting source injection. | `docs/cases/grasshopper-csharp-setsource-io-2026-06-22.md`, `docs/tools/grasshopper-csharp-script-nodes.md`, `docs/errors/grasshopper-mcp-error-library.md` |
 
