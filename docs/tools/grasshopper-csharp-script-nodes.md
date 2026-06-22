@@ -1,26 +1,23 @@
 # Grasshopper C# Script Nodes
 
-Status: active rules imported from the local `grasshopper-script-nodes` skill.
+Status: active repo-native rules, promoted from the local
+`grasshopper-script-nodes` skill.
 
 Use this file before writing or automating C# code for a Grasshopper Script
 component.
 
 ## Source Of Truth
 
-The local Codex skill remains the detailed source:
-
-```text
-C:\Users\dariy.n\.codex\skills\grasshopper-script-nodes
-```
-
-Repo workflows should mirror its stable rules so future agents do not rely on
-chat memory.
+This repository is the portable source of truth for Grasshopper C# Script
+generation rules. The original local Codex skill was used as seed material, but
+future agents should be able to work from the repo alone.
 
 Required read order for C# Script tasks:
 
 ```text
 docs/tools/grasshopper-workflow.md
 -> docs/tools/grasshopper-csharp-script-nodes.md
+-> docs/tools/grasshopper-csharp-performance.md
 -> docs/errors/grasshopper-mcp-error-library.md
 -> scripts/grasshopper/README.md
 -> scripts/grasshopper/examples/
@@ -81,6 +78,42 @@ Rules:
 - Initialize outputs before validation so disconnected inputs stay neutral.
 - Keep helper methods inside the same script node.
 - Avoid advanced C# syntax unless the local runtime proves support.
+
+## Automatic IO Contract
+
+Prefer automatic inputs and outputs through the `RunScript` signature whenever
+the script will be pasted manually into the Rhino 8 C# Script editor:
+
+```csharp
+private void RunScript(
+  int Floors,
+  double FloorHeight,
+  double Width,
+  List<Curve> SourceCurves,
+  ref object FloorPlates,
+  ref object Rails,
+  ref object Info)
+```
+
+Rules:
+
+- Use semantic parameter names; avoid `x`, `y`, `a`, and `out` in production
+  scripts.
+- Encode the intended access shape in types: scalar inputs as `double`/`int`,
+  list inputs as `List<T>`, and tree inputs only when the script really needs
+  branch structure.
+- Keep optional numeric inputs idle-safe by assigning practical defaults when
+  values are missing, zero, negative, or otherwise invalid for the algorithm.
+- Initialize every output before validation.
+- Keep diagnostic text in a named output such as `Info`; do not depend on the
+  default `out` unless the task is a tiny smoke test.
+
+Important automation caveat:
+
+- Programmatic `SetSource(...)` on the modern Rhino 8 component can keep the
+  default `x/y/out/a` contract. Treat automatic IO from the signature as a
+  manual-paste feature unless the source-assignment route has just passed the
+  inspection gate below.
 
 ## RhinoCommon Geometry Gotchas
 
@@ -176,3 +209,12 @@ For architecture/massing:
 - output blockout/massing first, detail later;
 - report height, floor count, footprint dimensions, twist/taper, and units;
 - avoid baking until the preview graph passes.
+
+## Related Performance Rules
+
+For list access, parallel computation, caching, and large geometry generation,
+read:
+
+```text
+docs/tools/grasshopper-csharp-performance.md
+```

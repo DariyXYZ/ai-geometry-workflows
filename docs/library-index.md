@@ -28,6 +28,7 @@ ideas, and tools without rereading every document.
 | `docs/scenarios/reference-modeling-gates.md` | Source authority, constructive grammar, section direction, massing-before-detail | Active |
 | `docs/tools/grasshopper-workflow.md` | Grasshopper automation workflow through RhinoMCP: scan, smoke graph, build, validate | Active |
 | `docs/tools/grasshopper-csharp-script-nodes.md` | C# Script node rules imported from local skill: GH_ScriptInstance shape, RhinoCommon gotchas, source-injection gates | Active |
+| `docs/tools/grasshopper-csharp-performance.md` | C# Script automatic IO, list/tree access, parallel-safe patterns, caching, and performance gates | Active |
 | `docs/libraries/grasshopper-pattern-library.md` | Reusable Grasshopper graph/script patterns and acceptance gates | Draft active |
 | `docs/cases/recent-rhino-case-lessons.md` | Case-derived rules for twist towers, shells, stepped towers, video replay | Active |
 | `docs/cases/grasshopper-spiral-skyscraper-2026-06-22.md` | First reusable Grasshopper architecture C# Script node case: spiral skyscraper massing | Active |
@@ -112,6 +113,7 @@ local source card
 | `docs/tools/rhino-common-helper.md` | Native RhinoCommon helper path for backend-specific operations |
 | `docs/tools/grasshopper-workflow.md` | Full Grasshopper MCP workflow: capability scan, smoke, graph strategy, validation |
 | `docs/tools/grasshopper-csharp-script-nodes.md` | Grasshopper C# Script node workflow, C# 9 baseline, RhinoCommon gotchas, source-injection validation |
+| `docs/tools/grasshopper-csharp-performance.md` | Performance and parallel rules for Grasshopper C# Script nodes |
 | `docs/tools/grasshopper-mcp-smoke.md` | Grasshopper MCP capability scan and smoke graph workflow |
 | `TOOLKIT.md` | CLI contract and commands |
 | `ai_geometry_toolkit/` | Runnable orchestration code |

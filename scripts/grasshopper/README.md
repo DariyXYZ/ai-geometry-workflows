@@ -16,12 +16,16 @@ scripts/grasshopper/smoke/          tiny smoke tests and selectors
 | --- | --- |
 | `examples/point_sum_csharp.cs` | Minimal C# Script smoke body. |
 | `examples/spiral_tower_csharp.cs` | First architecture case: parametric spiral skyscraper massing. |
+| `examples/simple_xy_point_csharp.cs` | Minimal `x/y/a` fallback for modern C# Script source-assignment smoke tests. |
+| `examples/subd_zaha_tower_csharp.cs` | SubD tower generator used to test Rhino 8 C# Script and SubD output. |
 
 ## Rules
 
 - Keep meaningful script component bodies in source control.
 - Read `docs/tools/grasshopper-csharp-script-nodes.md` before writing C# Script
   code for Grasshopper.
+- Read `docs/tools/grasshopper-csharp-performance.md` before writing large,
+  list-driven, cached, or parallel C# Script nodes.
 - Prefer C# 9.0-compatible Rhino 8 code for C# Script components.
 - Prefer Python 3 for Rhino 8 Python Script components.
 - Avoid hidden chat-only code.

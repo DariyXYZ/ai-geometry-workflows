@@ -37,6 +37,7 @@ This file tells a new user or AI agent what to read and what to ignore.
 | `docs/tools/rhino-common-helper.md` | Native RhinoCommon helper layer for backend-specific RhinoCommon execution. |
 | `docs/tools/grasshopper-workflow.md` | Grasshopper MCP workflow for capability scan, smoke graph, build order, and validation. |
 | `docs/tools/grasshopper-csharp-script-nodes.md` | Grasshopper C# Script node rules, RhinoCommon gotchas, and source-injection gates. |
+| `docs/tools/grasshopper-csharp-performance.md` | Automatic IO, list/tree access, parallel-safe loops, caching, and performance gates for GH C# Script nodes. |
 | `docs/errors/grasshopper-mcp-error-library.md` | Known Grasshopper MCP automation failure modes and fixes. |
 | `decisions/` | Dated accepted decisions. Read relevant files only. |
 
@@ -117,6 +118,7 @@ Read:
 
 - `docs/tools/grasshopper-workflow.md`
 - `docs/tools/grasshopper-csharp-script-nodes.md` when writing C# Script nodes
+- `docs/tools/grasshopper-csharp-performance.md` when writing large, automatic-IO, cached, or parallel C# Script nodes
 - `docs/tools/grasshopper-mcp-smoke.md`
 - `docs/libraries/grasshopper-pattern-library.md`
 - `docs/errors/grasshopper-mcp-error-library.md`
