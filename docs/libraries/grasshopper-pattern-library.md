@@ -156,6 +156,44 @@ Failure modes:
 - `Extrusion.CreateExtrusion` typed as `Extrusion` without verification;
 - script exists only in the chat and is lost after the session.
 
+## Pattern - One C# Node Plus Sliders For Tower Massing
+
+When to use:
+
+Parametric tower blockouts, early massing, and geometry cases where a component
+graph would need many repeated wires.
+
+Example:
+
+```text
+docs/cases/grasshopper-spiral-skyscraper-2026-06-22.md
+scripts/grasshopper/examples/spiral_tower_csharp.cs
+```
+
+Logic:
+
+```text
+sliders define design parameters
+-> one C# Script node generates primary massing geometry
+-> outputs expose solids, guide curves, and Info
+-> optional downstream nodes handle facade/detail/metrics
+```
+
+Acceptance:
+
+- all meaningful logic is in a source-controlled script;
+- slider ranges are documented;
+- units and design metrics are reported;
+- output count is controlled;
+- bake/detail is deferred until preview passes.
+
+Failure modes:
+
+- replacing a compact script with a large fragile wire graph;
+- baking before preview validation;
+- mixing massing, facade, and metrics in one unreviewable node;
+- losing the script body inside a Grasshopper file.
+
 ## Pattern - Rhino Source Curves To GH Graph
 
 When to use:

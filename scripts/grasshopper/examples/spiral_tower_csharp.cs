@@ -6,6 +6,16 @@ using Rhino.Geometry;
 using Grasshopper.Kernel;
 #endregion
 
+// Case: Grasshopper spiral skyscraper.
+// Target: Rhino 8 C# Script component, C# 9-compatible.
+// Units: meters.
+// Inputs:
+//   Floors, FloorHeight, Width, Depth, TwistDeg, Taper, SlabThick, CoreRadius
+// Outputs:
+//   FloorPlates, FacadeRails, Core, Info
+// Default design:
+//   42 floors, 3.9 m floor-to-floor, 34 x 28 m base plate,
+//   210 degree total twist, 0.72 top taper, 0.35 m slabs, 5 m core radius.
 public class Script_Instance : GH_ScriptInstance
 {
   private void RunScript(

@@ -30,6 +30,7 @@ ideas, and tools without rereading every document.
 | `docs/tools/grasshopper-csharp-script-nodes.md` | C# Script node rules imported from local skill: GH_ScriptInstance shape, RhinoCommon gotchas, source-injection gates | Active |
 | `docs/libraries/grasshopper-pattern-library.md` | Reusable Grasshopper graph/script patterns and acceptance gates | Draft active |
 | `docs/cases/recent-rhino-case-lessons.md` | Case-derived rules for twist towers, shells, stepped towers, video replay | Active |
+| `docs/cases/grasshopper-spiral-skyscraper-2026-06-22.md` | First reusable Grasshopper architecture C# Script node case: spiral skyscraper massing | Active |
 | `docs/obsidian-knowledge-map.md` | Map of useful Obsidian research, tests, postmortems, and future imports | Active index |
 | Obsidian project notes | Broader Moscow massing typologies, visual catalogs, source research, raw project memory | External canonical project memory |
 

@@ -10,6 +10,13 @@ scripts/grasshopper/graph_builders/ future RhinoMCP graph builder scripts
 scripts/grasshopper/smoke/          tiny smoke tests and selectors
 ```
 
+## Active Examples
+
+| Script | Use |
+| --- | --- |
+| `examples/point_sum_csharp.cs` | Minimal C# Script smoke body. |
+| `examples/spiral_tower_csharp.cs` | First architecture case: parametric spiral skyscraper massing. |
+
 ## Rules
 
 - Keep meaningful script component bodies in source control.
