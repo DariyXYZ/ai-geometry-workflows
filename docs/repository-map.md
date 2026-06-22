@@ -26,6 +26,7 @@ This file tells a new user or AI agent what to read and what to ignore.
 | `docs/scenarios/architecture-compliance-check.md` | Scenario 3D workflow for Rhino evidence collection and architecture approval checklist review. |
 | `docs/libraries/massing-decision-library.md` | Scenario 3 massing decision order, footprint families, massing families, risk checks, and generator output schema. |
 | `docs/libraries/form-operator-library.md` | Reusable form operators for early massing: chamfer, rotation, rounding, setbacks, voids, taper, podium/tower logic. |
+| `docs/libraries/grasshopper-architectural-form-patterns.md` | Bridge from architectural massing/form operators to Grasshopper control geometry, native nodes, plugin nodes, and validation gates. |
 | `docs/libraries/moscow-architecture-approval-checklist.md` | Compact checklist criteria from the 2026-06-13 DGP architecture evaluation PDF. |
 | `docs/errors/moscow-bc-massing-error-library.md` | Moscow BC massing failure modes: site fail despite numeric pass, cut routes, box-only variants, accidental intersections. |
 | `docs/libraries/moscow-bc-site-zoning-patterns.md` | Zoning patterns and pre-geometry gates for BC/residential massing: public spine, service edge, buildable bands, height anchors. |
@@ -105,6 +106,8 @@ Read:
 - `docs/scenarios/tep-massing-scenario-subtypes.md`
 - `docs/scenarios/architecture-compliance-check.md`
 - `docs/libraries/moscow-architecture-approval-checklist.md`
+- `docs/libraries/form-operator-library.md`
+- `docs/libraries/grasshopper-architectural-form-patterns.md` if Grasshopper will build or iterate the form
 - `docs/errors/moscow-bc-massing-error-library.md`
 - `docs/libraries/moscow-bc-site-zoning-patterns.md`
 - `docs/development-state.md`
@@ -121,6 +124,7 @@ Read:
 - `docs/tools/grasshopper-csharp-performance.md` when writing large, automatic-IO, cached, or parallel C# Script nodes
 - `docs/tools/grasshopper-mcp-smoke.md`
 - `docs/libraries/grasshopper-pattern-library.md`
+- `docs/libraries/grasshopper-architectural-form-patterns.md` for building-form and facade-graph tasks
 - `docs/errors/grasshopper-mcp-error-library.md`
 
 ## Rule For Future Agents

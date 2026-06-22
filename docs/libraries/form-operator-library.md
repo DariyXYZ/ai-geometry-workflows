@@ -9,6 +9,16 @@ This is a compact repo version of the Obsidian research note:
 Use it in Scenario 3 when a massing variant risks becoming a plain box, a
 random sculpture, or a numerically valid but architecturally weak object.
 
+When the form will be built in Grasshopper, translate the selected operator
+through:
+
+```text
+docs/libraries/grasshopper-architectural-form-patterns.md
+```
+
+That bridge maps architectural operators to control geometry, native GH nodes,
+plugin nodes, and validation gates.
+
 ## Operator Selection Rule
 
 Do not apply operators as decoration. Each operator must answer at least one

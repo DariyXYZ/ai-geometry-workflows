@@ -4,6 +4,15 @@ Status: draft active library.
 
 Reusable patterns for fast Grasshopper work through RhinoMCP.
 
+For building-form tasks, read the architectural bridge first:
+
+```text
+docs/libraries/grasshopper-architectural-form-patterns.md
+```
+
+It maps Scenario 3 form operators into Grasshopper control geometry, node
+families, plugin nodes, and validation gates.
+
 ## Pattern - Capability Scan First
 
 When to use:
@@ -229,3 +238,43 @@ Failure modes:
 - replacing source curves with guessed rectangles;
 - losing units;
 - baking floating geometry.
+
+## Pattern - Architectural Operator To GH Graph
+
+When to use:
+
+Building form, massing, facade-line, tower, podium, shell, or SubD/Brep
+generation in Grasshopper.
+
+Read:
+
+```text
+docs/libraries/form-operator-library.md
+docs/libraries/grasshopper-architectural-form-patterns.md
+```
+
+Logic:
+
+```text
+choose architectural operator
+-> declare why it belongs on the site or building
+-> choose control geometry: section stack, spine, rails, attractor, or surface
+-> build node graph from simple curves to preview massing
+-> add facade net only after form is accepted
+-> record the pattern if it becomes reusable
+```
+
+Acceptance:
+
+- operator has a site, TEP, view, movement, or image reason;
+- node graph exposes meaningful parameters;
+- primary massing is visible before facade/detail;
+- plugin nodes support the pattern instead of defining it;
+- validation checks height, footprint, silhouette, and source authority.
+
+Failure modes:
+
+- starting from plugin components without an architectural reason;
+- hiding a requested node graph inside one script node;
+- adding dense facade pipes before line preview is approved;
+- baking geometry before the Grasshopper preview passes.

@@ -24,6 +24,7 @@ ideas, and tools without rereading every document.
 | `docs/scenarios/architecture-compliance-check.md` | Rhino/MCP evidence collection and approval-risk review workflow | Active |
 | `docs/libraries/massing-decision-library.md` | Decision order from site context to CAD parameters; subtype routing, footprint families, risk checks | Active |
 | `docs/libraries/form-operator-library.md` | Reusable massing operators: chamfer, rotation, taper, setbacks, voids, podium/tower logic, crown moves | Active |
+| `docs/libraries/grasshopper-architectural-form-patterns.md` | Translation from architectural operators to Grasshopper section stacks, spines, attractors, facade nets, native nodes, and plugin nodes | Active |
 | `docs/libraries/moscow-architecture-approval-checklist.md` | Moscow architecture approval checklist criteria: visual image, urban frontage, permeability, parking | Active |
 | `docs/scenarios/reference-modeling-gates.md` | Source authority, constructive grammar, section direction, massing-before-detail | Active |
 | `docs/tools/grasshopper-workflow.md` | Grasshopper automation workflow through RhinoMCP: scan, smoke graph, build, validate | Active |

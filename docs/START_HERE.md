@@ -110,6 +110,8 @@ Read:
 - `docs/scenarios/architecture-compliance-check.md`
 - `docs/libraries/massing-decision-library.md`
 - `docs/libraries/form-operator-library.md`
+- `docs/libraries/grasshopper-architectural-form-patterns.md` if the form will
+  be built or iterated in Grasshopper
 - `docs/libraries/moscow-architecture-approval-checklist.md`
 - `docs/errors/moscow-bc-massing-error-library.md`
 - `docs/libraries/moscow-bc-site-zoning-patterns.md`
@@ -148,6 +150,8 @@ Read:
 - `docs/tools/grasshopper-mcp-smoke.md`
 - `docs/errors/grasshopper-mcp-error-library.md`
 - `docs/libraries/grasshopper-pattern-library.md`
+- `docs/libraries/grasshopper-architectural-form-patterns.md` for architectural
+  building-form graphs, facade nets, section stacks, and plugin-assisted forms
 
 Mandatory flow:
 
