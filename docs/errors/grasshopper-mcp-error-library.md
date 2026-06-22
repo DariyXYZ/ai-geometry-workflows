@@ -508,3 +508,55 @@ Required gate:
 Never use reflection-based `SetSource` on `RhinoCodePluginGH.Components.*` for
 production graphs. Treat manual paste as the only proven source-injection path
 for the modern Rhino 8 C# Script component.
+
+## GH-014 - Modern C# Script Reserves First Output As `out`
+
+Symptom:
+
+After programmatically adding named outputs to
+`RhinoCodePluginGH.Components.CSharpComponent`, the first visible output remains
+the script console output `out`. A source body whose `RunScript` signature starts
+with a production output such as `ref object VoxelBoxes` compiles with:
+
+```text
+The name 'VoxelBoxes' does not exist in the current context
+```
+
+Observed 2026-06-22:
+
+```yaml
+component: Rhino 8 C# Script
+manual_params: out, VoxelBoxes, EnvelopeMesh, FloorOutlines, FacadeLines
+actual_RunScript_after_SetSource: ref object EnvelopeMesh, ...
+result: first production output dropped from signature
+```
+
+Cause:
+
+The modern Rhino 8 C# Script component treats the first output slot as the
+script console output `out`. It is visible in `Params.Output`, but it is not a
+normal `ref object` output in the generated `RunScript` signature.
+
+Correction:
+
+Keep the first output named `out` and put production outputs after it:
+
+```text
+out
+VoxelPoints
+EnvelopeMesh
+FloorOutlines
+FacadeLines
+PluginGuides
+Metrics
+Info
+```
+
+Write script bodies so the first `ref object` output in `RunScript` corresponds
+to the second visible output after `out`.
+
+Required gate:
+
+After creating or editing a C# Script component programmatically, call
+`TryGetSource` and inspect the actual `RunScript` signature, not only
+`Params.Output`.

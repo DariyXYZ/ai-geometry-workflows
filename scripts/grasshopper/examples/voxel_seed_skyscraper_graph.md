@@ -9,6 +9,13 @@ scripts/grasshopper/examples/voxel_seed_skyscraper_csharp.cs
 Goal: keep the random voxel tower fast while still letting the definition use
 native Grasshopper nodes and plugins around the script output.
 
+The live Grasshopper test on 2026-06-22 uses two branches:
+
+- hybrid branch: C# generates deterministic occupied voxel centers, Pufferfish
+  `Voxel Mesh` builds the actual voxel mesh;
+- pure node branch: `Center Box -> Populate 3D -> Pufferfish Voxel Mesh` gives
+  a fully node-only seed-driven voxel cloud proof.
+
 ## C# Script Node
 
 Paste `voxel_seed_skyscraper_csharp.cs` into a Rhino 8 C# Script component.
@@ -43,6 +50,24 @@ C# EnvelopeMesh
 Keep `MakeBoxes=false` while searching seeds. The mesh is the intended fast
 interactive output.
 
+## Pufferfish Voxel Mesh Path
+
+```text
+C# VoxelPoints
+-> XY Plane
+-> Pufferfish Voxel Mesh
+   Points = VoxelPoints
+   Plane = XY Plane
+   Size X = CellSize
+   Size Y = CellSize
+   Size Z = FloorHeight
+-> Custom Preview
+```
+
+Use this as the main Grasshopper/plugin-visible voxel path. The C# node handles
+only the deterministic seed mask and point centers; the voxel mesh is generated
+by Pufferfish.
+
 ## Native GH Form Path
 
 ```text
@@ -70,6 +95,25 @@ C# PluginGuides
 Use this to turn the voxel sections into a smoother tower family while keeping
 the same seed-driven footprint logic.
 
+## Pure Node Seed Proof
+
+This branch uses no C# geometry generation:
+
+```text
+NodeWidth, NodeDepth, NodeHeight
+-> Center Box
+NodeCount, NodeSeed
+-> Populate 3D
+NodeCell
+-> Pufferfish Voxel Mesh
+-> Custom Preview
+```
+
+It is less architectural than the seed-mask tower because the points are random
+inside a box, but it is useful as a fully node-only seed-driven voxel proof.
+For a grounded tower, move the box or resulting voxel mesh upward by
+`NodeHeight / 2`.
+
 ## Facade Net Path
 
 ```text
@@ -81,17 +125,6 @@ C# FacadeLines
 
 Only pipe lines after the line preview is accepted. Dense pipes will slow
 Grasshopper more than the voxel generator itself.
-
-## Baking / Attribute Path
-
-```text
-C# VoxelBoxes with MakeBoxes=true
--> Elefront / Human attributes
--> bake by floor, seed, or occupied-cell group
-```
-
-Use this only for export or presentation snapshots. It is intentionally not the
-default preview path.
 
 ## Validation Gates
 

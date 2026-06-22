@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Rhino;
 using Rhino.Geometry;
 using Grasshopper.Kernel;
+using Grasshopper.Kernel.Types;
 #endregion
 
 // Case: seed-driven voxel skyscraper.
@@ -14,11 +15,12 @@ using Grasshopper.Kernel;
 //   Seed, Floors, GridX, GridY, CellSize, FloorHeight, Density,
 //   TwistDeg, Taper, TerraceBias, Noise, MakeBoxes, FacadeEvery
 // Outputs:
-//   VoxelBoxes, EnvelopeMesh, FloorOutlines, FacadeLines, PluginGuides, Metrics, Info
+//   VoxelPoints, EnvelopeMesh, FloorOutlines, FacadeLines, PluginGuides, Metrics, Info
 //
 // Fast workflow:
-//   EnvelopeMesh is the main preview output.
-//   VoxelBoxes is optional and can be heavy; keep MakeBoxes false while tuning.
+//   EnvelopeMesh is the fastest direct preview output.
+//   VoxelPoints can drive Pufferfish Voxel Mesh, so visible plugin nodes can
+//   build the final voxelized mesh.
 //   PluginGuides are sparse section curves for Pufferfish Tween Through Curves,
 //   Parameter Loft Mesh, Net On Surface, or native Loft/Contour workflows.
 public class Script_Instance : GH_ScriptInstance
@@ -26,20 +28,20 @@ public class Script_Instance : GH_ScriptInstance
   private bool _described = false;
 
   private void RunScript(
-    int Seed,
-    int Floors,
-    int GridX,
-    int GridY,
-    double CellSize,
-    double FloorHeight,
-    double Density,
-    double TwistDeg,
-    double Taper,
-    double TerraceBias,
-    double Noise,
-    bool MakeBoxes,
-    int FacadeEvery,
-    ref object VoxelBoxes,
+    object Seed,
+    object Floors,
+    object GridX,
+    object GridY,
+    object CellSize,
+    object FloorHeight,
+    object Density,
+    object TwistDeg,
+    object Taper,
+    object TerraceBias,
+    object Noise,
+    object MakeBoxes,
+    object FacadeEvery,
+    ref object VoxelPoints,
     ref object EnvelopeMesh,
     ref object FloorOutlines,
     ref object FacadeLines,
@@ -47,7 +49,7 @@ public class Script_Instance : GH_ScriptInstance
     ref object Metrics,
     ref object Info)
   {
-    VoxelBoxes = new List<Brep>();
+    VoxelPoints = new List<Point3d>();
     EnvelopeMesh = null;
     FloorOutlines = new List<Curve>();
     FacadeLines = new List<Curve>();
@@ -57,18 +59,26 @@ public class Script_Instance : GH_ScriptInstance
 
     SetComponentDescriptions();
 
-    int seed = Seed == 0 ? 240622 : Seed;
-    int floors = Clamp(Floors <= 0 ? 48 : Floors, 6, 120);
-    int gx = Clamp(GridX <= 0 ? 13 : GridX, 5, 35);
-    int gy = Clamp(GridY <= 0 ? 11 : GridY, 5, 35);
-    double cell = CellSize > 0.05 ? CellSize : 4.2;
-    double floorH = FloorHeight > 0.05 ? FloorHeight : 3.9;
-    double density = Clamp01(Density <= 0.0 ? 0.74 : Density);
-    double twistDeg = Math.Abs(TwistDeg) > 0.001 ? TwistDeg : 145.0;
-    double taper = Taper > 0.05 ? Math.Min(Taper, 1.35) : 0.68;
-    double terraceBias = Clamp01(TerraceBias <= 0.0 ? 0.34 : TerraceBias);
-    double noise = Clamp01(Noise <= 0.0 ? 0.42 : Noise);
-    int facadeEvery = Clamp(FacadeEvery <= 0 ? 4 : FacadeEvery, 1, 20);
+    int seed = ReadInt(Seed, 240622);
+    if (seed == 0)
+      seed = 240622;
+    int floors = Clamp(ReadInt(Floors, 48), 6, 120);
+    int gx = Clamp(ReadInt(GridX, 13), 5, 35);
+    int gy = Clamp(ReadInt(GridY, 11), 5, 35);
+    double cell = ReadDouble(CellSize, 4.2);
+    if (cell <= 0.05)
+      cell = 4.2;
+    double floorH = ReadDouble(FloorHeight, 3.9);
+    if (floorH <= 0.05)
+      floorH = 3.9;
+    double density = Clamp01(ReadDouble(Density, 0.74));
+    double twistDeg = ReadDouble(TwistDeg, 145.0);
+    double taper = ReadDouble(Taper, 0.68);
+    taper = taper > 0.05 ? Math.Min(taper, 1.35) : 0.68;
+    double terraceBias = Clamp01(ReadDouble(TerraceBias, 0.34));
+    double noise = Clamp01(ReadDouble(Noise, 0.42));
+    bool makeBoxes = ReadBool(MakeBoxes, false);
+    int facadeEvery = Clamp(ReadInt(FacadeEvery, 4), 1, 20);
 
     RhinoDoc doc = RhinoDoc.ActiveDoc;
     double tolerance = doc != null ? doc.ModelAbsoluteTolerance : 0.001;
@@ -122,7 +132,8 @@ public class Script_Instance : GH_ScriptInstance
       }
     }
 
-    var boxes = new List<Brep>(MakeBoxes ? occupiedCount : 0);
+    var boxes = new List<Brep>(makeBoxes ? occupiedCount : 0);
+    var voxelPoints = new List<Point3d>(occupiedCount);
     var mesh = new Mesh();
     var outlines = new List<Curve>(floors);
     var facade = new List<Curve>();
@@ -148,13 +159,14 @@ public class Script_Instance : GH_ScriptInstance
           double x1 = (ix - halfX + 0.5) * cell;
           double y0 = (iy - halfY - 0.5) * cell;
           double y1 = (iy - halfY + 0.5) * cell;
+          voxelPoints.Add(floorPlane.PointAt((x0 + x1) * 0.5, (y0 + y1) * 0.5, floorH * 0.5));
 
           floorCorners.Add(new Point2d(x0, y0));
           floorCorners.Add(new Point2d(x1, y0));
           floorCorners.Add(new Point2d(x1, y1));
           floorCorners.Add(new Point2d(x0, y1));
 
-          if (MakeBoxes)
+          if (makeBoxes)
           {
             var box = new Box(
               floorPlane,
@@ -185,7 +197,7 @@ public class Script_Instance : GH_ScriptInstance
     mesh.Normals.ComputeNormals();
     mesh.Compact();
 
-    VoxelBoxes = boxes;
+    VoxelPoints = voxelPoints;
     EnvelopeMesh = mesh;
     FloorOutlines = outlines;
     FacadeLines = facade;
@@ -197,14 +209,14 @@ public class Script_Instance : GH_ScriptInstance
     string units = doc != null ? doc.ModelUnitSystem.ToString() : "unknown";
 
     Metrics = string.Format(
-      "seed={0}; floors={1}; height={2:0.0}m; grid={3}x{4}; occupied={5}; boxes={6}; mesh_faces={7}; facade_lines={8}; guides={9}",
+      "seed={0}; floors={1}; height={2:0.0}m; grid={3}x{4}; occupied={5}; boxes_built={6}; mesh_faces={7}; facade_lines={8}; guides={9}",
       seed,
       floors,
       height,
       gx,
       gy,
       occupiedCount,
-      MakeBoxes ? boxes.Count : 0,
+      makeBoxes ? boxes.Count : 0,
       mesh.Faces.Count,
       facade.Count,
       pluginGuides.Count);
@@ -242,7 +254,7 @@ public class Script_Instance : GH_ScriptInstance
     SetInputDescription("MakeBoxes", "If true, outputs individual Brep voxel boxes. Keep false for fast slider work.");
     SetInputDescription("FacadeEvery", "Floor interval for facade guide line extraction.");
 
-    SetOutputDescription("VoxelBoxes", "Optional Brep boxes for selected voxels. Heavy but useful for baking or Elefront/Human workflows.");
+    SetOutputDescription("VoxelPoints", "Occupied voxel centers. Connect to Pufferfish Voxel Mesh for visible node-based voxelization.");
     SetOutputDescription("EnvelopeMesh", "Fast exposed-face mesh for preview, Weaverbird-style smoothing, SubD conversion, or mesh plugin workflows.");
     SetOutputDescription("FloorOutlines", "Convex floor outline curves for native Loft, Contour comparison, or section checks.");
     SetOutputDescription("FacadeLines", "Lightweight facade grid lines. Pipe these only after line density is approved.");
@@ -465,5 +477,84 @@ public class Script_Instance : GH_ScriptInstance
     if (value > max)
       return max;
     return value;
+  }
+
+  private static int ReadInt(object value, int fallback)
+  {
+    double number;
+    if (!TryReadDouble(value, out number))
+      return fallback;
+    return (int)Math.Round(number);
+  }
+
+  private static double ReadDouble(object value, double fallback)
+  {
+    double number;
+    return TryReadDouble(value, out number) ? number : fallback;
+  }
+
+  private static bool ReadBool(object value, bool fallback)
+  {
+    if (value == null)
+      return fallback;
+
+    if (value is bool)
+      return (bool)value;
+
+    var ghBool = value as GH_Boolean;
+    if (ghBool != null)
+      return ghBool.Value;
+
+    double number;
+    if (TryReadDouble(value, out number))
+      return Math.Abs(number) > 0.5;
+
+    bool parsed;
+    if (bool.TryParse(value.ToString(), out parsed))
+      return parsed;
+
+    return fallback;
+  }
+
+  private static bool TryReadDouble(object value, out double number)
+  {
+    number = 0.0;
+
+    if (value == null)
+      return false;
+
+    if (value is double)
+    {
+      number = (double)value;
+      return true;
+    }
+
+    if (value is int)
+    {
+      number = (int)value;
+      return true;
+    }
+
+    if (value is float)
+    {
+      number = (float)value;
+      return true;
+    }
+
+    var ghNumber = value as GH_Number;
+    if (ghNumber != null)
+    {
+      number = ghNumber.Value;
+      return true;
+    }
+
+    var ghInteger = value as GH_Integer;
+    if (ghInteger != null)
+    {
+      number = ghInteger.Value;
+      return true;
+    }
+
+    return double.TryParse(value.ToString(), out number);
   }
 }
