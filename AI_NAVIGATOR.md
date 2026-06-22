@@ -2,7 +2,7 @@
 
 This repository is a portable architecture and geometry workflow library for AI
 agents. It should give a new model enough structure to think architecturally,
-use Rhino/Aurox or another CAD bridge responsibly, avoid known failures, and add
+use RhinoMCP or another CAD bridge responsibly, avoid known failures, and add
 new reusable knowledge after each project.
 
 Use this file as the first page when giving the repo to any AI.
@@ -106,7 +106,7 @@ or 3D checklist/compliance review?
 - Do not replace user-provided source geometry, footprints, entries, or curves
   with generic parametric guesses.
 - Preserve source and context layers in Rhino.
-- If using Rhino/Aurox, validate by scene units, bbox/sections, source
+- If using RhinoMCP, validate by scene units, bbox/sections, source
   authority, and visible review state.
 - If a case reveals a reusable failure, add it to an error library before
   moving on.
@@ -144,7 +144,11 @@ decision: accepted tradeoff, date, reason, consequences
 source card: external repo idea, usable pieces, non-goals
 ```
 
-## Rhino/Aurox Session Rule
+## RhinoMCP Session Rule
+
+Default to the official McNeel `mcneel/RhinoMCP` server for Rhino work. Use
+Aurox or another Rhino plugin only when the user asks for that backend or the
+standard RhinoMCP route cannot expose a required operation.
 
 Before modeling or checklist review:
 

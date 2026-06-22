@@ -93,13 +93,15 @@ Scenario 3 is Rhino-first early design automation: revise or regenerate massing
 inside an active scene with context, red lines, underlays, rough massing, TEPs,
 constraints, and references.
 
-Rhino/Aurox owns `.3dm` scene readback, scan, overlays, section extraction,
-scene-context edits, and Rhino visual review.
+Standard McNeel RhinoMCP owns `.3dm` scene readback, scan, overlays, section
+extraction, scene-context edits, and Rhino visual review by default.
 
 `scripts/rhino_common_helper.py` owns native RhinoCommon operations that are
-too precise or too broad for the small typed Aurox tool set: curve trims,
+too precise or too broad for the currently selected backend tool set: curve trims,
 booleans, intersections, contours, NURBS rebuilds, and custom C# operations.
-Aurox remains the transport layer; RhinoCommon is the native modeling layer.
+Its current implementation is an optional Aurox route; use it only by request
+or when standard RhinoMCP cannot expose the required RhinoCommon operation.
+RhinoCommon is the native modeling layer.
 
 `text-to-cad` / build123d owns clean parametric source and STEP-first candidate
 generation. It is a reference for Scenario 1 and a backend for clean candidates,

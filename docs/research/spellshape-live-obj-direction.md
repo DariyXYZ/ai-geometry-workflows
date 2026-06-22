@@ -58,7 +58,7 @@ executor can regenerate or post-process geometry
 
 Текущая граница проекта:
 
-- Rhino/Aurox: scan, scene context, overlays, classification, sections, review captures.
+- RhinoMCP: scan, scene context, overlays, classification, sections, review captures.
 - `text-to-cad` / build123d: STEP-first parametric CAD candidates.
 - `ai_geometry_toolkit`: case folders, manifests, routes, reports, backend registration.
 
@@ -156,4 +156,3 @@ semantic_obj
 
 Не внедрять сейчас UI или API Spellshape. Следующий практический шаг - маленький
 локальный importer `semantic_obj` внутри `ai_geometry_toolkit`.
-

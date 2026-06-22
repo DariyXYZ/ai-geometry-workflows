@@ -19,7 +19,7 @@ prompt / reference / semantic plan
 -> named parts and parameters
 -> build123d candidate
 -> STEP export
--> Rhino/Aurox review and validation
+-> RhinoMCP review and validation
 ```
 
 ## How To Use In Our Scenarios
@@ -34,7 +34,7 @@ Scenario 1 - Reference to model:
 Scenario 2 - Complex model cleanup:
 
 - Secondary backend only.
-- Rhino/Aurox remains responsible for reading and classifying existing `.3dm`
+- RhinoMCP remains responsible for reading and classifying existing `.3dm`
   sources.
 
 Scenario 3 - Massing and revisions:

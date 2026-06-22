@@ -20,7 +20,10 @@ DEFAULT_CLIENT = Path(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Run native RhinoCommon helper operations through Aurox execute_csharp."
+        description=(
+            "Run native RhinoCommon helper operations through an optional "
+            "backend-specific execute_csharp route. Default Rhino work should use McNeel RhinoMCP."
+        )
     )
     parser.add_argument("--client", default=str(DEFAULT_CLIENT), help="Path to rhino_aurox_client.py.")
     parser.add_argument("--dry-run", action="store_true", help="Print generated C# instead of executing it.")

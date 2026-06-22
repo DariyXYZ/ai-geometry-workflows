@@ -1,7 +1,7 @@
 # AI Geometry Workflows
 
 Portable architecture and geometry workflow library for AI agents working with
-Rhino/Aurox, CAD-as-code, massing, reference modeling, and analysis-geometry
+RhinoMCP, CAD-as-code, massing, reference modeling, and analysis-geometry
 cleanup.
 
 The repo is meant to be handed to a fresh AI session as structured memory:

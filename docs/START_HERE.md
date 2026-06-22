@@ -4,7 +4,7 @@ This is the entry point for reopening the project on another computer or in a
 fresh AI chat.
 
 The repository is a compact memory system for AI-assisted geometry workflows:
-Rhino/Aurox modeling, reference-to-model reconstruction, CAD-as-code candidates,
+RhinoMCP modeling, reference-to-model reconstruction, CAD-as-code candidates,
 semantic OBJ experiments, and analysis-geometry cleanup.
 
 ## Fast Load In 5 Minutes
@@ -19,7 +19,7 @@ Read:
 6. `docs/error-ledger.md` - mistakes that must not repeat.
 7. `docs/obsidian-knowledge-map.md` - useful Obsidian research, tests, and errors
    not fully migrated into compact repo pages.
-8. `docs/cases/recent-rhino-case-lessons.md` - recent Rhino/Aurox case results,
+8. `docs/cases/recent-rhino-case-lessons.md` - recent Rhino/RhinoMCP case results,
    video scripts, and fresh mistakes.
 9. `docs/repository-map.md` - where everything lives.
 10. `docs/source-repos/README.md` - compressed memory of external repositories.
@@ -146,7 +146,11 @@ Subscenario split:
   approval checklist. Inspect Rhino evidence and score criteria before
   redesigning.
 
-## Rhino/Aurox Modeling Rules
+## RhinoMCP Modeling Rules
+
+Use the official McNeel RhinoMCP server (`mcneel/RhinoMCP`) as the default Rhino
+transport. Other Rhino plugins, including Aurox, are optional backends selected
+only on explicit user request or when a task needs a backend-specific feature.
 
 - Work in the scene units. If drawings are in feet and Rhino is in meters,
   convert explicitly and write the conversion in the note/report.

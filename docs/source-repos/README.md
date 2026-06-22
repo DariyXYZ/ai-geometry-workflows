@@ -13,6 +13,7 @@ repo before continuing the workflow.
 | `StepanKukharskiy/2DPlanTo3D` | `2d-plan-to-3d.md` | Plan/image to contour/profile extraction. |
 | `StepanKukharskiy/spellshape-three`, `spellshape-format` | `spellshape-three-format.md` | Expression, distribution, repetition, and `.spell` format ideas. |
 | `earthtojake/text-to-cad` | `text-to-cad.md` | STEP-first build123d backend reference. |
+| `mcneel/RhinoMCP` | `rhinomcp.md` | Default Rhino MCP transport for Codex and other AI agents. |
 
 ## Use Rule
 
@@ -33,6 +34,7 @@ read local source card
 - https://github.com/StepanKukharskiy/spellshape-agent
 - https://github.com/StepanKukharskiy?tab=repositories
 - https://github.com/earthtojake/text-to-cad
+- https://github.com/mcneel/RhinoMCP
 
 ## What Not To Do
 

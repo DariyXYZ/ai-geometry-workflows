@@ -29,11 +29,12 @@ This file tells a new user or AI agent what to read and what to ignore.
 | `docs/libraries/moscow-architecture-approval-checklist.md` | Compact checklist criteria from the 2026-06-13 DGP architecture evaluation PDF. |
 | `docs/errors/moscow-bc-massing-error-library.md` | Moscow BC massing failure modes: site fail despite numeric pass, cut routes, box-only variants, accidental intersections. |
 | `docs/libraries/moscow-bc-site-zoning-patterns.md` | Zoning patterns and pre-geometry gates for BC/residential massing: public spine, service edge, buildable bands, height anchors. |
-| `docs/cases/recent-rhino-case-lessons.md` | Recent Rhino/Aurox case results, video replay scripts, and fresh modeling rules. |
+| `docs/cases/recent-rhino-case-lessons.md` | Recent Rhino/RhinoMCP case results, video replay scripts, and fresh modeling rules. |
 | `docs/context-system.md` | Where to store decisions, cases, reports, and temporary work. |
 | `docs/repo-maintenance-guide.md` | How to add reusable strategies, patterns, cases, errors, and source findings without clutter. |
 | `docs/project-data-map.md` | Where source data and related repos live. |
-| `docs/tools/rhino-common-helper.md` | Native RhinoCommon helper layer through Aurox `execute_csharp`. |
+| `docs/tools/rhino-mcp-backends.md` | Rhino backend policy: McNeel RhinoMCP default, optional plugin backends by request. |
+| `docs/tools/rhino-common-helper.md` | Native RhinoCommon helper layer for backend-specific RhinoCommon execution. |
 | `decisions/` | Dated accepted decisions. Read relevant files only. |
 
 ## External Repo Library

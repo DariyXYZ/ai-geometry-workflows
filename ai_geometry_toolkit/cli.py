@@ -786,7 +786,7 @@ python "{profile["inspectLauncher"]}" refs path\\to\\candidate.step --facts --pl
 
 ## Scenario 2 Boundary
 
-Use Rhino/Aurox for source `.3dm` scanning, part classification, section
+Use standard RhinoMCP for source `.3dm` scanning, part classification, section
 extraction, and source overlays. Use `text-to-cad` when the accepted route is to
 rebuild an architectural part or simplified shell from parameters.
 """

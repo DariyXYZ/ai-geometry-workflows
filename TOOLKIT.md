@@ -1,7 +1,7 @@
 # AI Geometry Toolkit
 
 `ai_geometry_toolkit` is the first orchestration layer for the three AI geometry
-workflows. It does not replace Rhino/Aurox or `text-to-cad`; it coordinates
+workflows. It does not replace RhinoMCP or `text-to-cad`; it coordinates
 cases, parameters, routes, validation reports, and scan-derived classifications.
 
 ## Why This Exists
@@ -11,7 +11,7 @@ geometry generation, visual review, and repair in one long chat loop. The tool
 separates those responsibilities:
 
 - AI/Codex creates and updates case state.
-- Rhino/Aurox reads or builds scene geometry.
+- RhinoMCP reads or builds scene geometry by default.
 - build123d/text-to-cad can generate source-controlled STEP geometry where that
   backend is a better fit.
 - The case folder stores the reproducible state and validation evidence.
@@ -56,7 +56,7 @@ python -m ai_geometry_toolkit new-case --scenario reference --name "office tower
 python -m ai_geometry_toolkit import-semantic-obj .\.tmp_cases\<case_id> --source tests\fixtures\office_tower_semantic.live.obj
 ```
 
-Optional Rhino preview when Aurox is running:
+Optional Rhino preview when a Rhino backend is running:
 
 ```powershell
 python scripts\build_semantic_smoke_rhino.py .\.tmp_cases\<case_id>\reports\semantic_parts.json
@@ -94,15 +94,16 @@ python scripts\rhino_common_helper.py contour-brep `
   --interval 3.2
 ```
 
-Rhino must be open with Aurox MCP running. The helper calls Aurox
-`execute_csharp`, so it can grow into any small RhinoCommon operation we need:
+Rhino must be open with the selected Rhino backend running. The current helper
+implementation is an optional Aurox-backed route for `execute_csharp`; do not
+treat it as the default RhinoMCP path. It can grow into any small RhinoCommon operation we need:
 trim, split, boolean, contour, rebuild, intersections, loft seams, and source
 curve extraction.
 
 ## Scenario 2 MVP Route
 
 1. Create a cleanup case.
-2. Run Rhino/Aurox `scan_scene.py` on the source model.
+2. Run a RhinoMCP-backed scene scan on the source model.
 3. Put `scene_scan.json` into `reports/`.
 4. Run `classify-scan`.
 5. Review `source_classification.json`.
@@ -114,7 +115,7 @@ curve extraction.
 
 ## Backend Strategy
 
-Use Rhino/Aurox when:
+Use RhinoMCP when:
 
 - the source is `.3dm`, Rhino layers, existing scene objects, or messy meshes;
 - visual validation in Rhino is part of acceptance;
@@ -133,7 +134,7 @@ validates the expected CAD skill and render viewer files, then writes:
 - `reports/backend_text_to_cad.json` - machine-readable paths and role;
 - `case.json` / `params.json` backend entries for reproducible follow-up runs.
 
-For Scenario 2, keep the boundary explicit: Rhino/Aurox owns `.3dm` scan,
+For Scenario 2, keep the boundary explicit: RhinoMCP owns `.3dm` scan,
 classification, source overlays, and section extraction; `text-to-cad` owns
 clean parameter-driven STEP candidates after the route is accepted.
 

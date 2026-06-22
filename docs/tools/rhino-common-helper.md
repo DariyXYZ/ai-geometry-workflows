@@ -1,19 +1,25 @@
 # RhinoCommon Helper Layer
 
-Status: initial runnable bridge.
+Status: optional backend-specific bridge.
 
 ## Purpose
 
-Aurox is the bridge into the active Rhino scene. It is good for readback,
-layers, simple geometry, and captures, but its typed MCP tools are not the full
-Rhino modeling surface.
+The default Rhino transport for this repository is standard McNeel RhinoMCP.
+This helper is not the default path; it is an optional backend-specific route
+for operations that need direct RhinoCommon execution.
 
-The RhinoCommon helper layer lets the repository call native RhinoCommon code
-inside Rhino through Aurox `execute_csharp`.
+Rule: when a user selects any third-party Rhino MCP/plugin backend, use a
+RhinoCommon execution route (`run_python`, `run_csharp`, `execute_csharp`, or
+the backend equivalent) for non-trivial geometry. Do not rely on a proprietary
+helper surface until its schemas and a smoke run have been checked.
+
+The current implementation calls native RhinoCommon code inside Rhino through
+Aurox `execute_csharp`. Use it only when the user asks for Aurox or when the
+standard RhinoMCP route does not expose the required native operation.
 
 ```text
 Codex / repo workflow
--> Aurox connection
+-> selected Rhino backend
 -> execute_csharp
 -> RhinoCommon operations in the active Rhino document
 ```
@@ -28,12 +34,12 @@ scripts/rhino_common_helper.py
 ```
 
 The script is a small local runner. It generates or reads C# code, sends it to
-Aurox `execute_csharp`, and prints the result.
+the configured backend-specific `execute_csharp` route, and prints the result.
 
 Requirements:
 
 - Rhino is open;
-- Aurox MCP is running in Rhino with the `AuroxMcp` command;
+- a backend with `execute_csharp` support is running in Rhino;
 - the Python bridge can reach `rhino_aurox_client.py`.
 
 The helper path can be overridden:

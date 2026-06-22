@@ -88,7 +88,8 @@ final architecture; it is a planning skeleton for agreement.
 Workflow:
 
 ```text
-read plot/context/entries
+connect RhinoMCP and run capability scan
+-> read plot/context/entries
 -> classify site shape and edges
 -> reserve public spine and service/fire edge
 -> choose open-space type
@@ -258,6 +259,13 @@ Every Scenario 3 variant should report:
 
 ```yaml
 scenario_subtype: 3A | 3B | 3C | 3D
+rhino_mcp_capability_scan:
+  slot: string
+  rhino_version: string
+  units: string
+  command_families_checked: [Box, Layer, Boolean, Loft, Extrude, View, Python]
+  third_party_backend: none | name
+  rhino_common_route_required: true_if_third_party_backend
 source_authority:
   plot_boundary: required
   zoning: given | proposed | inferred_from_existing

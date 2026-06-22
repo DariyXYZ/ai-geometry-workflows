@@ -6,6 +6,7 @@ import sys
 import tempfile
 import time
 
+# Legacy Aurox demo. New Rhino work should use standard RhinoMCP first.
 CLIENT = r"C:\Users\dariy.n\.codex\skills\rhino-aurox-modeling\scripts\rhino_aurox_client.py"
 LAYER = "AI_Loft_Chair_01"
 COLOR = [190, 190, 185]

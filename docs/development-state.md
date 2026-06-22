@@ -44,7 +44,7 @@ script.
 
 ## Архитектурные слои
 
-### 1. Rhino/Aurox readback
+### 1. RhinoMCP readback
 
 Отвечает за:
 

@@ -211,5 +211,5 @@ The external repositories should not be adopted as one dependency. Use them as a
 - `2DPlanTo3D` mainly feeds Scenario 1.
 - `live-obj` metadata/planner feeds Scenario 1 and Scenario 3, and lightly supports Scenario 2.
 - `spellshape-three` distribution/expression ideas mainly feed Scenario 3.
-- Rhino/Aurox remains the authority for Scenario 2.
+- Standard RhinoMCP remains the authority for Scenario 2.
 - `text-to-cad` / build123d remains the authority for STEP-first precise CAD.

@@ -15,7 +15,7 @@ to rediscover the same lesson.
 | `medium-success` | Direction was right, but one or more gates failed |
 | `failed` | Result was rejected; promote the mistake to error library |
 | `source-correction` | User/source data changed the correct modeling strategy |
-| `tooling` | Case taught something about Rhino/Aurox/build123d/CLI workflow |
+| `tooling` | Case taught something about RhinoMCP/Rhino plugins/build123d/CLI workflow |
 
 ## Reference-To-Model Cases
 

@@ -6,6 +6,7 @@ import sys
 import tempfile
 
 
+# Legacy Aurox variant builder. New Scenario 3 builds should use RhinoMCP first.
 CLIENT = r"C:\Users\dariy.n\.codex\skills\rhino-aurox-modeling\scripts\rhino_aurox_client.py"
 PARAMS = r"c:\VS Code\workfiles\ai-geometry-workflows\scripts\moscow_bc_massing\variants_2026_06_16.json"
 

@@ -6,8 +6,8 @@ Only reusable or active project scripts should live here.
 
 | Path | Role |
 | --- | --- |
-| `rhino_common_helper.py` | Native RhinoCommon helper through Aurox `execute_csharp` |
-| `build_semantic_smoke_rhino.py` | Semantic OBJ / Rhino smoke demonstrator |
+| `rhino_common_helper.py` | Optional backend-specific RhinoCommon helper; current implementation uses Aurox `execute_csharp` |
+| `build_semantic_smoke_rhino.py` | Legacy Aurox Semantic OBJ / Rhino smoke demonstrator; port to RhinoMCP before new use |
 | `moscow_bc_massing/` | Active Moscow BC massing analysis, validation, and generation scripts |
 
 ## Archive Rule

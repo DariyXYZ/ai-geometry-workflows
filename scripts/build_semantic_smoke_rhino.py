@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 
+# Legacy Aurox smoke demonstrator. New Rhino work should use standard RhinoMCP first.
 CLIENT = r"C:\Users\dariy.n\.codex\skills\rhino-aurox-modeling\scripts\rhino_aurox_client.py"
 LAYER = "SEMANTIC_OBJ_SMOKE"
 GRID_LAYER = "SEMANTIC_OBJ_SMOKE_GUIDES"

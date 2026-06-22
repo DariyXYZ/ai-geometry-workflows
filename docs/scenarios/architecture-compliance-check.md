@@ -68,7 +68,7 @@ Optional add-ons:
 
 Minimum:
 
-- Rhino scene or model through MCP/Aurox/RhinoCommon;
+- Rhino scene or model through RhinoMCP/RhinoCommon;
 - building geometry or massing;
 - context geometry or at least site/street orientation;
 - object type: visual/landmark-like or contextual/environmental if known.

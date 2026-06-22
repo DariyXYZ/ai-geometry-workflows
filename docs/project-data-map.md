@@ -20,7 +20,7 @@ C:\VS Code\workfiles\ai-geometry-workflows
 | `TOOLKIT.md` | Runnable command reference | Active |
 | `ai_geometry_toolkit/` | Python CLI orchestration package | Active |
 | `tests/` | Unit tests and fixtures | Active |
-| `scripts/rhino_common_helper.py` | RhinoCommon helper through Aurox `execute_csharp` | Active |
+| `scripts/rhino_common_helper.py` | Optional backend-specific RhinoCommon helper; current implementation uses Aurox `execute_csharp` | Active |
 | `scripts/moscow_bc_massing/` | Current Moscow BC massing scripts and candidate data | Active project folder |
 | `decisions/` | Accepted dated technical decisions | Active |
 | `docs/` | Shared knowledge library | Active |
@@ -66,7 +66,7 @@ Boundary:
 
 - For Scenario 1, use it as a reference for text/reference-to-CAD mechanics,
   then extend it with source-authority gates and architectural grammar.
-- For Scenario 2, use it only after Rhino/Aurox has produced validated
+- For Scenario 2, use it only after RhinoMCP has produced validated
   parameters or sections for a clean candidate.
 - For Scenario 3, use it only where clean parametric massing candidates are
   useful; Rhino remains the active scene context.

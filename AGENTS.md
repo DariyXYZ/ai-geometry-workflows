@@ -36,7 +36,7 @@ control sections -> temporary loft -> Rhino Contour -> final floor contours
   and mirror/repeat logic.
 - For balcony towers, the contour curve is the slab/balcony edge, not the glass
   line. Offset glass inward and give slabs real thickness.
-- Recent Rhino/Aurox case memory lives in
+- Recent Rhino/RhinoMCP case memory lives in
   `docs/cases/recent-rhino-case-lessons.md`. Read it before replaying or extending
   Infinity Tower, Shanghai Tower-style twists, Flock chapel shells, symmetric
   stepped towers, Aqua Tower, or Absolute World Towers.

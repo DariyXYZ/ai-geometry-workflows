@@ -88,6 +88,7 @@ cards first.
 | `docs/source-repos/spellshape-three-format.md` | Expression/distribution ideas and `.spell` format concepts |
 | `docs/source-repos/2d-plan-to-3d.md` | Plan/image to contour extraction ideas |
 | `docs/source-repos/text-to-cad.md` | STEP-first CAD-as-code backend role |
+| `docs/source-repos/rhinomcp.md` | Default McNeel RhinoMCP backend role |
 | `docs/research/external-repo-constructor-map.md` | Long-form external repo map |
 
 Rule:
@@ -102,7 +103,8 @@ local source card
 
 | Tooling note | Purpose |
 | --- | --- |
-| `docs/tools/rhino-common-helper.md` | Native RhinoCommon helper path through Aurox |
+| `docs/tools/rhino-mcp-backends.md` | Rhino backend policy: McNeel RhinoMCP by default; Aurox/other plugins only by request |
+| `docs/tools/rhino-common-helper.md` | Native RhinoCommon helper path for backend-specific operations |
 | `TOOLKIT.md` | CLI contract and commands |
 | `ai_geometry_toolkit/` | Runnable orchestration code |
 | `tests/` | Unit tests and fixtures |
