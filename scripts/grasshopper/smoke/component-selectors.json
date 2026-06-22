@@ -1,0 +1,41 @@
+{
+  "observed_on": "2026-06-22",
+  "rhino_version": "8.30.26103.11001",
+  "selectors": {
+    "math_addition_a_plus_b": {
+      "guid": "a0d62394-a118-422d-abb3-6af115c75b25",
+      "name": "Addition",
+      "nickname": "A+B",
+      "category": "Maths",
+      "subcategory": "Operators"
+    },
+    "construct_point": {
+      "guid": "3581f42a-9592-4549-bd6b-1c0fc39d067b",
+      "name": "Construct Point",
+      "nickname": "Pt",
+      "category": "Vector",
+      "subcategory": "Point"
+    },
+    "python_3_script": {
+      "guid": "719467e6-7cf5-4848-99b0-c5dd57e5442c",
+      "name": "Python 3 Script",
+      "nickname": "Py3",
+      "category": "Maths",
+      "subcategory": "Script"
+    },
+    "csharp_script_rhino8": {
+      "guid": "b6ba1144-02d6-4a2d-b53c-ec62e290eeb7",
+      "name": "C# Script",
+      "nickname": "C#",
+      "category": "Maths",
+      "subcategory": "Script"
+    },
+    "panel": {
+      "guid": "59e0b89a-e487-49f8-bab8-b5bab16be14c",
+      "name": "Panel",
+      "category": "Params",
+      "subcategory": "Input",
+      "note": "Panel behaved as a value source in g1_connect; avoid as first smoke target."
+    }
+  }
+}

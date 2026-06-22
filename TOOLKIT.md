@@ -100,6 +100,38 @@ treat it as the default RhinoMCP path. It can grow into any small RhinoCommon op
 trim, split, boolean, contour, rebuild, intersections, loft seams, and source
 curve extraction.
 
+## Grasshopper MCP Workflow
+
+Use this when testing or building Grasshopper definitions through RhinoMCP:
+
+```powershell
+# Read first
+type docs\tools\grasshopper-workflow.md
+type docs\errors\grasshopper-mcp-error-library.md
+```
+
+Fast smoke sequence:
+
+```text
+list_slots
+-> run_python Rhino version / units / object count
+-> g1_search_components for Script, A+B, Construct Point
+-> g1_start
+-> place sliders
+-> place Construct Point
+-> connect X/Y/Z
+-> g1_solve_graph
+```
+
+Script bodies live under:
+
+```text
+scripts/grasshopper/
+```
+
+Until RhinoMCP exposes a reliable script-source setter, treat script component
+code as paste-ready source-controlled files.
+
 ## Scenario 2 MVP Route
 
 1. Create a cleanup case.

@@ -134,6 +134,29 @@ For Moscow BC-style sites, do not generate geometry until the public spine,
 service edge, open-space type, buildable bands, height anchors, and at least one
 site-reasoned architectural operator are declared.
 
+### Grasshopper Automation Through RhinoMCP
+
+Use when the task is: create, inspect, or test Grasshopper graphs, script
+components, sliders, or RhinoMCP `g1_*` workflows.
+
+Read:
+
+- `docs/tools/grasshopper-workflow.md`
+- `docs/tools/grasshopper-mcp-smoke.md`
+- `docs/errors/grasshopper-mcp-error-library.md`
+- `docs/libraries/grasshopper-pattern-library.md`
+
+Mandatory flow:
+
+```text
+Rhino capability scan
+-> Grasshopper component search
+-> fresh-slot smoke graph if active scene matters
+-> manual place/wire/solve
+-> script bodies stored in repo
+-> only then batch graph building
+```
+
 Subscenario split:
 
 - `3A`: zoning, footprints, and entries are already given. Keep zoning as source

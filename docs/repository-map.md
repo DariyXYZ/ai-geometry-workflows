@@ -35,6 +35,8 @@ This file tells a new user or AI agent what to read and what to ignore.
 | `docs/project-data-map.md` | Where source data and related repos live. |
 | `docs/tools/rhino-mcp-backends.md` | Rhino backend policy: McNeel RhinoMCP default, optional plugin backends by request. |
 | `docs/tools/rhino-common-helper.md` | Native RhinoCommon helper layer for backend-specific RhinoCommon execution. |
+| `docs/tools/grasshopper-workflow.md` | Grasshopper MCP workflow for capability scan, smoke graph, build order, and validation. |
+| `docs/errors/grasshopper-mcp-error-library.md` | Known Grasshopper MCP automation failure modes and fixes. |
 | `decisions/` | Dated accepted decisions. Read relevant files only. |
 
 ## External Repo Library

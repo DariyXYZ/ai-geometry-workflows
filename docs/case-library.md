@@ -52,6 +52,12 @@ to rediscover the same lesson.
 | Aqua Tower / Studio Gang video demonstrator | `tooling` | Preserve camera, slow construction down, keep model grounded, and remove obsolete helper geometry. | `docs/cases/recent-rhino-case-lessons.md` |
 | Absolute World Towers video demonstrator | `tooling` | Same replay discipline: staged visible construction and clean final state. | `docs/cases/recent-rhino-case-lessons.md` |
 
+## Grasshopper / MCP Cases
+
+| Case | Status | Main lesson | Read |
+| --- | --- | --- | --- |
+| Grasshopper MCP smoke 2026-06-22 | `tooling` | Use capability scan, fresh slot, manual placement/wiring, Construct Point smoke, and repo-stored script bodies. | `docs/cases/grasshopper-mcp-smoke-2026-06-22.md`, `docs/tools/grasshopper-workflow.md`, `docs/errors/grasshopper-mcp-error-library.md` |
+
 ## Case Entry Template
 
 Use this when adding a new case:

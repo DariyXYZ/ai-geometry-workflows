@@ -26,6 +26,8 @@ ideas, and tools without rereading every document.
 | `docs/libraries/form-operator-library.md` | Reusable massing operators: chamfer, rotation, taper, setbacks, voids, podium/tower logic, crown moves | Active |
 | `docs/libraries/moscow-architecture-approval-checklist.md` | Moscow architecture approval checklist criteria: visual image, urban frontage, permeability, parking | Active |
 | `docs/scenarios/reference-modeling-gates.md` | Source authority, constructive grammar, section direction, massing-before-detail | Active |
+| `docs/tools/grasshopper-workflow.md` | Grasshopper automation workflow through RhinoMCP: scan, smoke graph, build, validate | Active |
+| `docs/libraries/grasshopper-pattern-library.md` | Reusable Grasshopper graph/script patterns and acceptance gates | Draft active |
 | `docs/cases/recent-rhino-case-lessons.md` | Case-derived rules for twist towers, shells, stepped towers, video replay | Active |
 | `docs/obsidian-knowledge-map.md` | Map of useful Obsidian research, tests, postmortems, and future imports | Active index |
 | Obsidian project notes | Broader Moscow massing typologies, visual catalogs, source research, raw project memory | External canonical project memory |
@@ -45,6 +47,7 @@ Missing but desired future libraries:
 | --- | --- |
 | `docs/error-ledger.md` | Global failure modes across scenarios |
 | `docs/errors/moscow-bc-massing-error-library.md` | Numeric-pass/site-fail, cut routes, box-only massing, accidental intersections |
+| `docs/errors/grasshopper-mcp-error-library.md` | Grasshopper MCP automation failures: start timeout, missing document, generic batch errors, panel/source setter limits |
 | `docs/cases/recent-rhino-case-lessons.md` | Recent case-specific failures and promoted rules |
 | `docs/libraries/moscow-architecture-approval-checklist.md` | Approval checklist weak points and missing-evidence risks |
 | `decisions/` | Accepted tradeoffs that prevent old mistakes |
@@ -105,6 +108,8 @@ local source card
 | --- | --- |
 | `docs/tools/rhino-mcp-backends.md` | Rhino backend policy: McNeel RhinoMCP by default; Aurox/other plugins only by request |
 | `docs/tools/rhino-common-helper.md` | Native RhinoCommon helper path for backend-specific operations |
+| `docs/tools/grasshopper-workflow.md` | Full Grasshopper MCP workflow: capability scan, smoke, graph strategy, validation |
+| `docs/tools/grasshopper-mcp-smoke.md` | Grasshopper MCP capability scan and smoke graph workflow |
 | `TOOLKIT.md` | CLI contract and commands |
 | `ai_geometry_toolkit/` | Runnable orchestration code |
 | `tests/` | Unit tests and fixtures |
