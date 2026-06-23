@@ -1,5 +1,21 @@
 # Новости
 
+## 2026-06-24 - Added Moscow road dimensional library
+
+Added a road/street dimensional reference for Moscow massing and site context:
+
+- `docs/libraries/moscow-road-dimensional-library-2026.md`
+
+The library records lane-width and carriageway defaults for Rhino/Grasshopper
+generators: magistral lanes, local streets, quarter driveways, production-zone
+truck lanes, bus lanes, high-rise fire access, road-layer naming, and the
+`VISUAL_LIFT_M = 0.001` rule for road markings and other coplanar graphics.
+
+Updated:
+
+- `docs/START_HERE.md`
+- `docs/library-index.md`
+
 ## 2026-06-24 - Captured BC50 two-tower stylobate case lessons
 
 Added the accepted BC50 massing case and promoted its modeling rules:

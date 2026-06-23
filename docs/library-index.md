@@ -29,6 +29,7 @@ ideas, and tools without rereading every document.
 | `docs/libraries/grasshopper-architecture-snippet-library.md` | Fast reusable GH/C# architecture snippets: floorization, TEP/metrics, smoke builder | Active |
 | `docs/libraries/moscow-building-dimensional-library-2026.md` | Moscow 2026 tower/building dimensional baselines: floors, cores, depths, slabs, roofs, openings, facade grids | Active |
 | `docs/libraries/moscow-building-dimensional-library-2026.yaml` | Machine-readable defaults and warning flags for Rhino/Grasshopper generators | Active |
+| `docs/libraries/moscow-road-dimensional-library-2026.md` | Moscow 2026 road/street/driveway CAD defaults: lane widths, carriageways, fire access, internal drives, visual modeling rules | Active |
 | `docs/libraries/moscow-architecture-approval-checklist.md` | Moscow architecture approval checklist criteria: visual image, urban frontage, permeability, parking | Active |
 | `docs/scenarios/reference-modeling-gates.md` | Source authority, constructive grammar, section direction, massing-before-detail | Active |
 | `docs/cases/bc50-two-tower-stylobate-2026-06-24.md` | Accepted two-tower BC massing precedent: contour roofs/parapets, transparent glass, 1 mm visual lifts, metric board, sunken courtyard bridge rules | Active |

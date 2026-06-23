@@ -116,6 +116,10 @@ Read:
   plugin, native-node, C# Script, analysis, BIM, or facade-stack selection
 - `docs/libraries/grasshopper-architecture-snippet-library.md` for quick
   floorization, gabarit, TEP, and metrics snippets
+- `docs/libraries/moscow-building-dimensional-library-2026.md` for current
+  Moscow building/floor/core/facade/roof dimensional defaults
+- `docs/libraries/moscow-road-dimensional-library-2026.md` for Moscow
+  street, driveway, fire access, and lane-width CAD defaults
 - `docs/libraries/moscow-architecture-approval-checklist.md`
 - `docs/errors/moscow-bc-massing-error-library.md`
 - `docs/libraries/moscow-bc-site-zoning-patterns.md`
