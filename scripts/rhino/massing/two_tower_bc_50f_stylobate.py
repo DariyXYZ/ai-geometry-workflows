@@ -23,7 +23,7 @@ from System.Drawing import Color
 doc = __rhino_doc__
 tol = doc.ModelAbsoluteTolerance
 
-RUN = "BC50_v5"
+RUN = "BC50_v6"
 
 PARAMS = {
     "site": {"width": 160.0, "depth": 105.0},
@@ -485,7 +485,8 @@ def build_podium():
     # Green and paving are derived from courtyard/roof contours so they cannot
     # drift across the parapet or miss the opening.
     green_edge = offset_curve_by_area(void, 1.6, "smaller")
-    add_planar_region("courtyard_green_roof_from_void_offset", [green_edge], LAYERS["podium_roof"], Color.FromArgb(82, 135, 86))
+    green_edge.Transform(Transform.Translation(0, 0, 0.12 - (h + 0.22)))
+    add_planar_region("sunken_courtyard_green_from_void_offset", [green_edge], LAYERS["podium_roof"], Color.FromArgb(82, 135, 86))
     promenade_outer = offset_curve_by_area(outer, 4.2, "smaller")
     promenade_inner = offset_curve_by_area(outer, 9.0, "smaller")
     add_planar_region("roof_promenade_ring_from_outer_offsets", [promenade_outer, promenade_inner], LAYERS["podium_roof"], Color.FromArgb(190, 185, 170))
@@ -498,6 +499,13 @@ def build_podium():
         ]
     )
     add_planar_region("roof_bridge_from_courtyard_span_contour", [bridge_edge], LAYERS["podium_roof"], Color.FromArgb(160, 160, 150))
+    # Bridge guardrails run along both sides of the crossing, so the bridge is
+    # read as a usable path over the sunken courtyard instead of a plate cutting
+    # through the courtyard parapet.
+    rail_z0 = h + 0.34
+    rail_z1 = rail_z0 + 1.2
+    add_box("roof_bridge_south_guardrail", LAYERS["podium_roof"], COLORS["line"], courtyard["x0"] - 5.0, 3.55, courtyard["x1"] + 5.0, 4.0, rail_z0, rail_z1)
+    add_box("roof_bridge_north_guardrail", LAYERS["podium_roof"], COLORS["line"], courtyard["x0"] - 5.0, 13.0, courtyard["x1"] + 5.0, 13.45, rail_z0, rail_z1)
 
 
 def build_site():
@@ -525,7 +533,7 @@ def add_metrics():
     site_area = PARAMS["site"]["width"] * PARAMS["site"]["depth"]
     far = total_gfa / site_area
     lines = [
-        "BC50_v5 | units=m",
+        "BC50_v6 | units=m",
         "2 office towers on 3F exploited stylobate",
         "Tower floors: 50 each | F2F %.2f m" % tower["typical_floor"],
         "Podium roof %.1f m | tower roof %.1f m" % (podium["height"], z_top),
