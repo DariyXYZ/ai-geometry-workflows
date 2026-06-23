@@ -23,7 +23,7 @@ from System.Drawing import Color
 doc = __rhino_doc__
 tol = doc.ModelAbsoluteTolerance
 
-RUN = "BC50_v4"
+RUN = "BC50_v5"
 
 PARAMS = {
     "site": {"width": 160.0, "depth": 105.0},
@@ -438,7 +438,7 @@ def add_tower(name, cx, cy, color, rotation_bias, drift_x):
 
 def add_text(name, text, x, y, z, size=2.4):
     entity = TextEntity()
-    entity.Plane = Plane(Point3d(x, y, z), Vector3d.XAxis, Vector3d.YAxis)
+    entity.Plane = Plane(Point3d(x, y, z), Vector3d.XAxis, Vector3d.ZAxis)
     entity.PlainText = text
     entity.TextHeight = size
     return doc.Objects.AddText(entity, attr(LAYERS["metric"], COLORS["metric"], name))
@@ -525,23 +525,37 @@ def add_metrics():
     site_area = PARAMS["site"]["width"] * PARAMS["site"]["depth"]
     far = total_gfa / site_area
     lines = [
-        "BC50_v4 metrics, units=m",
-        "Program: 2 office towers on exploited 3F stylobate",
-        "Tower floors: 50 each; typical F2F: %.2f m" % tower["typical_floor"],
-        "Podium roof: %.2f m; tower roof: %.2f m" % (podium["height"], z_top),
-        "Transition floor: recessed %.0f x %.0f m under %.0f x %.0f m plate" % (rec_w, rec_d, upper_w, upper_d),
-        "Shadow joint / overhang: %.1f m X, %.1f m Y each side" % ((upper_w - rec_w) / 2, (upper_d - rec_d) / 2),
-        "Typical plate area per tower: %.0f m2" % tower_plate_area,
-        "Core placeholder: %.0f x %.0f m = %.0f m2; core ratio %.1f%%" % (core_w, core_d, core_area, core_area / tower_plate_area * 100.0),
-        "Facade-to-core lease depth: %.1f m X / %.1f m Y" % (net_depth_x, net_depth_y),
-        "Roof: outer contour parapet + straight core overrun/headhouse, no inner parapet ring.",
-        "Estimated GFA: towers %.0f m2 + podium %.0f m2 = %.0f m2" % (gfa_towers, podium_gfa, total_gfa),
-        "Site area %.0f m2; early FAR %.2f" % (site_area, far),
-        "Flags: office >50 m -> high-rise fire strategy required; core is not SP-sized, it is a placeholder.",
+        "BC50_v5 | units=m",
+        "2 office towers on 3F exploited stylobate",
+        "Tower floors: 50 each | F2F %.2f m" % tower["typical_floor"],
+        "Podium roof %.1f m | tower roof %.1f m" % (podium["height"], z_top),
+        "Transfer floor: %.0fx%.0f m under %.0fx%.0f m plate" % (rec_w, rec_d, upper_w, upper_d),
+        "Shadow joint overhang: %.1f m X / %.1f m Y" % ((upper_w - rec_w) / 2, (upper_d - rec_d) / 2),
+        "Typical plate per tower: %.0f m2" % tower_plate_area,
+        "Core placeholder: %.0fx%.0f = %.0f m2 | %.1f%%" % (core_w, core_d, core_area, core_area / tower_plate_area * 100.0),
+        "Lease depth: %.1f m X / %.1f m Y" % (net_depth_x, net_depth_y),
+        "Roof: outer parapet + straight core overrun",
+        "GFA est.: towers %.0f + podium %.0f = %.0f m2" % (gfa_towers, podium_gfa, total_gfa),
+        "Site %.0f m2 | early FAR %.2f" % (site_area, far),
+        "Flag: >50 m office high-rise strategy required",
     ]
-    y = -58
+    add_box(
+        "metric_board_vertical_backplate",
+        LAYERS["metric"],
+        Color.FromArgb(235, 236, 228),
+        -81.0,
+        -66.4,
+        36.0,
+        -66.1,
+        1.0,
+        37.0,
+    )
+    x = -79.0
+    y = -65.95
+    z_top = 34.0
+    line_step = 2.45
     for i, line in enumerate(lines):
-        add_text("metric_%02d" % i, line, -78, y, 2.0 + i * 2.8, 2.0)
+        add_text("metric_%02d" % i, line, x, y, z_top - i * line_step, 1.55)
 
 
 def main():
