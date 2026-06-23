@@ -1,5 +1,6 @@
 .tmp_cases/
 cases/
+outputs/
 __pycache__/
 *.pyc
 .mcp.json
