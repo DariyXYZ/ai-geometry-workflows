@@ -11,6 +11,8 @@ from Rhino.Geometry import (
     PolylineCurve,
     Brep,
     Curve,
+    CurveOffsetCornerStyle,
+    AreaMassProperties,
     TextEntity,
     Transform,
 )
@@ -21,7 +23,7 @@ from System.Drawing import Color
 doc = __rhino_doc__
 tol = doc.ModelAbsoluteTolerance
 
-RUN = "BC50_v1"
+RUN = "BC50_v2"
 
 PARAMS = {
     "site": {"width": 160.0, "depth": 105.0},
@@ -145,6 +147,81 @@ def section_points(cx, cy, w, d, rot_deg, z, chamfer=4.5):
 
 def add_polyline(points, name, layer, color):
     return doc.Objects.AddCurve(PolylineCurve(points), attr(layer, color, name))
+
+
+def curve_area(curve):
+    amp = AreaMassProperties.Compute(curve)
+    if not amp:
+        return 0.0
+    return abs(amp.Area)
+
+
+def closed_curve(points):
+    pts = list(points)
+    if pts[0].DistanceTo(pts[-1]) > tol:
+        pts.append(pts[0])
+    curve = PolylineCurve(pts)
+    curve.MakeClosed(tol)
+    return curve
+
+
+def offset_curve_by_area(curve, distance, prefer):
+    candidates = []
+    for signed_distance in [distance, -distance]:
+        offsets = curve.Offset(Plane.WorldXY, signed_distance, tol, CurveOffsetCornerStyle.Sharp)
+        if not offsets:
+            continue
+        for candidate in offsets:
+            if candidate and candidate.IsClosed:
+                candidates.append(candidate)
+    if not candidates:
+        raise Exception("Offset failed for curve")
+    base_area = curve_area(curve)
+    if prefer == "smaller":
+        smaller = [c for c in candidates if curve_area(c) < base_area]
+        return sorted(smaller or candidates, key=curve_area)[0]
+    larger = [c for c in candidates if curve_area(c) > base_area]
+    return sorted(larger or candidates, key=curve_area, reverse=True)[0]
+
+
+def add_planar_region(name, curves, layer, color):
+    breps = Brep.CreatePlanarBreps(curves, tol)
+    if not breps:
+        raise Exception("Planar region failed for " + name)
+    ids = []
+    for i, brep in enumerate(breps):
+        ids.append(doc.Objects.AddBrep(brep, attr(layer, color, "%s_%02d" % (name, i))))
+    return ids
+
+
+def translated_curve(curve, dz):
+    duplicate = curve.DuplicateCurve()
+    duplicate.Transform(Transform.Translation(0, 0, dz))
+    return duplicate
+
+
+def add_vertical_face_between_curves(name, curve_a, curve_b, layer, color):
+    breps = Brep.CreateFromLoft([curve_a, curve_b], Point3d.Unset, Point3d.Unset, Rhino.Geometry.LoftType.Normal, False)
+    if not breps:
+        raise Exception("Vertical face loft failed for " + name)
+    return doc.Objects.AddBrep(breps[0], attr(layer, color, name))
+
+
+def add_parapet_from_contour(name, edge_curve, z, height, thickness, layer, side):
+    # Build parapets as a ring between the source contour and an offset contour.
+    # This keeps roof edge geometry tied to the actual outline of the building.
+    prefer = "smaller" if side == "inside" else "larger"
+    offset = offset_curve_by_area(edge_curve, thickness, prefer)
+    edge_top = translated_curve(edge_curve, height)
+    offset_top = translated_curve(offset, height)
+    add_vertical_face_between_curves(name + "_outer_face", edge_curve, edge_top, layer, COLORS["line"])
+    add_vertical_face_between_curves(name + "_inner_face", offset, offset_top, layer, COLORS["line"])
+    return add_planar_region(name + "_top_cap", [edge_top, offset_top], layer, COLORS["line"])
+
+
+def add_inset_surface_from_contour(name, edge_curve, inset, layer, color, prefer="smaller"):
+    inset_curve = offset_curve_by_area(edge_curve, inset, prefer)
+    return add_planar_region(name, [inset_curve], layer, color)
 
 
 def loft_tower(name, layer, color, sections):
@@ -272,42 +349,24 @@ def add_tower(name, cx, cy, color, rotation_bias, drift_x):
             z + 0.08,
         )
 
-    # Exploited tower roof: parapet, plant screen, and occupied terrace inset.
+    # Exploited tower roof: surfaces and parapets are derived from the actual
+    # top contour, not from loose rectangles.
     roof_z = z_top
-    roof_w = upper_w - 10.0
-    roof_d = upper_d - 8.0
-    add_box(
-        name + "_occupied_roof_deck",
+    top_pts = section_points(cx, cy, upper_w - 8.0, upper_d - 6.0, rotation_bias + 13.5, roof_z, 4.5)
+    roof_edge = closed_curve(top_pts)
+    add_planar_region(name + "_roof_full_contour_deck", [roof_edge], LAYERS["podium_roof"], COLORS["podium_roof"])
+    add_parapet_from_contour(name + "_tower_roof_parapet", roof_edge, roof_z, 1.2, 0.75, LAYERS["podium_roof"], "inside")
+    add_inset_surface_from_contour(
+        name + "_green_roof_inset_from_contour",
+        roof_edge,
+        2.3,
         LAYERS["podium_roof"],
-        COLORS["podium_roof"],
-        cx - roof_w / 2,
-        cy - roof_d / 2,
-        cx + roof_w / 2,
-        cy + roof_d / 2,
-        roof_z,
-        roof_z + 0.28,
+        Color.FromArgb(92, 132, 98),
+        "smaller",
     )
-    add_parapet(name + "_tower_roof_parapet", cx, cy, roof_w, roof_d, roof_z, 1.2, LAYERS["podium_roof"])
-    add_box(
-        name + "_roof_plant_screen",
-        LAYERS["facade"],
-        Color.FromArgb(85, 90, 92),
-        cx - 8,
-        cy - 10,
-        cx + 8,
-        cy + 10,
-        roof_z + 0.28,
-        roof_z + 3.0,
-    )
+    plant_edge = offset_curve_by_area(roof_edge, 8.5, "smaller")
+    add_parapet_from_contour(name + "_roof_plant_screen_contour", plant_edge, roof_z + 0.28, 2.7, 0.55, LAYERS["facade"], "inside")
     return tower_id
-
-
-def add_parapet(name, cx, cy, w, d, z, h, layer):
-    th = 0.45
-    add_box(name + "_south", layer, COLORS["line"], cx - w / 2, cy - d / 2, cx + w / 2, cy - d / 2 + th, z, z + h)
-    add_box(name + "_north", layer, COLORS["line"], cx - w / 2, cy + d / 2 - th, cx + w / 2, cy + d / 2, z, z + h)
-    add_box(name + "_west", layer, COLORS["line"], cx - w / 2, cy - d / 2, cx - w / 2 + th, cy + d / 2, z, z + h)
-    add_box(name + "_east", layer, COLORS["line"], cx + w / 2 - th, cy - d / 2, cx + w / 2, cy + d / 2, z, z + h)
 
 
 def add_text(name, text, x, y, z, size=2.4):
@@ -322,26 +381,56 @@ def build_podium():
     w = PARAMS["podium"]["width"]
     d = PARAMS["podium"]["depth"]
     h = PARAMS["podium"]["height"]
+    courtyard = {
+        "x0": -13.0,
+        "y0": -9.0,
+        "x1": 13.0,
+        "y1": 24.0,
+    }
     # U-shaped stylobate: two tower-bearing bars plus a public south connector.
     add_box("stylobate_west_bar_3f", LAYERS["podium"], COLORS["podium"], -w / 2, -d / 2, -13, d / 2, 0, h)
     add_box("stylobate_east_bar_3f", LAYERS["podium"], COLORS["podium"], 13, -d / 2, w / 2, d / 2, 0, h)
     add_box("stylobate_south_connector_3f", LAYERS["podium"], COLORS["podium"], -13, -d / 2, 13, -9, 0, h)
     add_box("stylobate_north_gallery_2f", LAYERS["podium"], COLORS["podium"], -13, 24, 13, d / 2, 0, 9.9)
 
-    # Continuous exploited roof surfaces and paver bands.
-    for x0, y0, x1, y1, label in [
-        (-w / 2, -d / 2, -13, d / 2, "west"),
-        (13, -d / 2, w / 2, d / 2, "east"),
-        (-13, -d / 2, 13, -9, "south"),
-        (-13, 24, 13, d / 2, "north_gallery"),
-    ]:
-        add_box("podium_roof_deck_" + label, LAYERS["podium_roof"], COLORS["podium_roof"], x0, y0, x1, y1, h, h + 0.18)
+    # The exploited roof is one contour region with a courtyard void. Parapets
+    # are tied to the same outer and inner contours through offsets.
+    outer = closed_curve(
+        [
+            Point3d(-w / 2, -d / 2, h + 0.22),
+            Point3d(w / 2, -d / 2, h + 0.22),
+            Point3d(w / 2, d / 2, h + 0.22),
+            Point3d(-w / 2, d / 2, h + 0.22),
+        ]
+    )
+    void = closed_curve(
+        [
+            Point3d(courtyard["x0"], courtyard["y0"], h + 0.22),
+            Point3d(courtyard["x0"], courtyard["y1"], h + 0.22),
+            Point3d(courtyard["x1"], courtyard["y1"], h + 0.22),
+            Point3d(courtyard["x1"], courtyard["y0"], h + 0.22),
+        ]
+    )
+    add_planar_region("podium_roof_deck_outer_minus_courtyard", [outer, void], LAYERS["podium_roof"], COLORS["podium_roof"])
+    add_parapet_from_contour("stylobate_outer_parapet_from_outer_contour", outer, h + 0.22, 1.2, 0.75, LAYERS["podium_roof"], "inside")
+    add_parapet_from_contour("stylobate_courtyard_parapet_from_void_contour", void, h + 0.22, 1.2, 0.65, LAYERS["podium_roof"], "outside")
 
-    add_parapet("stylobate_outer_parapet", 0, 0, w, d, h, 1.2, LAYERS["podium_roof"])
-    # Central courtyard / roof garden bands.
-    add_box("roof_garden_central_lawn", LAYERS["podium_roof"], Color.FromArgb(82, 135, 86), -16, -7, 16, 22, h + 0.2, h + 0.28)
-    add_box("roof_public_promenade", LAYERS["podium_roof"], Color.FromArgb(190, 185, 170), -58, -4, 58, 4, h + 0.22, h + 0.30)
-    add_box("roof_bridge_between_towers", LAYERS["podium_roof"], Color.FromArgb(160, 160, 150), -18, 5, 18, 13, h + 0.25, h + 0.40)
+    # Green and paving are derived from courtyard/roof contours so they cannot
+    # drift across the parapet or miss the opening.
+    green_edge = offset_curve_by_area(void, 1.6, "smaller")
+    add_planar_region("courtyard_green_roof_from_void_offset", [green_edge], LAYERS["podium_roof"], Color.FromArgb(82, 135, 86))
+    promenade_outer = offset_curve_by_area(outer, 4.2, "smaller")
+    promenade_inner = offset_curve_by_area(outer, 9.0, "smaller")
+    add_planar_region("roof_promenade_ring_from_outer_offsets", [promenade_outer, promenade_inner], LAYERS["podium_roof"], Color.FromArgb(190, 185, 170))
+    bridge_edge = closed_curve(
+        [
+            Point3d(courtyard["x0"] - 5.0, 4.0, h + 0.34),
+            Point3d(courtyard["x1"] + 5.0, 4.0, h + 0.34),
+            Point3d(courtyard["x1"] + 5.0, 13.0, h + 0.34),
+            Point3d(courtyard["x0"] - 5.0, 13.0, h + 0.34),
+        ]
+    )
+    add_planar_region("roof_bridge_from_courtyard_span_contour", [bridge_edge], LAYERS["podium_roof"], Color.FromArgb(160, 160, 150))
 
 
 def build_site():
@@ -369,7 +458,7 @@ def add_metrics():
     site_area = PARAMS["site"]["width"] * PARAMS["site"]["depth"]
     far = total_gfa / site_area
     lines = [
-        "BC50_v1 metrics, units=m",
+        "BC50_v2 metrics, units=m",
         "Program: 2 office towers on exploited 3F stylobate",
         "Tower floors: 50 each; typical F2F: %.2f m" % tower["typical_floor"],
         "Podium roof: %.2f m; tower roof: %.2f m" % (podium["height"], z_top),
