@@ -1,5 +1,27 @@
 # Новости
 
+## 2026-06-24 - Captured BC50 two-tower stylobate case lessons
+
+Added the accepted BC50 massing case and promoted its modeling rules:
+
+- `docs/cases/bc50-two-tower-stylobate-2026-06-24.md`
+- `scripts/rhino/massing/two_tower_bc_50f_stylobate.py`
+
+Key rules:
+
+- use contour-derived roof/parapet geometry for stylobates and tower roofs;
+- use straight core overruns/headhouses, not twisted roof cores;
+- keep metric text on a vertical board outside the model;
+- use translucent blue glass material for tower massing readability;
+- raise thin finish surfaces by at least `0.001 m` to avoid Rhino viewport
+  z-fighting/flicker.
+
+Updated:
+
+- `docs/case-library.md`
+- `docs/error-ledger.md`
+- `docs/errors/moscow-bc-massing-error-library.md`
+
 ## 2026-06-23 - Added Moscow 2026 dimensional baseline library
 
 Added an active dimensional reference for Moscow residential and office massing:

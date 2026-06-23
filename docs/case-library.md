@@ -42,6 +42,7 @@ to rediscover the same lesson.
 | --- | --- | --- | --- |
 | Moscow BC `AI_BC_V01-V03` | `failed` | Numeric pass is not design acceptance. Low bars cut movement, accidental intersections are not stylobates, box-only variants are rejected. | `docs/errors/moscow-bc-massing-error-library.md`, `docs/libraries/moscow-bc-site-zoning-patterns.md` |
 | Moscow BC Scenario 3 split | `strategy` | Classify as `3A` fixed zoning, `3B` plot-plus-entries zoning proposal, or `3C` existing-massing image revision before acting. | `docs/scenarios/tep-massing-scenario-subtypes.md` |
+| BC50 two-tower stylobate 2026-06-24 | `accepted` | For high-rise BC massing, use contour-derived roofs/parapets, straight core overruns, a recessed transfer floor/shadow joint, transparent glass material, 1 mm visual lifts for finish surfaces, and a vertical metric board outside the model. | `docs/cases/bc50-two-tower-stylobate-2026-06-24.md`, `scripts/rhino/massing/two_tower_bc_50f_stylobate.py` |
 | Rhino pilot massing v2-v4 | `failed-to-rule` | Circulation came too late, gaps became narrow residual slots, red-line discipline failed, and heavy blocks ignored light/open-space logic. | `docs/obsidian-knowledge-map.md`, `docs/errors/moscow-bc-massing-error-library.md` |
 | Rhino test massing v5-v8 | `medium-success` | The strongest direction was compact central podium plus a separated dynamic tower and landscape field; avoid random wide podiums and leftover pavilions. | `docs/obsidian-knowledge-map.md`, `docs/libraries/massing-decision-library.md` |
 

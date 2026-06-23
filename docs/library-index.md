@@ -31,6 +31,7 @@ ideas, and tools without rereading every document.
 | `docs/libraries/moscow-building-dimensional-library-2026.yaml` | Machine-readable defaults and warning flags for Rhino/Grasshopper generators | Active |
 | `docs/libraries/moscow-architecture-approval-checklist.md` | Moscow architecture approval checklist criteria: visual image, urban frontage, permeability, parking | Active |
 | `docs/scenarios/reference-modeling-gates.md` | Source authority, constructive grammar, section direction, massing-before-detail | Active |
+| `docs/cases/bc50-two-tower-stylobate-2026-06-24.md` | Accepted two-tower BC massing precedent: contour roofs/parapets, transparent glass, 1 mm visual lifts, metric board, sunken courtyard bridge rules | Active |
 | `docs/tools/grasshopper-workflow.md` | Grasshopper automation workflow through RhinoMCP: scan, smoke graph, build, validate | Active |
 | `docs/tools/grasshopper-csharp-script-nodes.md` | C# Script node rules imported from local skill: GH_ScriptInstance shape, RhinoCommon gotchas, source-injection gates | Active |
 | `docs/tools/grasshopper-csharp-performance.md` | C# Script automatic IO, list/tree access, parallel-safe patterns, caching, and performance gates | Active |

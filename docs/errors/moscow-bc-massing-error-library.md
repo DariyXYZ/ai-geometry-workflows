@@ -207,6 +207,56 @@ hard constraints
 -> final clean Rhino layers
 ```
 
+### `MBC-E09` Coplanar Finish Flicker
+
+Symptom: roof finishes, green surfaces, paving strips, facade overlays, or
+graphic guide surfaces visually shimmer or disappear in Rhino shaded/rendered
+views even though their coordinates are correct.
+
+Cause: a thin finish surface is exactly coplanar with the block, roof, slab, or
+ground surface below it. Rhino viewport z-buffering cannot reliably decide which
+surface to display.
+
+Detection:
+
+- two planar surfaces share the same Z level and overlap in XY;
+- the issue appears as view-dependent flicker, moire, or broken patches;
+- the geometry is otherwise numerically aligned.
+
+Correction:
+
+- Use a named micro-offset such as `VISUAL_LIFT_M = 0.001`.
+- Raise visual finish surfaces at least `0.001 m` above the structural/blocking
+  surface they sit on.
+- Keep the lift small enough that it reads as representation, not physical
+  thickness.
+- Write this offset into the generator instead of manually nudging surfaces in
+  Rhino.
+
+### `MBC-E10` Presentation Materials Not Encoded In Generator
+
+Symptom: the model looks good after manual Rhino styling, but rerunning the
+generator loses the intended glass/readability setup.
+
+Cause: important visual decisions such as transparent glass material, line
+contrast, or surface lifts exist only in the active Rhino document, not in the
+source-controlled script.
+
+Detection:
+
+- tower masses are opaque color blocks after rerun;
+- facade/floor guide lines become harder to read;
+- manual material edits are not represented by a material or attribute helper
+  in the script.
+
+Correction:
+
+- Create named Rhino materials from the generator for repeated presentation
+  decisions, for example translucent blue tower glass.
+- Apply materials through object attributes, not only object colors.
+- Treat manual presentation polish as source feedback: promote it into the
+  script and case notes before the next variant.
+
 ## Mandatory Prebuild Gate
 
 No new Moscow BC variant should be generated until this table is filled:

@@ -23,7 +23,8 @@ from System.Drawing import Color
 doc = __rhino_doc__
 tol = doc.ModelAbsoluteTolerance
 
-RUN = "BC50_v6"
+RUN = "BC50_v7"
+VISUAL_LIFT_M = 0.001
 
 PARAMS = {
     "site": {"width": 160.0, "depth": 105.0},
@@ -72,6 +73,15 @@ COLORS = {
 }
 
 
+MATERIALS = {
+    "glass_blue": {
+        "name": "BC50_translucent_blue_glass",
+        "color": Color.FromArgb(118, 156, 218),
+        "transparency": 0.42,
+    },
+}
+
+
 def ensure_layer(name, color):
     index = doc.Layers.FindByFullPath(name, -1)
     if index >= 0:
@@ -86,12 +96,31 @@ def ensure_layer(name, color):
     return doc.Layers.Add(layer)
 
 
-def attr(layer_name, color=None, name=None):
+def ensure_material(material_key):
+    material_data = MATERIALS[material_key]
+    index = doc.Materials.Find(material_data["name"], True)
+    if index >= 0:
+        material = doc.Materials[index]
+    else:
+        material = Rhino.DocObjects.Material()
+        material.Name = material_data["name"]
+        index = doc.Materials.Add(material)
+        material = doc.Materials[index]
+    material.DiffuseColor = material_data["color"]
+    material.Transparency = material_data["transparency"]
+    doc.Materials.Modify(material, index, True)
+    return index
+
+
+def attr(layer_name, color=None, name=None, material_key=None):
     attributes = Rhino.DocObjects.ObjectAttributes()
     attributes.LayerIndex = ensure_layer(layer_name, color or Color.White)
     if color:
         attributes.ObjectColor = color
         attributes.ColorSource = Rhino.DocObjects.ObjectColorSource.ColorFromObject
+    if material_key:
+        attributes.MaterialIndex = ensure_material(material_key)
+        attributes.MaterialSource = Rhino.DocObjects.ObjectMaterialSource.MaterialFromObject
     if name:
         attributes.Name = name
     return attributes
@@ -304,7 +333,7 @@ def loft_tower(name, layer, color, sections):
     if not breps:
         raise Exception("Loft failed for " + name)
     brep = breps[0].CapPlanarHoles(tol)
-    return doc.Objects.AddBrep(brep, attr(layer, color, name))
+    return doc.Objects.AddBrep(brep, attr(layer, color, name, "glass_blue"))
 
 
 def add_floor_reveals(name, cx, cy, base_sections, levels, layer, color):
@@ -428,7 +457,7 @@ def add_tower(name, cx, cy, color, rotation_bias, drift_x):
     # Realistic tower roof: one outer parapet from the roof contour, flat
     # membrane, and a straight core overrun/headhouse. No inner parapet ring.
     roof_z = z_top
-    top_pts = section_points(cx, cy, upper_w - 8.0, upper_d - 6.0, rotation_bias + 13.5, roof_z, 4.5)
+    top_pts = section_points(cx, cy, upper_w - 8.0, upper_d - 6.0, rotation_bias + 13.5, roof_z + VISUAL_LIFT_M, 4.5)
     roof_edge = closed_curve(top_pts)
     add_planar_region(name + "_roof_membrane_from_contour", [roof_edge], LAYERS["podium_roof"], COLORS["tower_roof"])
     add_parapet_from_contour(name + "_tower_roof_parapet", roof_edge, roof_z, 1.2, 0.75, LAYERS["podium_roof"], "inside")
@@ -464,18 +493,18 @@ def build_podium():
     # are tied to the same outer and inner contours through offsets.
     outer = closed_curve(
         [
-            Point3d(-w / 2, -d / 2, h + 0.22),
-            Point3d(w / 2, -d / 2, h + 0.22),
-            Point3d(w / 2, d / 2, h + 0.22),
-            Point3d(-w / 2, d / 2, h + 0.22),
+            Point3d(-w / 2, -d / 2, h + 0.22 + VISUAL_LIFT_M),
+            Point3d(w / 2, -d / 2, h + 0.22 + VISUAL_LIFT_M),
+            Point3d(w / 2, d / 2, h + 0.22 + VISUAL_LIFT_M),
+            Point3d(-w / 2, d / 2, h + 0.22 + VISUAL_LIFT_M),
         ]
     )
     void = closed_curve(
         [
-            Point3d(courtyard["x0"], courtyard["y0"], h + 0.22),
-            Point3d(courtyard["x0"], courtyard["y1"], h + 0.22),
-            Point3d(courtyard["x1"], courtyard["y1"], h + 0.22),
-            Point3d(courtyard["x1"], courtyard["y0"], h + 0.22),
+            Point3d(courtyard["x0"], courtyard["y0"], h + 0.22 + VISUAL_LIFT_M),
+            Point3d(courtyard["x0"], courtyard["y1"], h + 0.22 + VISUAL_LIFT_M),
+            Point3d(courtyard["x1"], courtyard["y1"], h + 0.22 + VISUAL_LIFT_M),
+            Point3d(courtyard["x1"], courtyard["y0"], h + 0.22 + VISUAL_LIFT_M),
         ]
     )
     add_planar_region("podium_roof_deck_outer_minus_courtyard", [outer, void], LAYERS["podium_roof"], COLORS["podium_roof"])
@@ -485,17 +514,18 @@ def build_podium():
     # Green and paving are derived from courtyard/roof contours so they cannot
     # drift across the parapet or miss the opening.
     green_edge = offset_curve_by_area(void, 1.6, "smaller")
-    green_edge.Transform(Transform.Translation(0, 0, 0.12 - (h + 0.22)))
+    green_target_z = 0.12 + VISUAL_LIFT_M
+    green_edge.Transform(Transform.Translation(0, 0, green_target_z - (h + 0.22 + VISUAL_LIFT_M)))
     add_planar_region("sunken_courtyard_green_from_void_offset", [green_edge], LAYERS["podium_roof"], Color.FromArgb(82, 135, 86))
     promenade_outer = offset_curve_by_area(outer, 4.2, "smaller")
     promenade_inner = offset_curve_by_area(outer, 9.0, "smaller")
     add_planar_region("roof_promenade_ring_from_outer_offsets", [promenade_outer, promenade_inner], LAYERS["podium_roof"], Color.FromArgb(190, 185, 170))
     bridge_edge = closed_curve(
         [
-            Point3d(courtyard["x0"] - 5.0, 4.0, h + 0.34),
-            Point3d(courtyard["x1"] + 5.0, 4.0, h + 0.34),
-            Point3d(courtyard["x1"] + 5.0, 13.0, h + 0.34),
-            Point3d(courtyard["x0"] - 5.0, 13.0, h + 0.34),
+            Point3d(courtyard["x0"] - 5.0, 4.0, h + 0.34 + VISUAL_LIFT_M),
+            Point3d(courtyard["x1"] + 5.0, 4.0, h + 0.34 + VISUAL_LIFT_M),
+            Point3d(courtyard["x1"] + 5.0, 13.0, h + 0.34 + VISUAL_LIFT_M),
+            Point3d(courtyard["x0"] - 5.0, 13.0, h + 0.34 + VISUAL_LIFT_M),
         ]
     )
     add_planar_region("roof_bridge_from_courtyard_span_contour", [bridge_edge], LAYERS["podium_roof"], Color.FromArgb(160, 160, 150))
@@ -533,7 +563,7 @@ def add_metrics():
     site_area = PARAMS["site"]["width"] * PARAMS["site"]["depth"]
     far = total_gfa / site_area
     lines = [
-        "BC50_v6 | units=m",
+        "BC50_v7 | units=m",
         "2 office towers on 3F exploited stylobate",
         "Tower floors: 50 each | F2F %.2f m" % tower["typical_floor"],
         "Podium roof %.1f m | tower roof %.1f m" % (podium["height"], z_top),

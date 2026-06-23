@@ -48,6 +48,21 @@ relationship is declared and legible. Either make a true public stylobate with
 towers sitting fully on it, keep separate blocks with real spacing, or create a
 clear gate/bridge condition.
 
+### Avoid Coplanar Finish Surfaces
+
+In the BC50 two-tower stylobate case, roof/green/paving surfaces needed a
+small visual lift to avoid Rhino viewport flicker. Any thin finish surface that
+overlaps a block, slab, roof, ground plane, or facade surface should be lifted
+by a named offset such as `VISUAL_LIFT_M = 0.001` instead of being exactly
+coplanar.
+
+### Promote Manual Presentation Polish Into Scripts
+
+If the user improves a generated Rhino model with material, transparency, line,
+or surface-height edits, treat those edits as workflow feedback. Encode durable
+choices in the generator, for example a named translucent blue glass material
+for tower masses, so reruns do not regress to opaque blocks.
+
 ## Scenario 2 Mesh Cleanup
 
 ### `isSolid=True` Is Not Acceptance
