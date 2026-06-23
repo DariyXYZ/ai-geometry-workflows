@@ -8,10 +8,16 @@ For building-form tasks, read the architectural bridge first:
 
 ```text
 docs/libraries/grasshopper-architectural-form-patterns.md
+docs/libraries/grasshopper-architecture-plugin-stack.md
 ```
 
 It maps Scenario 3 form operators into Grasshopper control geometry, node
 families, plugin nodes, and validation gates.
+
+Use the plugin stack when the task requires choosing between native GH nodes,
+C# Script/RhinoCommon, and plugins such as Ladybug, Kangaroo, Karamba3D,
+Elefront, Human, Pufferfish, PanelingTools, LunchBox, Rhino.Inside.Revit,
+VisualARQ, ShapeDiver, or Speckle.
 
 ## Pattern - Capability Scan First
 

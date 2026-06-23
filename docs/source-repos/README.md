@@ -14,6 +14,7 @@ repo before continuing the workflow.
 | `StepanKukharskiy/spellshape-three`, `spellshape-format` | `spellshape-three-format.md` | Expression, distribution, repetition, and `.spell` format ideas. |
 | `earthtojake/text-to-cad` | `text-to-cad.md` | STEP-first build123d backend reference. |
 | `mcneel/RhinoMCP` | `rhinomcp.md` | Default Rhino MCP transport for Codex and other AI agents. |
+| McNeel Rhino/GH developer docs and samples | `mcneel-rhino-grasshopper-dev.md` | Official RhinoCommon, Grasshopper C#, Yak/Package Manager, and Rhino.Inside.Revit source map. |
 
 ## Use Rule
 
@@ -35,6 +36,9 @@ read local source card
 - https://github.com/StepanKukharskiy?tab=repositories
 - https://github.com/earthtojake/text-to-cad
 - https://github.com/mcneel/RhinoMCP
+- https://developer.rhino3d.com/
+- https://github.com/mcneel/rhino-developer-samples
+- https://github.com/mcneel/rhino.inside-revit
 
 ## What Not To Do
 

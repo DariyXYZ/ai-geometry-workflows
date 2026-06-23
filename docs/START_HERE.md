@@ -112,6 +112,8 @@ Read:
 - `docs/libraries/form-operator-library.md`
 - `docs/libraries/grasshopper-architectural-form-patterns.md` if the form will
   be built or iterated in Grasshopper
+- `docs/libraries/grasshopper-architecture-plugin-stack.md` if the task needs
+  plugin, native-node, C# Script, analysis, BIM, or facade-stack selection
 - `docs/libraries/moscow-architecture-approval-checklist.md`
 - `docs/errors/moscow-bc-massing-error-library.md`
 - `docs/libraries/moscow-bc-site-zoning-patterns.md`
@@ -152,6 +154,8 @@ Read:
 - `docs/libraries/grasshopper-pattern-library.md`
 - `docs/libraries/grasshopper-architectural-form-patterns.md` for architectural
   building-form graphs, facade nets, section stacks, and plugin-assisted forms
+- `docs/libraries/grasshopper-architecture-plugin-stack.md` for architecture
+  plugin routing and McNeel/Food4Rhino source links
 
 Mandatory flow:
 

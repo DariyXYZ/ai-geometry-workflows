@@ -25,6 +25,7 @@ ideas, and tools without rereading every document.
 | `docs/libraries/massing-decision-library.md` | Decision order from site context to CAD parameters; subtype routing, footprint families, risk checks | Active |
 | `docs/libraries/form-operator-library.md` | Reusable massing operators: chamfer, rotation, taper, setbacks, voids, podium/tower logic, crown moves | Active |
 | `docs/libraries/grasshopper-architectural-form-patterns.md` | Translation from architectural operators to Grasshopper section stacks, spines, attractors, facade nets, native nodes, and plugin nodes | Active |
+| `docs/libraries/grasshopper-architecture-plugin-stack.md` | Research-backed routing matrix for GH architecture plugins, McNeel official sources, and task-specific stacks | Active |
 | `docs/libraries/moscow-architecture-approval-checklist.md` | Moscow architecture approval checklist criteria: visual image, urban frontage, permeability, parking | Active |
 | `docs/scenarios/reference-modeling-gates.md` | Source authority, constructive grammar, section direction, massing-before-detail | Active |
 | `docs/tools/grasshopper-workflow.md` | Grasshopper automation workflow through RhinoMCP: scan, smoke graph, build, validate | Active |
@@ -96,6 +97,7 @@ cards first.
 | `docs/source-repos/2d-plan-to-3d.md` | Plan/image to contour extraction ideas |
 | `docs/source-repos/text-to-cad.md` | STEP-first CAD-as-code backend role |
 | `docs/source-repos/rhinomcp.md` | Default McNeel RhinoMCP backend role |
+| `docs/source-repos/mcneel-rhino-grasshopper-dev.md` | Official Rhino/GH developer docs, sample repos, Package Manager/Yak, Rhino.Inside.Revit |
 | `docs/research/external-repo-constructor-map.md` | Long-form external repo map |
 
 Rule:
