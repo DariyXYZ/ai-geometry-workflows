@@ -23,7 +23,7 @@ from System.Drawing import Color
 doc = __rhino_doc__
 tol = doc.ModelAbsoluteTolerance
 
-RUN = "BC50_v2"
+RUN = "BC50_v4"
 
 PARAMS = {
     "site": {"width": 160.0, "depth": 105.0},
@@ -35,6 +35,7 @@ PARAMS = {
         "upper_plate": [44.0, 50.0],
         "recessed_plate": [36.0, 42.0],
         "core": [18.0, 24.0],
+        "roof_core_overrun": [12.0, 18.0, 4.2],
     },
 }
 
@@ -48,9 +49,8 @@ LAYERS = {
     "floors": "BC50_21_floor_reveals",
     "core": "BC50_22_cores",
     "datum": "BC50_30_datum_contours",
-    "roof_screen": "BC50_31_roof_screens",
+    "roof_equipment": "BC50_31_roof_core_overruns",
     "metric": "BC50_90_metrics",
-    "archive": "TEMP_BC50_old",
 }
 
 
@@ -58,11 +58,14 @@ COLORS = {
     "site": Color.FromArgb(225, 225, 220),
     "podium": Color.FromArgb(170, 172, 168),
     "podium_roof": Color.FromArgb(112, 142, 118),
+    "tower_roof": Color.FromArgb(172, 172, 164),
     "shadow": Color.FromArgb(26, 26, 26),
     "tower_a": Color.FromArgb(126, 151, 176),
     "tower_b": Color.FromArgb(154, 139, 171),
     "glass": Color.FromArgb(110, 168, 190),
     "core": Color.FromArgb(70, 75, 80),
+    "core_headhouse": Color.FromArgb(92, 96, 98),
+    "equipment": Color.FromArgb(118, 122, 124),
     "line": Color.FromArgb(30, 30, 30),
     "datum": Color.FromArgb(36, 36, 36),
     "metric": Color.FromArgb(20, 20, 20),
@@ -94,25 +97,38 @@ def attr(layer_name, color=None, name=None):
     return attributes
 
 
-def archive_old_run():
-    archive_index = ensure_layer(LAYERS["archive"], Color.FromArgb(120, 120, 120))
-    archive_layer = doc.Layers[archive_index]
-    archive_layer.IsVisible = False
-    doc.Layers.Modify(archive_layer, archive_index, True)
+def cleanup_previous_generated():
     settings = ObjectEnumeratorSettings()
     settings.HiddenObjects = True
-    settings.LockedObjects = False
+    settings.LockedObjects = True
     settings.NormalObjects = True
-    moved = 0
+    deleted = 0
     for rh_obj in list(doc.Objects.GetObjectList(settings)):
         layer = doc.Layers[rh_obj.Attributes.LayerIndex]
-        if layer and layer.Name.startswith("BC50_"):
+        layer_name = layer.Name if layer else ""
+        if layer_name.startswith("BC50_") or layer_name.startswith("TEMP_BC50"):
             attributes = rh_obj.Attributes.Duplicate()
-            attributes.LayerIndex = archive_index
-            attributes.Visible = False
+            attributes.Locked = False
+            attributes.Visible = True
             doc.Objects.ModifyAttributes(rh_obj, attributes, True)
-            moved += 1
-    return moved
+            if doc.Objects.Delete(rh_obj.Id, True):
+                deleted += 1
+
+    target_layers = set(LAYERS.values())
+    remaining_layer_indices = set()
+    check_settings = ObjectEnumeratorSettings()
+    check_settings.HiddenObjects = True
+    check_settings.LockedObjects = True
+    check_settings.NormalObjects = True
+    for rh_obj in doc.Objects.GetObjectList(check_settings):
+        remaining_layer_indices.add(rh_obj.Attributes.LayerIndex)
+    for i in reversed(range(doc.Layers.Count)):
+        layer = doc.Layers[i]
+        name = layer.Name or ""
+        if (name.startswith("BC50_") or name.startswith("TEMP_BC50")) and name not in target_layers:
+            if i not in remaining_layer_indices:
+                doc.Layers.Delete(i, True)
+    return deleted
 
 
 def add_box(name, layer, color, x0, y0, x1, y1, z0, z1):
@@ -227,6 +243,55 @@ def add_parapet_from_contour(name, edge_curve, z, height, thickness, layer, side
 def add_inset_surface_from_contour(name, edge_curve, inset, layer, color, prefer="smaller"):
     inset_curve = offset_curve_by_area(edge_curve, inset, prefer)
     return add_planar_region(name, [inset_curve], layer, color)
+
+
+def add_roof_core_overrun(name, cx, cy, roof_z):
+    core_w, core_d = PARAMS["tower"]["core"]
+    head_w, head_d, head_h = PARAMS["tower"]["roof_core_overrun"]
+    add_box(
+        name + "_core_continues_to_roof",
+        LAYERS["roof_equipment"],
+        COLORS["core_headhouse"],
+        cx - head_w / 2,
+        cy - head_d / 2,
+        cx + head_w / 2,
+        cy + head_d / 2,
+        roof_z,
+        roof_z + head_h,
+    )
+    add_box(
+        name + "_roof_access_lobby",
+        LAYERS["roof_equipment"],
+        COLORS["equipment"],
+        cx - head_w / 2 + 1.2,
+        cy + head_d / 2,
+        cx + head_w / 2 - 1.2,
+        cy + head_d / 2 + 4.0,
+        roof_z,
+        roof_z + 2.7,
+    )
+    add_box(
+        name + "_low_mep_pad_west",
+        LAYERS["roof_equipment"],
+        COLORS["equipment"],
+        cx - core_w / 2 - 5.5,
+        cy - 5.0,
+        cx - core_w / 2 - 1.5,
+        cy + 5.0,
+        roof_z + 0.15,
+        roof_z + 1.1,
+    )
+    add_box(
+        name + "_low_mep_pad_east",
+        LAYERS["roof_equipment"],
+        COLORS["equipment"],
+        cx + core_w / 2 + 1.5,
+        cy - 5.0,
+        cx + core_w / 2 + 5.5,
+        cy + 5.0,
+        roof_z + 0.15,
+        roof_z + 1.1,
+    )
 
 
 def loft_tower(name, layer, color, sections):
@@ -360,23 +425,14 @@ def add_tower(name, cx, cy, color, rotation_bias, drift_x):
     add_floor_reveals(name, cx, cy, section_specs, floor_levels, LAYERS["floors"], COLORS["line"])
     add_datum_contours(name, section_specs, range(5, total_floors + 1, 5))
 
-    # Exploited tower roof: surfaces and parapets are derived from the actual
-    # top contour, not from loose rectangles.
+    # Realistic tower roof: one outer parapet from the roof contour, flat
+    # membrane, and a straight core overrun/headhouse. No inner parapet ring.
     roof_z = z_top
     top_pts = section_points(cx, cy, upper_w - 8.0, upper_d - 6.0, rotation_bias + 13.5, roof_z, 4.5)
     roof_edge = closed_curve(top_pts)
-    add_planar_region(name + "_roof_full_contour_deck", [roof_edge], LAYERS["podium_roof"], COLORS["podium_roof"])
+    add_planar_region(name + "_roof_membrane_from_contour", [roof_edge], LAYERS["podium_roof"], COLORS["tower_roof"])
     add_parapet_from_contour(name + "_tower_roof_parapet", roof_edge, roof_z, 1.2, 0.75, LAYERS["podium_roof"], "inside")
-    add_inset_surface_from_contour(
-        name + "_green_roof_inset_from_contour",
-        roof_edge,
-        2.3,
-        LAYERS["podium_roof"],
-        Color.FromArgb(92, 132, 98),
-        "smaller",
-    )
-    plant_edge = offset_curve_by_area(roof_edge, 8.5, "smaller")
-    add_parapet_from_contour(name + "_roof_plant_screen_contour", plant_edge, roof_z + 0.28, 2.7, 0.55, LAYERS["roof_screen"], "inside")
+    add_roof_core_overrun(name, cx, cy, roof_z)
     return tower_id
 
 
@@ -469,7 +525,7 @@ def add_metrics():
     site_area = PARAMS["site"]["width"] * PARAMS["site"]["depth"]
     far = total_gfa / site_area
     lines = [
-        "BC50_v2 metrics, units=m",
+        "BC50_v4 metrics, units=m",
         "Program: 2 office towers on exploited 3F stylobate",
         "Tower floors: 50 each; typical F2F: %.2f m" % tower["typical_floor"],
         "Podium roof: %.2f m; tower roof: %.2f m" % (podium["height"], z_top),
@@ -478,6 +534,7 @@ def add_metrics():
         "Typical plate area per tower: %.0f m2" % tower_plate_area,
         "Core placeholder: %.0f x %.0f m = %.0f m2; core ratio %.1f%%" % (core_w, core_d, core_area, core_area / tower_plate_area * 100.0),
         "Facade-to-core lease depth: %.1f m X / %.1f m Y" % (net_depth_x, net_depth_y),
+        "Roof: outer contour parapet + straight core overrun/headhouse, no inner parapet ring.",
         "Estimated GFA: towers %.0f m2 + podium %.0f m2 = %.0f m2" % (gfa_towers, podium_gfa, total_gfa),
         "Site area %.0f m2; early FAR %.2f" % (site_area, far),
         "Flags: office >50 m -> high-rise fire strategy required; core is not SP-sized, it is a placeholder.",
@@ -488,7 +545,7 @@ def add_metrics():
 
 
 def main():
-    moved = archive_old_run()
+    deleted = cleanup_previous_generated()
     for layer, color_key in [
         (LAYERS["site"], COLORS["site"]),
         (LAYERS["podium"], COLORS["podium"]),
@@ -498,7 +555,7 @@ def main():
         (LAYERS["floors"], COLORS["line"]),
         (LAYERS["core"], COLORS["core"]),
         (LAYERS["datum"], COLORS["datum"]),
-        (LAYERS["roof_screen"], COLORS["glass"]),
+        (LAYERS["roof_equipment"], COLORS["equipment"]),
         (LAYERS["metric"], COLORS["metric"]),
     ]:
         ensure_layer(layer, color_key)
@@ -517,7 +574,7 @@ def main():
     settings.NormalObjects = True
     count_visible = len(list(doc.Objects.GetObjectList(settings)))
     report = {
-        "archived_old_bc50_objects": moved,
+        "deleted_old_bc50_objects": deleted,
         "visible_objects": count_visible,
         "rhino_version": str(Rhino.RhinoApp.Version),
         "units": str(doc.ModelUnitSystem),
