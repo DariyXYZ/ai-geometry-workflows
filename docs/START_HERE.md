@@ -114,6 +114,8 @@ Read:
   be built or iterated in Grasshopper
 - `docs/libraries/grasshopper-architecture-plugin-stack.md` if the task needs
   plugin, native-node, C# Script, analysis, BIM, or facade-stack selection
+- `docs/libraries/grasshopper-architecture-snippet-library.md` for quick
+  floorization, gabarit, TEP, and metrics snippets
 - `docs/libraries/moscow-architecture-approval-checklist.md`
 - `docs/errors/moscow-bc-massing-error-library.md`
 - `docs/libraries/moscow-bc-site-zoning-patterns.md`
@@ -156,6 +158,8 @@ Read:
   building-form graphs, facade nets, section stacks, and plugin-assisted forms
 - `docs/libraries/grasshopper-architecture-plugin-stack.md` for architecture
   plugin routing and McNeel/Food4Rhino source links
+- `docs/libraries/grasshopper-architecture-snippet-library.md` for quick
+  reusable architecture C# snippets
 
 Mandatory flow:
 

@@ -143,6 +143,10 @@ Known rules:
 - `Line.ClosestParameter(point)` returns a double directly, not a Try-pattern
   with an out parameter.
 - Never reassign a `foreach` iteration variable; use a separate local variable.
+- In Rhino 8 C# runner smoke scripts, use `TextEntity.PlainText` instead of
+  obsolete `TextEntity.Text`.
+- Use `RhinoApp.WriteLine(string.Format(...))`; do not assume `WriteLine`
+  accepts a format string plus multiple arguments.
 
 ## Script Component Automation Rules
 

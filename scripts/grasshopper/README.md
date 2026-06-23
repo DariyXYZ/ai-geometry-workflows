@@ -7,6 +7,7 @@ Reusable Grasshopper script bodies and graph-builder utilities live here.
 ```text
 scripts/grasshopper/examples/       paste-ready C# / Python script bodies
 scripts/grasshopper/graph_builders/ future RhinoMCP graph builder scripts
+scripts/grasshopper/snippets/       small reusable C# Script architecture blocks
 scripts/grasshopper/smoke/          tiny smoke tests and selectors
 ```
 
@@ -19,6 +20,8 @@ scripts/grasshopper/smoke/          tiny smoke tests and selectors
 | `examples/simple_xy_point_csharp.cs` | Minimal `x/y/a` fallback for modern C# Script source-assignment smoke tests. |
 | `examples/subd_zaha_tower_csharp.cs` | SubD tower generator used to test Rhino 8 C# Script and SubD output. |
 | `examples/voxel_seed_skyscraper_csharp.cs` | Seed-driven voxel skyscraper with fast mesh preview, optional Brep boxes, facade lines, and plugin guide curves. |
+| `snippets/massing_bbox_floorizer_csharp.cs` | Schematic floor slabs from a massing bounding box. |
+| `snippets/building_metrics_tep_csharp.cs` | Fast gabarit, TEP, GFA/FAR, volume, and efficiency report. |
 | `examples/voxel_seed_skyscraper_graph.md` | Companion native/Pufferfish/Weaverbird/Human/Elefront graph recipe for the voxel skyscraper script. |
 
 ## Rules

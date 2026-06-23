@@ -9,6 +9,7 @@ For building-form tasks, read the architectural bridge first:
 ```text
 docs/libraries/grasshopper-architectural-form-patterns.md
 docs/libraries/grasshopper-architecture-plugin-stack.md
+docs/libraries/grasshopper-architecture-snippet-library.md
 ```
 
 It maps Scenario 3 form operators into Grasshopper control geometry, node
@@ -18,6 +19,9 @@ Use the plugin stack when the task requires choosing between native GH nodes,
 C# Script/RhinoCommon, and plugins such as Ladybug, Kangaroo, Karamba3D,
 Elefront, Human, Pufferfish, PanelingTools, LunchBox, Rhino.Inside.Revit,
 VisualARQ, ShapeDiver, or Speckle.
+
+Use the snippet library when the task needs quick reusable C# pieces such as
+floorization, gabarits, TEP/GFA/FAR metrics, or smoke-test geometry.
 
 ## Pattern - Capability Scan First
 
