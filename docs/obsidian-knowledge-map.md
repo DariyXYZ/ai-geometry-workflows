@@ -22,6 +22,7 @@ C:\Users\dariy.n\Documents\Obsidian Vault
 | Moscow style trends | `50 Research\Moscow Massing\Property Insider Moscow Style Trends 2026.md` | Context and market-language calibration |
 | Channel/image signal research | `50 Research\Moscow Massing\m0n1ch Architecture Channel Massing Signals 2026.md` | Source-language and precedent mining |
 | Skyscraper silhouette grammar | `50 Research\Moscow Massing\Materia Skyscraper Silhouette Grammar 2026.md` | Tower crown and skyline rules |
+| Moscow dimensional baselines | `50 Research\Moscow Dimensions\Moscow Building Dimensional Library 2026.md` | Basis for `docs/libraries/moscow-building-dimensional-library-2026.md` and generator YAML defaults |
 
 ## High-Value Rhino And CAD Lessons
 

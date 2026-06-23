@@ -1,0 +1,131 @@
+status: active
+checked_on: 2026-06-23
+city: Moscow
+units: meters
+purpose: early_massing_and_grasshopper_generation
+warning: >
+  Early-stage dimensional baseline only. Recheck project-specific SP/GOST,
+  fire strategy, lift traffic, structure, daylight, MEP, and facade engineering.
+
+classification_gates:
+  residential:
+    base_standard: SP 54.13330.2022
+    base_scope_height_m: 75
+    high_rise_fire_threshold_m: 75
+  office_public:
+    base_standard: SP 118.13330.2022
+    high_rise_fire_threshold_m: 50
+  multifunctional:
+    routing_standard: SP 160.1325800.2014
+  stair_core_attention_threshold_m: 28
+
+office:
+  floor_count_bands:
+    low_mid: [6, 12]
+    high_rise: [13, 35]
+    tall: [35, 60]
+    very_tall_min: 60
+  floor_heights_m:
+    typical: [3.9, 4.2]
+    premium: [4.2, 4.5]
+    ground_lobby: [4.5, 6.0]
+    technical: [3.0, 4.5]
+  plan:
+    efficient_plate_area_m2: [900, 1800]
+    large_podium_plate_area_m2: [1500, 3000]
+    core_to_glass_m: [10.0, 14.5]
+    preferred_core_to_glass_m:
+      private_office: 12.8
+      open_workstation: 14.3
+    atrium_commercial_band_m: [15.0, 18.0]
+    naturally_ventilated_width_m: [12.0, 15.0]
+    structural_grid_m: [8.4, 9.0, 10.5]
+    facade_module_m: [1.35, 1.5, 1.8]
+  core_placeholders_m:
+    low_mid: { width: [12, 16], depth: [18, 22] }
+    high_rise: { width: [16, 22], depth: [22, 30] }
+    tall: { width: [22, 30], depth: [30, 42] }
+  generator_default:
+    floors: { podium: 2, tower: 32 }
+    floor_heights: { ground: 5.4, podium: 4.5, office_typical: 4.05, technical: 4.2 }
+    floor_plate: { tower_width: 42, tower_depth: 32, target_plate_area_m2: 1344 }
+    core: { width: 18, depth: 24, core_to_glass_target: 12.5 }
+    structure: { grid_primary: 8.4, facade_module: 1.5 }
+    floor_package: { slab: 0.25, raised_floor: 0.12, ceiling_services: 0.60 }
+    roof: { build_up: 0.45, parapet: 1.2 }
+
+residential:
+  floor_count_bands:
+    mid_rise: [9, 17]
+    upper_non_high_rise: [18, 25]
+    high_rise: [25, 45]
+    landmark_min: 45
+  floor_heights_m:
+    typical: [3.0, 3.15]
+    business_premium: [3.15, 3.45]
+    penthouse: [3.45, 4.2]
+    ground_lobby_commercial: [3.6, 5.4]
+    technical: [2.4, 3.6]
+  plan:
+    efficient_plate_area_m2: [500, 900]
+    large_plate_area_m2: [900, 1200]
+    facade_to_corridor_m: [6.0, 9.0]
+    default_facade_to_corridor_m: 7.5
+    double_loaded_total_depth_m: [14.0, 18.0]
+    premium_unit_depth_m: [8.0, 12.0]
+    facade_bay_m: [3.0, 3.6]
+    living_bay_m: [3.3, 4.2]
+    loggia_projection_m: [1.2, 1.8]
+  core_placeholders_m:
+    below_28m: { width: [8, 10], depth: [12, 14] }
+    height_28_to_75m: { width: [10, 14], depth: [14, 20] }
+    above_75m: { width: [14, 20], depth: [20, 30] }
+  windows:
+    opening_area_to_floor_area: { min_ratio: "1:8", max_ratio: "1:5.5", inclined_top_floor_min_ratio: "1:10" }
+    bedroom_width_m: [0.9, 1.5]
+    bedroom_height_m: [1.4, 1.8]
+    living_width_m: [1.5, 2.4]
+    living_height_m: [1.5, 2.2]
+    panoramic_height_m: [2.1, 2.7]
+    sill_m: [0.45, 0.9]
+    balcony_door_width_m: [0.8, 1.0]
+    balcony_door_height_m: [2.1, 2.4]
+  generator_default:
+    floors: { podium: 1, tower: 24 }
+    floor_heights: { ground: 4.2, residential_typical: 3.15, top: 3.3 }
+    floor_plate: { tower_width: 34, tower_depth: 26, target_plate_area_m2: 884 }
+    core: { width: 12, depth: 16, facade_to_corridor_target: 7.5 }
+    structure: { facade_bay: 3.3 }
+    floor_package: { slab: 0.20, floor_build_up: 0.10, ceiling_services: 0.10 }
+    roof: { build_up: 0.40, parapet: 1.2 }
+    windows: { default_width: 1.5, default_height: 1.65, sill: 0.6 }
+
+floor_packages_m:
+  residential_typical:
+    slab: [0.18, 0.22]
+    floor_build_up: [0.06, 0.12]
+    ceiling_plenum: [0.05, 0.15]
+  office_typical:
+    slab: [0.20, 0.28]
+    raised_floor: [0.10, 0.15]
+    ceiling_services: [0.45, 0.70]
+  retail_podium:
+    slab: [0.25, 0.35]
+    floor_build_up: [0.10, 0.20]
+    ceiling_services: [0.60, 1.20]
+
+roof_m:
+  non_operated_total: [0.20, 0.45]
+  operated_terrace_total: [0.30, 0.60]
+  intensive_green_total_min: 0.45
+  flat_roof_slope_percent: [1.5, 3.0]
+  accessible_guard_or_parapet_default: 1.2
+  plant_screen: [1.5, 3.0]
+
+validation_flags:
+  - office_above_50m_needs_high_rise_fire_placeholder
+  - residential_above_75m_needs_high_rise_fire_placeholder
+  - above_28m_needs_non_low_rise_stair_core_assumption
+  - office_core_to_glass_above_15m_warn
+  - residential_facade_to_corridor_above_9m_warn
+  - occupied_roof_guard_below_1_2m_warn

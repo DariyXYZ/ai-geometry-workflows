@@ -27,6 +27,8 @@ ideas, and tools without rereading every document.
 | `docs/libraries/grasshopper-architectural-form-patterns.md` | Translation from architectural operators to Grasshopper section stacks, spines, attractors, facade nets, native nodes, and plugin nodes | Active |
 | `docs/libraries/grasshopper-architecture-plugin-stack.md` | Research-backed routing matrix for GH architecture plugins, McNeel official sources, and task-specific stacks | Active |
 | `docs/libraries/grasshopper-architecture-snippet-library.md` | Fast reusable GH/C# architecture snippets: floorization, TEP/metrics, smoke builder | Active |
+| `docs/libraries/moscow-building-dimensional-library-2026.md` | Moscow 2026 tower/building dimensional baselines: floors, cores, depths, slabs, roofs, openings, facade grids | Active |
+| `docs/libraries/moscow-building-dimensional-library-2026.yaml` | Machine-readable defaults and warning flags for Rhino/Grasshopper generators | Active |
 | `docs/libraries/moscow-architecture-approval-checklist.md` | Moscow architecture approval checklist criteria: visual image, urban frontage, permeability, parking | Active |
 | `docs/scenarios/reference-modeling-gates.md` | Source authority, constructive grammar, section direction, massing-before-detail | Active |
 | `docs/tools/grasshopper-workflow.md` | Grasshopper automation workflow through RhinoMCP: scan, smoke graph, build, validate | Active |

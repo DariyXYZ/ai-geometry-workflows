@@ -29,6 +29,7 @@ This file tells a new user or AI agent what to read and what to ignore.
 | `docs/libraries/grasshopper-architectural-form-patterns.md` | Bridge from architectural massing/form operators to Grasshopper control geometry, native nodes, plugin nodes, and validation gates. |
 | `docs/libraries/grasshopper-architecture-plugin-stack.md` | Routing matrix for choosing GH native nodes, C# Script, RhinoCommon, and architecture plugins. |
 | `docs/libraries/grasshopper-architecture-snippet-library.md` | Fast reusable architecture snippets for floorization, TEP/metrics, and smoke tests. |
+| `docs/libraries/moscow-building-dimensional-library-2026.md` | Moscow 2026 dimensional baseline for tower floors, cores, facade depths, slabs, roofs, openings, and facade grids. |
 | `docs/libraries/moscow-architecture-approval-checklist.md` | Compact checklist criteria from the 2026-06-13 DGP architecture evaluation PDF. |
 | `docs/errors/moscow-bc-massing-error-library.md` | Moscow BC massing failure modes: site fail despite numeric pass, cut routes, box-only variants, accidental intersections. |
 | `docs/libraries/moscow-bc-site-zoning-patterns.md` | Zoning patterns and pre-geometry gates for BC/residential massing: public spine, service edge, buildable bands, height anchors. |
@@ -113,6 +114,7 @@ Read:
 - `docs/libraries/grasshopper-architectural-form-patterns.md` if Grasshopper will build or iterate the form
 - `docs/libraries/grasshopper-architecture-plugin-stack.md` if plugin/native/C# stack choice matters
 - `docs/libraries/grasshopper-architecture-snippet-library.md` for quick floorization, metrics, and TEP snippets
+- `docs/libraries/moscow-building-dimensional-library-2026.md` before choosing floor heights, core size, facade-to-core depth, slab/package, roof, or window/facade module assumptions
 - `docs/errors/moscow-bc-massing-error-library.md`
 - `docs/libraries/moscow-bc-site-zoning-patterns.md`
 - `docs/development-state.md`

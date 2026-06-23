@@ -1,5 +1,23 @@
 # Новости
 
+## 2026-06-23 - Added Moscow 2026 dimensional baseline library
+
+Added an active dimensional reference for Moscow residential and office massing:
+
+- `docs/libraries/moscow-building-dimensional-library-2026.md`
+- `docs/libraries/moscow-building-dimensional-library-2026.yaml`
+
+The library separates normative gates from practice heuristics and generator
+defaults: floor counts, floor heights, core placeholders, facade-to-core depths,
+slab/service packages, flat/operated roof packages, parapets, openings, windows,
+facade grids, and Grasshopper/Rhino validation flags.
+
+Also mirrored the compact research note into Obsidian:
+
+```text
+C:\Users\dariy.n\Documents\Obsidian Vault\50 Research\Moscow Dimensions\Moscow Building Dimensional Library 2026.md
+```
+
 ## 2026-06-18 - Уточнена структура отчета Scenario 3D
 
 PDF чек-листа ДГП прочитан через `microsoft/markitdown`; извлеченный Markdown
