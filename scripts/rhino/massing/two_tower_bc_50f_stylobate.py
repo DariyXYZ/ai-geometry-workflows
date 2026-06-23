@@ -34,7 +34,7 @@ PARAMS = {
         "recessed_floor_height": 4.05,
         "upper_plate": [44.0, 50.0],
         "recessed_plate": [36.0, 42.0],
-        "core": [20.0, 28.0],
+        "core": [18.0, 24.0],
     },
 }
 
@@ -47,7 +47,8 @@ LAYERS = {
     "tower_mass": "BC50_20_tower_massing",
     "floors": "BC50_21_floor_reveals",
     "core": "BC50_22_cores",
-    "facade": "BC50_30_facade_logic",
+    "datum": "BC50_30_datum_contours",
+    "roof_screen": "BC50_31_roof_screens",
     "metric": "BC50_90_metrics",
     "archive": "TEMP_BC50_old",
 }
@@ -63,6 +64,7 @@ COLORS = {
     "glass": Color.FromArgb(110, 168, 190),
     "core": Color.FromArgb(70, 75, 80),
     "line": Color.FromArgb(30, 30, 30),
+    "datum": Color.FromArgb(36, 36, 36),
     "metric": Color.FromArgb(20, 20, 20),
 }
 
@@ -93,7 +95,10 @@ def attr(layer_name, color=None, name=None):
 
 
 def archive_old_run():
-    ensure_layer(LAYERS["archive"], Color.FromArgb(120, 120, 120))
+    archive_index = ensure_layer(LAYERS["archive"], Color.FromArgb(120, 120, 120))
+    archive_layer = doc.Layers[archive_index]
+    archive_layer.IsVisible = False
+    doc.Layers.Modify(archive_layer, archive_index, True)
     settings = ObjectEnumeratorSettings()
     settings.HiddenObjects = True
     settings.LockedObjects = False
@@ -103,7 +108,7 @@ def archive_old_run():
         layer = doc.Layers[rh_obj.Attributes.LayerIndex]
         if layer and layer.Name.startswith("BC50_"):
             attributes = rh_obj.Attributes.Duplicate()
-            attributes.LayerIndex = doc.Layers.FindByFullPath(LAYERS["archive"], -1)
+            attributes.LayerIndex = archive_index
             attributes.Visible = False
             doc.Objects.ModifyAttributes(rh_obj, attributes, True)
             moved += 1
@@ -252,6 +257,24 @@ def add_floor_reveals(name, cx, cy, base_sections, levels, layer, color):
     return ids
 
 
+def add_datum_contours(name, base_sections, levels):
+    ids = []
+    for level in levels:
+        z = PARAMS["podium"]["height"] + level * PARAMS["tower"]["typical_floor"] + 0.06
+        t = float(level) / float(PARAMS["tower"]["floors"])
+        pts = section_points(
+            lerp_sections(base_sections, "cx", t),
+            lerp_sections(base_sections, "cy", t),
+            lerp_sections(base_sections, "w", t),
+            lerp_sections(base_sections, "d", t),
+            lerp_sections(base_sections, "rot_deg", t),
+            z,
+            4.2,
+        )
+        ids.append(add_polyline(pts, "%s_5f_datum_contour_%02d" % (name, level), LAYERS["datum"], COLORS["datum"]))
+    return ids
+
+
 def lerp(a, b, t):
     return a + (b - a) * t
 
@@ -321,7 +344,7 @@ def add_tower(name, cx, cy, color, rotation_bias, drift_x):
     # than the plate and landing continuously on the podium.
     core_w, core_d = PARAMS["tower"]["core"]
     add_box(
-        name + "_core_20x28m",
+        name + "_core_18x24m_placeholder",
         LAYERS["core"],
         COLORS["core"],
         cx - core_w / 2,
@@ -335,19 +358,7 @@ def add_tower(name, cx, cy, color, rotation_bias, drift_x):
     # Floor reveals every level, stronger datum every five levels.
     floor_levels = list(range(1, total_floors + 1))
     add_floor_reveals(name, cx, cy, section_specs, floor_levels, LAYERS["floors"], COLORS["line"])
-    for level in range(5, total_floors + 1, 5):
-        z = z0 + level * tf + 0.04
-        add_box(
-            "%s_stronger_5f_datum_%02d" % (name, level),
-            LAYERS["facade"],
-            Color.FromArgb(45, 45, 45),
-            cx - (upper_w + 2) / 2,
-            cy - (upper_d + 2) / 2,
-            cx + (upper_w + 2) / 2,
-            cy + (upper_d + 2) / 2,
-            z,
-            z + 0.08,
-        )
+    add_datum_contours(name, section_specs, range(5, total_floors + 1, 5))
 
     # Exploited tower roof: surfaces and parapets are derived from the actual
     # top contour, not from loose rectangles.
@@ -365,7 +376,7 @@ def add_tower(name, cx, cy, color, rotation_bias, drift_x):
         "smaller",
     )
     plant_edge = offset_curve_by_area(roof_edge, 8.5, "smaller")
-    add_parapet_from_contour(name + "_roof_plant_screen_contour", plant_edge, roof_z + 0.28, 2.7, 0.55, LAYERS["facade"], "inside")
+    add_parapet_from_contour(name + "_roof_plant_screen_contour", plant_edge, roof_z + 0.28, 2.7, 0.55, LAYERS["roof_screen"], "inside")
     return tower_id
 
 
@@ -469,7 +480,7 @@ def add_metrics():
         "Facade-to-core lease depth: %.1f m X / %.1f m Y" % (net_depth_x, net_depth_y),
         "Estimated GFA: towers %.0f m2 + podium %.0f m2 = %.0f m2" % (gfa_towers, podium_gfa, total_gfa),
         "Site area %.0f m2; early FAR %.2f" % (site_area, far),
-        "Flags: office >50 m -> high-rise fire strategy required; core/lifts are placeholders.",
+        "Flags: office >50 m -> high-rise fire strategy required; core is not SP-sized, it is a placeholder.",
     ]
     y = -58
     for i, line in enumerate(lines):
@@ -486,7 +497,8 @@ def main():
         (LAYERS["tower_mass"], COLORS["tower_a"]),
         (LAYERS["floors"], COLORS["line"]),
         (LAYERS["core"], COLORS["core"]),
-        (LAYERS["facade"], COLORS["glass"]),
+        (LAYERS["datum"], COLORS["datum"]),
+        (LAYERS["roof_screen"], COLORS["glass"]),
         (LAYERS["metric"], COLORS["metric"]),
     ]:
         ensure_layer(layer, color_key)
