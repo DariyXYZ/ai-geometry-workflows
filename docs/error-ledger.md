@@ -423,3 +423,30 @@ continuing.
 
 If a route, boundary, or failure matters, write it into repo docs or Obsidian.
 Do not rely on a future chat remembering it.
+
+### GH-014: Do Not Call SourceCodeChanged(None) On Legacy C# Script
+
+In Rhino 8.30 / Grasshopper 8.30, programmatically editing the legacy
+`ScriptComponents.Component_CSNET_Script` source and then calling
+`SourceCodeChanged(None)` can crash Rhino with an asynchronous UI-thread
+`NullReferenceException`:
+
+```text
+ScriptComponents.Component_AbstractScript_Roslyn.SourceCodeChanged(GH_ScriptEditor sender)
+System.NullReferenceException
+```
+
+This is not catchable with a normal `try/catch` around the call because the
+exception is thrown later through the dispatcher.
+
+Correct workflow:
+
+```text
+avoid SourceCodeChanged(None)
+-> prefer paste-ready C# scripts in repo examples
+-> if automation is needed, first smoke-test source refresh on a disposable file
+-> use a user-opened Rhino/GH slot and save before risky source injection
+```
+
+For Pavilion 80hz, the stable artifact is
+`scripts/grasshopper/examples/pavilion_80hz_lamella_attractor_csharp.cs`.
