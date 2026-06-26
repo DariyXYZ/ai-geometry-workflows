@@ -5,6 +5,38 @@ Status: `medium-success / tooling`.
 Scenario: build a parametric Grasshopper definition for a Pavilion 80hz-like
 small pavilion with lamellas and staggered tilted shingles.
 
+## AI Extraction Summary
+
+```yaml
+use_when: "parametric pavilion, lamella screen, staggered shingles, attractor-shaped facade/skin logic"
+source_authority: "user reference images and user-corrected construction sequence"
+geometry_grammar: "attractor envelope points -> vertical/slightly curved lamellas -> row-parity checkerboard anchors -> tangent tilted shingles -> continuous top beam"
+effective_rhino_gh_route: "repo-stored Rhino 8 C# Script body pasted manually into GH; automate only proven-safe surrounding sliders/groups"
+key_parameters:
+  units: mm
+  width_mm: 5200
+  height_mm: 5100
+  lamella_count: 13
+  rows: 18
+  shingle_width_mm: 260
+  shingle_height_mm: 430
+  shingle_tilt_deg: 15
+promoted_rules:
+  - "generate checkerboard anchors from row parity and lamella index"
+  - "output guides separately from production meshes"
+  - "store C# source in repo before GH automation"
+  - "use manual paste or a proven bridge for script source"
+failure_gates:
+  - "do not call SourceCodeChanged(None) on legacy C# Script components"
+  - "do not trust reflection/internal GH source setters without same-version smoke test"
+  - "avoid overlapping duplicate shingles and half-height-only panel placement"
+validation: "small lamella/row count solve first; inspect separate LamellaCurves, LamellaMeshes, AnchorPoints, ShingleMeshes, TopBeamMesh, Log"
+read_more_when: "building GH C# pavilion logic or debugging Rhino 8 C# Script source injection"
+related_scripts:
+  - "scripts/grasshopper/examples/pavilion_80hz_lamella_attractor_csharp.cs"
+  - "scripts/grasshopper/examples/pavilion_80hz_lamella_attractor_csharp.md"
+```
+
 Source / file:
 
 - User reference images and markup from the 2026-06-24 to 2026-06-26 session.

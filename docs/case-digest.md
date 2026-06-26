@@ -7,6 +7,10 @@ Grasshopper, or cleanup work.
 For full routing, use `docs/case-library.md`. For full case notes, open only the
 linked file that matches the current task.
 
+When opening a case file, read the `AI Extraction Summary` block first and stop
+there unless the current task matches the case grammar, tool route, or failure
+gate.
+
 ## Current Standards
 
 | Standard | Use for | Source |
@@ -92,4 +96,3 @@ docs/task-read-maps.md
 docs/case-digest.md
 docs/tools/grasshopper-workflow.md
 ```
-

@@ -1,5 +1,33 @@
 # Новости
 
+## 2026-06-26 - Normalized case files for faster AI extraction
+
+Added a mandatory `AI Extraction Summary` block to every active case note in
+`docs/cases/`. The block lets a fresh AI decide quickly whether a case is
+relevant before spending tokens on detailed notes.
+
+Updated:
+
+- `docs/experience-capture-format.md`
+- `docs/case-digest.md`
+- `docs/case-library.md`
+- all active `docs/cases/*.md`
+
+The standard case-card fields are now:
+
+```text
+use_when
+source_authority
+geometry_grammar
+effective_rhino_gh_route
+key_parameters
+promoted_rules
+failure_gates
+validation
+read_more_when
+related_scripts
+```
+
 ## 2026-06-26 - Defined repo vs Obsidian knowledge boundary
 
 Added the promotion gate for deciding what belongs in the shared GitHub repo

@@ -3,6 +3,37 @@
 Status: first reusable Grasshopper architecture case, pending manual GH paste
 test.
 
+Scenario: tooling / Grasshopper architecture massing.
+
+## AI Extraction Summary
+
+```yaml
+use_when: "baseline parametric tower in Grasshopper using one Rhino 8 C# Script node plus sliders"
+source_authority: "source-controlled C# Script body and RhinoCommon runtime validation"
+geometry_grammar: "repeated rectangular floor plates -> controlled twist -> controlled taper -> capped slabs -> vertical core -> four facade rails"
+effective_rhino_gh_route: "manual paste into modern Rhino 8 C# Script component; validate RhinoCommon logic through run_python/RhinoCommon before trusting GH canvas delivery"
+key_parameters:
+  units: meters
+  floors: 42
+  floor_height_m: 3.9
+  width_m: 34
+  depth_m: 28
+  twist_deg: 210
+  taper: 0.72
+  core_radius_m: 5
+promoted_rules:
+  - "one source-controlled C# Script node is the fastest baseline for early parametric tower massing"
+  - "script body must live in repo, not only in GH or chat"
+  - "validate object counts, Z levels, and rails before adding facade detail"
+failure_gates:
+  - "do not rely on automated GH source assignment unless IO inspection and tiny solve pass"
+  - "avoid g1_* and run_csharp on adopted/problematic slots when they wedge the plugin handler"
+validation: "42 plates, 4 rails, 1 capped core, first slab at Z=0, total height 163.8 m, bbox and visible object count audited"
+read_more_when: "creating a quick twist/taper tower C# node or debugging GH C# Script delivery"
+related_scripts:
+  - "scripts/grasshopper/examples/spiral_tower_csharp.cs"
+```
+
 ## Goal
 
 Create a parametric spiral skyscraper as a Grasshopper C# Script node case that

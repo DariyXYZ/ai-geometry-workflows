@@ -6,6 +6,31 @@ Scenario:
 
 Grasshopper automation through standard RhinoMCP.
 
+## AI Extraction Summary
+
+```yaml
+use_when: "starting or debugging Grasshopper automation through RhinoMCP"
+source_authority: "fresh-slot MCP smoke test with component search/place/wire/solve"
+geometry_grammar: "tooling case; no architectural grammar"
+effective_rhino_gh_route: "fresh Rhino slot -> run_python capability scan -> g1_start -> component search -> manual place/wire -> solve"
+key_parameters:
+  fresh_slot: "armadillo"
+  first_preview_component: "Construct Point"
+  avoid_first_preview: "Panel"
+promoted_rules:
+  - "use a fresh slot for GH smoke when active scene matters"
+  - "capability scan before graph building"
+  - "manual place/wire before batching with g1_apply_graph"
+  - "store script bodies in repo until source setter exists"
+failure_gates:
+  - "used slot may leave Rhino command-busy after g1_start timeout"
+  - "g1_apply_graph generic errors hide useful diagnostics"
+  - "GH preview geometry may not appear in Rhino document-object capture"
+validation: "component search finds Script/A+B/Construct Point; sliders wire; g1_solve_graph returns Success"
+read_more_when: "opening GH through MCP, choosing smoke graph, or diagnosing g1 workflow failures"
+related_scripts: []
+```
+
 Goal:
 
 Prove a fast, repeatable workflow for inspecting Rhino/GH capabilities, opening

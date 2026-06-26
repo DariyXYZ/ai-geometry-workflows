@@ -2,6 +2,32 @@
 
 Status: promoted to error rule.
 
+Scenario: tooling / Grasshopper C# Script source injection failure.
+
+## AI Extraction Summary
+
+```yaml
+use_when: "considering programmatic SetSource into Rhino 8 C# Script components"
+source_authority: "Rhino 8.30 component API smoke test on RhinoCodePluginGH.Components.CSharpComponent"
+geometry_grammar: "tooling case; no architectural geometry"
+effective_rhino_gh_route: "use paste-ready code unless SetSource -> SetParametersFromScript -> TryGetSource -> IO inspection -> tiny solve all pass"
+key_parameters:
+  rhino_version: "8.30.26103.11001"
+  component_type: "RhinoCodePluginGH.Components.CSharpComponent"
+  failed_default_inputs: "x, y"
+  failed_default_outputs: "out, a"
+promoted_rules:
+  - "SetSource accepting code is not enough"
+  - "inspect Params.Input and Params.Output after source assignment"
+  - "solve a tiny script before trusting generated GH definitions"
+failure_gates:
+  - "RunScript signature rewritten to object x, object y, ref object a"
+  - "intended typed signature lost"
+validation: "source readback, IO inspection, tiny solve gate required before any production use"
+read_more_when: "debugging GH C# source setters or unexplained x/y/out/a IO"
+related_scripts: []
+```
+
 ## Context
 
 Task:

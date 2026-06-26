@@ -7,6 +7,14 @@ change future behavior.
 Use this before starting a similar task. Do not repeat the old experiment just
 to rediscover the same lesson.
 
+Read case files in two passes:
+
+```text
+AI Extraction Summary first
+-> stop if the case is not similar
+-> detailed note only when source, grammar, tool route, or failure gate matches
+```
+
 ## Case Status Types
 
 | Status | Meaning |

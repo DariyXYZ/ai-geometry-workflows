@@ -25,6 +25,10 @@ less random, and easier to audit.
 
 Use this shape for every durable case in `docs/cases/`.
 
+The `AI Extraction Summary` block is mandatory and must stay near the top of
+the file. It is the token-saving layer: a fresh AI should decide whether the
+case is relevant from this block before reading the detailed notes.
+
 ```markdown
 # Case Title
 
@@ -33,6 +37,21 @@ Date:
 Status: accepted | medium-success | failed | source-correction | tooling
 
 Scenario: 1 | 2 | 3A | 3B | 3C | 3D | tooling
+
+## AI Extraction Summary
+
+```yaml
+use_when:
+source_authority:
+geometry_grammar:
+effective_rhino_gh_route:
+key_parameters:
+promoted_rules:
+failure_gates:
+validation:
+read_more_when:
+related_scripts:
+```
 
 Source authority:
 
@@ -199,4 +218,3 @@ docs/cases/<case-id>.md     compact durable lesson
 
 Only promote artifacts when another AI needs them to reproduce or validate the
 workflow. Otherwise promote the rule, not the file.
-

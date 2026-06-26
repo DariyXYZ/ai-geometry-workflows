@@ -5,6 +5,37 @@ Status: accepted workflow precedent
 Scenario: Scenario 3A/3C style massing revision with fixed stylobate and tower
 footprint intent.
 
+## AI Extraction Summary
+
+```yaml
+use_when: "high-rise business-center massing with towers on a stylobate, especially Scenario 3A/3C revisions"
+source_authority: "fixed stylobate/tower intent plus source-controlled Rhino generator"
+geometry_grammar: "continuous stylobate -> exploited roof/courtyard/bridge -> recessed transfer floors -> two tapered/twisted towers -> straight roof cores"
+effective_rhino_gh_route: "RhinoMCP slot scan + RhinoCommon Python generator; contour/offset roof curves drive roofs and parapets"
+key_parameters:
+  units: meters
+  towers: 2
+  floors_per_tower: 50
+  typical_f2f_m: 4.05
+  podium_roof_m: 14.4
+  tower_roof_m: 216.9
+  office_plate_m2: 2200
+promoted_rules:
+  - "derive roof finishes and parapets from actual contours, not separate rectangles"
+  - "keep roof cores/headhouses straight, not twisted with facade massing"
+  - "use translucent glass massing when floor/datum guides must remain visible"
+  - "use VISUAL_LIFT_M = 0.001 for thin coplanar finish surfaces"
+failure_gates:
+  - "fake inner roof parapet"
+  - "floating courtyard green"
+  - "horizontal metric text intersecting model"
+  - "bridge without explicit guardrail/edge logic"
+validation: "meters, object/layer audit, bbox/Z-level audit, TEP metric board, visual roof/courtyard/bridge review"
+read_more_when: "building BC-style tower+podium massing, roof/parapet logic, sunken courtyard, or RhinoCommon generator baseline"
+related_scripts:
+  - "scripts/rhino/massing/two_tower_bc_50f_stylobate.py"
+```
+
 Source / file:
 
 - generator: `scripts/rhino/massing/two_tower_bc_50f_stylobate.py`

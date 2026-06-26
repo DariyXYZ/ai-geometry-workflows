@@ -2,6 +2,38 @@
 
 Status: passed RhinoCommon smoke test.
 
+Scenario: tooling / architecture snippet validation.
+
+## AI Extraction Summary
+
+```yaml
+use_when: "testing quick architecture snippets for massing, floors, core, and TEP metrics without depending on GH source injection"
+source_authority: "RhinoCommon smoke script and object/layer audit"
+geometry_grammar: "bbox massing -> schematic floors -> central core -> GFA/net/FAR metrics -> visible annotation"
+effective_rhino_gh_route: "run RhinoCommon smoke in Rhino first; then use paste-ready GH C# snippets manually"
+key_parameters:
+  units: meters
+  massing_m: "36 x 28 x 78"
+  floors: 20
+  floor_height_m: 3.9
+  slab_thickness_m: 0.30
+  site_area_m2: 4200
+  far: 4.8
+promoted_rules:
+  - "use PlainText on TextEntity in Rhino 8 C# runner"
+  - "use string.Format for RhinoApp.WriteLine formatting"
+  - "compute FAR only when site area is provided"
+failure_gates:
+  - "do not assume GH source injection is needed for snippet validation"
+  - "do not leave generated objects unnamed or unlayered"
+validation: "23 generated objects, named smoke layers, grounded geometry, floor slabs within massing height, console OK line"
+read_more_when: "checking architecture snippet basics or Rhino 8 C# runner gotchas"
+related_scripts:
+  - "scripts/rhino/smoke/quick_architecture_snippets_smoke.cs"
+  - "scripts/grasshopper/snippets/massing_bbox_floorizer_csharp.cs"
+  - "scripts/grasshopper/snippets/building_metrics_tep_csharp.cs"
+```
+
 ## Goal
 
 Test the first quick architecture snippet bundle without relying on Grasshopper

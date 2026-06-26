@@ -6,9 +6,40 @@ This file captures recent Rhino/RhinoMCP modeling results that should survive a
 fresh chat. It is intentionally compact: it records source authority,
 constructive grammar, what worked, what failed, and the reusable modeling rule.
 
+## AI Extraction Summary
+
+```yaml
+use_when: "reference-to-model, video replay, or Rhino massing tasks similar to one of the mini-cases below"
+source_authority: "mixed: user Rhino curves, text dimensions, plan underlays, elevations, sections, photos, and user camera"
+geometry_grammar: "case-specific; read only the mini-card that matches the current task"
+effective_rhino_gh_route: "Rhino/RhinoMCP modeling with source authority and constructive grammar declared before geometry"
+key_parameters: "stored inside each mini-case when relevant"
+promoted_rules:
+  - "source authority before geometry"
+  - "constructive grammar before modeling"
+  - "if grammar includes a cutter, the cutter must produce the final cut"
+  - "build massing/proportion/support before secondary detail"
+  - "preserve user source geometry and user-selected camera"
+failure_gates:
+  - "generic envelope guessed from one view"
+  - "actual user curves replaced by approximate sections"
+  - "helper/cutter geometry shown but not used"
+  - "stacked massing with wrong Z placement"
+validation: "units, height, footprint, support/contact, non-floating geometry, source-derived comparison"
+read_more_when: "current task resembles Infinity, Shanghai-style twist, Flock shell, stepped tower, Aqua Tower, or Absolute World replay"
+related_scripts:
+  - ".tmp_cases/... local video scripts only; not active repo contract"
+```
+
 ## Infinity Tower / SOM
 
 Status: partial success after correction.
+
+```yaml
+use_when: "twisting tower with user-prepared Rhino floor/core/axis curves"
+geometry_grammar: "exact source contour copies transformed through height around a twist axis"
+failure_gate: "do not replace source curves with generic square-like sections"
+```
 
 Source authority:
 
@@ -38,6 +69,12 @@ section.
 ## Shanghai Tower-Style Twisted Shaft
 
 Status: improved, not fully accepted.
+
+```yaml
+use_when: "soft triangular high-rise twist with corner bite/groove"
+geometry_grammar: "soft triangle minus rotated square/diamond cutter -> height-changing cut depth -> 4 control sections -> loft"
+failure_gate: "shown cutter must drive final trimmed curve; do not make an organic blob"
+```
 
 Source authority:
 
@@ -76,6 +113,12 @@ trim, boolean, split, or an explicit intersection algorithm.
 
 Status: medium-success massing.
 
+```yaml
+use_when: "wave/ribbon concrete shell from plan, sections, and photos"
+geometry_grammar: "scaled plan footprint -> section-derived crest/valley heights -> shell surface -> support/plinth contact -> rim/thickness -> secondary glass"
+failure_gate: "do not add glass/posts before shell/support/plan fit is accepted"
+```
+
 Source authority:
 
 - Scaled plan underlay controls footprint, length/depth, and support/plinth
@@ -111,6 +154,12 @@ scaled plan footprint
 
 Status: useful failure/correction case for simple massing grammar.
 
+```yaml
+use_when: "stacked plan-type massing with fixed envelope and vertical symmetry"
+geometry_grammar: "same bbox for all plan types -> cross / half-cross / rectangle bands -> correct Z stacking -> mirrored band order"
+failure_gate: "do not let plan-type changes accidentally taper the fixed envelope"
+```
+
 Source authority:
 
 - Plans define three footprint types: cross, half-cross, rectangle.
@@ -143,6 +192,12 @@ afterthought.
 
 Status: successful video demonstrator.
 
+```yaml
+use_when: "video/replay demonstrator for tower with floor-by-floor wavy slabs"
+geometry_grammar: "rectangular tower core plus repeated wavy balcony slabs on grounded base"
+failure_gate: "do not leave tower floating, oversized plinth, or stale helper lines in final capture"
+```
+
 What worked:
 
 - Rectangular tower core plus floor-by-floor wavy balcony slabs produced a
@@ -167,6 +222,12 @@ Useful local script:
 ## Absolute World Towers
 
 Status: successful video demonstrator.
+
+```yaml
+use_when: "video/replay demonstrator for rotating elliptical towers"
+geometry_grammar: "elliptical floor rings gradually rotate through height with twisted vertical guide lines"
+failure_gate: "preserve user camera and clean final helper geometry"
+```
 
 What worked:
 

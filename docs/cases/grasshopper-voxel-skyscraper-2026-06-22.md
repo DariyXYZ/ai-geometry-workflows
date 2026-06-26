@@ -4,6 +4,34 @@ Status: accepted tooling / form case.
 
 Scenario: Grasshopper architecture massing.
 
+## AI Extraction Summary
+
+```yaml
+use_when: "voxel skyscraper or seed-driven tower that must read as architecture, not a random voxel cloud"
+source_authority: "accepted GH/C# seed-mask case with observed live metrics"
+geometry_grammar: "floor stack -> deterministic grid mask -> taper/waist/twist/terrace filters -> occupied voxel centers -> fast envelope mesh -> optional Pufferfish Voxel Mesh"
+effective_rhino_gh_route: "C# Script generates controlled voxel centers and preview mesh; Pufferfish Voxel Mesh is downstream only"
+key_parameters:
+  seed: 240622
+  floors: 48
+  height_m: 187.2
+  grid: "13 x 11"
+  occupied_voxels: 2881
+  envelope_mesh: "V:11888 F:2972"
+promoted_rules:
+  - "architecture voxel towers need deterministic masks, not Populate 3D randomness"
+  - "separate fast preview geometry from heavy presentation/plugin geometry"
+  - "keep floor outlines, facade lines, and plugin guides available for downstream workflows"
+failure_gates:
+  - "Populate 3D in a box is a rejected proof for architecture"
+  - "do not present random voxel clouds as tower massing"
+validation: "floor count, height, occupied voxel count, envelope mesh stats, floor outlines, facade guide count"
+read_more_when: "task involves voxels, Pufferfish, seed variants, or controlled random-looking high-rise massing"
+related_scripts:
+  - "scripts/grasshopper/examples/voxel_seed_skyscraper_csharp.cs"
+  - "scripts/grasshopper/examples/voxel_seed_skyscraper_graph.md"
+```
+
 Source / file:
 
 ```text
