@@ -188,7 +188,7 @@ Reusable ideas:
 
 Adaption for us:
 
-- Our current `scripts/build_semantic_smoke_rhino.py` is a smaller repo-native
+- Our current `scripts/rhino/smoke/build_semantic_smoke_rhino.py` is a smaller repo-native
   version.
 - Later, port useful renderer pieces into `ai_geometry_toolkit` only when needed.
 

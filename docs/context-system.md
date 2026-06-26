@@ -22,7 +22,7 @@ Do not store durable project state only in chat history.
 | Current roadmap and open decisions | `docs/development-state.md`, `decisions/` | Decisions get dated files. Historical roadmap snapshots live in `archive/reports/`. |
 | Data/source map | `docs/project-data-map.md` | Update when folders or source roles change. |
 | Known failures and lessons | `docs/error-ledger.md` | Record enough to avoid repeating work. |
-| Reference modeling gates | `docs/scenarios/reference-modeling-gates.md` | Constructive grammar before geometry. |
+| Reference modeling gates | `docs/workflows/rhino-reference/reference-modeling-gates.md` | Constructive grammar before geometry. |
 | Tool commands and backend contracts | `TOOLKIT.md` | Keep runnable. |
 | Chronological updates | `NEWS.md` | One entry per material change. |
 | One modeling run | `cases/<case_id>/` | Tracked only when ready to share. |
@@ -102,7 +102,7 @@ constraints, and references.
 Standard McNeel RhinoMCP owns `.3dm` scene readback, scan, overlays, section
 extraction, scene-context edits, and Rhino visual review by default.
 
-`scripts/rhino_common_helper.py` owns native RhinoCommon operations that are
+`scripts/rhino/common/rhino_common_helper.py` owns native RhinoCommon operations that are
 too precise or too broad for the currently selected backend tool set: curve trims,
 booleans, intersections, contours, NURBS rebuilds, and custom C# operations.
 Its current implementation is an optional Aurox route; use it only by request

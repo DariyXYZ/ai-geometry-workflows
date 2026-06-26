@@ -1,10 +1,35 @@
 # Новости
 
+## 2026-06-26 - Reorganized repo into scalable domain folders
+
+Moved active docs and scripts into domain-owned folders so Rhino geometry,
+Grasshopper automation, massing libraries, standards, tools, errors, and
+research cannot drift back into one mixed pool.
+
+Added:
+
+- `docs/repo-folder-architecture.md`
+
+New durable layout:
+
+```text
+docs/workflows/<domain>/
+docs/libraries/<domain>/
+docs/cases/<case-family>/
+docs/errors/<domain>/
+docs/tools/<domain>/
+docs/research/source-repos/
+scripts/rhino/<purpose>/
+scripts/grasshopper/<purpose>/
+```
+
+Updated references across navigation, tool docs, cases, scripts, and tests.
+
 ## 2026-06-26 - Split Grasshopper cases from Rhino geometry cases
 
 Added a separate Grasshopper case branch:
 
-- `docs/cases/grasshopper-case-index.md`
+- `docs/cases/grasshopper/README.md`
 
 Case routing now distinguishes direct Rhino geometry from Grasshopper graph,
 C# Script, plugin, slider, source-injection, and RhinoMCP `g1_*` automation
@@ -119,7 +144,7 @@ Follow-up stale-information audit:
 
 Added a road/street dimensional reference for Moscow massing and site context:
 
-- `docs/libraries/moscow-road-dimensional-library-2026.md`
+- `docs/libraries/standards/moscow-road-dimensional-library-2026.md`
 
 The library records lane-width and carriageway defaults for Rhino/Grasshopper
 generators: magistral lanes, local streets, quarter driveways, production-zone
@@ -135,7 +160,7 @@ Updated:
 
 Added the accepted BC50 massing case and promoted its modeling rules:
 
-- `docs/cases/bc50-two-tower-stylobate-2026-06-24.md`
+- `docs/cases/rhino-geometry/bc50-two-tower-stylobate-2026-06-24.md`
 - `scripts/rhino/massing/two_tower_bc_50f_stylobate.py`
 
 Key rules:
@@ -151,14 +176,14 @@ Updated:
 
 - `docs/case-library.md`
 - `docs/error-ledger.md`
-- `docs/errors/moscow-bc-massing-error-library.md`
+- `docs/errors/massing/moscow-bc-massing-error-library.md`
 
 ## 2026-06-23 - Added Moscow 2026 dimensional baseline library
 
 Added an active dimensional reference for Moscow residential and office massing:
 
-- `docs/libraries/moscow-building-dimensional-library-2026.md`
-- `docs/libraries/moscow-building-dimensional-library-2026.yaml`
+- `docs/libraries/standards/moscow-building-dimensional-library-2026.md`
+- `docs/libraries/standards/moscow-building-dimensional-library-2026.yaml`
 
 The library separates normative gates from practice heuristics and generator
 defaults: floor counts, floor heights, core placeholders, facade-to-core depths,
@@ -180,7 +205,7 @@ PDF чек-листа ДГП прочитан через `microsoft/markitdown`;
 archive/reference/dgp-architecture-checklist-2026-06-13/markitdown.md
 ```
 
-В `docs/scenarios/architecture-compliance-check.md` закреплена более строгая
+В `docs/workflows/massing/architecture-compliance-check.md` закреплена более строгая
 русскоязычная структура отчета для сравнения вариантов объемного решения:
 
 - начинать с исходных материалов и типа объекта, а не с общего вывода;
@@ -216,8 +241,8 @@ Key corrections:
 
 Updated:
 
-- `docs/scenarios/architecture-compliance-check.md`
-- `docs/libraries/moscow-architecture-approval-checklist.md`
+- `docs/workflows/massing/architecture-compliance-check.md`
+- `docs/libraries/standards/moscow-architecture-approval-checklist.md`
 - `docs/error-ledger.md`
 
 ## 2026-06-17 - Added Scenario 3D architecture approval checklist review
@@ -237,8 +262,8 @@ C:\Users\dariy.n\Downloads\2026_06_13_ДГП_Чек_лист_оценки_арх
 
 Added:
 
-- `docs/scenarios/architecture-compliance-check.md`
-- `docs/libraries/moscow-architecture-approval-checklist.md`
+- `docs/workflows/massing/architecture-compliance-check.md`
+- `docs/libraries/standards/moscow-architecture-approval-checklist.md`
 
 Promoted workflow:
 
@@ -260,7 +285,7 @@ Later refinement:
 - rendered all 15 PDF pages as visual reference screenshots in
   `archive/reference/dgp-architecture-checklist-2026-06-13/`;
 - added visual example signals to
-  `docs/libraries/moscow-architecture-approval-checklist.md`;
+  `docs/libraries/standards/moscow-architecture-approval-checklist.md`;
 - added percentage scoring: architectural image %, urban planning %, weighted
   total %, and evidence coverage %;
 - made five review views the minimum evidence set: north, south, east, west,
@@ -270,14 +295,16 @@ Later refinement:
 
 ## 2026-06-16 - Cleaned repo architecture for active AI workflow use
 
+Superseded on 2026-06-26 by `docs/repo-folder-architecture.md`.
+
 Reorganized the repository into a stable active/archived structure:
 
 ```text
-docs/scenarios/
-docs/libraries/
-docs/cases/
-docs/errors/
-docs/tools/
+docs/workflows/
+docs/libraries/<domain>/
+docs/cases/<case-family>/
+docs/errors/<domain>/
+docs/tools/<domain>/
 docs/research/
 archive/reports/
 archive/rhino-experiments-2026-06/
@@ -308,8 +335,8 @@ testing, research, and error notes. Added a durable repo bridge:
 
 ```text
 docs/obsidian-knowledge-map.md
-docs/libraries/form-operator-library.md
-docs/libraries/massing-decision-library.md
+docs/libraries/massing/form-operator-library.md
+docs/libraries/massing/massing-decision-library.md
 ```
 
 Promoted useful Obsidian lessons into the repo:
@@ -362,8 +389,8 @@ Updated:
 Added two durable Scenario 3 massing documents:
 
 ```text
-docs/errors/moscow-bc-massing-error-library.md
-docs/libraries/moscow-bc-site-zoning-patterns.md
+docs/errors/massing/moscow-bc-massing-error-library.md
+docs/libraries/massing/moscow-bc-site-zoning-patterns.md
 ```
 
 The 2026-06-16 `AI_BC_V01-V03` Rhino variants passed numeric checks
@@ -386,14 +413,14 @@ Updated:
 - `docs/error-ledger.md`
 - `docs/START_HERE.md`
 - `docs/repository-map.md`
-- `docs/cases/moscow-bc-massing-modeling-brief-2026-06-16.md`
+- `docs/errors/massing/moscow-bc-massing-error-library.md`
 
 ## 2026-06-16 - Split Scenario 3 into TEP/massing subscenarios
 
 Added:
 
 ```text
-docs/scenarios/tep-massing-scenario-subtypes.md
+docs/workflows/massing/tep-massing-scenario-subtypes.md
 ```
 
 Scenario 3 now starts by classifying the task:
@@ -410,14 +437,14 @@ Updated:
 - `docs/START_HERE.md`
 - `docs/repository-map.md`
 - `docs/development-state.md`
-- `docs/libraries/moscow-bc-site-zoning-patterns.md`
+- `docs/libraries/massing/moscow-bc-site-zoning-patterns.md`
 
 ## 2026-06-04 - Preserved recent Rhino/Aurox case memory for fresh chats
 
 Added a compact durable case-memory file:
 
 ```text
-docs/cases/recent-rhino-case-lessons.md
+docs/cases/rhino-geometry/recent-rhino-case-lessons.md
 ```
 
 It records the latest results, techniques, and mistakes from:
@@ -452,7 +479,7 @@ Updated:
 Added a first runnable RhinoCommon helper runner:
 
 ```text
-scripts/rhino_common_helper.py
+scripts/rhino/common/rhino_common_helper.py
 ```
 
 The helper uses Aurox `execute_csharp` as the transport and executes native
@@ -467,7 +494,7 @@ for operations that should not be approximated by point drawing:
 
 Updated:
 
-- `docs/tools/rhino-common-helper.md`
+- `docs/tools/rhino/rhino-common-helper.md`
 - `docs/context-system.md`
 - `docs/repository-map.md`
 - `docs/START_HERE.md`
@@ -498,7 +525,7 @@ glass/posts only after the shell/support relationship is accepted.
 Updated:
 
 - `docs/error-ledger.md`
-- `docs/scenarios/reference-modeling-gates.md`
+- `docs/workflows/rhino-reference/reference-modeling-gates.md`
 - `decisions/2026-06-01-flock-chapel-shell-medium-success.md`
 
 ## 2026-06-01 - Shanghai Tower v5: square cutter must be the actual section boolean
@@ -524,7 +551,7 @@ actual square/triangle intersection or an equivalent explicit 2D trim operation.
 Updated:
 
 - `docs/error-ledger.md`
-- `docs/scenarios/reference-modeling-gates.md`
+- `docs/workflows/rhino-reference/reference-modeling-gates.md`
 - `decisions/2026-06-01-shanghai-tower-square-cutter-source-grammar.md`
 
 ## 2026-06-01 - Зафиксирован урок Shanghai Tower: cut-out section, not organic blob
@@ -569,7 +596,7 @@ visible source curves
 Обновлено:
 
 - `docs/error-ledger.md`
-- `docs/scenarios/reference-modeling-gates.md`
+- `docs/workflows/rhino-reference/reference-modeling-gates.md`
 - `decisions/2026-06-01-infinity-tower-user-rhino-curves-source-authority.md`
 
 ## 2026-06-01 - Добавлен первый `validate-candidate` gate
@@ -618,7 +645,7 @@ section/profile deltas, source overlays, fixed captures и review по част�
 
 - `AGENTS.md`
 - `docs/START_HERE.md`
-- `docs/scenarios/reference-modeling-gates.md`
+- `docs/workflows/rhino-reference/reference-modeling-gates.md`
 - `docs/error-ledger.md`
 - Obsidian: `50 Research/Karlatornet Vertical Section Loft Workflow 2026-06-01.md`
 
@@ -630,7 +657,7 @@ section/profile deltas, source overlays, fixed captures и review по част�
 - `AGENTS.md` - короткие обязательные инструкции для агента;
 - `docs/START_HERE.md` - маршрут чтения по сценариям;
 - `docs/repository-map.md` - карта repo: что читать первым, что пропускать;
-- `docs/source-repos/` - сжатая библиотека внешних репозиториев и reusable
+- `docs/research/source-repos/` - сжатая библиотека внешних репозиториев и reusable
   pieces.
 
 Цель: репозиторий должен сам объяснять текущий workflow, правила, ошибки,
@@ -665,7 +692,7 @@ section/profile deltas, source overlays, fixed captures и review по част�
 
 Обновлено:
 
-- `docs/scenarios/reference-modeling-gates.md`
+- `docs/workflows/rhino-reference/reference-modeling-gates.md`
 - `docs/error-ledger.md`
 - `decisions/2026-06-01-grove-contour-derived-floor-plates.md`
 - Obsidian: `50 Research/Grove Contour Floor Plates 2026-06-01.md`
@@ -678,7 +705,7 @@ section/profile deltas, source overlays, fixed captures и review по част�
 
 Добавлено:
 
-- `docs/scenarios/reference-modeling-gates.md`
+- `docs/workflows/rhino-reference/reference-modeling-gates.md`
 - `decisions/2026-05-28-constructive-grammar-before-reference-modeling.md`
 - обновления в `docs/error-ledger.md`, `docs/context-system.md`, `docs/development-state.md`
 - Obsidian note: `50 Research/Constructive Grammar Before Geometry 2026-05-28.md`
@@ -794,7 +821,7 @@ office_tower_semantic.live.obj
 - `tests/fixtures/office_tower_semantic.live.obj`
 - команда `import-semantic-obj`
 - parser Live OBJ-style `#@` metadata
-- `scripts/build_semantic_smoke_rhino.py`
+- `scripts/rhino/smoke/build_semantic_smoke_rhino.py`
 - unit test на извлечение part table
 
 Результат smoke run:

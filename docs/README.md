@@ -10,6 +10,7 @@ useful for a fresh AI session.
 | `START_HERE.md` | Scenario read sets and operating rules |
 | `task-read-maps.md` | Concrete task-to-read-set router for AI agents |
 | `repository-map.md` | Current repo structure |
+| `repo-folder-architecture.md` | Folder ownership rules for durable docs and scripts |
 | `library-index.md` | Pattern, strategy, source, and tool index |
 | `case-digest.md` | One-minute case wins, failures, techniques, and standards |
 | `case-library.md` | Reusable case memory |
@@ -22,15 +23,15 @@ useful for a fresh AI session.
 
 | Folder | Contents |
 | --- | --- |
-| `scenarios/` | Workflow gates and scenario-specific strategy |
-| `libraries/` | Reusable architectural and massing patterns |
-| `cases/` | Case-specific lessons and handoff notes |
+| `workflows/` | Workflow gates and scenario-specific strategy by domain |
+| `libraries/` | Domain folders for massing, Grasshopper, and standards |
+| `cases/` | Case-family folders such as Rhino geometry and Grasshopper |
 | `errors/` | Domain-specific anti-pattern libraries |
-| `tools/` | Tooling and backend notes |
-| `research/` | Compressed research and direction synthesis |
-| `source-repos/` | External repository cards |
+| `tools/` | Rhino and Grasshopper tool/backend notes |
+| `research/` | Compressed research, direction synthesis, and source-repo cards |
 
 ## Rule
 
-Keep long-form knowledge in the smallest correct folder, then link it from the
-core indexes. Do not duplicate full rules across many files.
+Keep long-form knowledge in the smallest correct domain folder, then link it
+from the core indexes. Do not duplicate full rules across many files. Follow
+`repo-folder-architecture.md` before adding or moving durable files.

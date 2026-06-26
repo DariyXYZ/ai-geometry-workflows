@@ -21,7 +21,7 @@ https://github.com/DariyXYZ/ai-geometry-workflows
 
 Проект перешел от loose Rhino experiments к case-based orchestration toolchain.
 На 2026-06-01 добавлен переносимый context layer: `AGENTS.md`,
-`docs/START_HERE.md`, `docs/repository-map.md` и `docs/source-repos/`.
+`docs/START_HERE.md`, `docs/repository-map.md` и `docs/research/source-repos/`.
 Цель - чтобы новый AI-чат мог восстановить workflow из repo без Obsidian и
 истории переписки.
 
@@ -83,7 +83,7 @@ anchors, params, controls, locks, constraints.
 
 Матрица применимости по трем направлениям: `docs/research/development-directions-repo-fit.md`.
 
-Обязательные gates для Scenario 1 reference modeling: `docs/scenarios/reference-modeling-gates.md`.
+Обязательные gates для Scenario 1 reference modeling: `docs/workflows/rhino-reference/reference-modeling-gates.md`.
 
 ### 3. CAD-as-code backend
 
@@ -164,7 +164,7 @@ prompt/reference -> named parts/controls/anchors -> CAD script.
 Входы: active scene, red lines, underlays, rough massing, TEPs, GFA/FAR/height
 constraints, user revisions.
 
-Scenario 3 is split into subtypes in `docs/scenarios/tep-massing-scenario-subtypes.md`:
+Scenario 3 is split into subtypes in `docs/workflows/massing/tep-massing-scenario-subtypes.md`:
 
 - `3A`: zoning, footprints, and entries are already given. Keep them as source
   authority and work on building form, height, TEP, and constraints.
@@ -196,7 +196,7 @@ Spellshape / Live OBJ тоже может быть полезен как semanti
 7. Использовать `docs/research/development-directions-repo-fit.md` перед выбором следующего направления, чтобы не тащить Scenario 1/3 инструменты в Scenario 2 cleanup.
 8. Для каждого Scenario 1 case перед build stage писать constructive grammar и missing-view check.
 9. Продвигать stable case outputs только после validation reports.
-10. Поддерживать `AGENTS.md`, `docs/START_HERE.md` и `docs/source-repos/` как
+10. Поддерживать `AGENTS.md`, `docs/START_HERE.md` и `docs/research/source-repos/` как
     минимальный контекст для нового чата.
 
 ## Проверка

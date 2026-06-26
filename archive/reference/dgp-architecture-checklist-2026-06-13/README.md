@@ -19,8 +19,8 @@ Use these images as visual examples for Scenario 3D checklist review. The
 active compact rule lives in:
 
 ```text
-docs/libraries/moscow-architecture-approval-checklist.md
-docs/scenarios/architecture-compliance-check.md
+docs/libraries/standards/moscow-architecture-approval-checklist.md
+docs/workflows/massing/architecture-compliance-check.md
 ```
 
 Do not treat the screenshots as the normal AI read path. Use them when visual

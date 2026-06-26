@@ -32,18 +32,19 @@ Bad additions:
 | Scenario read path | `docs/START_HERE.md` |
 | Task read path | `docs/task-read-maps.md` |
 | Repo structure | `docs/repository-map.md` |
+| Folder architecture | `docs/repo-folder-architecture.md` |
 | Pattern or strategy index | `docs/library-index.md` |
 | Experience capture format | `docs/experience-capture-format.md` |
 | Repo vs Obsidian promotion gate | `docs/repo-knowledge-boundary.md` |
 | Case entry | `docs/case-library.md` |
-| Scenario workflow | `docs/scenarios/<scenario>.md` |
-| Pattern library | `docs/libraries/<topic>.md` |
-| Detailed case note | `docs/cases/<case>.md` |
-| Repeated mistake | `docs/error-ledger.md` or `docs/errors/<topic>.md` |
-| Tool/backend note | `docs/tools/<tool>.md` |
+| Scenario workflow | `docs/workflows/<domain>/<workflow>.md` |
+| Pattern library | `docs/libraries/<domain>/<topic>.md` |
+| Detailed case note | `docs/cases/<case-family>/<case>.md` |
+| Repeated mistake | `docs/error-ledger.md` or `docs/errors/<domain>/<topic>.md` |
+| Tool/backend note | `docs/tools/<domain>/<tool>.md` |
 | Research synthesis | `docs/research/<topic>.md` |
 | Accepted tradeoff | `decisions/YYYY-MM-DD-short-title.md` |
-| External repo finding | `docs/source-repos/<source>.md` |
+| External repo finding | `docs/research/source-repos/<source>.md` |
 | Current technical state | `docs/development-state.md` |
 | Chronological update | `NEWS.md` |
 | Temporary run output | `.tmp_cases/` or a clearly named scripts subfolder |
@@ -71,13 +72,14 @@ repo-maintenance-guide.md
 When adding a new reusable rule:
 
 1. If it came from Obsidian, apply `docs/repo-knowledge-boundary.md`.
-2. Add the rule to the smallest correct file.
-3. If it changes navigation, update `AI_NAVIGATOR.md` or `docs/START_HERE.md`.
-4. If it should be discoverable, update `docs/library-index.md`.
-5. If it came from a case, update `docs/case-library.md`.
-6. If it is a failure, update `docs/error-ledger.md`.
-7. If it is an accepted tradeoff, add a dated file in `decisions/`.
-8. Add a short `NEWS.md` entry if future sessions should notice it.
+2. Apply `docs/repo-folder-architecture.md` to choose the domain folder.
+3. Add the rule to the smallest correct file.
+4. If it changes navigation, update `AI_NAVIGATOR.md` or `docs/START_HERE.md`.
+5. If it should be discoverable, update `docs/library-index.md`.
+6. If it came from a case, update `docs/case-library.md`.
+7. If it is a failure, update `docs/error-ledger.md`.
+8. If it is an accepted tradeoff, add a dated file in `decisions/`.
+9. Add a short `NEWS.md` entry if future sessions should notice it.
 
 ## Case Promotion Checklist
 
@@ -89,7 +91,7 @@ After a Rhino/CAD session, answer:
 | Did it reveal a repeated mistake? | Add to `docs/error-ledger.md` or domain error file |
 | Did it settle a tradeoff? | Add a dated decision |
 | Did it create a new architectural pattern? | Add/update a pattern library and `docs/library-index.md` |
-| Did it depend on external repo knowledge? | Update the relevant `docs/source-repos/` card |
+| Did it depend on external repo knowledge? | Update the relevant `docs/research/source-repos/` card |
 
 Use `docs/experience-capture-format.md` for the full case note and promotion
 table. Every promoted case should make clear which parts became a pattern,
@@ -110,8 +112,8 @@ scripts/<domain>/<case-or-purpose>.png
 Examples:
 
 ```text
-scripts/moscow_bc_massing/analyze_scene.py
-scripts/moscow_bc_massing/variants_2026_06_16.json
+scripts/rhino/massing/moscow_bc/analyze_scene.py
+scripts/rhino/massing/moscow_bc/variants_2026_06_16.json
 ```
 
 If a script is disposable, put it in `.tmp_cases/` instead. If it becomes
@@ -122,26 +124,31 @@ reusable, promote it with a short note in `docs/` or `TOOLKIT.md`.
 Use the existing top-level folders inside `docs/`:
 
 ```text
-docs/scenarios/
+docs/workflows/
 docs/libraries/
 docs/cases/
 docs/errors/
 docs/tools/
 docs/research/
-docs/source-repos/
+docs/research/source-repos/
 ```
 
 Root-level `docs/*.md` files are indexes, current-state documents, or global
 ledgers. New long-form knowledge should usually go into one of the folders
 above and be linked from the relevant index.
 
+Domain folders are mandatory for new durable content. Do not add new long-form
+files directly under `docs/cases/`, `docs/tools/`, `docs/libraries/`, or
+`docs/errors/`; use the matching subfolder described in
+`docs/repo-folder-architecture.md`.
+
 `docs/task-read-maps.md` and `docs/experience-capture-format.md` are global
 operating documents. Keep them compact and update them when the way an AI should
 enter or write back to the repo changes.
 
 One-off Rhino scripts, PNGs, JSON reports, and old presentations belong in
-`archive/` unless they are actively reusable. Reusable scripts belong in
-`scripts/<domain>/`.
+`archive/` unless they are actively reusable. Reusable scripts belong in the
+smallest matching folder under `scripts/rhino/` or `scripts/grasshopper/`.
 
 ## Duplication Policy
 

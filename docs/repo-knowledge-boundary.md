@@ -19,13 +19,13 @@ private, or useful mainly as research background.
 | Information | Repo shape | Why |
 | --- | --- | --- |
 | Geometry typologies | `docs/libraries/<typology>.md` | Helps an AI choose a massing or facade grammar. |
-| Form operators | `docs/libraries/form-operator-library.md` or focused libraries | Gives reusable moves such as setbacks, chamfers, rotations, voids, taper, crown logic. |
-| Construction recipes | `docs/scenarios/`, `docs/tools/`, `scripts/` | Tells architects and agents which Rhino/Grasshopper operations build the form efficiently. |
+| Form operators | `docs/libraries/massing/form-operator-library.md` or focused libraries | Gives reusable moves such as setbacks, chamfers, rotations, voids, taper, crown logic. |
+| Construction recipes | `docs/workflows/`, `docs/tools/`, `scripts/` | Tells architects and agents which Rhino/Grasshopper operations build the form efficiently. |
 | Dimensional defaults | `docs/libraries/*dimensional*.md` and YAML when useful | Prevents scale errors in floors, cores, facade depth, roads, roofs, and clearances. |
 | Validation gates | `docs/errors/`, `docs/error-ledger.md`, scenario files | Catches numeric-pass/design-fail and known modeling mistakes. |
 | Proven cases | `docs/cases/`, `docs/case-library.md`, `docs/case-digest.md` | Shows what worked, what failed, and what rule was promoted. |
 | Tool/backend rules | `docs/tools/`, `TOOLKIT.md`, `scripts/README.md` | Records effective Rhino, RhinoCommon, Grasshopper, C# Script, and MCP routes. |
-| Source synthesis | `docs/research/`, `docs/source-repos/` | Compresses external repositories or public research into actionable local memory. |
+| Source synthesis | `docs/research/`, `docs/research/source-repos/` | Compresses external repositories or public research into actionable local memory. |
 | Accepted tradeoffs | `decisions/YYYY-MM-DD-*.md` | Settles policy so future agents do not relitigate it. |
 
 Repo entries must be compact, source-aware, and action-oriented. A good entry
@@ -109,10 +109,10 @@ distilled rule, not copied articles or large visual catalogs.
 
 ## Recommended Import Order From Obsidian
 
-1. `docs/libraries/massing-typology-catalog.md` for large-form typologies.
+1. `docs/libraries/massing/massing-typology-catalog.md` for large-form typologies.
 2. Focused libraries for structure systems and facade grammars.
-3. `docs/libraries/form-operator-library.md` for reusable geometry moves.
-4. `docs/libraries/grasshopper-architectural-form-patterns.md` and
+3. `docs/libraries/massing/form-operator-library.md` for reusable geometry moves.
+4. `docs/libraries/grasshopper/grasshopper-architectural-form-patterns.md` and
    `docs/tools/` for efficient build methods.
 5. `docs/errors/` for rejection rules discovered during modeling.
 6. `decisions/` when a boundary or tradeoff becomes policy.
@@ -143,4 +143,3 @@ Scope: large form / structure / facade / site / tool
 
 ### Related Cases Or Sources
 ```
-

@@ -27,9 +27,9 @@ scripts/grasshopper/smoke/          tiny smoke tests and selectors
 ## Rules
 
 - Keep meaningful script component bodies in source control.
-- Read `docs/tools/grasshopper-csharp-script-nodes.md` before writing C# Script
+- Read `docs/tools/grasshopper/grasshopper-csharp-script-nodes.md` before writing C# Script
   code for Grasshopper.
-- Read `docs/tools/grasshopper-csharp-performance.md` before writing large,
+- Read `docs/tools/grasshopper/grasshopper-csharp-performance.md` before writing large,
   list-driven, cached, or parallel C# Script nodes.
 - Prefer C# 9.0-compatible Rhino 8 code for C# Script components.
 - Prefer Python 3 for Rhino 8 Python Script components.

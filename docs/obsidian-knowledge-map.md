@@ -14,15 +14,15 @@ C:\Users\dariy.n\Documents\Obsidian Vault
 
 | Topic | Obsidian source | Repo use |
 | --- | --- | --- |
-| Form operators from Moscow reference imagery | `50 Research\Moscow Massing\Form Operator Library 2026.md` | Basis for `docs/libraries/form-operator-library.md` |
-| Decision order for massing generation | `50 Research\Moscow Massing\Massing V2 Decision Library 2026.md` | Basis for `docs/libraries/massing-decision-library.md` |
+| Form operators from Moscow reference imagery | `50 Research\Moscow Massing\Form Operator Library 2026.md` | Basis for `docs/libraries/massing/form-operator-library.md` |
+| Decision order for massing generation | `50 Research\Moscow Massing\Massing V2 Decision Library 2026.md` | Basis for `docs/libraries/massing/massing-decision-library.md` |
 | Visual typology catalog | `50 Research\Moscow Massing\Massing Typology Catalog 2026.md` | Expand future typology library and case prompts |
 | Mayor-ready massing criteria | `50 Research\Moscow Massing\Moscow Mayor Ready Massing 2026.md` | Approval-risk checks: silhouette, fifth facade, TEP hard stop |
 | Office massing references | `50 Research\Moscow Massing\Archi.ru Office Massing References 2026.md` | Office-specific variant grammar and risk notes |
 | Moscow style trends | `50 Research\Moscow Massing\Property Insider Moscow Style Trends 2026.md` | Context and market-language calibration |
 | Channel/image signal research | `50 Research\Moscow Massing\m0n1ch Architecture Channel Massing Signals 2026.md` | Source-language and precedent mining |
 | Skyscraper silhouette grammar | `50 Research\Moscow Massing\Materia Skyscraper Silhouette Grammar 2026.md` | Tower crown and skyline rules |
-| Moscow dimensional baselines | `50 Research\Moscow Dimensions\Moscow Building Dimensional Library 2026.md` | Basis for `docs/libraries/moscow-building-dimensional-library-2026.md` and generator YAML defaults |
+| Moscow dimensional baselines | `50 Research\Moscow Dimensions\Moscow Building Dimensional Library 2026.md` | Basis for `docs/libraries/standards/moscow-building-dimensional-library-2026.md` and generator YAML defaults |
 
 ## High-Value Rhino And CAD Lessons
 
@@ -30,7 +30,7 @@ C:\Users\dariy.n\Documents\Obsidian Vault
 | --- | --- | --- |
 | Rhino massing iterations v5-v8 | `30 Projects\AI Geometry Workflows\LLM to CAD Massing\Rhino Test Massing Iterations v5-v8 2026-06-11.md` | Case library: compact podium, separated tower, no random pavilions |
 | Rhino pilot massing review | `30 Projects\AI Geometry Workflows\LLM to CAD Massing\Rhino Pilot Massing Review 2026-06-11.md` | Error library: circulation-first, gap checks, red-line discipline |
-| Moscow BC rejected variants | `30 Projects\AI Geometry Workflows\LLM to CAD Massing\Moscow BC Massing Error Library 2026-06-16.md` | Already mirrored in `docs/errors/moscow-bc-massing-error-library.md` |
+| Moscow BC rejected variants | `30 Projects\AI Geometry Workflows\LLM to CAD Massing\Moscow BC Massing Error Library 2026-06-16.md` | Already mirrored in `docs/errors/massing/moscow-bc-massing-error-library.md` |
 | Site shape and footprint system | `30 Projects\AI Geometry Workflows\LLM to CAD Massing\Site Shape and Footprint Decision System 2026.md` | Expand generic site-planning library |
 | BC site-massing typologies | `30 Projects\AI Geometry Workflows\LLM to CAD Massing\Business Center Site-Massing Typologies 2026.md` | Expand business-center typology library |
 | Image-to-CAD massing protocol | `50 Research\Architecture Image to CAD Massing 2026-05-05.md` | Reference-modeling protocol: parameter table before geometry |
@@ -62,10 +62,10 @@ C:\Users\dariy.n\Documents\Obsidian Vault
 ## Import Backlog
 
 1. Promote the generic site/footprint decision system into
-   `docs/site-planning-pattern-library.md`.
+   `docs/libraries/massing/site-planning-pattern-library.md`.
 2. Promote the visual typology catalog into
-   `docs/massing-typology-catalog.md`.
-3. Add a compact `docs/rhino-reference-modeling-protocol.md` from the
+   `docs/libraries/massing/massing-typology-catalog.md`.
+3. Add a compact `docs/workflows/rhino-reference/rhino-reference-modeling-protocol.md` from the
    image-to-CAD massing note.
 4. Add a Scenario 3B movement validation note from the GhCrowdFlow research,
    but only as lightweight route/bottleneck heuristics first.

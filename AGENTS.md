@@ -37,7 +37,7 @@ control sections -> temporary loft -> Rhino Contour -> final floor contours
 - For balcony towers, the contour curve is the slab/balcony edge, not the glass
   line. Offset glass inward and give slabs real thickness.
 - Recent Rhino/RhinoMCP case memory lives in
-  `docs/cases/recent-rhino-case-lessons.md`. Read it before replaying or extending
+  `docs/cases/rhino-geometry/recent-rhino-case-lessons.md`. Read it before replaying or extending
   Infinity Tower, Shanghai Tower-style twists, Flock chapel shells, symmetric
   stepped towers, Aqua Tower, or Absolute World Towers.
 
@@ -55,7 +55,7 @@ control sections -> temporary loft -> Rhino Contour -> final floor contours
 
 Do not reread external repositories blindly. Start from:
 
-- `docs/source-repos/README.md`
+- `docs/research/source-repos/README.md`
 - `docs/research/external-repo-constructor-map.md`
 - `docs/research/development-directions-repo-fit.md`
 
@@ -64,11 +64,11 @@ insufficient.
 
 ## Where To Save New Knowledge
 
-- New durable workflow rule: `docs/scenarios/reference-modeling-gates.md`
-- New massing/checklist subscenario: `docs/scenarios/tep-massing-scenario-subtypes.md`
-- Architecture approval checklist review: `docs/scenarios/architecture-compliance-check.md`
+- New durable workflow rule: `docs/workflows/rhino-reference/reference-modeling-gates.md`
+- New massing/checklist subscenario: `docs/workflows/massing/tep-massing-scenario-subtypes.md`
+- Architecture approval checklist review: `docs/workflows/massing/architecture-compliance-check.md`
 - Failure or repeated mistake: `docs/error-ledger.md`
 - Accepted tradeoff/decision: `decisions/YYYY-MM-DD-short-title.md`
-- External repo finding: `docs/source-repos/`
+- External repo finding: `docs/research/source-repos/`
 - Chronological user-facing update: `NEWS.md`
 - Current implementation state: `docs/development-state.md`

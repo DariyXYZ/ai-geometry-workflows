@@ -36,8 +36,9 @@ Read in this order:
 8. `docs/error-ledger.md` - mistakes that must not repeat.
 9. `docs/experience-capture-format.md` - how to write back reusable lessons.
 10. `docs/repo-knowledge-boundary.md` - what belongs in GitHub vs local Obsidian.
-11. `docs/obsidian-knowledge-map.md` - useful vault research not fully migrated.
-12. `NEWS.md` - newest changes and promoted rules.
+11. `docs/repo-folder-architecture.md` - where each kind of durable file belongs.
+12. `docs/obsidian-knowledge-map.md` - useful vault research not fully migrated.
+13. `NEWS.md` - newest changes and promoted rules.
 
 Then load only the scenario-specific documents. Do not read the whole repo by
 default.
@@ -57,9 +58,9 @@ classify task
 
 Example: if the user asks for a second massing variant and variant 1 already
 exists, route to Scenario `3C`. Read
-`docs/scenarios/tep-massing-scenario-subtypes.md`,
-`docs/libraries/massing-decision-library.md`,
-`docs/libraries/form-operator-library.md`, the Moscow dimensional libraries,
+`docs/workflows/massing/tep-massing-scenario-subtypes.md`,
+`docs/libraries/massing/massing-decision-library.md`,
+`docs/libraries/massing/form-operator-library.md`, the Moscow dimensional libraries,
 the closest case, and the active Rhino scene. Preserve source gabarit/TEP scale
 and report the new variant as deltas from the first one.
 
@@ -72,8 +73,8 @@ underlays, text descriptions, or reference images.
 
 Read:
 
-- `docs/scenarios/reference-modeling-gates.md`
-- `docs/cases/recent-rhino-case-lessons.md`
+- `docs/workflows/rhino-reference/reference-modeling-gates.md`
+- `docs/cases/rhino-geometry/recent-rhino-case-lessons.md`
 - relevant `decisions/`
 
 First question:
@@ -108,13 +109,13 @@ underlays, user feedback, or approval checklist criteria.
 
 Read:
 
-- `docs/scenarios/tep-massing-scenario-subtypes.md`
-- `docs/libraries/massing-decision-library.md`
-- `docs/libraries/form-operator-library.md`
-- `docs/scenarios/architecture-compliance-check.md`
-- `docs/libraries/moscow-architecture-approval-checklist.md`
-- `docs/libraries/moscow-bc-site-zoning-patterns.md`
-- `docs/errors/moscow-bc-massing-error-library.md`
+- `docs/workflows/massing/tep-massing-scenario-subtypes.md`
+- `docs/libraries/massing/massing-decision-library.md`
+- `docs/libraries/massing/form-operator-library.md`
+- `docs/workflows/massing/architecture-compliance-check.md`
+- `docs/libraries/standards/moscow-architecture-approval-checklist.md`
+- `docs/libraries/massing/moscow-bc-site-zoning-patterns.md`
+- `docs/errors/massing/moscow-bc-massing-error-library.md`
 
 First question:
 
@@ -147,16 +148,17 @@ or 3D checklist/compliance review?
 | Compact case memory | `docs/case-digest.md` |
 | Experience capture format | `docs/experience-capture-format.md` |
 | Repo vs Obsidian boundary | `docs/repo-knowledge-boundary.md` |
+| Folder architecture | `docs/repo-folder-architecture.md` |
 | Obsidian research map | `docs/obsidian-knowledge-map.md` |
-| Massing decision order | `docs/libraries/massing-decision-library.md` |
-| Massing form operators | `docs/libraries/form-operator-library.md` |
-| Approval checklist review | `docs/scenarios/architecture-compliance-check.md` |
-| Moscow architecture checklist | `docs/libraries/moscow-architecture-approval-checklist.md` |
+| Massing decision order | `docs/libraries/massing/massing-decision-library.md` |
+| Massing form operators | `docs/libraries/massing/form-operator-library.md` |
+| Approval checklist review | `docs/workflows/massing/architecture-compliance-check.md` |
+| Moscow architecture checklist | `docs/libraries/standards/moscow-architecture-approval-checklist.md` |
 | Successful/failed examples | `docs/case-library.md` |
 | Known mistakes | `docs/error-ledger.md` |
-| Recent Rhino lessons | `docs/cases/recent-rhino-case-lessons.md` |
+| Recent Rhino lessons | `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` |
 | Accepted decisions | `decisions/` |
-| External repo memory | `docs/source-repos/` |
+| External repo memory | `docs/research/source-repos/` |
 | Current technical state | `docs/development-state.md` |
 | How to add knowledge | `docs/repo-maintenance-guide.md` |
 

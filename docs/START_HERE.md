@@ -17,17 +17,18 @@ Read:
 4. `docs/library-index.md` - reusable strategy, pattern, source, and tool libraries.
 5. `docs/case-digest.md` - compact wins, failures, techniques, and standards.
 6. `docs/case-library.md` - successful, partial, and failed cases.
-7. `docs/scenarios/reference-modeling-gates.md` - how to think before modeling.
+7. `docs/workflows/rhino-reference/reference-modeling-gates.md` - how to think before modeling.
 8. `docs/error-ledger.md` - mistakes that must not repeat.
 9. `docs/experience-capture-format.md` - how to promote useful experience.
 10. `docs/repo-knowledge-boundary.md` - what belongs in the shared repo vs
    local Obsidian.
-11. `docs/obsidian-knowledge-map.md` - useful Obsidian research, tests, and errors
+11. `docs/repo-folder-architecture.md` - where new durable docs/scripts belong.
+12. `docs/obsidian-knowledge-map.md` - useful Obsidian research, tests, and errors
    not fully migrated into compact repo pages.
-12. `docs/cases/recent-rhino-case-lessons.md` - recent Rhino/RhinoMCP case results,
+13. `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` - recent Rhino/RhinoMCP case results,
    video scripts, and fresh mistakes.
-13. `docs/repository-map.md` - where everything lives.
-14. `docs/source-repos/README.md` - compressed memory of external repositories.
+14. `docs/repository-map.md` - where everything lives.
+15. `docs/research/source-repos/README.md` - compressed memory of external repositories.
 
 If using an AI agent, point it at `AGENTS.md` first.
 
@@ -40,12 +41,12 @@ facades, elevations, dimensions, or underlays.
 
 Read:
 
-- `docs/scenarios/reference-modeling-gates.md`
+- `docs/workflows/rhino-reference/reference-modeling-gates.md`
 - `docs/error-ledger.md`
 - `decisions/2026-05-28-constructive-grammar-before-reference-modeling.md`
 - `decisions/2026-06-01-grove-contour-derived-floor-plates.md`
-- `docs/source-repos/2d-plan-to-3d.md`
-- `docs/source-repos/live-obj.md`
+- `docs/research/source-repos/2d-plan-to-3d.md`
+- `docs/research/source-repos/live-obj.md`
 
 Mandatory flow:
 
@@ -69,7 +70,7 @@ Current hard lessons:
 - Grove at Grand Bay: for rotating orthogonal floor plates, derive intermediate
   floors by Rhino `Contour` from temporary lofts. Use contour curves as slab
   edges, offset glass inward, and give slabs thickness.
-- Recent video/reference cases: read `docs/cases/recent-rhino-case-lessons.md` for
+- Recent video/reference cases: read `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` for
   the Infinity, Shanghai-style twist, Flock shell, symmetric stepped tower,
   Aqua Tower, and Absolute World lessons before modeling or replaying them.
 
@@ -111,27 +112,27 @@ approval checklist criteria.
 
 Read:
 
-- `docs/scenarios/tep-massing-scenario-subtypes.md`
-- `docs/scenarios/architecture-compliance-check.md`
-- `docs/libraries/massing-decision-library.md`
-- `docs/libraries/form-operator-library.md`
-- `docs/libraries/grasshopper-architectural-form-patterns.md` if the form will
+- `docs/workflows/massing/tep-massing-scenario-subtypes.md`
+- `docs/workflows/massing/architecture-compliance-check.md`
+- `docs/libraries/massing/massing-decision-library.md`
+- `docs/libraries/massing/form-operator-library.md`
+- `docs/libraries/grasshopper/grasshopper-architectural-form-patterns.md` if the form will
   be built or iterated in Grasshopper
-- `docs/libraries/grasshopper-architecture-plugin-stack.md` if the task needs
+- `docs/libraries/grasshopper/grasshopper-architecture-plugin-stack.md` if the task needs
   plugin, native-node, C# Script, analysis, BIM, or facade-stack selection
-- `docs/libraries/grasshopper-architecture-snippet-library.md` for quick
+- `docs/libraries/grasshopper/grasshopper-architecture-snippet-library.md` for quick
   floorization, gabarit, TEP, and metrics snippets
-- `docs/libraries/moscow-building-dimensional-library-2026.md` for current
+- `docs/libraries/standards/moscow-building-dimensional-library-2026.md` for current
   Moscow building/floor/core/facade/roof dimensional defaults
-- `docs/libraries/moscow-road-dimensional-library-2026.md` for Moscow
+- `docs/libraries/standards/moscow-road-dimensional-library-2026.md` for Moscow
   street, driveway, fire access, and lane-width CAD defaults
-- `docs/libraries/moscow-architecture-approval-checklist.md`
-- `docs/errors/moscow-bc-massing-error-library.md`
-- `docs/libraries/moscow-bc-site-zoning-patterns.md`
+- `docs/libraries/standards/moscow-architecture-approval-checklist.md`
+- `docs/errors/massing/moscow-bc-massing-error-library.md`
+- `docs/libraries/massing/moscow-bc-site-zoning-patterns.md`
 - `docs/development-state.md`
 - `docs/research/development-directions-repo-fit.md`
-- `docs/source-repos/live-obj.md`
-- `docs/source-repos/spellshape-three-format.md`
+- `docs/research/source-repos/live-obj.md`
+- `docs/research/source-repos/spellshape-three-format.md`
 
 Mandatory flow:
 
@@ -156,19 +157,19 @@ components, sliders, or RhinoMCP `g1_*` workflows.
 
 Read:
 
-- `docs/tools/grasshopper-workflow.md`
-- `docs/cases/grasshopper-case-index.md`
-- `docs/tools/grasshopper-csharp-script-nodes.md` for C# Script nodes
-- `docs/tools/grasshopper-csharp-performance.md` for automatic IO,
+- `docs/tools/grasshopper/grasshopper-workflow.md`
+- `docs/cases/grasshopper/README.md`
+- `docs/tools/grasshopper/grasshopper-csharp-script-nodes.md` for C# Script nodes
+- `docs/tools/grasshopper/grasshopper-csharp-performance.md` for automatic IO,
   list/tree access, caching, and parallel-safe C# Script nodes
-- `docs/tools/grasshopper-mcp-smoke.md`
-- `docs/errors/grasshopper-mcp-error-library.md`
-- `docs/libraries/grasshopper-pattern-library.md`
-- `docs/libraries/grasshopper-architectural-form-patterns.md` for architectural
+- `docs/tools/grasshopper/grasshopper-mcp-smoke.md`
+- `docs/errors/grasshopper/grasshopper-mcp-error-library.md`
+- `docs/libraries/grasshopper/grasshopper-pattern-library.md`
+- `docs/libraries/grasshopper/grasshopper-architectural-form-patterns.md` for architectural
   building-form graphs, facade nets, section stacks, and plugin-assisted forms
-- `docs/libraries/grasshopper-architecture-plugin-stack.md` for architecture
+- `docs/libraries/grasshopper/grasshopper-architecture-plugin-stack.md` for architecture
   plugin routing and McNeel/Food4Rhino source links
-- `docs/libraries/grasshopper-architecture-snippet-library.md` for quick
+- `docs/libraries/grasshopper/grasshopper-architecture-snippet-library.md` for quick
   reusable architecture C# snippets
 
 Mandatory flow:
@@ -207,7 +208,7 @@ only on explicit user request or when a task needs a backend-specific feature.
 - Build massing first, detail second.
 - Validate with source-derived dimensions, section datums, and screenshots.
 - Preserve user-created source geometry and hidden references.
-- Use `scripts/rhino_common_helper.py` for native Rhino operations that should
+- Use `scripts/rhino/common/rhino_common_helper.py` for native Rhino operations that should
   not be approximated with point drawing: trim, split, boolean, intersections,
   contours, NURBS rebuild, and custom RhinoCommon C#.
 - For video/replay modeling, preserve the user-selected camera unless asked,
@@ -217,7 +218,7 @@ only on explicit user request or when a task needs a backend-specific feature.
 ## External Repositories
 
 The external repos are not vendored into this repository. Their useful ideas
-are compressed into `docs/source-repos/`. Start there before opening GitHub.
+are compressed into `docs/research/source-repos/`. Start there before opening GitHub.
 
 Use this rule:
 
@@ -232,6 +233,7 @@ local source card first
 Every meaningful session should leave the repo better for the next fresh chat:
 
 - follow `docs/repo-maintenance-guide.md`;
+- follow `docs/repo-folder-architecture.md` before creating or moving files;
 - apply `docs/repo-knowledge-boundary.md` before importing Obsidian research;
 - use `docs/experience-capture-format.md` when promoting a case into patterns,
   errors, metrics, prompts, or decisions;

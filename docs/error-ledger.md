@@ -6,8 +6,8 @@ This file records known failure modes so future work does not repeat them.
 
 See also:
 
-- `docs/errors/moscow-bc-massing-error-library.md`
-- `docs/libraries/moscow-bc-site-zoning-patterns.md`
+- `docs/errors/massing/moscow-bc-massing-error-library.md`
+- `docs/libraries/massing/moscow-bc-site-zoning-patterns.md`
 
 ### Numeric Constraint Pass Is Not Massing Acceptance
 

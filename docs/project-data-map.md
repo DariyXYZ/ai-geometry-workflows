@@ -20,8 +20,8 @@ C:\VS Code\ai-geometry-workflows
 | `TOOLKIT.md` | Runnable command reference | Active |
 | `ai_geometry_toolkit/` | Python CLI orchestration package | Active |
 | `tests/` | Unit tests and fixtures | Active |
-| `scripts/rhino_common_helper.py` | Optional backend-specific RhinoCommon helper; current implementation uses Aurox `execute_csharp` | Active |
-| `scripts/moscow_bc_massing/` | Current Moscow BC massing scripts and candidate data | Active project folder |
+| `scripts/rhino/common/rhino_common_helper.py` | Optional backend-specific RhinoCommon helper; current implementation uses Aurox `execute_csharp` | Active |
+| `scripts/rhino/massing/moscow_bc/` | Current Moscow BC massing scripts and candidate data | Active project folder |
 | `decisions/` | Accepted dated technical decisions | Active |
 | `docs/` | Shared knowledge library | Active |
 | `archive/` | Old reports and one-off experiments | Historical |
@@ -35,18 +35,26 @@ C:\VS Code\ai-geometry-workflows
 | `docs/START_HERE.md` | Scenario read sets |
 | `docs/task-read-maps.md` | Concrete task-to-read-set router |
 | `docs/repository-map.md` | Repo structure |
+| `docs/repo-folder-architecture.md` | Folder ownership rules and scalable IA |
 | `docs/library-index.md` | Strategy, pattern, source, and tool index |
 | `docs/case-library.md` | Reusable case memory |
 | `docs/error-ledger.md` | Cross-scenario failure modes |
 | `docs/experience-capture-format.md` | Standard format for promoting case experience |
 | `docs/obsidian-knowledge-map.md` | Obsidian research and import backlog |
-| `docs/scenarios/` | Workflow gates and scenario-specific strategy |
-| `docs/libraries/` | Architectural and massing pattern libraries |
-| `docs/cases/` | Detailed case lessons and handoffs |
-| `docs/errors/` | Domain-specific anti-pattern libraries |
-| `docs/tools/` | Tool/backend notes |
+| `docs/workflows/rhino-reference/` | Scenario 1 source-authority and constructive-grammar workflows |
+| `docs/workflows/massing/` | Scenario 3 massing, TEP, checklist, and office/MFC workflows |
+| `docs/workflows/analysis-cleanup/` | Future Scenario 2 cleanup workflows |
+| `docs/libraries/massing/` | Massing, site planning, and form-operator libraries |
+| `docs/libraries/grasshopper/` | GH graph, plugin, C# Script, and architecture-snippet libraries |
+| `docs/libraries/standards/` | Dimensional baselines and approval/checklist standards |
+| `docs/cases/rhino-geometry/` | Direct Rhino/RhinoCommon/.3dm geometry cases |
+| `docs/cases/grasshopper/` | GH graph/C# Script/plugin/source-injection cases |
+| `docs/errors/massing/` | Massing/site/design anti-pattern libraries |
+| `docs/errors/grasshopper/` | GH/MCP/C# automation anti-pattern libraries |
+| `docs/tools/rhino/` | RhinoMCP, RhinoCommon, backend policy |
+| `docs/tools/grasshopper/` | GH automation and C# Script tool notes |
 | `docs/research/` | Compressed research and direction synthesis |
-| `docs/source-repos/` | External repository cards |
+| `docs/research/source-repos/` | External repository cards |
 
 ## External Backend: text-to-cad
 
@@ -99,7 +107,7 @@ Repo summaries:
 - `docs/research/spellshape-live-obj-direction.md`
 - `docs/research/external-repo-constructor-map.md`
 - `docs/research/development-directions-repo-fit.md`
-- `docs/source-repos/`
+- `docs/research/source-repos/`
 
 ## Rhino Source And Evidence
 
@@ -110,12 +118,12 @@ C:\VS Code\workfiles\rhino\workflow-kit
 Role: older Rhino workflow kit. Scripts here should be migrated or wrapped into
 `ai_geometry_toolkit` instead of copied ad hoc.
 
-Useful paths:
+Useful files inside that external kit:
 
-- `rhino_workflow_kit/scripts/scan_scene.py`
-- `rhino_workflow_kit/scripts/extract_sections.py`
-- `rhino_workflow_kit/scripts/fit_architectural_sections.py`
-- `rhino_workflow_kit/reports/tower_bbox_classification.json`
+- `scan_scene.py`
+- `extract_sections.py`
+- `fit_architectural_sections.py`
+- `tower_bbox_classification.json`
 
 ```text
 C:\VS Code\workfiles\rhino\cad-mesh-reconstruction

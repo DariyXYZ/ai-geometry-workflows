@@ -23,14 +23,14 @@ Then read case files only when the task resembles that case.
 
 | User task | Scenario | Required read set | Useful libraries | Output discipline |
 | --- | --- | --- | --- | --- |
-| Build from photo, plan, facade, reference, or text | Scenario 1 | `docs/scenarios/reference-modeling-gates.md`, `docs/error-ledger.md`, `docs/cases/recent-rhino-case-lessons.md` | `docs/source-repos/2d-plan-to-3d.md`, `docs/source-repos/live-obj.md` | State source authority and constructive grammar before geometry |
-| Make second variant from an existing massing | Scenario 3C | `docs/scenarios/tep-massing-scenario-subtypes.md`, `docs/libraries/massing-decision-library.md`, source case note if present | `docs/libraries/form-operator-library.md`, `docs/libraries/moscow-building-dimensional-library-2026.md`, `docs/errors/moscow-bc-massing-error-library.md` | Preserve source gabarit/TEP scale; describe deltas from variant 1 |
-| Generate first massing from plot and entries only | Scenario 3B | `docs/scenarios/tep-massing-scenario-subtypes.md`, `docs/libraries/moscow-bc-site-zoning-patterns.md` | `docs/libraries/massing-decision-library.md`, `docs/libraries/moscow-road-dimensional-library-2026.md`, `docs/libraries/form-operator-library.md` | Propose zoning/public spine before expressive form |
-| Build form on given footprints/zoning | Scenario 3A | `docs/scenarios/tep-massing-scenario-subtypes.md`, given source notes, `docs/libraries/form-operator-library.md` | `docs/libraries/moscow-building-dimensional-library-2026.md`, `docs/libraries/massing-decision-library.md` | Do not move approved footprints/entries unless asked |
-| Review massing/building against approval checklist | Scenario 3D | `docs/scenarios/architecture-compliance-check.md`, `docs/libraries/moscow-architecture-approval-checklist.md` | `docs/libraries/moscow-building-dimensional-library-2026.md`, `docs/error-ledger.md` | Collect Rhino/view evidence before scoring or redesigning |
-| Clean complex Rhino model for analysis | Scenario 2 | `docs/development-state.md`, `docs/error-ledger.md`, `decisions/2026-05-19-feature-preserving-mesh-reconstruction.md`, `decisions/2026-05-20-nurbs-restart-from-named-rails.md` | `docs/context-system.md`, `docs/tools/rhino-mcp-backends.md` | Preserve source; classify parts; validate sections, not only watertightness |
-| Build or test Grasshopper graph | Grasshopper branch | `docs/tools/grasshopper-workflow.md`, `docs/tools/grasshopper-mcp-smoke.md`, `docs/cases/grasshopper-case-index.md` | `docs/tools/grasshopper-csharp-script-nodes.md`, `docs/tools/grasshopper-csharp-performance.md`, `docs/libraries/grasshopper-pattern-library.md` | Smoke-test small graph first; store script bodies in repo; do not read Rhino geometry cases unless the form grammar matches |
-| Choose Rhino backend or run RhinoMCP | Tooling | `docs/tools/rhino-mcp-backends.md`, `docs/source-repos/rhinomcp.md` | `TOOLKIT.md`, `scripts/README.md` | Use McNeel RhinoMCP by default; scan capabilities before build |
+| Build from photo, plan, facade, reference, or text | Scenario 1 | `docs/workflows/rhino-reference/reference-modeling-gates.md`, `docs/error-ledger.md`, `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` | `docs/research/source-repos/2d-plan-to-3d.md`, `docs/research/source-repos/live-obj.md` | State source authority and constructive grammar before geometry |
+| Make second variant from an existing massing | Scenario 3C | `docs/workflows/massing/tep-massing-scenario-subtypes.md`, `docs/libraries/massing/massing-decision-library.md`, source case note if present | `docs/libraries/massing/form-operator-library.md`, `docs/libraries/standards/moscow-building-dimensional-library-2026.md`, `docs/errors/massing/moscow-bc-massing-error-library.md` | Preserve source gabarit/TEP scale; describe deltas from variant 1 |
+| Generate first massing from plot and entries only | Scenario 3B | `docs/workflows/massing/tep-massing-scenario-subtypes.md`, `docs/libraries/massing/moscow-bc-site-zoning-patterns.md` | `docs/libraries/massing/massing-decision-library.md`, `docs/libraries/standards/moscow-road-dimensional-library-2026.md`, `docs/libraries/massing/form-operator-library.md` | Propose zoning/public spine before expressive form |
+| Build form on given footprints/zoning | Scenario 3A | `docs/workflows/massing/tep-massing-scenario-subtypes.md`, given source notes, `docs/libraries/massing/form-operator-library.md` | `docs/libraries/standards/moscow-building-dimensional-library-2026.md`, `docs/libraries/massing/massing-decision-library.md` | Do not move approved footprints/entries unless asked |
+| Review massing/building against approval checklist | Scenario 3D | `docs/workflows/massing/architecture-compliance-check.md`, `docs/libraries/standards/moscow-architecture-approval-checklist.md` | `docs/libraries/standards/moscow-building-dimensional-library-2026.md`, `docs/error-ledger.md` | Collect Rhino/view evidence before scoring or redesigning |
+| Clean complex Rhino model for analysis | Scenario 2 | `docs/development-state.md`, `docs/error-ledger.md`, `decisions/2026-05-19-feature-preserving-mesh-reconstruction.md`, `decisions/2026-05-20-nurbs-restart-from-named-rails.md` | `docs/context-system.md`, `docs/tools/rhino/rhino-mcp-backends.md` | Preserve source; classify parts; validate sections, not only watertightness |
+| Build or test Grasshopper graph | Grasshopper branch | `docs/tools/grasshopper/grasshopper-workflow.md`, `docs/tools/grasshopper/grasshopper-mcp-smoke.md`, `docs/cases/grasshopper/README.md` | `docs/tools/grasshopper/grasshopper-csharp-script-nodes.md`, `docs/tools/grasshopper/grasshopper-csharp-performance.md`, `docs/libraries/grasshopper/grasshopper-pattern-library.md` | Smoke-test small graph first; store script bodies in repo; do not read Rhino geometry cases unless the form grammar matches |
+| Choose Rhino backend or run RhinoMCP | Tooling | `docs/tools/rhino/rhino-mcp-backends.md`, `docs/research/source-repos/rhinomcp.md` | `TOOLKIT.md`, `scripts/README.md` | Use McNeel RhinoMCP by default; scan capabilities before build |
 | Reuse an existing successful or failed case | Case work | `docs/case-library.md`, matching `docs/cases/*.md` or `decisions/*.md` | matching error and pattern libraries | Promote only the reusable rule, not raw chat |
 | Promote Obsidian research into the repo | Knowledge import | `docs/repo-knowledge-boundary.md`, `docs/obsidian-knowledge-map.md`, `docs/repo-maintenance-guide.md` | `docs/experience-capture-format.md`, matching scenario/library files | Import only geometry-actionable, reusable, source-aware, buildable, checkable, shareable, compact knowledge |
 
@@ -42,11 +42,11 @@ do not restart from generic typology.
 Read:
 
 ```text
-docs/scenarios/tep-massing-scenario-subtypes.md
-docs/libraries/massing-decision-library.md
-docs/libraries/form-operator-library.md
-docs/libraries/moscow-building-dimensional-library-2026.md
-docs/errors/moscow-bc-massing-error-library.md
+docs/workflows/massing/tep-massing-scenario-subtypes.md
+docs/libraries/massing/massing-decision-library.md
+docs/libraries/massing/form-operator-library.md
+docs/libraries/standards/moscow-building-dimensional-library-2026.md
+docs/errors/massing/moscow-bc-massing-error-library.md
 docs/case-library.md
 docs/case-digest.md
 ```
@@ -66,7 +66,7 @@ what user accepted or rejected
 ```
 
 Then choose one or two explicit operators from
-`docs/libraries/form-operator-library.md`, for example:
+`docs/libraries/massing/form-operator-library.md`, for example:
 
 ```text
 setback

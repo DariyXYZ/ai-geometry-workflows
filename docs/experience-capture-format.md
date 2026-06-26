@@ -124,7 +124,7 @@ At the end of a meaningful session, make a small routing table:
 | --- | --- | --- | --- |
 |  | pattern | `docs/libraries/...` | no |
 |  | error | `docs/errors/...` | no |
-|  | metric | `docs/libraries/...yaml` | no |
+|  | metric | `docs/libraries/<domain>/<topic>.yaml` | no |
 |  | case index | `docs/case-library.md` | no |
 |  | decision | `decisions/...` | no |
 

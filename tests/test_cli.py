@@ -22,7 +22,7 @@ def run_cli(*args: str, cwd: Path = ROOT) -> subprocess.CompletedProcess[str]:
 
 def run_helper(*args: str, cwd: Path = ROOT) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        [sys.executable, "scripts/rhino_common_helper.py", *args],
+        [sys.executable, "scripts/rhino/common/rhino_common_helper.py", *args],
         cwd=str(cwd),
         text=True,
         capture_output=True,

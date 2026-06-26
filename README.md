@@ -59,13 +59,12 @@ archive/                old reports and one-off experiments
 Inside `docs/`:
 
 ```text
-scenarios/   workflow gates and scenario-specific strategy
-libraries/   reusable architectural patterns and massing logic
-cases/       successful, partial, and failed project lessons
+workflows/   task approach and scenario strategy by domain
+libraries/   reusable patterns, standards, dimensions, and GH libraries
+cases/       separated Rhino geometry and Grasshopper case branches
 errors/      domain-specific anti-patterns and rejection gates
-tools/       tool/backend notes
-research/    compressed research and source-repo synthesis
-source-repos/ external repository cards
+tools/       Rhino and Grasshopper backend notes
+research/    compressed research and external source-repo synthesis
 ```
 
 ## Runnable CLI
@@ -95,10 +94,11 @@ python -m ai_geometry_toolkit route .\cases\<case_id>
 ## Knowledge Rules
 
 - Save reusable structure, not raw chat.
-- Put new patterns in `docs/libraries/`.
-- Put scenario workflow rules in `docs/scenarios/`.
-- Put reusable lessons in `docs/case-library.md` or `docs/cases/`.
-- Put repeated failures in `docs/error-ledger.md` or `docs/errors/`.
+- Follow `docs/repo-folder-architecture.md` before creating or moving files.
+- Put new patterns in the matching `docs/libraries/<domain>/` folder.
+- Put workflow rules in `docs/workflows/<domain>/`.
+- Put reusable case lessons in the matching `docs/cases/<case-family>/` folder.
+- Put repeated failures in `docs/error-ledger.md` or `docs/errors/<domain>/`.
 - Put dated tradeoffs in `decisions/`.
 - Put disposable run output in `.tmp_cases/` or `archive/`, not active docs.
 - Use `docs/experience-capture-format.md` to split case experience into

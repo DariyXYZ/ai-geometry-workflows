@@ -17,7 +17,7 @@ AI Extraction Summary first
 
 Do not mix direct Rhino geometry cases with Grasshopper automation cases. If the
 task mentions Grasshopper, GH graph, C# Script component, sliders, plugins, or
-`g1_*`, use `docs/cases/grasshopper-case-index.md` as the case branch. If the
+`g1_*`, use `docs/cases/grasshopper/README.md` as the case branch. If the
 task is ordinary Rhino geometry, reference modeling, massing, cleanup, or .3dm
 scene construction, skip the Grasshopper branch unless GH implementation is
 explicitly requested.
@@ -41,7 +41,7 @@ explicitly requested.
 | Infinity Tower/SOM | `source-correction` | User-prepared Rhino curves override generic parametric sections. Use exact source contours and twist axis. | `decisions/2026-06-01-infinity-tower-user-rhino-curves-source-authority.md` |
 | Shanghai Tower-style twist | `medium-success` | A soft triangular twist with corner cut-out must be built from primitive/cutter logic, not an organic blob or unrelated point list. | `decisions/2026-06-01-shanghai-tower-square-cutter-source-grammar.md`, `docs/error-ledger.md` |
 | Flock chapel shell | `medium-success` | Shell direction was right, but supports, plan fit, and secondary elements must wait for shell acceptance. | `decisions/2026-06-01-flock-chapel-shell-medium-success.md` |
-| Symmetric stepped residential tower | `failed-to-rule` | Fixed-envelope plan-type changes must not create unintended taper; validate vertical band placement. | `docs/cases/recent-rhino-case-lessons.md`, `docs/error-ledger.md` |
+| Symmetric stepped residential tower | `failed-to-rule` | Fixed-envelope plan-type changes must not create unintended taper; validate vertical band placement. | `docs/cases/rhino-geometry/recent-rhino-case-lessons.md`, `docs/error-ledger.md` |
 
 ## Complex Model Cleanup Cases
 
@@ -55,34 +55,34 @@ explicitly requested.
 
 | Case | Status | Main lesson | Read |
 | --- | --- | --- | --- |
-| Moscow BC `AI_BC_V01-V03` | `failed` | Numeric pass is not design acceptance. Low bars cut movement, accidental intersections are not stylobates, box-only variants are rejected. | `docs/errors/moscow-bc-massing-error-library.md`, `docs/libraries/moscow-bc-site-zoning-patterns.md` |
-| Moscow BC Scenario 3 split | `strategy` | Classify as `3A` fixed zoning, `3B` plot-plus-entries zoning proposal, or `3C` existing-massing image revision before acting. | `docs/scenarios/tep-massing-scenario-subtypes.md` |
-| BC50 two-tower stylobate 2026-06-24 | `accepted` | For high-rise BC massing, use contour-derived roofs/parapets, straight core overruns, a recessed transfer floor/shadow joint, transparent glass material, 1 mm visual lifts for finish surfaces, and a vertical metric board outside the model. | `docs/cases/bc50-two-tower-stylobate-2026-06-24.md`, `scripts/rhino/massing/two_tower_bc_50f_stylobate.py` |
-| Rhino pilot massing v2-v4 | `failed-to-rule` | Circulation came too late, gaps became narrow residual slots, red-line discipline failed, and heavy blocks ignored light/open-space logic. | `docs/obsidian-knowledge-map.md`, `docs/errors/moscow-bc-massing-error-library.md` |
-| Rhino test massing v5-v8 | `medium-success` | The strongest direction was compact central podium plus a separated dynamic tower and landscape field; avoid random wide podiums and leftover pavilions. | `docs/obsidian-knowledge-map.md`, `docs/libraries/massing-decision-library.md` |
+| Moscow BC `AI_BC_V01-V03` | `failed` | Numeric pass is not design acceptance. Low bars cut movement, accidental intersections are not stylobates, box-only variants are rejected. | `docs/errors/massing/moscow-bc-massing-error-library.md`, `docs/libraries/massing/moscow-bc-site-zoning-patterns.md` |
+| Moscow BC Scenario 3 split | `strategy` | Classify as `3A` fixed zoning, `3B` plot-plus-entries zoning proposal, or `3C` existing-massing image revision before acting. | `docs/workflows/massing/tep-massing-scenario-subtypes.md` |
+| BC50 two-tower stylobate 2026-06-24 | `accepted` | For high-rise BC massing, use contour-derived roofs/parapets, straight core overruns, a recessed transfer floor/shadow joint, transparent glass material, 1 mm visual lifts for finish surfaces, and a vertical metric board outside the model. | `docs/cases/rhino-geometry/bc50-two-tower-stylobate-2026-06-24.md`, `scripts/rhino/massing/two_tower_bc_50f_stylobate.py` |
+| Rhino pilot massing v2-v4 | `failed-to-rule` | Circulation came too late, gaps became narrow residual slots, red-line discipline failed, and heavy blocks ignored light/open-space logic. | `docs/obsidian-knowledge-map.md`, `docs/errors/massing/moscow-bc-massing-error-library.md` |
+| Rhino test massing v5-v8 | `medium-success` | The strongest direction was compact central podium plus a separated dynamic tower and landscape field; avoid random wide podiums and leftover pavilions. | `docs/obsidian-knowledge-map.md`, `docs/libraries/massing/massing-decision-library.md` |
 
 ## Video / Replay / Demonstrator Cases
 
 | Case | Status | Main lesson | Read |
 | --- | --- | --- | --- |
-| Aqua Tower / Studio Gang video demonstrator | `tooling` | Preserve camera, slow construction down, keep model grounded, and remove obsolete helper geometry. | `docs/cases/recent-rhino-case-lessons.md` |
-| Absolute World Towers video demonstrator | `tooling` | Same replay discipline: staged visible construction and clean final state. | `docs/cases/recent-rhino-case-lessons.md` |
+| Aqua Tower / Studio Gang video demonstrator | `tooling` | Preserve camera, slow construction down, keep model grounded, and remove obsolete helper geometry. | `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` |
+| Absolute World Towers video demonstrator | `tooling` | Same replay discipline: staged visible construction and clean final state. | `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` |
 
 ## Grasshopper / MCP Cases
 
 This section is mirrored as a dedicated branch in
-`docs/cases/grasshopper-case-index.md`. Prefer that branch for Grasshopper
+`docs/cases/grasshopper/README.md`. Prefer that branch for Grasshopper
 work so direct Rhino geometry tasks do not spend tokens on GH-specific tooling
 failures.
 
 | Case | Status | Main lesson | Read |
 | --- | --- | --- | --- |
-| Grasshopper architecture snippets smoke 2026-06-23 | `tooling` | Quick architecture snippets passed RhinoCommon smoke: massing -> floors -> core -> TEP metrics; use `PlainText` and `string.Format` in Rhino 8 C# runner. | `docs/cases/grasshopper-architecture-snippets-smoke-2026-06-23.md`, `docs/libraries/grasshopper-architecture-snippet-library.md`, `scripts/rhino/smoke/quick_architecture_snippets_smoke.cs` |
-| Grasshopper spiral skyscraper 2026-06-22 | `tooling` | First architecture C# Script node case: one source-controlled node plus sliders is the fastest baseline for parametric tower massing; pending manual GH paste test. | `docs/cases/grasshopper-spiral-skyscraper-2026-06-22.md`, `scripts/grasshopper/examples/spiral_tower_csharp.cs`, `docs/tools/grasshopper-csharp-script-nodes.md` |
-| Grasshopper voxel skyscraper 2026-06-22 | `accepted` | Successful seed-driven voxel tower: use a controlled architectural mask plus Pufferfish `Voxel Mesh`; do not confuse it with random `Populate 3D` voxel clouds. | `docs/cases/grasshopper-voxel-skyscraper-2026-06-22.md`, `scripts/grasshopper/examples/voxel_seed_skyscraper_csharp.cs`, `scripts/grasshopper/examples/voxel_seed_skyscraper_graph.md` |
-| Grasshopper Pavilion 80hz lamella attractor 2026-06-26 | `medium-success / tooling` | Correct abstraction is attractor-shaped generatrix lamellas -> row-parity checkerboard anchor points -> tangent tilted shingles -> top beam. Source injection failed because legacy C# `SourceCodeChanged(None)` crashes Rhino 8.30; keep the C# body in repo and paste/use only a proven bridge. | `docs/cases/grasshopper-pavilion-80hz-lamella-attractor-2026-06-26.md`, `scripts/grasshopper/examples/pavilion_80hz_lamella_attractor_csharp.cs` |
-| Grasshopper MCP smoke 2026-06-22 | `tooling` | Use capability scan, fresh slot, manual placement/wiring, Construct Point smoke, and repo-stored script bodies. | `docs/cases/grasshopper-mcp-smoke-2026-06-22.md`, `docs/tools/grasshopper-workflow.md`, `docs/errors/grasshopper-mcp-error-library.md` |
-| Grasshopper C# SetSource IO 2026-06-22 | `tooling` | `SetSource` can accept code while preserving wrong default `x/y/out/a` IO; inspect IO and solve a tiny script before trusting source injection. | `docs/cases/grasshopper-csharp-setsource-io-2026-06-22.md`, `docs/tools/grasshopper-csharp-script-nodes.md`, `docs/errors/grasshopper-mcp-error-library.md` |
+| Grasshopper architecture snippets smoke 2026-06-23 | `tooling` | Quick architecture snippets passed RhinoCommon smoke: massing -> floors -> core -> TEP metrics; use `PlainText` and `string.Format` in Rhino 8 C# runner. | `docs/cases/grasshopper/grasshopper-architecture-snippets-smoke-2026-06-23.md`, `docs/libraries/grasshopper/grasshopper-architecture-snippet-library.md`, `scripts/rhino/smoke/quick_architecture_snippets_smoke.cs` |
+| Grasshopper spiral skyscraper 2026-06-22 | `tooling` | First architecture C# Script node case: one source-controlled node plus sliders is the fastest baseline for parametric tower massing; pending manual GH paste test. | `docs/cases/grasshopper/grasshopper-spiral-skyscraper-2026-06-22.md`, `scripts/grasshopper/examples/spiral_tower_csharp.cs`, `docs/tools/grasshopper/grasshopper-csharp-script-nodes.md` |
+| Grasshopper voxel skyscraper 2026-06-22 | `accepted` | Successful seed-driven voxel tower: use a controlled architectural mask plus Pufferfish `Voxel Mesh`; do not confuse it with random `Populate 3D` voxel clouds. | `docs/cases/grasshopper/grasshopper-voxel-skyscraper-2026-06-22.md`, `scripts/grasshopper/examples/voxel_seed_skyscraper_csharp.cs`, `scripts/grasshopper/examples/voxel_seed_skyscraper_graph.md` |
+| Grasshopper Pavilion 80hz lamella attractor 2026-06-26 | `medium-success / tooling` | Correct abstraction is attractor-shaped generatrix lamellas -> row-parity checkerboard anchor points -> tangent tilted shingles -> top beam. Source injection failed because legacy C# `SourceCodeChanged(None)` crashes Rhino 8.30; keep the C# body in repo and paste/use only a proven bridge. | `docs/cases/grasshopper/grasshopper-pavilion-80hz-lamella-attractor-2026-06-26.md`, `scripts/grasshopper/examples/pavilion_80hz_lamella_attractor_csharp.cs` |
+| Grasshopper MCP smoke 2026-06-22 | `tooling` | Use capability scan, fresh slot, manual placement/wiring, Construct Point smoke, and repo-stored script bodies. | `docs/cases/grasshopper/grasshopper-mcp-smoke-2026-06-22.md`, `docs/tools/grasshopper/grasshopper-workflow.md`, `docs/errors/grasshopper/grasshopper-mcp-error-library.md` |
+| Grasshopper C# SetSource IO 2026-06-22 | `tooling` | `SetSource` can accept code while preserving wrong default `x/y/out/a` IO; inspect IO and solve a tiny script before trusting source injection. | `docs/cases/grasshopper/grasshopper-csharp-setsource-io-2026-06-22.md`, `docs/tools/grasshopper/grasshopper-csharp-script-nodes.md`, `docs/errors/grasshopper/grasshopper-mcp-error-library.md` |
 
 ## Case Entry Template
 
