@@ -37,6 +37,7 @@ This file tells a new user or AI agent what to read and what to ignore.
 | `docs/errors/moscow-bc-massing-error-library.md` | Moscow BC massing failure modes: site fail despite numeric pass, cut routes, box-only variants, accidental intersections. |
 | `docs/libraries/moscow-bc-site-zoning-patterns.md` | Zoning patterns and pre-geometry gates for BC/residential massing: public spine, service edge, buildable bands, height anchors. |
 | `docs/cases/recent-rhino-case-lessons.md` | Recent Rhino/RhinoMCP case results, video replay scripts, and fresh modeling rules. |
+| `docs/cases/grasshopper-case-index.md` | Separate Grasshopper case branch for GH graphs, C# Script, plugins, and `g1_*` automation. |
 | `docs/context-system.md` | Where to store decisions, cases, reports, and temporary work. |
 | `docs/experience-capture-format.md` | Standard format for turning cases into patterns, errors, metrics, prompts, decisions, and tool notes. |
 | `docs/repo-knowledge-boundary.md` | Promotion gate for deciding what belongs in GitHub and what remains local in Obsidian. |
@@ -132,6 +133,7 @@ Read:
 Read:
 
 - `docs/tools/grasshopper-workflow.md`
+- `docs/cases/grasshopper-case-index.md`
 - `docs/tools/grasshopper-csharp-script-nodes.md` when writing C# Script nodes
 - `docs/tools/grasshopper-csharp-performance.md` when writing large, automatic-IO, cached, or parallel C# Script nodes
 - `docs/tools/grasshopper-mcp-smoke.md`

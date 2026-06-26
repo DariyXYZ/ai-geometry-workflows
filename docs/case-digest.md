@@ -11,6 +11,17 @@ When opening a case file, read the `AI Extraction Summary` block first and stop
 there unless the current task matches the case grammar, tool route, or failure
 gate.
 
+Keep two case branches separate:
+
+- direct Rhino geometry cases: reference modeling, massing, cleanup, .3dm scene
+  construction, RhinoCommon generators;
+- Grasshopper cases: GH graphs, C# Script components, sliders, plugins,
+  RhinoMCP `g1_*`, and source-injection/tooling failures.
+
+For Grasshopper work, open `docs/cases/grasshopper-case-index.md`. For direct
+Rhino geometry work, skip that branch unless GH implementation is explicitly
+requested.
+
 ## Current Standards
 
 | Standard | Use for | Source |
@@ -22,6 +33,7 @@ gate.
 | McNeel RhinoMCP is default | Rhino work | `docs/tools/rhino-mcp-backends.md` |
 | `MCPStart`, not `MCPConnect` | RhinoMCP slot startup | `docs/errors/grasshopper-mcp-error-library.md` |
 | Store GH C# bodies in repo | Grasshopper script logic | `docs/tools/grasshopper-csharp-script-nodes.md` |
+| Separate GH cases from Rhino geometry | Case routing | `docs/cases/grasshopper-case-index.md` |
 | Promote experience by type | Any useful session | `docs/experience-capture-format.md` |
 
 ## Wins To Reuse

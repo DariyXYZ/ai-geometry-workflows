@@ -8,6 +8,7 @@ footprint intent.
 ## AI Extraction Summary
 
 ```yaml
+case_family: rhino-geometry
 use_when: "high-rise business-center massing with towers on a stylobate, especially Scenario 3A/3C revisions"
 source_authority: "fixed stylobate/tower intent plus source-controlled Rhino generator"
 geometry_grammar: "continuous stylobate -> exploited roof/courtyard/bridge -> recessed transfer floors -> two tapered/twisted towers -> straight roof cores"

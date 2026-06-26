@@ -15,6 +15,13 @@ AI Extraction Summary first
 -> detailed note only when source, grammar, tool route, or failure gate matches
 ```
 
+Do not mix direct Rhino geometry cases with Grasshopper automation cases. If the
+task mentions Grasshopper, GH graph, C# Script component, sliders, plugins, or
+`g1_*`, use `docs/cases/grasshopper-case-index.md` as the case branch. If the
+task is ordinary Rhino geometry, reference modeling, massing, cleanup, or .3dm
+scene construction, skip the Grasshopper branch unless GH implementation is
+explicitly requested.
+
 ## Case Status Types
 
 | Status | Meaning |
@@ -62,6 +69,11 @@ AI Extraction Summary first
 | Absolute World Towers video demonstrator | `tooling` | Same replay discipline: staged visible construction and clean final state. | `docs/cases/recent-rhino-case-lessons.md` |
 
 ## Grasshopper / MCP Cases
+
+This section is mirrored as a dedicated branch in
+`docs/cases/grasshopper-case-index.md`. Prefer that branch for Grasshopper
+work so direct Rhino geometry tasks do not spend tokens on GH-specific tooling
+failures.
 
 | Case | Status | Main lesson | Read |
 | --- | --- | --- | --- |

@@ -7,6 +7,7 @@ Scenario: Grasshopper architecture massing.
 ## AI Extraction Summary
 
 ```yaml
+case_family: grasshopper
 use_when: "voxel skyscraper or seed-driven tower that must read as architecture, not a random voxel cloud"
 source_authority: "accepted GH/C# seed-mask case with observed live metrics"
 geometry_grammar: "floor stack -> deterministic grid mask -> taper/waist/twist/terrace filters -> occupied voxel centers -> fast envelope mesh -> optional Pufferfish Voxel Mesh"

@@ -8,6 +8,7 @@ Scenario: tooling / Grasshopper architecture massing.
 ## AI Extraction Summary
 
 ```yaml
+case_family: grasshopper
 use_when: "baseline parametric tower in Grasshopper using one Rhino 8 C# Script node plus sliders"
 source_authority: "source-controlled C# Script body and RhinoCommon runtime validation"
 geometry_grammar: "repeated rectangular floor plates -> controlled twist -> controlled taper -> capped slabs -> vertical core -> four facade rails"

@@ -38,9 +38,12 @@ Status: accepted | medium-success | failed | source-correction | tooling
 
 Scenario: 1 | 2 | 3A | 3B | 3C | 3D | tooling
 
+Case family: rhino-geometry | grasshopper | analysis-cleanup | source-research
+
 ## AI Extraction Summary
 
 ```yaml
+case_family:
 use_when:
 source_authority:
 geometry_grammar:

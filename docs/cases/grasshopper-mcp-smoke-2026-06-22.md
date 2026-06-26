@@ -9,6 +9,7 @@ Grasshopper automation through standard RhinoMCP.
 ## AI Extraction Summary
 
 ```yaml
+case_family: grasshopper
 use_when: "starting or debugging Grasshopper automation through RhinoMCP"
 source_authority: "fresh-slot MCP smoke test with component search/place/wire/solve"
 geometry_grammar: "tooling case; no architectural grammar"

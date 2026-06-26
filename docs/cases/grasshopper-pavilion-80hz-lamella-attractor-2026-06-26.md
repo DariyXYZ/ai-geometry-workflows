@@ -8,6 +8,7 @@ small pavilion with lamellas and staggered tilted shingles.
 ## AI Extraction Summary
 
 ```yaml
+case_family: grasshopper
 use_when: "parametric pavilion, lamella screen, staggered shingles, attractor-shaped facade/skin logic"
 source_authority: "user reference images and user-corrected construction sequence"
 geometry_grammar: "attractor envelope points -> vertical/slightly curved lamellas -> row-parity checkerboard anchors -> tangent tilted shingles -> continuous top beam"

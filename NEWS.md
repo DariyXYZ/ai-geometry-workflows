@@ -1,5 +1,27 @@
 # Новости
 
+## 2026-06-26 - Split Grasshopper cases from Rhino geometry cases
+
+Added a separate Grasshopper case branch:
+
+- `docs/cases/grasshopper-case-index.md`
+
+Case routing now distinguishes direct Rhino geometry from Grasshopper graph,
+C# Script, plugin, slider, source-injection, and RhinoMCP `g1_*` automation
+work. Existing `AI Extraction Summary` blocks now include `case_family` so
+future agents can skip the wrong branch quickly.
+
+Updated:
+
+- `docs/case-digest.md`
+- `docs/case-library.md`
+- `docs/task-read-maps.md`
+- `docs/repository-map.md`
+- `docs/library-index.md`
+- `docs/START_HERE.md`
+- `docs/experience-capture-format.md`
+- active `docs/cases/*.md`
+
 ## 2026-06-26 - Normalized case files for faster AI extraction
 
 Added a mandatory `AI Extraction Summary` block to every active case note in

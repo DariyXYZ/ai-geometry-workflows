@@ -7,6 +7,7 @@ Scenario: tooling / architecture snippet validation.
 ## AI Extraction Summary
 
 ```yaml
+case_family: grasshopper
 use_when: "testing quick architecture snippets for massing, floors, core, and TEP metrics without depending on GH source injection"
 source_authority: "RhinoCommon smoke script and object/layer audit"
 geometry_grammar: "bbox massing -> schematic floors -> central core -> GFA/net/FAR metrics -> visible annotation"

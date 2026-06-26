@@ -7,6 +7,7 @@ Scenario: tooling / Grasshopper C# Script source injection failure.
 ## AI Extraction Summary
 
 ```yaml
+case_family: grasshopper
 use_when: "considering programmatic SetSource into Rhino 8 C# Script components"
 source_authority: "Rhino 8.30 component API smoke test on RhinoCodePluginGH.Components.CSharpComponent"
 geometry_grammar: "tooling case; no architectural geometry"

@@ -9,6 +9,7 @@ constructive grammar, what worked, what failed, and the reusable modeling rule.
 ## AI Extraction Summary
 
 ```yaml
+case_family: rhino-geometry
 use_when: "reference-to-model, video replay, or Rhino massing tasks similar to one of the mini-cases below"
 source_authority: "mixed: user Rhino curves, text dimensions, plan underlays, elevations, sections, photos, and user camera"
 geometry_grammar: "case-specific; read only the mini-card that matches the current task"
