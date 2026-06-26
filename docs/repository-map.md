@@ -11,6 +11,7 @@ This file tells a new user or AI agent what to read and what to ignore.
 | `docs/START_HERE.md` | Main loading path for fresh chats and new computers. |
 | `docs/task-read-maps.md` | Task-to-read-set router for AI agents using the repo as a skill. |
 | `docs/case-digest.md` | Compact wins, errors, techniques, standards, and current case-derived decisions. |
+| `docs/repo-knowledge-boundary.md` | Boundary between shared repo knowledge and local Obsidian research/capture. |
 | `NEWS.md` | Chronological project memory, newest entries first. |
 | `README.md` | Project overview and runnable CLI commands. |
 | `docs/development-state.md` | Current technical state and next engineering steps. |
@@ -38,6 +39,7 @@ This file tells a new user or AI agent what to read and what to ignore.
 | `docs/cases/recent-rhino-case-lessons.md` | Recent Rhino/RhinoMCP case results, video replay scripts, and fresh modeling rules. |
 | `docs/context-system.md` | Where to store decisions, cases, reports, and temporary work. |
 | `docs/experience-capture-format.md` | Standard format for turning cases into patterns, errors, metrics, prompts, decisions, and tool notes. |
+| `docs/repo-knowledge-boundary.md` | Promotion gate for deciding what belongs in GitHub and what remains local in Obsidian. |
 | `docs/repo-maintenance-guide.md` | How to add reusable strategies, patterns, cases, errors, and source findings without clutter. |
 | `docs/project-data-map.md` | Where source data and related repos live. |
 | `docs/tools/rhino-mcp-backends.md` | Rhino backend policy: McNeel RhinoMCP default, optional plugin backends by request. |

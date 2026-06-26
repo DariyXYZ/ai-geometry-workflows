@@ -34,6 +34,7 @@ Bad additions:
 | Repo structure | `docs/repository-map.md` |
 | Pattern or strategy index | `docs/library-index.md` |
 | Experience capture format | `docs/experience-capture-format.md` |
+| Repo vs Obsidian promotion gate | `docs/repo-knowledge-boundary.md` |
 | Case entry | `docs/case-library.md` |
 | Scenario workflow | `docs/scenarios/<scenario>.md` |
 | Pattern library | `docs/libraries/<topic>.md` |
@@ -69,13 +70,14 @@ repo-maintenance-guide.md
 
 When adding a new reusable rule:
 
-1. Add the rule to the smallest correct file.
-2. If it changes navigation, update `AI_NAVIGATOR.md` or `docs/START_HERE.md`.
-3. If it should be discoverable, update `docs/library-index.md`.
-4. If it came from a case, update `docs/case-library.md`.
-5. If it is a failure, update `docs/error-ledger.md`.
-6. If it is an accepted tradeoff, add a dated file in `decisions/`.
-7. Add a short `NEWS.md` entry if future sessions should notice it.
+1. If it came from Obsidian, apply `docs/repo-knowledge-boundary.md`.
+2. Add the rule to the smallest correct file.
+3. If it changes navigation, update `AI_NAVIGATOR.md` or `docs/START_HERE.md`.
+4. If it should be discoverable, update `docs/library-index.md`.
+5. If it came from a case, update `docs/case-library.md`.
+6. If it is a failure, update `docs/error-ledger.md`.
+7. If it is an accepted tradeoff, add a dated file in `decisions/`.
+8. Add a short `NEWS.md` entry if future sessions should notice it.
 
 ## Case Promotion Checklist
 

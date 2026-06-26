@@ -28,6 +28,7 @@ Do not store durable project state only in chat history.
 | One modeling run | `cases/<case_id>/` | Tracked only when ready to share. |
 | Local smoke runs | `.tmp_cases/<case_id>/` | Ignored by Git. |
 | Case-derived reusable lesson | `docs/experience-capture-format.md` routes it to the right library | Split into case, pattern, error, metric, prompt, decision, or tool note. |
+| Obsidian research promotion | `docs/repo-knowledge-boundary.md` | Promote only geometry-actionable, reusable, source-aware, buildable, checkable, shareable, compact knowledge. |
 | Personal reload notes | Obsidian `Codex Workspace Control Center` | Use for cross-repo context. |
 | GitHub implementation task | Engineering task issue template | Use when a task should be tracked publicly. |
 | GitHub failure or lesson | Failure/lesson issue template | Mirror into `docs/error-ledger.md` when durable. |
@@ -64,6 +65,8 @@ Recommended report files:
 - If a failure changes the route, add it to `docs/error-ledger.md`.
 - If a session produced reusable experience, apply
   `docs/experience-capture-format.md` before adding long notes.
+- If importing from Obsidian, apply `docs/repo-knowledge-boundary.md` before
+  adding repo docs.
 - If a file or folder gains a new role, update `docs/project-data-map.md`.
 - If a command changes, update `TOOLKIT.md`.
 - If a next step changes, update `docs/development-state.md`.

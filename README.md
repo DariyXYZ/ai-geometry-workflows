@@ -22,6 +22,7 @@ For a human or new machine:
 docs/START_HERE.md
 docs/task-read-maps.md
 docs/case-digest.md
+docs/repo-knowledge-boundary.md
 docs/repository-map.md
 docs/library-index.md
 ```
@@ -102,5 +103,7 @@ python -m ai_geometry_toolkit route .\cases\<case_id>
 - Put disposable run output in `.tmp_cases/` or `archive/`, not active docs.
 - Use `docs/experience-capture-format.md` to split case experience into
   patterns, errors, metrics, prompts, decisions, and tool notes.
+- Use `docs/repo-knowledge-boundary.md` before promoting Obsidian research into
+  the shared repo.
 
 Read `docs/repo-maintenance-guide.md` before adding new durable knowledge.

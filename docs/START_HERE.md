@@ -20,12 +20,14 @@ Read:
 7. `docs/scenarios/reference-modeling-gates.md` - how to think before modeling.
 8. `docs/error-ledger.md` - mistakes that must not repeat.
 9. `docs/experience-capture-format.md` - how to promote useful experience.
-10. `docs/obsidian-knowledge-map.md` - useful Obsidian research, tests, and errors
+10. `docs/repo-knowledge-boundary.md` - what belongs in the shared repo vs
+   local Obsidian.
+11. `docs/obsidian-knowledge-map.md` - useful Obsidian research, tests, and errors
    not fully migrated into compact repo pages.
-11. `docs/cases/recent-rhino-case-lessons.md` - recent Rhino/RhinoMCP case results,
+12. `docs/cases/recent-rhino-case-lessons.md` - recent Rhino/RhinoMCP case results,
    video scripts, and fresh mistakes.
-12. `docs/repository-map.md` - where everything lives.
-13. `docs/source-repos/README.md` - compressed memory of external repositories.
+13. `docs/repository-map.md` - where everything lives.
+14. `docs/source-repos/README.md` - compressed memory of external repositories.
 
 If using an AI agent, point it at `AGENTS.md` first.
 
@@ -229,6 +231,7 @@ local source card first
 Every meaningful session should leave the repo better for the next fresh chat:
 
 - follow `docs/repo-maintenance-guide.md`;
+- apply `docs/repo-knowledge-boundary.md` before importing Obsidian research;
 - use `docs/experience-capture-format.md` when promoting a case into patterns,
   errors, metrics, prompts, or decisions;
 - update `NEWS.md`;

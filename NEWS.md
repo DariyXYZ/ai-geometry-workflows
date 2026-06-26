@@ -1,5 +1,22 @@
 # Новости
 
+## 2026-06-26 - Defined repo vs Obsidian knowledge boundary
+
+Added the promotion gate for deciding what belongs in the shared GitHub repo
+and what remains local in Obsidian:
+
+- `docs/repo-knowledge-boundary.md`
+- `decisions/2026-06-26-repo-vs-obsidian-knowledge-boundary.md`
+
+Policy: the repo stores compact, shareable, geometry-actionable operating
+memory for architects and AI agents. Obsidian remains the raw research,
+personal continuity, private context, and speculative trend layer until notes
+are distilled into patterns, cases, errors, metrics/defaults, tool recipes,
+source synthesis, or decisions.
+
+Updated navigation and maintenance files so future imports from Obsidian pass
+the boundary checklist first.
+
 ## 2026-06-26 - Strengthened repo-as-skill architecture
 
 Added a task-level routing layer so an AI can use the repository as a compact

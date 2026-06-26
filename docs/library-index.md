@@ -11,6 +11,7 @@ ideas, and tools without rereading every document.
 | Scenario router | Choosing which workflow applies | `docs/START_HERE.md` |
 | Task read maps | Matching a concrete user task to the smallest read set | `docs/task-read-maps.md` |
 | Case digest | Compact wins, failures, techniques, standards, and current decisions from cases | `docs/case-digest.md` |
+| Repo knowledge boundary | Deciding what is shared repo memory vs local Obsidian research/capture | `docs/repo-knowledge-boundary.md` |
 | Reference modeling gates | Building from references, plans, photos, underlays | `docs/scenarios/reference-modeling-gates.md` |
 | TEP/massing subtypes | Splitting Scenario 3 into 3A/3B/3C/3D | `docs/scenarios/tep-massing-scenario-subtypes.md` |
 | Architecture compliance check | Reviewing a building/massing against checklist criteria | `docs/scenarios/architecture-compliance-check.md` |
@@ -139,6 +140,7 @@ local source card
 | `docs/obsidian-knowledge-map.md` | Obsidian research, tests, errors, and import backlog |
 | `docs/context-system.md` | Where to save project context, cases, errors, decisions |
 | `docs/experience-capture-format.md` | How to promote session experience into reusable repo knowledge |
+| `docs/repo-knowledge-boundary.md` | What gets promoted from Obsidian into the shared GitHub repo |
 | `docs/project-data-map.md` | Active data and source locations |
 | `docs/repository-map.md` | Repo structure and scenario read sets |
 | `docs/development-state.md` | Current technical state and roadmap |

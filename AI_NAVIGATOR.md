@@ -35,8 +35,9 @@ Read in this order:
 7. `docs/case-library.md` - known successful and failed cases.
 8. `docs/error-ledger.md` - mistakes that must not repeat.
 9. `docs/experience-capture-format.md` - how to write back reusable lessons.
-10. `docs/obsidian-knowledge-map.md` - useful vault research not fully migrated.
-11. `NEWS.md` - newest changes and promoted rules.
+10. `docs/repo-knowledge-boundary.md` - what belongs in GitHub vs local Obsidian.
+11. `docs/obsidian-knowledge-map.md` - useful vault research not fully migrated.
+12. `NEWS.md` - newest changes and promoted rules.
 
 Then load only the scenario-specific documents. Do not read the whole repo by
 default.
@@ -145,6 +146,7 @@ or 3D checklist/compliance review?
 | Pattern and strategy library | `docs/library-index.md` |
 | Compact case memory | `docs/case-digest.md` |
 | Experience capture format | `docs/experience-capture-format.md` |
+| Repo vs Obsidian boundary | `docs/repo-knowledge-boundary.md` |
 | Obsidian research map | `docs/obsidian-knowledge-map.md` |
 | Massing decision order | `docs/libraries/massing-decision-library.md` |
 | Massing form operators | `docs/libraries/form-operator-library.md` |
@@ -174,6 +176,10 @@ source card: external repo idea, usable pieces, non-goals
 Use `docs/experience-capture-format.md` when a session should be split into a
 case note, pattern/operator, error, metric/default, prompt/hint, decision, or
 tool note.
+
+Use `docs/repo-knowledge-boundary.md` before importing local Obsidian research:
+only geometry-actionable, reusable, source-aware, buildable, checkable, and
+shareable knowledge belongs in the shared repo.
 
 ## RhinoMCP Session Rule
 

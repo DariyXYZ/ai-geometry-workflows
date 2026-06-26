@@ -32,6 +32,7 @@ Then read case files only when the task resembles that case.
 | Build or test Grasshopper graph | Tooling | `docs/tools/grasshopper-workflow.md`, `docs/tools/grasshopper-mcp-smoke.md` | `docs/tools/grasshopper-csharp-script-nodes.md`, `docs/tools/grasshopper-csharp-performance.md`, `docs/libraries/grasshopper-pattern-library.md` | Smoke-test small graph first; store script bodies in repo |
 | Choose Rhino backend or run RhinoMCP | Tooling | `docs/tools/rhino-mcp-backends.md`, `docs/source-repos/rhinomcp.md` | `TOOLKIT.md`, `scripts/README.md` | Use McNeel RhinoMCP by default; scan capabilities before build |
 | Reuse an existing successful or failed case | Case work | `docs/case-library.md`, matching `docs/cases/*.md` or `decisions/*.md` | matching error and pattern libraries | Promote only the reusable rule, not raw chat |
+| Promote Obsidian research into the repo | Knowledge import | `docs/repo-knowledge-boundary.md`, `docs/obsidian-knowledge-map.md`, `docs/repo-maintenance-guide.md` | `docs/experience-capture-format.md`, matching scenario/library files | Import only geometry-actionable, reusable, source-aware, buildable, checkable, shareable, compact knowledge |
 
 ## Scenario 3C Example - Second Massing Variant
 

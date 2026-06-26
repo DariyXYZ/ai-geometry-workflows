@@ -78,7 +78,12 @@ Use Obsidian as source memory and this repo as portable operating memory.
 
 ```text
 Obsidian note found
+-> apply docs/repo-knowledge-boundary.md
 -> extract durable rule / pattern / case / error
 -> add compact repo page or index pointer
 -> update NEWS.md
 ```
+
+Only promote notes that are geometry-actionable, reusable, source-aware,
+buildable, checkable, shareable, and compact. Keep raw research, private
+context, speculative trends, and long precedent catalogs local until distilled.
