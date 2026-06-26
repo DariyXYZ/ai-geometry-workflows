@@ -196,6 +196,23 @@ If the IO contract is wrong, stop and use one of these paths:
 - legacy C# component only after a separate smoke test proves source and IO;
 - a dedicated graph-builder script once the component source format is known.
 
+Additional legacy-component caveat:
+
+- Do not call `SourceCodeChanged(None)` on
+  `ScriptComponents.Component_CSNET_Script`. In Rhino/GH 8.30 this crashed
+  Rhino with a dispatcher-thread `NullReferenceException` during the Pavilion
+  80hz automation attempt (GH-015). This failure is not safely catchable around
+  the call because the exception is raised asynchronously.
+
+Use this decision rule:
+
+```text
+need complex logic
+-> write/pick paste-ready C# in scripts/grasshopper/examples/
+-> manual paste or proven source bridge
+-> automate only sliders/standard graph around it
+```
+
 ## Good Script Node Defaults
 
 For generated scripts:

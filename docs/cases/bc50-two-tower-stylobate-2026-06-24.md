@@ -8,8 +8,9 @@ footprint intent.
 Source / file:
 
 - generator: `scripts/rhino/massing/two_tower_bc_50f_stylobate.py`
-- latest local Rhino output: `outputs/rhino/BC50_two_towers_stylobate_v6.3dm`
-- next reproducible generator baseline after presentation polish: `BC50_v7`
+- prior local Rhino output was kept under ignored `outputs/rhino/` and is not
+  part of the active repo contract
+- current reproducible generator baseline after presentation polish: `BC50_v7`
 - branch: `codex/grasshopper-workflow`
 
 ## Goal

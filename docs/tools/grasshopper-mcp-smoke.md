@@ -8,7 +8,7 @@ Use this before relying on Grasshopper automation through RhinoMCP.
 
 ```text
 mcp__rhino.list_slots
--> if empty, ask the user to run MCPConnect in Rhino
+-> if empty, ask the user to run MCPStart in Rhino
 -> mcp__rhino.run_python for Rhino version, units, object count
 -> mcp__rhino.get_commands for Grasshopper, Script, Python
 -> mcp__rhino.g1_search_components for required GH objects

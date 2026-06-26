@@ -1,11 +1,21 @@
 # Development State
 
+Current override, 2026-06-26:
+
+- Active local repo path: `C:\VS Code\ai-geometry-workflows`.
+- AI entry layer now includes `AI_NAVIGATOR.md`, `docs/task-read-maps.md`,
+  `docs/START_HERE.md`, `docs/library-index.md`, and
+  `docs/experience-capture-format.md`.
+- Scenario 3 includes `3D` architecture checklist review in addition to
+  `3A/3B/3C` massing workflows.
+- Latest verification: `python -m pytest` -> 8 tests passed.
+
 Обновлено: 2026-06-01
 
 ## Активный репозиторий
 
 ```text
-C:\VS Code\workfiles\ai-geometry-workflows
+C:\VS Code\ai-geometry-workflows
 https://github.com/DariyXYZ/ai-geometry-workflows
 ```
 
@@ -195,7 +205,7 @@ Spellshape / Live OBJ тоже может быть полезен как semanti
 python -m unittest discover -s tests
 ```
 
-Последний известный результат: 5 tests passed.
+Latest known result: 8 tests passed on 2026-06-26 via `python -m pytest`.
 
 ## Не активно прямо сейчас
 

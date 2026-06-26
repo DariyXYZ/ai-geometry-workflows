@@ -24,8 +24,8 @@ Grasshopper may be loaded even though `g1_start` timed out.
 Correction:
 
 For production work, avoid closing or spawning slots unless the user explicitly
-asks for it. Ask the user to open Grasshopper manually, then reconnect with
-`MCPConnect` if needed.
+asks for it. Ask the user to open Grasshopper manually and run `MCPStart` if no
+RhinoMCP slot is visible.
 
 Required gate:
 
@@ -560,3 +560,59 @@ Required gate:
 After creating or editing a C# Script component programmatically, call
 `TryGetSource` and inspect the actual `RunScript` signature, not only
 `Params.Output`.
+
+## GH-015 - Legacy C# `SourceCodeChanged(None)` Crashes Rhino
+
+Symptom:
+
+Programmatically editing the legacy `C# Script` component
+(`ScriptComponents.Component_CSNET_Script`) and then calling:
+
+```python
+component.SourceCodeChanged(None)
+```
+
+crashes Rhino 8.30. The router prunes the slot as `rhino_crashed`.
+
+Observed 2026-06-26:
+
+```yaml
+rhino_version: 8.30.26103.11001
+grasshopper_version: 8.30.26103.11001
+component: ScriptComponents.Component_CSNET_Script
+operation: set ScriptSource.UsingCode / ScriptCode / AdditionalCode, then SourceCodeChanged(None)
+result: Rhino crash before .gh save
+crash: System.NullReferenceException at Component_AbstractScript_Roslyn.SourceCodeChanged(GH_ScriptEditor sender)
+case: Pavilion 80hz lamella attractor
+```
+
+Cause:
+
+`SourceCodeChanged` expects a real `GH_ScriptEditor` sender. Passing `None`
+creates an asynchronous UI-thread `NullReferenceException`. The error is thrown
+later through the dispatcher, so a local `try/catch` around the call does not
+protect Rhino.
+
+Correction:
+
+Do not call `SourceCodeChanged(None)`. Do not trust legacy C# script-source
+automation until a tiny disposable smoke test proves source refresh, IO, solve,
+and save in the same Rhino/Grasshopper version.
+
+Stable path:
+
+```text
+store paste-ready C# body in scripts/grasshopper/examples/
+-> user creates fresh C# Script component
+-> manual paste through Script Editor
+-> Codex may automate surrounding sliders/groups only through proven run_python routes
+```
+
+Required gate:
+
+If a task needs a C# Script node, the script body must exist in the repo before
+any risky Grasshopper source-injection attempt. For Pavilion 80hz, use:
+
+```text
+scripts/grasshopper/examples/pavilion_80hz_lamella_attractor_csharp.cs
+```

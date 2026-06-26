@@ -19,8 +19,9 @@ command = "rhino-mcp-router"
 args = ["--default-version", "8"]
 ```
 
-If Rhino provides a full router path through `MCPConnect`, use that command
-instead of inventing a path.
+If no slot is visible, ask the user to run `MCPStart` in Rhino. Use the full
+router executable path from the local `.mcp.json` or Rhino MCP package install
+when configuring Codex; do not invent a path.
 
 ## Operating Rule
 

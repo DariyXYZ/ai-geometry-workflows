@@ -8,7 +8,7 @@ historical artifacts live. It is an index, not a full dump of the project.
 Root:
 
 ```text
-C:\VS Code\workfiles\ai-geometry-workflows
+C:\VS Code\ai-geometry-workflows
 ```
 
 | Path | Role | Status |
@@ -33,10 +33,12 @@ C:\VS Code\workfiles\ai-geometry-workflows
 | Path | Role |
 | --- | --- |
 | `docs/START_HERE.md` | Scenario read sets |
+| `docs/task-read-maps.md` | Concrete task-to-read-set router |
 | `docs/repository-map.md` | Repo structure |
 | `docs/library-index.md` | Strategy, pattern, source, and tool index |
 | `docs/case-library.md` | Reusable case memory |
 | `docs/error-ledger.md` | Cross-scenario failure modes |
+| `docs/experience-capture-format.md` | Standard format for promoting case experience |
 | `docs/obsidian-knowledge-map.md` | Obsidian research and import backlog |
 | `docs/scenarios/` | Workflow gates and scenario-specific strategy |
 | `docs/libraries/` | Architectural and massing pattern libraries |

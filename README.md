@@ -20,12 +20,14 @@ For a human or new machine:
 
 ```text
 docs/START_HERE.md
+docs/task-read-maps.md
+docs/case-digest.md
 docs/repository-map.md
 docs/library-index.md
 ```
 
 Do not read the whole repo first. Pick the smallest scenario read set from
-`docs/START_HERE.md`.
+`docs/task-read-maps.md`.
 
 ## Active Scenarios
 
@@ -98,5 +100,7 @@ python -m ai_geometry_toolkit route .\cases\<case_id>
 - Put repeated failures in `docs/error-ledger.md` or `docs/errors/`.
 - Put dated tradeoffs in `decisions/`.
 - Put disposable run output in `.tmp_cases/` or `archive/`, not active docs.
+- Use `docs/experience-capture-format.md` to split case experience into
+  patterns, errors, metrics, prompts, decisions, and tool notes.
 
 Read `docs/repo-maintenance-guide.md` before adding new durable knowledge.

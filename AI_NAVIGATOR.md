@@ -27,16 +27,40 @@ decision structure.
 Read in this order:
 
 1. `AI_NAVIGATOR.md` - this file.
-2. `docs/START_HERE.md` - scenario read sets.
-3. `docs/repository-map.md` - where things live.
-4. `docs/library-index.md` - pattern, strategy, source, and tool libraries.
-5. `docs/case-library.md` - known successful and failed cases.
-6. `docs/error-ledger.md` - mistakes that must not repeat.
-7. `docs/obsidian-knowledge-map.md` - useful vault research not fully migrated.
-8. `NEWS.md` - newest changes and promoted rules.
+2. `docs/task-read-maps.md` - task-specific read sets.
+3. `docs/START_HERE.md` - scenario read sets.
+4. `docs/repository-map.md` - where things live.
+5. `docs/library-index.md` - pattern, strategy, source, and tool libraries.
+6. `docs/case-digest.md` - one-minute wins, errors, techniques, and standards.
+7. `docs/case-library.md` - known successful and failed cases.
+8. `docs/error-ledger.md` - mistakes that must not repeat.
+9. `docs/experience-capture-format.md` - how to write back reusable lessons.
+10. `docs/obsidian-knowledge-map.md` - useful vault research not fully migrated.
+11. `NEWS.md` - newest changes and promoted rules.
 
 Then load only the scenario-specific documents. Do not read the whole repo by
 default.
+
+## Repo-As-Skill Workflow
+
+For any concrete task:
+
+```text
+classify task
+-> open docs/task-read-maps.md
+-> load the smallest scenario/library/case set
+-> inspect active Rhino/source context
+-> act
+-> write back only reusable experience
+```
+
+Example: if the user asks for a second massing variant and variant 1 already
+exists, route to Scenario `3C`. Read
+`docs/scenarios/tep-massing-scenario-subtypes.md`,
+`docs/libraries/massing-decision-library.md`,
+`docs/libraries/form-operator-library.md`, the Moscow dimensional libraries,
+the closest case, and the active Rhino scene. Preserve source gabarit/TEP scale
+and report the new variant as deltas from the first one.
 
 ## Scenario Router
 
@@ -116,8 +140,11 @@ or 3D checklist/compliance review?
 | Need | Start here |
 | --- | --- |
 | Quick scenario choice | `docs/START_HERE.md` |
+| Concrete task read map | `docs/task-read-maps.md` |
 | Repository structure | `docs/repository-map.md` |
 | Pattern and strategy library | `docs/library-index.md` |
+| Compact case memory | `docs/case-digest.md` |
+| Experience capture format | `docs/experience-capture-format.md` |
 | Obsidian research map | `docs/obsidian-knowledge-map.md` |
 | Massing decision order | `docs/libraries/massing-decision-library.md` |
 | Massing form operators | `docs/libraries/form-operator-library.md` |
@@ -143,6 +170,10 @@ error: symptom, cause, detection, correction, gate
 decision: accepted tradeoff, date, reason, consequences
 source card: external repo idea, usable pieces, non-goals
 ```
+
+Use `docs/experience-capture-format.md` when a session should be split into a
+case note, pattern/operator, error, metric/default, prompt/hint, decision, or
+tool note.
 
 ## RhinoMCP Session Rule
 

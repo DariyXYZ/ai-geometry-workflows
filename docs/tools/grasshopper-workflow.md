@@ -40,9 +40,11 @@ Always start with the same preflight:
    (adopted) slot — it crashes Rhino (see GH-009). Query the GH component server
    from `run_python`, or rely on documented GUIDs.
 5. Confirm Grasshopper access by asking the user to open Grasshopper manually.
-6. Validate C# Script node logic via `run_csharp` (bake-and-inspect) before any
-   manual paste. Reserve `g1_*` canvas automation for slots the user explicitly
-   asked to spawn.
+6. Validate geometry logic with `run_python` smoke scripts whenever possible.
+   Do not lead with `run_csharp`; it can wedge the plugin handler (GH-012).
+   Reserve `g1_*` canvas automation for slots the user explicitly asked to
+   spawn, and reserve C# source automation for routes that passed a disposable
+   smoke test in the same Rhino/GH version.
 
 Do not start with a large graph. A failed five-node graph is cheap. A failed
 hundred-node graph is a fog machine.
@@ -110,10 +112,21 @@ Choose the smallest graph type that can prove the task:
 | Complex geometry logic | C# Script component body stored in repo |
 | Repeated production graph | Scripted graph builder in `scripts/grasshopper/` |
 
+For C# Script components, distinguish the safe parts from the risky part:
+
+```text
+safe after smoke: sliders, groups, standard GH components, simple wiring
+risky: programmatic C# source injection / IO refresh
+```
+
+The Pavilion 80hz case proved that legacy `SourceCodeChanged(None)` can crash
+Rhino 8.30 (GH-015). Keep paste-ready C# bodies in source control and paste
+manually unless a source bridge has just been proven on a disposable graph.
+
 ## Build Order
 
 ```text
-1. Ask the user to open Rhino and Grasshopper, then run `MCPConnect`
+1. Ask the user to open Rhino and Grasshopper, then run `MCPStart`
 2. Place named sliders first
 3. Place standard components
 4. Wire one chain

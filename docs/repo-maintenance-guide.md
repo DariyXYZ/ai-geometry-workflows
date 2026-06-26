@@ -30,8 +30,10 @@ Bad additions:
 | --- | --- |
 | Universal AI entrypoint | `AI_NAVIGATOR.md` |
 | Scenario read path | `docs/START_HERE.md` |
+| Task read path | `docs/task-read-maps.md` |
 | Repo structure | `docs/repository-map.md` |
 | Pattern or strategy index | `docs/library-index.md` |
+| Experience capture format | `docs/experience-capture-format.md` |
 | Case entry | `docs/case-library.md` |
 | Scenario workflow | `docs/scenarios/<scenario>.md` |
 | Pattern library | `docs/libraries/<topic>.md` |
@@ -87,6 +89,10 @@ After a Rhino/CAD session, answer:
 | Did it create a new architectural pattern? | Add/update a pattern library and `docs/library-index.md` |
 | Did it depend on external repo knowledge? | Update the relevant `docs/source-repos/` card |
 
+Use `docs/experience-capture-format.md` for the full case note and promotion
+table. Every promoted case should make clear which parts became a pattern,
+error, metric/default, prompt/hint, decision, or tool note.
+
 ## Script And Output Hygiene
 
 Scripts should not pile up anonymously in `scripts/`.
@@ -126,6 +132,10 @@ docs/source-repos/
 Root-level `docs/*.md` files are indexes, current-state documents, or global
 ledgers. New long-form knowledge should usually go into one of the folders
 above and be linked from the relevant index.
+
+`docs/task-read-maps.md` and `docs/experience-capture-format.md` are global
+operating documents. Keep them compact and update them when the way an AI should
+enter or write back to the repo changes.
 
 One-off Rhino scripts, PNGs, JSON reports, and old presentations belong in
 `archive/` unless they are actively reusable. Reusable scripts belong in

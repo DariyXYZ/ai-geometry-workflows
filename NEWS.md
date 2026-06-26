@@ -1,5 +1,53 @@
 # Новости
 
+## 2026-06-26 - Strengthened repo-as-skill architecture
+
+Added a task-level routing layer so an AI can use the repository as a compact
+skill instead of reading everything:
+
+- `docs/task-read-maps.md`
+- `docs/case-digest.md`
+- `docs/experience-capture-format.md`
+
+The new task map routes concrete asks such as "make a second massing variant"
+to the right scenario, libraries, cases, dimensional defaults, and error gates.
+The case digest gives a one-minute list of wins, failures, techniques, metrics,
+standards, and current decisions. The experience format defines how a session is
+promoted into a case note, pattern/operator, error, metric/default, prompt/hint,
+decision, or tool note.
+
+Cleaned ignored local build artifacts:
+
+- `.pytest_cache/`
+- `__pycache__/`
+- `outputs/`
+
+Fixed `.gitignore` so `docs/cases/` is not accidentally hidden from future
+agents.
+
+Updated:
+
+- `AI_NAVIGATOR.md`
+- `README.md`
+- `docs/START_HERE.md`
+- `docs/case-digest.md`
+- `docs/repository-map.md`
+- `docs/library-index.md`
+- `docs/repo-maintenance-guide.md`
+- `docs/context-system.md`
+- `docs/project-data-map.md`
+- `docs/case-library.md`
+
+Follow-up stale-information audit:
+
+- replaced active `MCPConnect` instructions with `MCPStart`;
+- updated RhinoMCP setup wording to use local `.mcp.json` / installed router
+  path instead of obsolete copy-command language;
+- corrected active repo path references to `C:\VS Code\ai-geometry-workflows`;
+- updated the latest known test result to `python -m pytest` -> 8 passed;
+- removed active-case dependence on deleted ignored `outputs/rhino/*.3dm`
+  artifacts.
+
 ## 2026-06-24 - Added Moscow road dimensional library
 
 Added a road/street dimensional reference for Moscow massing and site context:

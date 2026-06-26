@@ -9,12 +9,15 @@ ideas, and tools without rereading every document.
 | Library | Use when | File |
 | --- | --- | --- |
 | Scenario router | Choosing which workflow applies | `docs/START_HERE.md` |
+| Task read maps | Matching a concrete user task to the smallest read set | `docs/task-read-maps.md` |
+| Case digest | Compact wins, failures, techniques, standards, and current decisions from cases | `docs/case-digest.md` |
 | Reference modeling gates | Building from references, plans, photos, underlays | `docs/scenarios/reference-modeling-gates.md` |
 | TEP/massing subtypes | Splitting Scenario 3 into 3A/3B/3C/3D | `docs/scenarios/tep-massing-scenario-subtypes.md` |
 | Architecture compliance check | Reviewing a building/massing against checklist criteria | `docs/scenarios/architecture-compliance-check.md` |
 | Office / MФК concept checklist | IND internal checklist for office and МФК projects (15 sections, concept stage) | `docs/scenarios/office-mfc-checklist.md` |
 | Moscow BC zoning patterns | Plot-plus-entries or site-zoning massing work | `docs/libraries/moscow-bc-site-zoning-patterns.md` |
 | Development direction matrix | Choosing which external repo ideas fit which vector | `docs/research/development-directions-repo-fit.md` |
+| Experience capture format | Splitting cases into patterns, errors, metrics, prompts, decisions, and tool notes | `docs/experience-capture-format.md` |
 
 ## Pattern And Form Libraries
 
@@ -78,6 +81,7 @@ error code/title
 
 Start with:
 
+- `docs/case-digest.md`
 - `docs/case-library.md`
 - `docs/cases/recent-rhino-case-lessons.md`
 - `decisions/`
@@ -134,6 +138,7 @@ local source card
 | --- | --- |
 | `docs/obsidian-knowledge-map.md` | Obsidian research, tests, errors, and import backlog |
 | `docs/context-system.md` | Where to save project context, cases, errors, decisions |
+| `docs/experience-capture-format.md` | How to promote session experience into reusable repo knowledge |
 | `docs/project-data-map.md` | Active data and source locations |
 | `docs/repository-map.md` | Repo structure and scenario read sets |
 | `docs/development-state.md` | Current technical state and roadmap |

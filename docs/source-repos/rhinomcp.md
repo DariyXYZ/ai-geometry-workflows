@@ -15,7 +15,7 @@ It is the default transport for Codex-driven Rhino work in this repository.
 
 ## Codex Setup Contract
 
-Use Rhino `MCPConnect` to copy the router command when available. The documented
+Ask the user to run Rhino `MCPStart` when no slot is advertised. The documented
 Codex config shape is:
 
 ```toml
@@ -24,7 +24,8 @@ command = "rhino-mcp-router"
 args = ["--default-version", "8"]
 ```
 
-Use the full router executable path if Rhino prints one through `MCPConnect`.
+Use the full local router executable path from `.mcp.json` or the Rhino MCP
+package install when the short `rhino-mcp-router` command is not on PATH.
 
 ## Backend Boundary
 

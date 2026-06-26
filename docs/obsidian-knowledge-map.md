@@ -47,6 +47,7 @@ C:\Users\dariy.n\Documents\Obsidian Vault
 | Rhino reference modeling stage gates | `40 Decisions\Decision - Rhino Reference Modeling Stage Gates.md` | Stage-gate policy for Scenario 1 |
 | Rhino Aurox release guardrails | `40 Decisions\Decision - Rhino Aurox Modeling Release Guardrails.md` | Tool behavior and validation policy |
 | Rhino and Grasshopper area note | `20 Domains\Area - Rhino and Grasshopper.md` | General domain memory |
+| GH MCP automation lessons | `30 Projects\Grasshopper Plugins\GH MCP Automation — Spiral Tower + Facade Lamellae.md` | Adopted-slot rules, C# source strategy, Pavilion 80hz lamella-attractor case |
 | Rhino modeling workflows roadmap | `30 Projects\Skills and Publishing\Rhino Aurox Modeling\Rhino Modeling Workflows Roadmap 2026-05-18.md` | Future skill/tool roadmap |
 
 ## Adjacent Research To Import Later

@@ -12,17 +12,20 @@ semantic OBJ experiments, and analysis-geometry cleanup.
 Read:
 
 1. `AI_NAVIGATOR.md` - portable entrypoint for any AI agent.
-2. `NEWS.md` - newest rules and project changes.
-3. `docs/library-index.md` - reusable strategy, pattern, source, and tool libraries.
-4. `docs/case-library.md` - successful, partial, and failed cases.
-5. `docs/scenarios/reference-modeling-gates.md` - how to think before modeling.
-6. `docs/error-ledger.md` - mistakes that must not repeat.
-7. `docs/obsidian-knowledge-map.md` - useful Obsidian research, tests, and errors
+2. `docs/task-read-maps.md` - task-specific read sets for acting quickly.
+3. `NEWS.md` - newest rules and project changes.
+4. `docs/library-index.md` - reusable strategy, pattern, source, and tool libraries.
+5. `docs/case-digest.md` - compact wins, failures, techniques, and standards.
+6. `docs/case-library.md` - successful, partial, and failed cases.
+7. `docs/scenarios/reference-modeling-gates.md` - how to think before modeling.
+8. `docs/error-ledger.md` - mistakes that must not repeat.
+9. `docs/experience-capture-format.md` - how to promote useful experience.
+10. `docs/obsidian-knowledge-map.md` - useful Obsidian research, tests, and errors
    not fully migrated into compact repo pages.
-8. `docs/cases/recent-rhino-case-lessons.md` - recent Rhino/RhinoMCP case results,
+11. `docs/cases/recent-rhino-case-lessons.md` - recent Rhino/RhinoMCP case results,
    video scripts, and fresh mistakes.
-9. `docs/repository-map.md` - where everything lives.
-10. `docs/source-repos/README.md` - compressed memory of external repositories.
+12. `docs/repository-map.md` - where everything lives.
+13. `docs/source-repos/README.md` - compressed memory of external repositories.
 
 If using an AI agent, point it at `AGENTS.md` first.
 
@@ -226,6 +229,8 @@ local source card first
 Every meaningful session should leave the repo better for the next fresh chat:
 
 - follow `docs/repo-maintenance-guide.md`;
+- use `docs/experience-capture-format.md` when promoting a case into patterns,
+  errors, metrics, prompts, or decisions;
 - update `NEWS.md`;
 - add or update one rule in `docs/`;
 - add a decision if a tradeoff became policy;

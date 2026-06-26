@@ -8,10 +8,13 @@ useful for a fresh AI session.
 | File | Role |
 | --- | --- |
 | `START_HERE.md` | Scenario read sets and operating rules |
+| `task-read-maps.md` | Concrete task-to-read-set router for AI agents |
 | `repository-map.md` | Current repo structure |
 | `library-index.md` | Pattern, strategy, source, and tool index |
+| `case-digest.md` | One-minute case wins, failures, techniques, and standards |
 | `case-library.md` | Reusable case memory |
 | `error-ledger.md` | Cross-scenario failures |
+| `experience-capture-format.md` | Format for promoting cases into patterns, errors, metrics, prompts, and decisions |
 | `obsidian-knowledge-map.md` | Useful vault research and import backlog |
 | `repo-maintenance-guide.md` | How to add new knowledge cleanly |
 
