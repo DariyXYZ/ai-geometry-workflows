@@ -11,6 +11,7 @@ Only reusable or active project scripts should live here.
 | `rhino/smoke/quick_architecture_snippets_smoke.cs` | RhinoCommon smoke for architecture snippet validation |
 | `rhino/massing/two_tower_bc_50f_stylobate.py` | Source-controlled BC50 tower/stylobate generator |
 | `rhino/massing/moscow_bc/` | Moscow BC massing analysis, validation, and generation scripts |
+| `rhino/massing/residential_okn/` | Residential complex massing with retained OKN/public brick building |
 | `rhino/demos/` | Reproducible Rhino demo builders |
 | `grasshopper/examples/` | Paste-ready GH C# / Python examples |
 | `grasshopper/snippets/` | Small reusable GH C# Script architecture blocks |

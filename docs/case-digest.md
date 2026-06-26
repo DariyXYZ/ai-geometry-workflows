@@ -41,6 +41,7 @@ requested.
 | Win | Reusable move | Read |
 | --- | --- | --- |
 | BC50 two-tower stylobate | Contour-derived roofs/parapets, straight core overruns, translucent massing glass, 1 mm visual lift, metric board | `docs/cases/rhino-geometry/bc50-two-tower-stylobate-2026-06-24.md` |
+| Residential OKN complex | Fixed ЖК footprints plus low public OKN block; use height stepping/top setbacks and keep OKN plaza legible | `docs/cases/rhino-geometry/residential-okn-three-block-massing-2026-06-26.md` |
 | Grove at Grand Bay correction | Use authoritative control sections -> temporary loft -> Rhino Contour -> final slabs; contour is slab edge, not glass line | `decisions/2026-06-01-grove-contour-derived-floor-plates.md` |
 | Aqua Tower replay | Floor-by-floor wavy slabs plus grounded base can be a strong video demonstrator | `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` |
 | Absolute World replay | Repeated rotated elliptical rings plus guide lines communicate tower twist cleanly | `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` |

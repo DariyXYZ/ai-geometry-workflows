@@ -1,5 +1,21 @@
 # Новости
 
+## 2026-06-26 - Added residential OKN three-block massing case
+
+Added a new Rhino geometry case for a modern residential complex with three
+residential blocks and a retained brick gable OKN/public building:
+
+- `docs/cases/rhino-geometry/residential-okn-three-block-massing-2026-06-26.md`
+- `scripts/rhino/massing/residential_okn/build_residential_okn_massing.py`
+- `exports/residential-okn-massing/residential_okn_massing_v1.obj`
+- `exports/residential-okn-massing/residential_okn_massing_v1_report.json`
+
+The first pass treats the user sketch as Scenario `3A`: footprints and OKN are
+source authority. It uses 2026 residential dimensional defaults, height stepping,
+top setbacks, central courtyard/public spine logic, and explicit warnings that
+scale, INSO, fire access, parking, daylight, and OKN protection zones are not
+validated without source CAD.
+
 ## 2026-06-26 - Reorganized repo into scalable domain folders
 
 Moved active docs and scripts into domain-owned folders so Rhino geometry,

@@ -1,0 +1,108 @@
+{
+  "case_id": "residential-okn-three-block-massing-2026-06-26",
+  "units": "meters",
+  "source_authority": {
+    "image": "user sketch: red plot, three blue residential footprints, orange OKN block",
+    "scale": "inferred first-pass metric scale; replace with survey/CAD dimensions when available"
+  },
+  "scenario_subtype": "3A",
+  "design_intent": {
+    "program": "modern residential complex with public OKN house",
+    "site_logic": "three residential blocks frame a diagonal public spine and central courtyard; OKN receives a small public plaza",
+    "primary_operator": "height stepping and setback top floors",
+    "secondary_operator": "courtyard/public-spine preservation"
+  },
+  "standards_used": {
+    "residential_f2f_m": 3.15,
+    "ground_floor_m": 4.2,
+    "top_floor_m": 3.3,
+    "residential_height_band": "9-17 floors, below 75 m high-rise residential threshold"
+  },
+  "residential_bars": [
+    {
+      "name": "north_west_long_bar",
+      "floors": 14,
+      "length_m": 24,
+      "depth_m": 116,
+      "height_m": 45.3,
+      "footprint_area_m2": 2784,
+      "approx_gfa_m2": 38976
+    },
+    {
+      "name": "north_top_bar",
+      "floors": 16,
+      "length_m": 92,
+      "depth_m": 24,
+      "height_m": 51.6,
+      "footprint_area_m2": 2208,
+      "approx_gfa_m2": 35328
+    },
+    {
+      "name": "north_east_short_bar",
+      "floors": 15,
+      "length_m": 24,
+      "depth_m": 72,
+      "height_m": 48.45,
+      "footprint_area_m2": 1728,
+      "approx_gfa_m2": 25920
+    },
+    {
+      "name": "east_long_bar",
+      "floors": 13,
+      "length_m": 86,
+      "depth_m": 22,
+      "height_m": 42.15,
+      "footprint_area_m2": 1892,
+      "approx_gfa_m2": 24596
+    },
+    {
+      "name": "east_south_wing",
+      "floors": 15,
+      "length_m": 22,
+      "depth_m": 44,
+      "height_m": 48.45,
+      "footprint_area_m2": 968,
+      "approx_gfa_m2": 14520
+    },
+    {
+      "name": "south_west_bar",
+      "floors": 10,
+      "length_m": 58,
+      "depth_m": 21,
+      "height_m": 32.7,
+      "footprint_area_m2": 1218,
+      "approx_gfa_m2": 12180
+    },
+    {
+      "name": "south_east_bar",
+      "floors": 11,
+      "length_m": 22,
+      "depth_m": 52,
+      "height_m": 35.85,
+      "footprint_area_m2": 1144,
+      "approx_gfa_m2": 12584
+    }
+  ],
+  "okn": {
+    "name": "okn_public_brick_house",
+    "length_m": 34,
+    "depth_m": 16,
+    "wall_h_m": 6.8,
+    "ridge_h_m": 10.8
+  },
+  "totals": {
+    "residential_footprint_area_m2": 11942,
+    "residential_approx_gfa_m2": 164104,
+    "max_residential_height_m": 51.6,
+    "visual_lift_m": 0.001
+  },
+  "outputs": {
+    "obj": "exports/residential-okn-massing/residential_okn_massing_v1.obj",
+    "mtl": "exports/residential-okn-massing/residential_okn_massing_v1.mtl"
+  },
+  "warnings": [
+    "No surveyed plot dimensions were provided; boundary and footprint sizes are inferred from image proportions.",
+    "INSO, fire access, parking, daylight, and code compliance are not validated in this first massing pass.",
+    "OKN protection zone and exact heritage envelope must be checked against source CAD/legal data."
+  ]
+}
