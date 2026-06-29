@@ -30,6 +30,7 @@ requested.
 | Scenario 3 subtype first | Any massing/TEP/checklist task | `docs/workflows/massing/tep-massing-scenario-subtypes.md` |
 | Site zoning before form | Plot-plus-entries massing | `docs/libraries/massing/moscow-bc-site-zoning-patterns.md` |
 | Numeric pass is not design acceptance | Moscow BC / Scenario 3 | `docs/errors/massing/moscow-bc-massing-error-library.md` |
+| Review labels on ground | Visible massing labels | `docs/errors/massing/moscow-bc-massing-error-library.md`, `docs/cases/rhino-geometry/moscow-river-bc-two-footprints-2026-06-29.md` |
 | McNeel RhinoMCP is default | Rhino work | `docs/tools/rhino/rhino-mcp-backends.md` |
 | `MCPStart`, not `MCPConnect` | RhinoMCP slot startup | `docs/errors/grasshopper/grasshopper-mcp-error-library.md` |
 | Store GH C# bodies in repo | Grasshopper script logic | `docs/tools/grasshopper/grasshopper-csharp-script-nodes.md` |
@@ -41,6 +42,8 @@ requested.
 | Win | Reusable move | Read |
 | --- | --- | --- |
 | BC50 two-tower stylobate | Contour-derived roofs/parapets, straight core overruns, translucent massing glass, 1 mm visual lift, metric board | `docs/cases/rhino-geometry/bc50-two-tower-stylobate-2026-06-24.md` |
+| Moscow river BC V02 | On approved river-edge footprints, use hidden core guides, clean final visibility, recessed transfer shoulders, a supported tower-on-stylobate transition, and a connector deck between tower and lower block | `docs/cases/rhino-geometry/moscow-river-bc-two-footprints-2026-06-29.md` |
+| Moscow river BC user-remodeled V03 | For paired rounded BC towers, use shadow reveals above stylobate, a monolithic two-story cut-through connector, and river-facing sloped sides that converge into one upward silhouette | `docs/cases/rhino-geometry/moscow-river-bc-two-footprints-2026-06-29.md` |
 | Residential OKN complex | Fixed ЖК footprints plus low public OKN block; use height stepping/top setbacks and keep OKN plaza legible | `docs/cases/rhino-geometry/residential-okn-three-block-massing-2026-06-26.md` |
 | Grove at Grand Bay correction | Use authoritative control sections -> temporary loft -> Rhino Contour -> final slabs; contour is slab edge, not glass line | `decisions/2026-06-01-grove-contour-derived-floor-plates.md` |
 | Aqua Tower replay | Floor-by-floor wavy slabs plus grounded base can be a strong video demonstrator | `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` |
@@ -58,6 +61,9 @@ requested.
 | Shell got detailed before accepted | Shell/support/plan fit first; glass/posts later | `decisions/2026-06-01-flock-chapel-shell-medium-success.md` |
 | Fixed-envelope tower accidentally tapered | Keep every plan type inside the same bbox; validate Z bands | `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` |
 | BC variants passed numbers but failed site | Reserve public spine/service edge/open-space logic before building volumes | `docs/errors/massing/moscow-bc-massing-error-library.md` |
+| BC massing shows 3D core/helper junk | Keep cores as hidden 2D guides unless requested, then hide all helper/source/debug layers before final review | `docs/errors/massing/moscow-bc-massing-error-library.md`, `docs/cases/rhino-geometry/moscow-river-bc-two-footprints-2026-06-29.md` |
+| Review text is hard to read | Hide long metric boards; if a label is needed, place a compact horizontal ground label in XY outside the footprint | `docs/errors/massing/moscow-bc-massing-error-library.md`, `docs/cases/rhino-geometry/moscow-river-bc-two-footprints-2026-06-29.md` |
+| Connector reads like a black coffin | Make the link part of a monolithic stylobate/transfer volume with a cut-through; add shadow reveals under rounded towers | `docs/errors/massing/moscow-bc-massing-error-library.md`, `docs/cases/rhino-geometry/moscow-river-bc-two-footprints-2026-06-29.md` |
 | Accidental intersections called stylobate | Declare true podium, separate blocks, or gate/bridge condition | `docs/errors/massing/moscow-bc-massing-error-library.md` |
 | Mesh cleanup accepted only because closed | Validate parts, bbox, sections, views, and source fidelity | `docs/error-ledger.md` |
 | GH C# source injection crashed Rhino | Never call `SourceCodeChanged(None)`; paste or use proven bridge | `docs/errors/grasshopper/grasshopper-mcp-error-library.md` |

@@ -1,5 +1,43 @@
 # Новости
 
+## 2026-06-29 - Promoted user-remodeled Moscow river BC V03 rules
+
+Updated the Moscow river BC case after the user remodeled the smoother V03.
+Promoted the durable design rules:
+
+- use shadow reveals between rounded towers and massive stylobate;
+- make the inter-block link a monolithic two-story transfer volume with a
+  cut-through passage, not a detached dark connector object;
+- aim sloped tower sides toward the river and toward each other so the pair
+  reads as one upward silhouette system.
+
+Updated:
+
+- `docs/cases/rhino-geometry/moscow-river-bc-two-footprints-2026-06-29.md`
+- `docs/errors/massing/moscow-bc-massing-error-library.md`
+- `docs/case-library.md`
+- `docs/case-digest.md`
+
+## 2026-06-29 - Captured Moscow river BC two-footprint massing direction
+
+Added a compact Rhino geometry case for a business-center massing on two
+user-approved footprints near the river:
+
+- `docs/cases/rhino-geometry/moscow-river-bc-two-footprints-2026-06-29.md`
+
+The V02 direction was rated `4/5` by the user and is stored as
+`medium-success / accepted direction`. Promoted rules: keep user footprints as
+source authority, hide 3D core/helper geometry before final review, support
+tower-on-stylobate transitions with transfer shoulders or connector decks, and
+keep the final visible scene clean.
+
+Updated:
+
+- `docs/case-library.md`
+- `docs/case-digest.md`
+- `docs/errors/massing/moscow-bc-massing-error-library.md`
+- `docs/workflows/massing/tep-massing-scenario-subtypes.md`
+
 ## 2026-06-26 - Added residential OKN three-block massing case
 
 Added a new Rhino geometry case for a modern residential complex with three

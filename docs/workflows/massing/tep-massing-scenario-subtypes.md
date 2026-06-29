@@ -41,6 +41,7 @@ read given zoning
 -> choose height distribution
 -> apply architectural operators to building form
 -> validate TEP, height envelope, floor modules
+-> hide construction/helper layers and leave final review layers visible
 -> output clean massing
 ```
 
@@ -68,7 +69,11 @@ Acceptance:
 - entries remain connected and legible;
 - GFA/FAR/height are close to target;
 - architectural form is richer than boxes;
-- no new movement conflict is introduced.
+- no new movement conflict is introduced;
+- tower-on-stylobate variants have a readable transition zone, not an
+  unsupported upper volume hanging off the base;
+- final viewport shows the massing result, not source copies, datums, core
+  helpers, guide rays, metric boards, debug objects, or old variants.
 
 ## 3B - Given Plot Boundary And Site Entries Only
 
