@@ -452,6 +452,163 @@ Correction:
 - Validate the pair from elevation: the silhouette should read as one system
   with two parts, not two unrelated smooth objects.
 
+### `MBC-E17` Facade Detail Added Before Massing Approval
+
+Symptom: the user asks for a massing/form option, but the generator starts
+building window grids, detailed mullions, balcony rails, facade panels, or
+storefront details before the large form is approved. The result may look
+impressive, but it spends tokens and geometry budget on detail that may need to
+be thrown away.
+
+Detection:
+
+- dense window grids, mullions, facade panels, railings, balcony guards, or
+  storefront modules are visible before the user accepts the massing;
+- facade rhythm is used to make a weak large form look finished;
+- the user gives feedback about silhouette, terraces, roof, setbacks, or
+  overall mass while the model is already full of small facade objects;
+- object count is dominated by facade/detail layers during a massing review;
+- review layers do not distinguish approved massing from optional future
+  facade detail.
+
+Correction:
+
+- During the massing approval stage, show only large form, primary terraces,
+  roofscape, main voids/passages, roof access volumes, and coarse facade intent
+  if needed.
+- Keep dense facade grids, windows, mullions, balcony rails, and storefront
+  modules hidden on a future-detail layer until the user accepts the massing.
+- Do not use facade detail to compensate for unresolved stepped form, roof
+  logic, tower/base relationship, or silhouette.
+- If a reference image has a strong facade system, translate it first into a
+  massing grammar, for example `floor-stack clipped plates`, `stepped roof
+  terraces`, or `regular facade grid intent`, then wait for approval before
+  adding the full window grid.
+
+### `MBC-E18` Ragged Roof Guards And Missing Roof Access Volumes
+
+Symptom: roof terraces appear in the massing, but their guardrails are thin,
+broken, random, or placed on/through the facade. Operated roofs lack visible
+LLY/stair-core exits, so the roof reads as a graphic cap rather than an
+accessible terrace.
+
+Detection:
+
+- guardrail/parapet pieces are individual short sticks or random boxes instead
+  of continuous edges;
+- guard corners are assembled from separate segment boxes and create gaps,
+  diagonal cuts, overlaps, or twisted corner caps;
+- guards overlap facade windows, sit below the roof edge, or float away from
+  the roof border;
+- guards are created from segment guesses instead of from the roof border;
+- accessible roofs/terraces have no stair/lift lobby exit volume;
+- roof exits appear as full-height visible cores rather than small roof-access
+  volumes.
+
+Correction:
+
+- Build roof guards from the actual roof border: `DupBorder -> Offset x 2 ->
+  Extrude` or the RhinoCommon equivalent of border curve plus two controlled
+  offsets creating a continuous parapet/guard strip.
+- Do not approximate roof guards with independent boxes per edge unless the
+  roof is strictly rectangular and corners are explicitly joined. For
+  non-orthogonal or stepped roofs, the final guard/parapet must be a continuous
+  closed strip made from nested closed roof-border curves.
+- Put roof guards on roof/terrace layers, not facade-detail layers.
+- Keep guards inside or exactly on the roof edge and validate they do not cross
+  the facade plane.
+- For operated roofs, add small LLY/stair-core roof access volumes during the
+  massing stage. They should be visible roofscape elements, not hidden planning
+  notes.
+- Size roof access volumes as massing placeholders and keep them set back from
+  terrace edges; do not expose a full core tower unless specifically requested.
+
+### `MBC-E19` Random Core Or Roof Access Placement
+
+Symptom: roof access/headhouse boxes are scattered across terraces as if every
+terrace needs an independent core. The boxes sit in arbitrary positions,
+consume usable roof area, create awkward office floor fragments below, or sit
+too close to the facade.
+
+Detection:
+
+- one roof access box appears on each terrace without a clear vertical core
+  strategy;
+- core/headhouse boxes are placed by roof centroid only, not by office plate
+  planning logic;
+- a core zone creates narrow leftover office strips, blocks the best facade
+  depth, or touches the facade;
+- the number of cores is not justified against floor plate area, length, floor
+  count, and core-to-glass depth;
+- roof exits do not align with a plausible vertical circulation zone below.
+
+Correction:
+
+- Decide core count before placing roof access volumes. For office massing, use
+  floor plate area, building length, floor count, and core-to-glass depth as
+  the first-pass basis.
+- Use the dimensional defaults from
+  `docs/libraries/standards/moscow-building-dimensional-library-2026.md`:
+  efficient office tower plates are roughly `900-1800 m2`, large low-rise /
+  podium office plates are roughly `1500-3000 m2`, and office core-to-glass
+  should normally stay around `12.5-14.0 m`.
+- For an elongated office plate above roughly `3000 m2`, or a long stepped
+  plate where one core would create poor travel distances and deep leftovers,
+  consider two core zones rather than many small random roof boxes.
+- Place core zones in broad internal bands, set back from the facade and terrace
+  edges. A core may create one organized service/corridor zone; it must not
+  leave unusable slivers around it.
+- Show only the small roof access/headhouse volume at the highest roof that
+  each core actually reaches. Keep larger core planning guides hidden unless
+  the user asks to review plan efficiency.
+
+### `MBC-E20` Missing Or Misread LLY Emergency Exits
+
+Symptom: the massing has planned LLY/core zones, but the ground floor does not
+show direct emergency exits from those zones. The model may instead show a
+decorative public entrance, canopy, or storefront-like portal that does not
+solve evacuation logic.
+
+Detection:
+
+- no direct ground-level exit is shown from a visible or implied LLY/core zone;
+- the model uses decorative public entrance portals or storefront accents when
+  the issue is emergency egress from stairs/LLY;
+- exit accents are placed on arbitrary facade points instead of being aligned
+  with the core/service zone behind them;
+- door/opening panels, frames, or other facade elements protrude as boxes
+  instead of lying in the local facade plane;
+- emergency exit panels cut across the ground-floor window/module grid instead
+  of occupying a clear facade bay;
+- ground-floor windows remain behind or immediately collide with the LLY exit
+  marker;
+- one core zone has only one visible exit direction when the plan clearly needs
+  paired evacuation directions;
+- exits become detailed doors, signage, mullions, or shopfronts before massing
+  approval.
+
+Correction:
+
+- For each planned LLY/core zone, place minimal ground-level emergency exits
+  directly from that zone to the exterior. A useful early massing default is two
+  exit directions per core when the plan allows it.
+- For a two-core elongated office slab, show four minimal exits: two tied to
+  the main core zone and two tied to the secondary core zone.
+- Keep exits in the project's massing language: small dark recessed panels,
+  thin frames, and modest threshold pads are enough. Do not create a decorative
+  public portal unless the user asks for entrance hierarchy.
+- Door/opening panels and frames must be coplanar with the local facade plane.
+  They may have only a tiny visual thickness; do not model them as perpendicular
+  attached boxes. Horizontal threshold pads/aprons may project outward.
+- Coordinate LLY exits with the ground-floor facade module. The exit should
+  replace or occupy one clean bay in the window/grid rhythm; adjust neighboring
+  first-floor windows locally instead of letting a window sit behind the exit.
+- Align exits with the core/service zone behind them. If the nearest facade
+  point is not viable, move the core guide or report the plan conflict rather
+  than placing a random facade accent.
+- Put LLY exit geometry on a final entry/egress layer and keep any core-route
+  construction guides hidden at the end.
+
 ## Mandatory Prebuild Gate
 
 No new Moscow BC variant should be generated until this table is filled:

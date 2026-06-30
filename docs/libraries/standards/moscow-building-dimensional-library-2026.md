@@ -98,6 +98,19 @@ Core placeholders:
 | 35-60 floors | 22 x 30 m to 30 x 42 m | Lift zoning and transfer/technical floors likely. |
 | 60+ floors | 30 x 42 m and up | Do not guess final core; run traffic/fire/structure study. |
 
+Core count quick gate for early office massing:
+
+- Start with one core zone only when the typical floor plate is compact enough
+  that the core-to-glass depth stays near `12.5-14.0 m` and the floor plate
+  does not create long dead-end office wings.
+- For elongated plates above roughly `3000 m2`, or stepped/slab buildings where
+  one core would sit far from a large part of the plan, test two core zones
+  before placing roof access volumes.
+- Do not place one visible roof access box on every terrace. Place roof exits
+  only where a plausible vertical core/service zone reaches an operated roof.
+- Keep core zones inside broad internal bands. They should organize corridor /
+  service logic, not create narrow leftover strips or touch the facade.
+
 ## Residential Towers
 
 ### Height And Floor Count

@@ -40,7 +40,10 @@ read given zoning
 -> compute TEP gap
 -> choose height distribution
 -> apply architectural operators to building form
+-> decide service/core zones from plate area, length, and core-to-glass depth
+-> mark minimal LLY/core emergency exits at massing level
 -> validate TEP, height envelope, floor modules
+-> keep dense facade/window/detail layers hidden until massing is accepted
 -> hide construction/helper layers and leave final review layers visible
 -> output clean massing
 ```
@@ -52,6 +55,13 @@ Allowed moves:
 - taper or upper-form change;
 - chamfers / rounded corners;
 - roof or crown massing;
+- roof access volumes for operated terraces;
+- continuous roof guards/parapets generated from roof borders;
+- hidden 2D core/service-zone guides that justify roof access locations;
+- minimal LLY/core emergency exits such as small recessed panels, thin frames,
+  and threshold pads tied directly to core/service zones;
+- public/address entrance accents only when the user explicitly asks for
+  entrance hierarchy, not as a substitute for emergency egress;
 - voids/cut-outs that do not break the approved zoning;
 - podium/tower shaping if the footprint relationship is already defined.
 
@@ -61,7 +71,13 @@ Forbidden moves:
 - cut across the approved spine;
 - move entrances casually;
 - replace footprints with a different site plan;
-- create new blocks that invalidate the given zoning.
+- create new blocks that invalidate the given zoning;
+- add dense window grids, mullions, balcony rails, storefronts, or facade
+  panels before the massing is accepted;
+- scatter visible roof access/core boxes across terraces without a justified
+  core-zone strategy;
+- model dense storefront, door, mullion, signage, or interior lobby details
+  before the massing and egress logic are accepted.
 
 Acceptance:
 
@@ -72,8 +88,21 @@ Acceptance:
 - no new movement conflict is introduced;
 - tower-on-stylobate variants have a readable transition zone, not an
   unsupported upper volume hanging off the base;
+- operated roof terraces have continuous guards/parapets from roof borders and
+  visible roof access volumes tied to plausible core/service zones;
+- core/service zones are set back from facades and do not create unusable floor
+  fragments;
+- each LLY/core zone has direct, minimal ground-level exit geometry; for a
+  two-core elongated office slab, four exits are a good massing default when
+  the plan allows two directions per core;
+- facade panels, opening markers, and frames are coplanar with the local facade
+  plane; only threshold pads/aprons project outward horizontally;
+- LLY exits are coordinated with the first-floor facade grid: each exit occupies
+  a clear bay, and neighboring ground-floor windows are locally adjusted rather
+  than hidden behind the exit;
 - final viewport shows the massing result, not source copies, datums, core
-  helpers, guide rays, metric boards, debug objects, or old variants.
+  helpers, guide rays, metric boards, debug objects, old variants, or
+  unapproved dense facade/detail layers.
 
 ## 3B - Given Plot Boundary And Site Entries Only
 
