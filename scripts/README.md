@@ -6,7 +6,7 @@ Only reusable or active project scripts should live here.
 
 | Path | Role |
 | --- | --- |
-| `rhino/common/rhino_common_helper.py` | Optional backend-specific RhinoCommon helper; current implementation uses Aurox `execute_csharp` |
+| `rhino/common/rhino_common_helper.py` | Legacy optional backend-specific RhinoCommon helper; current implementation uses Aurox `execute_csharp`; new Rhino work should use `mcp__rhino.run_python` / `run_csharp` plus `docs/tools/rhino/rhino-mcp-command-library.md` |
 | `rhino/smoke/build_semantic_smoke_rhino.py` | Legacy Aurox Semantic OBJ / Rhino smoke demonstrator; port to RhinoMCP before new use |
 | `rhino/smoke/quick_architecture_snippets_smoke.cs` | RhinoCommon smoke for architecture snippet validation |
 | `rhino/massing/two_tower_bc_50f_stylobate.py` | Source-controlled BC50 tower/stylobate generator |

@@ -38,10 +38,14 @@ Read in this order:
 10. `docs/repo-knowledge-boundary.md` - what belongs in GitHub vs local Obsidian.
 11. `docs/repo-folder-architecture.md` - where each kind of durable file belongs.
 12. `docs/obsidian-knowledge-map.md` - useful vault research not fully migrated.
-13. `NEWS.md` - newest changes and promoted rules.
 
 Then load only the scenario-specific documents. Do not read the whole repo by
 default.
+
+`NEWS.md` is a chronological changelog and audit trail, not a fast-load file.
+Read it only when you need recent repository history. Any rule needed for
+modeling must also live in the relevant workflow, library, case digest, command
+card, or error file.
 
 ## Repo-As-Skill Workflow
 
@@ -157,6 +161,7 @@ or 3D checklist/compliance review?
 | Successful/failed examples | `docs/case-library.md` |
 | Known mistakes | `docs/error-ledger.md` |
 | Recent Rhino lessons | `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` |
+| Rhino command cards | `docs/tools/rhino/rhino-mcp-command-library.md` |
 | Accepted decisions | `decisions/` |
 | External repo memory | `docs/research/source-repos/` |
 | Current technical state | `docs/development-state.md` |
@@ -194,10 +199,12 @@ Before modeling or checklist review:
 1. Read the scenario-specific gate.
 2. Inspect source layers and units.
 3. Decide what is source authority.
-4. Define the validation gates.
-5. Build the smallest useful geometry, or collect checklist evidence if this is
+4. For direct Rhino construction, map the user's intent through
+   `docs/tools/rhino/rhino-mcp-command-library.md`.
+5. Define the validation gates.
+6. Build the smallest useful geometry, or collect checklist evidence if this is
    a review task.
-6. Validate numerically, visually, and against checklist criteria when relevant.
-7. Record reusable results back into this repo.
+7. Validate numerically, visually, and against checklist criteria when relevant.
+8. Record reusable results back into this repo.
 
 This repo should make the AI slower at the start and much less random later.

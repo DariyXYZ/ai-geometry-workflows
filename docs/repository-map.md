@@ -13,7 +13,6 @@ This file tells a new user or AI agent what to read and what to ignore.
 | `docs/case-digest.md` | Compact wins, errors, techniques, standards, and current case-derived decisions. |
 | `docs/repo-knowledge-boundary.md` | Boundary between shared repo knowledge and local Obsidian research/capture. |
 | `docs/repo-folder-architecture.md` | Folder ownership rules that keep Rhino, Grasshopper, massing, standards, tools, and research separated. |
-| `NEWS.md` | Chronological project memory, newest entries first. |
 | `README.md` | Project overview and runnable CLI commands. |
 | `docs/development-state.md` | Current technical state and next engineering steps. |
 
@@ -46,7 +45,8 @@ This file tells a new user or AI agent what to read and what to ignore.
 | `docs/repo-maintenance-guide.md` | How to add reusable strategies, patterns, cases, errors, and source findings without clutter. |
 | `docs/project-data-map.md` | Where source data and related repos live. |
 | `docs/tools/rhino/rhino-mcp-backends.md` | Rhino backend policy: McNeel RhinoMCP default, optional plugin backends by request. |
-| `docs/tools/rhino/rhino-common-helper.md` | Native RhinoCommon helper layer for backend-specific RhinoCommon execution. |
+| `docs/tools/rhino/rhino-mcp-command-library.md` | RhinoMCP command cards for slabs, floor stacks, guards, roof access, entries, facade panels, lamellas, links, and final cleanup. |
+| `docs/tools/rhino/rhino-common-helper.md` | Legacy optional RhinoCommon helper layer for backend-specific RhinoCommon execution. |
 | `docs/tools/grasshopper/grasshopper-workflow.md` | Grasshopper MCP workflow for capability scan, smoke graph, build order, and validation. |
 | `docs/tools/grasshopper/grasshopper-csharp-script-nodes.md` | Grasshopper C# Script node rules, RhinoCommon gotchas, and source-injection gates. |
 | `docs/tools/grasshopper/grasshopper-csharp-performance.md` | Automatic IO, list/tree access, parallel-safe loops, caching, and performance gates for GH C# Script nodes. |
@@ -81,7 +81,8 @@ This file tells a new user or AI agent what to read and what to ignore.
 | --- | --- |
 | `.tmp_cases/` | Local ignored experiments; useful only when the user names a specific run. |
 | `archive/reports/ai-geometry-research.html`, `archive/reports/index.html` | Report/presentation outputs, not primary working memory. |
-| Old team updates | Useful for history, but `NEWS.md` and `development-state.md` are faster. |
+| `NEWS.md` | Chronological changelog/audit trail. Do not read for fast modeling context unless recent repo history matters. |
+| Old team updates | Useful for history, but `development-state.md` and current docs are faster. |
 
 ## Scenario Read Sets
 
@@ -116,6 +117,7 @@ Read:
 Read:
 
 - `docs/workflows/massing/tep-massing-scenario-subtypes.md`
+- `docs/tools/rhino/rhino-mcp-command-library.md` when building or editing Rhino geometry
 - `docs/workflows/massing/architecture-compliance-check.md`
 - `docs/libraries/standards/moscow-architecture-approval-checklist.md`
 - `docs/libraries/massing/form-operator-library.md`

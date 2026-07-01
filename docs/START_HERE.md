@@ -13,12 +13,13 @@ Read:
 
 1. `AI_NAVIGATOR.md` - portable entrypoint for any AI agent.
 2. `docs/task-read-maps.md` - task-specific read sets for acting quickly.
-3. `NEWS.md` - newest rules and project changes.
-4. `docs/library-index.md` - reusable strategy, pattern, source, and tool libraries.
-5. `docs/case-digest.md` - compact wins, failures, techniques, and standards.
-6. `docs/case-library.md` - successful, partial, and failed cases.
-7. `docs/workflows/rhino-reference/reference-modeling-gates.md` - how to think before modeling.
-8. `docs/error-ledger.md` - mistakes that must not repeat.
+3. `docs/library-index.md` - reusable strategy, pattern, source, and tool libraries.
+4. `docs/case-digest.md` - compact wins, failures, techniques, and standards.
+5. `docs/case-library.md` - successful, partial, and failed cases.
+6. `docs/workflows/rhino-reference/reference-modeling-gates.md` - how to think before modeling.
+7. `docs/error-ledger.md` - mistakes that must not repeat.
+8. `docs/tools/rhino/rhino-mcp-command-library.md` - RhinoMCP command cards:
+   intent -> Rhino/RhinoCommon sequence -> validation gates.
 9. `docs/experience-capture-format.md` - how to promote useful experience.
 10. `docs/repo-knowledge-boundary.md` - what belongs in the shared repo vs
    local Obsidian.
@@ -29,6 +30,10 @@ Read:
    video scripts, and fresh mistakes.
 14. `docs/repository-map.md` - where everything lives.
 15. `docs/research/source-repos/README.md` - compressed memory of external repositories.
+
+Do not read `NEWS.md` during fast load. It is a chronological changelog for
+auditing recent repo changes; actionable rules must be promoted into the files
+above.
 
 If using an AI agent, point it at `AGENTS.md` first.
 
@@ -201,6 +206,9 @@ Use the official McNeel RhinoMCP server (`mcneel/RhinoMCP`) as the default Rhino
 transport. Other Rhino plugins, including Aurox, are optional backends selected
 only on explicit user request or when a task needs a backend-specific feature.
 
+- For direct Rhino modeling requests, read
+  `docs/tools/rhino/rhino-mcp-command-library.md` and translate the user's
+  intent into the documented RhinoMCP/RhinoCommon command card.
 - Work in the scene units. If drawings are in feet and Rhino is in meters,
   convert explicitly and write the conversion in the note/report.
 - Do not place reference slabs, underlays, or helper mass above floor 1 unless
@@ -208,9 +216,11 @@ only on explicit user request or when a task needs a backend-specific feature.
 - Build massing first, detail second.
 - Validate with source-derived dimensions, section datums, and screenshots.
 - Preserve user-created source geometry and hidden references.
-- Use `scripts/rhino/common/rhino_common_helper.py` for native Rhino operations that should
-  not be approximated with point drawing: trim, split, boolean, intersections,
-  contours, NURBS rebuild, and custom RhinoCommon C#.
+- Use `mcp__rhino.run_python` or `mcp__rhino.run_csharp` for native Rhino
+  operations that should not be approximated with point drawing: trim, split,
+  boolean, intersections, contours, NURBS rebuild, and custom RhinoCommon C#.
+  `scripts/rhino/common/rhino_common_helper.py` is a legacy optional helper,
+  not the default route.
 - For video/replay modeling, preserve the user-selected camera unless asked,
   slow down visible construction, keep the model grounded, and remove obsolete
   helper lines before the final pass.
@@ -237,7 +247,8 @@ Every meaningful session should leave the repo better for the next fresh chat:
 - apply `docs/repo-knowledge-boundary.md` before importing Obsidian research;
 - use `docs/experience-capture-format.md` when promoting a case into patterns,
   errors, metrics, prompts, or decisions;
-- update `NEWS.md`;
+- optionally add a short `NEWS.md` changelog entry after the actionable docs
+  are updated;
 - add or update one rule in `docs/`;
 - add a decision if a tradeoff became policy;
 - add source-repo notes if an external repo taught us something reusable;

@@ -16,11 +16,12 @@ C:\VS Code\ai-geometry-workflows
 | `AI_NAVIGATOR.md` | Portable first page for AI agents | Active |
 | `AGENTS.md` | Compact agent instructions | Active |
 | `README.md` | Human-facing overview | Active |
-| `NEWS.md` | Chronological project change log | Active |
+| `NEWS.md` | Optional chronological changelog / audit trail | Active, not fast-load |
 | `TOOLKIT.md` | Runnable command reference | Active |
 | `ai_geometry_toolkit/` | Python CLI orchestration package | Active |
 | `tests/` | Unit tests and fixtures | Active |
-| `scripts/rhino/common/rhino_common_helper.py` | Optional backend-specific RhinoCommon helper; current implementation uses Aurox `execute_csharp` | Active |
+| `docs/tools/rhino/rhino-mcp-command-library.md` | Active RhinoMCP command cards: intent -> RhinoCommon/Rhino sequence -> validation | Active |
+| `scripts/rhino/common/rhino_common_helper.py` | Legacy optional backend-specific RhinoCommon helper; current implementation uses Aurox `execute_csharp` | Legacy optional |
 | `scripts/rhino/massing/moscow_bc/` | Current Moscow BC massing scripts and candidate data | Active project folder |
 | `decisions/` | Accepted dated technical decisions | Active |
 | `docs/` | Shared knowledge library | Active |
@@ -51,7 +52,7 @@ C:\VS Code\ai-geometry-workflows
 | `docs/cases/grasshopper/` | GH graph/C# Script/plugin/source-injection cases |
 | `docs/errors/massing/` | Massing/site/design anti-pattern libraries |
 | `docs/errors/grasshopper/` | GH/MCP/C# automation anti-pattern libraries |
-| `docs/tools/rhino/` | RhinoMCP, RhinoCommon, backend policy |
+| `docs/tools/rhino/` | RhinoMCP command cards, RhinoCommon, backend policy |
 | `docs/tools/grasshopper/` | GH automation and C# Script tool notes |
 | `docs/research/` | Compressed research and direction synthesis |
 | `docs/research/source-repos/` | External repository cards |
@@ -161,4 +162,4 @@ Start with:
 | `archive/rhino-experiments-2026-06/` | One-off Rhino scripts and generated PNG/JSON outputs |
 
 Archive files are not part of the normal AI read path. Promote useful lessons
-into `docs/`, `decisions/`, or `NEWS.md`.
+into `docs/` or `decisions/`; use `NEWS.md` only as an optional changelog.

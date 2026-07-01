@@ -81,7 +81,7 @@ Obsidian note found
 -> apply docs/repo-knowledge-boundary.md
 -> extract durable rule / pattern / case / error
 -> add compact repo page or index pointer
--> update NEWS.md
+-> optionally update NEWS.md as changelog only
 ```
 
 Only promote notes that are geometry-actionable, reusable, source-aware,

@@ -29,6 +29,7 @@ Then read case files only when the task resembles that case.
 | Build form on given footprints/zoning | Scenario 3A | `docs/workflows/massing/tep-massing-scenario-subtypes.md`, given source notes, `docs/libraries/massing/form-operator-library.md` | `docs/libraries/standards/moscow-building-dimensional-library-2026.md`, `docs/libraries/massing/massing-decision-library.md` | Do not move approved footprints/entries unless asked |
 | Review massing/building against approval checklist | Scenario 3D | `docs/workflows/massing/architecture-compliance-check.md`, `docs/libraries/standards/moscow-architecture-approval-checklist.md` | `docs/libraries/standards/moscow-building-dimensional-library-2026.md`, `docs/error-ledger.md` | Collect Rhino/view evidence before scoring or redesigning |
 | Clean complex Rhino model for analysis | Scenario 2 | `docs/development-state.md`, `docs/error-ledger.md`, `decisions/2026-05-19-feature-preserving-mesh-reconstruction.md`, `decisions/2026-05-20-nurbs-restart-from-named-rails.md` | `docs/context-system.md`, `docs/tools/rhino/rhino-mcp-backends.md` | Preserve source; classify parts; validate sections, not only watertightness |
+| Build a Rhino element by intent, for example slab, parapet, roof access, lamellas, entry, cleanup | Rhino command card | `docs/tools/rhino/rhino-mcp-backends.md`, `docs/tools/rhino/rhino-mcp-command-library.md` | closest scenario workflow and dimensional library | Translate intent to RhinoMCP/RhinoCommon sequence; validate layer visibility and bbox/plane/closure |
 | Build or test Grasshopper graph | Grasshopper branch | `docs/tools/grasshopper/grasshopper-workflow.md`, `docs/tools/grasshopper/grasshopper-mcp-smoke.md`, `docs/cases/grasshopper/README.md` | `docs/tools/grasshopper/grasshopper-csharp-script-nodes.md`, `docs/tools/grasshopper/grasshopper-csharp-performance.md`, `docs/libraries/grasshopper/grasshopper-pattern-library.md` | Smoke-test small graph first; store script bodies in repo; do not read Rhino geometry cases unless the form grammar matches |
 | Choose Rhino backend or run RhinoMCP | Tooling | `docs/tools/rhino/rhino-mcp-backends.md`, `docs/research/source-repos/rhinomcp.md` | `TOOLKIT.md`, `scripts/README.md` | Use McNeel RhinoMCP by default; scan capabilities before build |
 | Reuse an existing successful or failed case | Case work | `docs/case-library.md`, matching `docs/cases/*.md` or `decisions/*.md` | matching error and pattern libraries | Promote only the reusable rule, not raw chat |
@@ -47,6 +48,7 @@ docs/libraries/massing/massing-decision-library.md
 docs/libraries/massing/form-operator-library.md
 docs/libraries/standards/moscow-building-dimensional-library-2026.md
 docs/errors/massing/moscow-bc-massing-error-library.md
+docs/tools/rhino/rhino-mcp-command-library.md
 docs/case-library.md
 docs/case-digest.md
 ```

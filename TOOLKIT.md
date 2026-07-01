@@ -67,27 +67,41 @@ loft, and facade guide curves in Rhino. It is not final CAD validation.
 
 ## RhinoCommon Helper
 
-Use the RhinoCommon helper when a modeling step should use native Rhino
-operations instead of approximating geometry with point lists.
+For current RhinoMCP work, use the command library first:
+
+```text
+docs/tools/rhino/rhino-mcp-command-library.md
+```
+
+It maps user intents such as "build a slab", "make roof guards", "add LLY
+exits", and "project lamellas to the facade" to RhinoMCP/RhinoCommon operation
+sequences and validation gates.
+
+Use `mcp__rhino.run_python` or `mcp__rhino.run_csharp` when a modeling step
+should use native Rhino operations instead of approximating geometry with point
+lists.
+
+The legacy RhinoCommon helper is available only for backend-specific replay or
+workaround tasks:
 
 ```powershell
-python scripts\rhino_common_helper.py list-ops
-python scripts\rhino_common_helper.py read-visible-curves
-python scripts\rhino_common_helper.py --dry-run read-visible-curves
+python scripts\rhino\common\rhino_common_helper.py list-ops
+python scripts\rhino\common\rhino_common_helper.py read-visible-curves
+python scripts\rhino\common\rhino_common_helper.py --dry-run read-visible-curves
 ```
 
 Examples:
 
 ```powershell
-python scripts\rhino_common_helper.py make-soft-closed-curve `
+python scripts\rhino\common\rhino_common_helper.py make-soft-closed-curve `
   --points "[[0,0,0],[8,0,0],[10,5,0],[5,9,0],[0,5,0]]" `
   --degree 3
 
-python scripts\rhino_common_helper.py curve-difference-2d `
+python scripts\rhino\common\rhino_common_helper.py curve-difference-2d `
   --boundary "[[0,0,0],[10,0,0],[10,10,0],[0,10,0]]" `
   --cutter "[[6,4,0],[12,4,0],[12,8,0],[6,8,0]]"
 
-python scripts\rhino_common_helper.py contour-brep `
+python scripts\rhino\common\rhino_common_helper.py contour-brep `
   --object-id "<rhino-object-guid>" `
   --z-min 0 `
   --z-max 300 `
@@ -96,9 +110,9 @@ python scripts\rhino_common_helper.py contour-brep `
 
 Rhino must be open with the selected Rhino backend running. The current helper
 implementation is an optional Aurox-backed route for `execute_csharp`; do not
-treat it as the default RhinoMCP path. It can grow into any small RhinoCommon operation we need:
-trim, split, boolean, contour, rebuild, intersections, loft seams, and source
-curve extraction.
+treat it as the default RhinoMCP path. New command knowledge belongs in
+`docs/tools/rhino/rhino-mcp-command-library.md`, not in Aurox-specific helper
+assumptions.
 
 ## Grasshopper MCP Workflow
 

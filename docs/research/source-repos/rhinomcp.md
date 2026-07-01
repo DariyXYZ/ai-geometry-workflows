@@ -13,6 +13,11 @@ geometry in Rhino and Grasshopper.
 
 It is the default transport for Codex-driven Rhino work in this repository.
 
+For reusable modeling sequences, use
+`docs/tools/rhino/rhino-mcp-command-library.md`. That file translates
+architectural intents into RhinoMCP/RhinoCommon command cards and validation
+gates.
+
 ## Codex Setup Contract
 
 Ask the user to run Rhino `MCPStart` when no slot is advertised. The documented

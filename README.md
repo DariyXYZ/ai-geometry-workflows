@@ -8,6 +8,11 @@ The repo is meant to be handed to a fresh AI session as structured memory:
 strategies, pattern libraries, successful and failed cases, error ledgers,
 source-repo summaries, and runnable helper code.
 
+For direct Rhino modeling, start from
+`docs/tools/rhino/rhino-mcp-command-library.md`. It translates intents such as
+"build a slab", "make roof guards", or "project lamellas" into RhinoMCP /
+RhinoCommon operation sequences and validation gates.
+
 ## Start Here
 
 For any AI agent:
@@ -46,7 +51,7 @@ Do not read the whole repo first. Pick the smallest scenario read set from
 ```text
 AI_NAVIGATOR.md          portable first page for AI agents
 AGENTS.md               compact agent rules
-NEWS.md                 newest project changes
+NEWS.md                 optional chronological changelog
 TOOLKIT.md              CLI/tooling contract
 ai_geometry_toolkit/    runnable Python orchestration code
 tests/                  unit tests and fixtures

@@ -60,11 +60,18 @@ sections, and object/layer audits, prefer RhinoCommon-backed execution.
 ```text
 capability scan
 -> standard RhinoMCP tools
+-> intent-to-command card from docs/tools/rhino/rhino-mcp-command-library.md
 -> Rhino command / Grasshopper operations exposed by RhinoMCP
 -> RhinoCommon via run_python/run_csharp for complex geometry
 -> third-party backend only when requested or required
 -> record the backend-specific dependency in the case note
 ```
+
+For user prompts such as "build a slab", "make roof guards", "project lamellas
+to the facade", or "clean the review view", read
+`docs/tools/rhino/rhino-mcp-command-library.md` before modeling. It maps
+architectural intent to RhinoMCP/RhinoCommon operation sequences and validation
+gates.
 
 ## Required Capability Scan
 
@@ -89,4 +96,6 @@ in the case note or final handoff.
 
 Older project memory, archives, and helper scripts may mention Aurox because
 that was the previous bridge. Treat those as historical or optional-backend
-instructions, not as default policy.
+instructions, not as default policy. Do not copy Aurox response shapes, helper
+client paths, or socket assumptions into new workflow docs, command cards, or
+case templates.

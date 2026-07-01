@@ -23,8 +23,9 @@ Do not store durable project state only in chat history.
 | Data/source map | `docs/project-data-map.md` | Update when folders or source roles change. |
 | Known failures and lessons | `docs/error-ledger.md` | Record enough to avoid repeating work. |
 | Reference modeling gates | `docs/workflows/rhino-reference/reference-modeling-gates.md` | Constructive grammar before geometry. |
-| Tool commands and backend contracts | `TOOLKIT.md` | Keep runnable. |
-| Chronological updates | `NEWS.md` | One entry per material change. |
+| RhinoMCP command cards | `docs/tools/rhino/rhino-mcp-command-library.md` | Intent -> Rhino/RhinoCommon sequence -> validation gates. |
+| Tool commands and backend contracts | `TOOLKIT.md` | Keep runnable and link to command-card docs. |
+| Optional chronological changelog | `NEWS.md` | Audit trail only; actionable rules must live in workflow/library/case/error docs. |
 | One modeling run | `cases/<case_id>/` | Tracked only when ready to share. |
 | Local smoke runs | `.tmp_cases/<case_id>/` | Ignored by Git. |
 | Case-derived reusable lesson | `docs/experience-capture-format.md` routes it to the right library | Split into case, pattern, error, metric, prompt, decision, or tool note. |
@@ -102,12 +103,14 @@ constraints, and references.
 Standard McNeel RhinoMCP owns `.3dm` scene readback, scan, overlays, section
 extraction, scene-context edits, and Rhino visual review by default.
 
-`scripts/rhino/common/rhino_common_helper.py` owns native RhinoCommon operations that are
-too precise or too broad for the currently selected backend tool set: curve trims,
-booleans, intersections, contours, NURBS rebuilds, and custom C# operations.
-Its current implementation is an optional Aurox route; use it only by request
-or when standard RhinoMCP cannot expose the required RhinoCommon operation.
-RhinoCommon is the native modeling layer.
+`docs/tools/rhino/rhino-mcp-command-library.md` owns the reusable Rhino command
+grammar: slabs, floor stacks, parapets, roof access, entries, facade panels,
+lamellas, transfer links, cleanup, and their validation gates.
+
+RhinoCommon is the native modeling layer. For new work, call it through
+standard RhinoMCP `run_python` or `run_csharp`. `scripts/rhino/common/rhino_common_helper.py`
+is a legacy optional helper for selected non-standard backends; its current
+implementation uses an Aurox route and must not become the default path again.
 
 `text-to-cad` / build123d owns clean parametric source and STEP-first candidate
 generation. It is a reference for Scenario 1 and a backend for clean candidates,

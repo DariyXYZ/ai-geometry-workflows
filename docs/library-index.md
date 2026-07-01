@@ -126,7 +126,8 @@ local source card
 | Tooling note | Purpose |
 | --- | --- |
 | `docs/tools/rhino/rhino-mcp-backends.md` | Rhino backend policy: McNeel RhinoMCP by default; Aurox/other plugins only by request |
-| `docs/tools/rhino/rhino-common-helper.md` | Native RhinoCommon helper path for backend-specific operations |
+| `docs/tools/rhino/rhino-mcp-command-library.md` | RhinoMCP command cards: architectural intent -> Rhino/RhinoCommon operation sequence -> validation gates |
+| `docs/tools/rhino/rhino-common-helper.md` | Legacy optional RhinoCommon helper path for backend-specific operations |
 | `docs/tools/grasshopper/grasshopper-workflow.md` | Full Grasshopper MCP workflow: capability scan, smoke, graph strategy, validation |
 | `docs/tools/grasshopper/grasshopper-csharp-script-nodes.md` | Grasshopper C# Script node workflow, C# 9 baseline, RhinoCommon gotchas, source-injection validation |
 | `docs/tools/grasshopper/grasshopper-csharp-performance.md` | Performance and parallel rules for Grasshopper C# Script nodes |
@@ -153,7 +154,8 @@ local source card
 1. Decide the type: strategy, pattern, case, error, decision, source card, tool.
 2. Add or update the smallest matching file.
 3. Add an index entry here if it should be discoverable.
-4. Add a short `NEWS.md` entry if it changes future behavior.
+4. Add a short `NEWS.md` entry only if an audit trail is useful; do not rely on
+   `NEWS.md` as the only place for a future-behavior rule.
 5. If the rule came from a project session, also update the relevant handoff or
    case note.
 

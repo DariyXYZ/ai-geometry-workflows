@@ -109,8 +109,8 @@ Before creating or moving a file, answer:
 2. Is it Rhino geometry, Grasshopper, massing, standards, research, or
    analysis-cleanup?
 3. Does an index need a one-line pointer?
-4. Does `NEWS.md` need a short entry because future agents should notice it?
+4. Does `NEWS.md` need an optional changelog entry after the actionable docs
+   are already updated?
 
 When in doubt, add a compact index pointer and keep the long content in the
 domain folder, not in `docs/` root.
-

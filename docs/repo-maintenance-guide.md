@@ -46,7 +46,7 @@ Bad additions:
 | Accepted tradeoff | `decisions/YYYY-MM-DD-short-title.md` |
 | External repo finding | `docs/research/source-repos/<source>.md` |
 | Current technical state | `docs/development-state.md` |
-| Chronological update | `NEWS.md` |
+| Optional chronological changelog | `NEWS.md` |
 | Temporary run output | `.tmp_cases/` or a clearly named scripts subfolder |
 
 ## Naming
@@ -79,7 +79,8 @@ When adding a new reusable rule:
 6. If it came from a case, update `docs/case-library.md`.
 7. If it is a failure, update `docs/error-ledger.md`.
 8. If it is an accepted tradeoff, add a dated file in `decisions/`.
-9. Add a short `NEWS.md` entry if future sessions should notice it.
+9. Add a short `NEWS.md` entry only as an audit note after the actionable
+   workflow/library/case/error/index files are updated.
 
 ## Case Promotion Checklist
 

@@ -1,5 +1,33 @@
 # Новости
 
+## 2026-07-01 - Demoted NEWS from fast-load context
+
+`NEWS.md` is now treated as an optional chronological changelog / audit trail,
+not as a required file for new AI sessions. Fast-load context should come from
+`AI_NAVIGATOR.md`, `docs/task-read-maps.md`, `docs/case-digest.md`, workflow
+docs, command cards, cases, and error libraries.
+
+Actionable modeling rules must be promoted into the relevant workflow, library,
+case digest, command-card, or error file before any optional NEWS entry.
+
+## 2026-07-01 - Added RhinoMCP command-card library
+
+Updated active Rhino docs away from legacy Aurox-first assumptions.
+
+Added:
+
+- `docs/tools/rhino/rhino-mcp-command-library.md`
+
+The new file maps architectural intents to RhinoMCP/RhinoCommon sequences:
+floor slabs, floor stacks, massing blocks, roof guards, roof access/LLY exits,
+facade-plane panels, projected lamellas, transfer links, and final review
+cleanup. It also records stage gates so agents do not add detail before massing
+approval.
+
+Updated navigation and ownership docs so new Rhino work defaults to McNeel
+RhinoMCP `run_python` / `run_csharp`; Aurox helper scripts are legacy optional
+routes only.
+
 ## 2026-06-29 - Promoted user-remodeled Moscow river BC V03 rules
 
 Updated the Moscow river BC case after the user remodeled the smoother V03.

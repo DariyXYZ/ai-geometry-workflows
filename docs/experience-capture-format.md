@@ -19,7 +19,7 @@ less random, and easier to audit.
 | Prompt/hint | Reusable instruction to an AI or image/model generator | `card-prompts.json` or relevant `docs/libraries/*.md` |
 | Decision | Accepted policy/tradeoff | `decisions/YYYY-MM-DD-*.md` |
 | Tool note | Backend or automation behavior | `docs/tools/*.md` |
-| News | Change future agents should notice | `NEWS.md` |
+| Changelog | Optional audit note after actionable docs are updated | `NEWS.md` |
 
 ## Case Note Template
 

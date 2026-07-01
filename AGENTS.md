@@ -7,9 +7,9 @@ Read these files first, in this order:
 
 1. `AI_NAVIGATOR.md`
 2. `docs/START_HERE.md`
-3. `NEWS.md`
-4. `docs/repository-map.md`
-5. `docs/library-index.md`
+3. `docs/repository-map.md`
+4. `docs/library-index.md`
+5. `docs/case-digest.md`
 6. `docs/error-ledger.md`
 
 Then choose the scenario-specific read set from `docs/START_HERE.md`.
@@ -40,6 +40,11 @@ control sections -> temporary loft -> Rhino Contour -> final floor contours
   `docs/cases/rhino-geometry/recent-rhino-case-lessons.md`. Read it before replaying or extending
   Infinity Tower, Shanghai Tower-style twists, Flock chapel shells, symmetric
   stepped towers, Aqua Tower, or Absolute World Towers.
+- For direct Rhino modeling commands such as slab, parapet, roof access,
+  facade panel, lamella, entry, or cleanup, read
+  `docs/tools/rhino/rhino-mcp-command-library.md` and use standard RhinoMCP
+  `run_python` / `run_csharp` by default. Do not use Aurox patterns unless the
+  user explicitly requests that backend or a legacy replay requires it.
 
 ## Current Product Vectors
 
@@ -70,5 +75,5 @@ insufficient.
 - Failure or repeated mistake: `docs/error-ledger.md`
 - Accepted tradeoff/decision: `decisions/YYYY-MM-DD-short-title.md`
 - External repo finding: `docs/research/source-repos/`
-- Chronological user-facing update: `NEWS.md`
+- Optional chronological changelog entry: `NEWS.md`
 - Current implementation state: `docs/development-state.md`
