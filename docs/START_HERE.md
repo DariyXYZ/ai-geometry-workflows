@@ -1,255 +1,67 @@
 # Start Here
 
-This is the entry point for reopening the project on another computer or in a
-fresh AI chat.
+Human onboarding page for reopening the repo on a new machine or explaining it
+to another architect. For AI task execution, use `AI_NAVIGATOR.md` first.
 
-The repository is a compact memory system for AI-assisted geometry workflows:
-RhinoMCP modeling, reference-to-model reconstruction, CAD-as-code candidates,
-semantic OBJ experiments, and analysis-geometry cleanup.
+## Minimal Reading Order
 
-## Fast Load In 5 Minutes
-
-Read:
-
-1. `AI_NAVIGATOR.md` - portable entrypoint for any AI agent.
-2. `docs/task-read-maps.md` - task-specific read sets for acting quickly.
-3. `docs/library-index.md` - reusable strategy, pattern, source, and tool libraries.
-4. `docs/case-digest.md` - compact wins, failures, techniques, and standards.
-5. `docs/case-library.md` - successful, partial, and failed cases.
-6. `docs/workflows/rhino-reference/reference-modeling-gates.md` - how to think before modeling.
-7. `docs/error-ledger.md` - mistakes that must not repeat.
-8. `docs/tools/rhino/rhino-mcp-command-library.md` - RhinoMCP command cards:
-   intent -> Rhino/RhinoCommon sequence -> validation gates.
-9. `docs/experience-capture-format.md` - how to promote useful experience.
-10. `docs/repo-knowledge-boundary.md` - what belongs in the shared repo vs
-   local Obsidian.
-11. `docs/repo-folder-architecture.md` - where new durable docs/scripts belong.
-12. `docs/obsidian-knowledge-map.md` - useful Obsidian research, tests, and errors
-   not fully migrated into compact repo pages.
-13. `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` - recent Rhino/RhinoMCP case results,
-   video scripts, and fresh mistakes.
-14. `docs/repository-map.md` - where everything lives.
-15. `docs/research/source-repos/README.md` - compressed memory of external repositories.
-
-Do not read `NEWS.md` during fast load. It is a chronological changelog for
-auditing recent repo changes; actionable rules must be promoted into the files
-above.
-
-If using an AI agent, point it at `AGENTS.md` first.
-
-## Choose The Scenario
-
-### Scenario 1 - Reference To Model
-
-Use when the task is: build a Rhino/CAD model from text, photos, plans,
-facades, elevations, dimensions, or underlays.
-
-Read:
-
-- `docs/workflows/rhino-reference/reference-modeling-gates.md`
-- `docs/error-ledger.md`
-- `decisions/2026-05-28-constructive-grammar-before-reference-modeling.md`
-- `decisions/2026-06-01-grove-contour-derived-floor-plates.md`
-- `docs/research/source-repos/2d-plan-to-3d.md`
-- `docs/research/source-repos/live-obj.md`
-
-Mandatory flow:
+For an AI agent:
 
 ```text
-source authority
--> constructive grammar
--> section/repetition strategy
--> missing-view check
--> geometry
--> source-derived comparison
+AI_NAVIGATOR.md
+-> docs/task-read-maps.md
+-> one matching task row
+-> only the named workflow/library/case files
 ```
 
-Current hard lessons:
-
-- Karlatornet: do not guess one envelope; identify repeated shafts, gaps,
-  twist datums, loft sections, and mirror/repeat logic.
-- Karlatornet update: if the form reads as repeated vertical shafts with
-  twisting facade faces, start from primitive shafts plus vertical guide curves,
-  loft the transition surface, then mirror/repeat. Do not force a horizontal
-  section stack unless floor plates are proven to control the geometry.
-- Grove at Grand Bay: for rotating orthogonal floor plates, derive intermediate
-  floors by Rhino `Contour` from temporary lofts. Use contour curves as slab
-  edges, offset glass inward, and give slabs thickness.
-- Recent video/reference cases: read `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` for
-  the Infinity, Shanghai-style twist, Flock shell, symmetric stepped tower,
-  Aqua Tower, and Absolute World lessons before modeling or replaying them.
-
-### Scenario 2 - Complex Model To Simplified Analysis Geometry
-
-Use when the task is: take an existing Rhino/architecture model and make clean
-analysis geometry for wind comfort or related simulations.
-
-Read:
-
-- `docs/development-state.md`
-- `docs/error-ledger.md`
-- `docs/context-system.md`
-- `decisions/2026-05-19-feature-preserving-mesh-reconstruction.md`
-- `decisions/2026-05-20-nurbs-restart-from-named-rails.md`
-
-Mandatory flow:
+For a human:
 
 ```text
-scan source
--> classify architectural parts
--> reconstruct by parts/zones
--> validate with sections/views
--> handoff
+README.md
+-> AI_NAVIGATOR.md
+-> docs/task-read-maps.md
+-> docs/case-digest.md
+-> docs/repository-map.md only if you need to find files
 ```
 
-Avoid:
+Do not read `NEWS.md` for modeling context. It is a changelog/audit trail.
 
-- global decimation as final geometry;
-- ShrinkWrap/Poisson as a trusted solution;
-- one global hull/envelope;
-- claiming success only because geometry is closed.
+## File Roles
 
-### Scenario 3 - Massing And Revisions From TEPs
+| File | Role |
+| --- | --- |
+| `AI_NAVIGATOR.md` | First AI page: hierarchy, rules, scenario names. |
+| `docs/task-read-maps.md` | Source of truth for what to read for a concrete task. |
+| `docs/case-digest.md` | Compact lessons, wins, failure gates, and metrics. |
+| `docs/repository-map.md` | File/folder location map, not a default read set. |
+| `docs/library-index.md` | Library catalog, used when a task row is not enough. |
+| `docs/case-library.md` | Full case index, used only when a close precedent matters. |
+| `docs/repo-knowledge-boundary.md` | What belongs in GitHub vs local Obsidian. |
+| `docs/repo-folder-architecture.md` | Where to save new durable files. |
 
-Use when the task is: generate, revise, or review early massing/building
-proposals from TEP, GFA/FAR, height, underlays, redlines, user edits, or city
-approval checklist criteria.
+## Main Workflows
 
-Read:
+| Workflow | Start with |
+| --- | --- |
+| Reference/photo/plan to model | `docs/task-read-maps.md`, Scenario 1 row. |
+| Existing model cleanup | `docs/task-read-maps.md`, Scenario 2 row. |
+| Massing / TEP / revision | `docs/task-read-maps.md`, Scenario 3A/3B/3C row. |
+| Checklist review | `docs/task-read-maps.md`, Scenario 3D row. |
+| RhinoMCP command execution | `docs/tools/rhino/rhino-mcp-command-library.md`. |
+| Grasshopper automation | `docs/task-read-maps.md`, Grasshopper row. |
 
-- `docs/workflows/massing/tep-massing-scenario-subtypes.md`
-- `docs/workflows/massing/architecture-compliance-check.md`
-- `docs/libraries/massing/massing-decision-library.md`
-- `docs/libraries/massing/form-operator-library.md`
-- `docs/libraries/grasshopper/grasshopper-architectural-form-patterns.md` if the form will
-  be built or iterated in Grasshopper
-- `docs/libraries/grasshopper/grasshopper-architecture-plugin-stack.md` if the task needs
-  plugin, native-node, C# Script, analysis, BIM, or facade-stack selection
-- `docs/libraries/grasshopper/grasshopper-architecture-snippet-library.md` for quick
-  floorization, gabarit, TEP, and metrics snippets
-- `docs/libraries/standards/moscow-building-dimensional-library-2026.md` for current
-  Moscow building/floor/core/facade/roof dimensional defaults
-- `docs/libraries/standards/moscow-road-dimensional-library-2026.md` for Moscow
-  street, driveway, fire access, and lane-width CAD defaults
-- `docs/libraries/standards/moscow-architecture-approval-checklist.md`
-- `docs/errors/massing/moscow-bc-massing-error-library.md`
-- `docs/libraries/massing/moscow-bc-site-zoning-patterns.md`
-- `docs/development-state.md`
-- `docs/research/development-directions-repo-fit.md`
-- `docs/research/source-repos/live-obj.md`
-- `docs/research/source-repos/spellshape-three-format.md`
+## Write-Back Rule
 
-Mandatory flow:
+After a useful session, update the smallest durable place:
 
 ```text
-scene/context
--> classify Scenario 3 subtype
--> if 3A/3B/3C: zoning / constraints / TEP / operators / variants
--> if 3D: Rhino evidence / views / checklist criteria / approval risks
--> movement/open-space/visual checks
--> optional TEP/norm checks only when requested and sourced
--> surgical revisions or compliance report
+workflow rule -> docs/workflows/
+modeling command -> docs/tools/
+metric/default -> docs/libraries/
+mistake -> docs/errors/ or docs/error-ledger.md
+case result -> docs/cases/
+tradeoff -> decisions/
 ```
 
-For Moscow BC-style sites, do not generate geometry until the public spine,
-service edge, open-space type, buildable bands, height anchors, and at least one
-site-reasoned architectural operator are declared.
-
-### Grasshopper Automation Through RhinoMCP
-
-Use when the task is: create, inspect, or test Grasshopper graphs, script
-components, sliders, or RhinoMCP `g1_*` workflows.
-
-Read:
-
-- `docs/tools/grasshopper/grasshopper-workflow.md`
-- `docs/cases/grasshopper/README.md`
-- `docs/tools/grasshopper/grasshopper-csharp-script-nodes.md` for C# Script nodes
-- `docs/tools/grasshopper/grasshopper-csharp-performance.md` for automatic IO,
-  list/tree access, caching, and parallel-safe C# Script nodes
-- `docs/tools/grasshopper/grasshopper-mcp-smoke.md`
-- `docs/errors/grasshopper/grasshopper-mcp-error-library.md`
-- `docs/libraries/grasshopper/grasshopper-pattern-library.md`
-- `docs/libraries/grasshopper/grasshopper-architectural-form-patterns.md` for architectural
-  building-form graphs, facade nets, section stacks, and plugin-assisted forms
-- `docs/libraries/grasshopper/grasshopper-architecture-plugin-stack.md` for architecture
-  plugin routing and McNeel/Food4Rhino source links
-- `docs/libraries/grasshopper/grasshopper-architecture-snippet-library.md` for quick
-  reusable architecture C# snippets
-
-Mandatory flow:
-
-```text
-Rhino capability scan
--> Grasshopper component search
--> fresh-slot smoke graph if active scene matters
--> manual place/wire/solve
--> script bodies stored in repo
--> only then batch graph building
-```
-
-Subscenario split:
-
-- `3A`: zoning, footprints, and entries are already given. Keep zoning as source
-  authority and work on form, height, TEP, and constraints.
-- `3B`: only plot and entries/access are given. First propose zoning and
-  tentative footprints, then wait for zoning approval before architecture.
-- `3C`: plot plus existing massing iteration are given. Use source massing as
-  TEP/gabarit anchor and improve image/form in roughly the same scale.
-- `3D`: existing building/massing/proposal needs review against an architecture
-  approval checklist. Inspect Rhino evidence and score criteria before
-  redesigning.
-
-## RhinoMCP Modeling Rules
-
-Use the official McNeel RhinoMCP server (`mcneel/RhinoMCP`) as the default Rhino
-transport. Other Rhino plugins, including Aurox, are optional backends selected
-only on explicit user request or when a task needs a backend-specific feature.
-
-- For direct Rhino modeling requests, read
-  `docs/tools/rhino/rhino-mcp-command-library.md` and translate the user's
-  intent into the documented RhinoMCP/RhinoCommon command card.
-- Work in the scene units. If drawings are in feet and Rhino is in meters,
-  convert explicitly and write the conversion in the note/report.
-- Do not place reference slabs, underlays, or helper mass above floor 1 unless
-  they are real building geometry.
-- Build massing first, detail second.
-- Validate with source-derived dimensions, section datums, and screenshots.
-- Preserve user-created source geometry and hidden references.
-- Use `mcp__rhino.run_python` or `mcp__rhino.run_csharp` for native Rhino
-  operations that should not be approximated with point drawing: trim, split,
-  boolean, intersections, contours, NURBS rebuild, and custom RhinoCommon C#.
-  `scripts/rhino/common/rhino_common_helper.py` is a legacy optional helper,
-  not the default route.
-- For video/replay modeling, preserve the user-selected camera unless asked,
-  slow down visible construction, keep the model grounded, and remove obsolete
-  helper lines before the final pass.
-
-## External Repositories
-
-The external repos are not vendored into this repository. Their useful ideas
-are compressed into `docs/research/source-repos/`. Start there before opening GitHub.
-
-Use this rule:
-
-```text
-local source card first
--> external repo only if implementation detail is missing
--> update source card after learning something durable
-```
-
-## When Updating This Repository
-
-Every meaningful session should leave the repo better for the next fresh chat:
-
-- follow `docs/repo-maintenance-guide.md`;
-- follow `docs/repo-folder-architecture.md` before creating or moving files;
-- apply `docs/repo-knowledge-boundary.md` before importing Obsidian research;
-- use `docs/experience-capture-format.md` when promoting a case into patterns,
-  errors, metrics, prompts, or decisions;
-- optionally add a short `NEWS.md` changelog entry after the actionable docs
-  are updated;
-- add or update one rule in `docs/`;
-- add a decision if a tradeoff became policy;
-- add source-repo notes if an external repo taught us something reusable;
-- keep `.tmp_cases/` disposable and out of git unless promoting a case.
+Use `docs/experience-capture-format.md` when one session contains several
+types of knowledge.

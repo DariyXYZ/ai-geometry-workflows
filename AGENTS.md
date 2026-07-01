@@ -6,13 +6,12 @@ continue the geometry workflow without chat history or Obsidian.
 Read these files first, in this order:
 
 1. `AI_NAVIGATOR.md`
-2. `docs/START_HERE.md`
-3. `docs/repository-map.md`
-4. `docs/library-index.md`
-5. `docs/case-digest.md`
-6. `docs/error-ledger.md`
+2. `docs/task-read-maps.md`
+3. the single matching task row
 
-Then choose the scenario-specific read set from `docs/START_HERE.md`.
+Then load only the named workflow/library/case files. Do not read
+`docs/START_HERE.md`, `docs/repository-map.md`, `docs/library-index.md`, or
+`docs/case-library.md` by default; they are onboarding/lookup files.
 
 ## Non-Negotiable Rules
 
@@ -45,6 +44,11 @@ control sections -> temporary loft -> Rhino Contour -> final floor contours
   `docs/tools/rhino/rhino-mcp-command-library.md` and use standard RhinoMCP
   `run_python` / `run_csharp` by default. Do not use Aurox patterns unless the
   user explicitly requests that backend or a legacy replay requires it.
+- For Moscow massing, first build a compact `metric_pack` from
+  `docs/libraries/standards/moscow-massing-metric-quick-cards.md` and
+  `docs/libraries/massing/tep-calculation-patterns.md`; open detailed SP-based
+  dimensional libraries only when a value needs verification or a warning flag
+  is triggered.
 
 ## Current Product Vectors
 

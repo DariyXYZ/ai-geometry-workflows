@@ -22,25 +22,42 @@ The repo combines five kinds of memory:
 The goal is not to store every chat transcript. The goal is to preserve reusable
 decision structure.
 
-## Fast Load For Any AI
+## Reading Hierarchy
 
-Read in this order:
+Use one entry flow. Do not combine all indexes as a default context dump.
 
-1. `AI_NAVIGATOR.md` - this file.
-2. `docs/task-read-maps.md` - task-specific read sets.
-3. `docs/START_HERE.md` - scenario read sets.
-4. `docs/repository-map.md` - where things live.
-5. `docs/library-index.md` - pattern, strategy, source, and tool libraries.
-6. `docs/case-digest.md` - one-minute wins, errors, techniques, and standards.
-7. `docs/case-library.md` - known successful and failed cases.
-8. `docs/error-ledger.md` - mistakes that must not repeat.
-9. `docs/experience-capture-format.md` - how to write back reusable lessons.
-10. `docs/repo-knowledge-boundary.md` - what belongs in GitHub vs local Obsidian.
-11. `docs/repo-folder-architecture.md` - where each kind of durable file belongs.
-12. `docs/obsidian-knowledge-map.md` - useful vault research not fully migrated.
+```text
+Tier 0: AI_NAVIGATOR.md
+  Purpose: repo role, non-negotiable rules, and routing principle.
+  Read: always first.
 
-Then load only the scenario-specific documents. Do not read the whole repo by
-default.
+Tier 1: docs/task-read-maps.md
+  Purpose: concrete task -> smallest required read set.
+  Read: always second for real work.
+
+Tier 2: scenario workflow
+  Purpose: stage gates and decision order for this task type.
+  Read: only files named by the matching task row.
+
+Tier 3: libraries / command cards / one closest case or error file
+  Purpose: values, operators, RhinoMCP sequences, and known failures.
+  Read: only when the task row or workflow calls for them.
+
+Tier 4: indexes and maintenance docs
+  Purpose: finding files or writing back knowledge.
+  Read: only when locating unknown material or updating the repo.
+```
+
+Default AI load:
+
+1. `AI_NAVIGATOR.md`
+2. `docs/task-read-maps.md`
+3. the single matching task row
+4. active Rhino/Grasshopper/source inspection when relevant
+
+Do not read `docs/START_HERE.md`, `docs/repository-map.md`,
+`docs/library-index.md`, `docs/case-library.md`, or `docs/obsidian-knowledge-map.md`
+by default. They are lookup/onboarding files.
 
 `NEWS.md` is a chronological changelog and audit trail, not a fast-load file.
 Read it only when you need recent repository history. Any rule needed for
@@ -64,69 +81,27 @@ Example: if the user asks for a second massing variant and variant 1 already
 exists, route to Scenario `3C`. Read
 `docs/workflows/massing/tep-massing-scenario-subtypes.md`,
 `docs/libraries/massing/massing-decision-library.md`,
-`docs/libraries/massing/form-operator-library.md`, the Moscow dimensional libraries,
+`docs/libraries/massing/form-operator-library.md`,
+`docs/libraries/standards/moscow-massing-metric-quick-cards.md`,
+`docs/libraries/massing/tep-calculation-patterns.md`, then the detailed Moscow
+dimensional libraries only as needed,
 the closest case, and the active Rhino scene. Preserve source gabarit/TEP scale
 and report the new variant as deltas from the first one.
 
 ## Scenario Router
 
-### Scenario 1 - Reference To Model
+Use `docs/task-read-maps.md` as the source of truth for scenario read sets.
+This file only defines the scenario names:
 
-Use when building architecture from photos, plans, elevations, dimensions,
-underlays, text descriptions, or reference images.
-
-Read:
-
-- `docs/workflows/rhino-reference/reference-modeling-gates.md`
-- `docs/cases/rhino-geometry/recent-rhino-case-lessons.md`
-- relevant `decisions/`
-
-First question:
-
-```text
-What is the source authority, and what constructive grammar makes the object?
-```
-
-### Scenario 2 - Complex Model To Simplified Analysis Geometry
-
-Use when simplifying an existing Rhino/architecture model for wind comfort,
-analysis geometry, or clean massing.
-
-Read:
-
-- `docs/development-state.md`
-- `docs/error-ledger.md`
-- `decisions/2026-05-19-feature-preserving-mesh-reconstruction.md`
-- `decisions/2026-05-20-nurbs-restart-from-named-rails.md`
-
-First question:
-
-```text
-What architectural parts must be preserved, and which details can be discarded?
-```
-
-### Scenario 3 - Massing And Revisions From TEPs
-
-Use when generating, revising, or reviewing early massing/building proposals
-from plot boundary, TEP/GFA/FAR, height constraints, red lines, INSO,
-underlays, user feedback, or approval checklist criteria.
-
-Read:
-
-- `docs/workflows/massing/tep-massing-scenario-subtypes.md`
-- `docs/libraries/massing/massing-decision-library.md`
-- `docs/libraries/massing/form-operator-library.md`
-- `docs/workflows/massing/architecture-compliance-check.md`
-- `docs/libraries/standards/moscow-architecture-approval-checklist.md`
-- `docs/libraries/massing/moscow-bc-site-zoning-patterns.md`
-- `docs/errors/massing/moscow-bc-massing-error-library.md`
-
-First question:
-
-```text
-Is this 3A fixed zoning, 3B plot-plus-entries, 3C existing-massing revision,
-or 3D checklist/compliance review?
-```
+| Scenario | Use when |
+| --- | --- |
+| 1 Reference to model | Build architecture from photos, plans, elevations, dimensions, underlays, text, or references. |
+| 2 Complex model cleanup | Simplify existing Rhino/architecture models for analysis geometry. |
+| 3A Fixed zoning massing | User already gave zoning, footprints, or entries; do not move them unless asked. |
+| 3B Plot-plus-entries zoning | User gave plot/access only; propose zoning before 3D massing. |
+| 3C Existing massing revision | Improve or make another variant while preserving accepted scale/anchors. |
+| 3D Checklist review | Review existing massing/building against approval/checklist criteria before redesign. |
+| Grasshopper branch | Build/test GH graphs, C# Script nodes, plugins, or `g1_*` automation. |
 
 ## Non-Negotiable Operating Rules
 
@@ -141,31 +116,24 @@ or 3D checklist/compliance review?
 - If a case reveals a reusable failure, add it to an error library before
   moving on.
 
-## Where To Look
+## Lookup Files
 
-| Need | Start here |
+Read these only when the task needs them:
+
+| Need | File |
 | --- | --- |
-| Quick scenario choice | `docs/START_HERE.md` |
-| Concrete task read map | `docs/task-read-maps.md` |
-| Repository structure | `docs/repository-map.md` |
-| Pattern and strategy library | `docs/library-index.md` |
-| Compact case memory | `docs/case-digest.md` |
-| Experience capture format | `docs/experience-capture-format.md` |
+| Concrete task read set | `docs/task-read-maps.md` |
+| Compact wins/errors before modeling | `docs/case-digest.md` |
+| Repository/file location | `docs/repository-map.md` |
+| Library discovery | `docs/library-index.md` |
+| Full case list | `docs/case-library.md` |
+| Global mistakes | `docs/error-ledger.md` |
+| Human onboarding | `docs/START_HERE.md` |
+| Write-back format | `docs/experience-capture-format.md` |
 | Repo vs Obsidian boundary | `docs/repo-knowledge-boundary.md` |
 | Folder architecture | `docs/repo-folder-architecture.md` |
-| Obsidian research map | `docs/obsidian-knowledge-map.md` |
-| Massing decision order | `docs/libraries/massing/massing-decision-library.md` |
-| Massing form operators | `docs/libraries/massing/form-operator-library.md` |
-| Approval checklist review | `docs/workflows/massing/architecture-compliance-check.md` |
-| Moscow architecture checklist | `docs/libraries/standards/moscow-architecture-approval-checklist.md` |
-| Successful/failed examples | `docs/case-library.md` |
-| Known mistakes | `docs/error-ledger.md` |
-| Recent Rhino lessons | `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` |
-| Rhino command cards | `docs/tools/rhino/rhino-mcp-command-library.md` |
-| Accepted decisions | `decisions/` |
-| External repo memory | `docs/research/source-repos/` |
-| Current technical state | `docs/development-state.md` |
-| How to add knowledge | `docs/repo-maintenance-guide.md` |
+| Obsidian import map | `docs/obsidian-knowledge-map.md` |
+| Maintenance guide | `docs/repo-maintenance-guide.md` |
 
 ## Knowledge Shape
 

@@ -9,24 +9,28 @@ the active Rhino/Grasshopper/source context if relevant, then act.
 
 ## Universal Load
 
-Always read:
+Always read only:
 
 1. `AI_NAVIGATOR.md`
 2. `docs/task-read-maps.md`
-3. `docs/case-digest.md`
-4. `docs/repository-map.md`
-5. The task-specific row below
+3. the single closest task row below
 
-Then read case files only when the task resembles that case.
+Then expand narrowly:
+
+- read `docs/case-digest.md` before Rhino/massing work with known precedent,
+  repeated errors, or quality review risk;
+- read `docs/repository-map.md` only when locating a file or folder;
+- read `docs/library-index.md` only when no task row names the needed library;
+- read full case files only when the task resembles that case.
 
 ## Task Matrix
 
 | User task | Scenario | Required read set | Useful libraries | Output discipline |
 | --- | --- | --- | --- | --- |
 | Build from photo, plan, facade, reference, or text | Scenario 1 | `docs/workflows/rhino-reference/reference-modeling-gates.md`, `docs/error-ledger.md`, `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` | `docs/research/source-repos/2d-plan-to-3d.md`, `docs/research/source-repos/live-obj.md` | State source authority and constructive grammar before geometry |
-| Make second variant from an existing massing | Scenario 3C | `docs/workflows/massing/tep-massing-scenario-subtypes.md`, `docs/libraries/massing/massing-decision-library.md`, source case note if present | `docs/libraries/massing/form-operator-library.md`, `docs/libraries/standards/moscow-building-dimensional-library-2026.md`, `docs/errors/massing/moscow-bc-massing-error-library.md` | Preserve source gabarit/TEP scale; describe deltas from variant 1 |
-| Generate first massing from plot and entries only | Scenario 3B | `docs/workflows/massing/tep-massing-scenario-subtypes.md`, `docs/libraries/massing/moscow-bc-site-zoning-patterns.md` | `docs/libraries/massing/massing-decision-library.md`, `docs/libraries/standards/moscow-road-dimensional-library-2026.md`, `docs/libraries/massing/form-operator-library.md` | Propose zoning/public spine before expressive form |
-| Build form on given footprints/zoning | Scenario 3A | `docs/workflows/massing/tep-massing-scenario-subtypes.md`, given source notes, `docs/libraries/massing/form-operator-library.md` | `docs/libraries/standards/moscow-building-dimensional-library-2026.md`, `docs/libraries/massing/massing-decision-library.md` | Do not move approved footprints/entries unless asked |
+| Make second variant from an existing massing | Scenario 3C | `docs/workflows/massing/tep-massing-scenario-subtypes.md`, `docs/libraries/massing/massing-decision-library.md`, source case note if present | `docs/libraries/massing/form-operator-library.md`, `docs/libraries/standards/moscow-massing-metric-quick-cards.md`, `docs/libraries/massing/tep-calculation-patterns.md`, `docs/libraries/standards/moscow-building-dimensional-library-2026.md`, `docs/errors/massing/moscow-bc-massing-error-library.md` | Preserve source gabarit/TEP scale; describe deltas from variant 1 |
+| Generate first massing from plot and entries only | Scenario 3B | `docs/workflows/massing/tep-massing-scenario-subtypes.md`, `docs/libraries/massing/moscow-bc-site-zoning-patterns.md` | `docs/libraries/massing/massing-decision-library.md`, `docs/libraries/standards/moscow-massing-metric-quick-cards.md`, `docs/libraries/standards/moscow-road-dimensional-library-2026.md`, `docs/libraries/massing/form-operator-library.md` | Propose zoning/public spine before expressive form |
+| Build form on given footprints/zoning | Scenario 3A | `docs/workflows/massing/tep-massing-scenario-subtypes.md`, given source notes, `docs/libraries/massing/form-operator-library.md` | `docs/libraries/standards/moscow-massing-metric-quick-cards.md`, `docs/libraries/standards/moscow-building-dimensional-library-2026.md`, `docs/libraries/massing/tep-calculation-patterns.md`, `docs/libraries/massing/massing-decision-library.md` | Do not move approved footprints/entries unless asked |
 | Review massing/building against approval checklist | Scenario 3D | `docs/workflows/massing/architecture-compliance-check.md`, `docs/libraries/standards/moscow-architecture-approval-checklist.md` | `docs/libraries/standards/moscow-building-dimensional-library-2026.md`, `docs/error-ledger.md` | Collect Rhino/view evidence before scoring or redesigning |
 | Clean complex Rhino model for analysis | Scenario 2 | `docs/development-state.md`, `docs/error-ledger.md`, `decisions/2026-05-19-feature-preserving-mesh-reconstruction.md`, `decisions/2026-05-20-nurbs-restart-from-named-rails.md` | `docs/context-system.md`, `docs/tools/rhino/rhino-mcp-backends.md` | Preserve source; classify parts; validate sections, not only watertightness |
 | Build a Rhino element by intent, for example slab, parapet, roof access, lamellas, entry, cleanup | Rhino command card | `docs/tools/rhino/rhino-mcp-backends.md`, `docs/tools/rhino/rhino-mcp-command-library.md` | closest scenario workflow and dimensional library | Translate intent to RhinoMCP/RhinoCommon sequence; validate layer visibility and bbox/plane/closure |
@@ -46,15 +50,18 @@ Read:
 docs/workflows/massing/tep-massing-scenario-subtypes.md
 docs/libraries/massing/massing-decision-library.md
 docs/libraries/massing/form-operator-library.md
+docs/libraries/standards/moscow-massing-metric-quick-cards.md
+docs/libraries/massing/tep-calculation-patterns.md
 docs/libraries/standards/moscow-building-dimensional-library-2026.md
 docs/errors/massing/moscow-bc-massing-error-library.md
 docs/tools/rhino/rhino-mcp-command-library.md
-docs/case-library.md
 docs/case-digest.md
 ```
 
-If the first variant has a case note, read it. If it exists only in Rhino,
-inspect the active scene through RhinoMCP and record:
+If the first variant has a known case note, read that one case file. Do not open
+the full `docs/case-library.md` unless you need to search for the closest case.
+If the variant exists only in Rhino, inspect the active scene through RhinoMCP
+and record:
 
 ```text
 units

@@ -8,7 +8,7 @@ ideas, and tools without rereading every document.
 
 | Library | Use when | File |
 | --- | --- | --- |
-| Scenario router | Choosing which workflow applies | `docs/START_HERE.md` |
+| Scenario router | Choosing which workflow applies | `AI_NAVIGATOR.md`, `docs/task-read-maps.md` |
 | Task read maps | Matching a concrete user task to the smallest read set | `docs/task-read-maps.md` |
 | Case digest | Compact wins, failures, techniques, standards, and current decisions from cases | `docs/case-digest.md` |
 | Repo knowledge boundary | Deciding what is shared repo memory vs local Obsidian research/capture | `docs/repo-knowledge-boundary.md` |
@@ -35,8 +35,10 @@ ideas, and tools without rereading every document.
 | `docs/libraries/grasshopper/grasshopper-architecture-snippet-library.md` | Fast reusable GH/C# architecture snippets: floorization, TEP/metrics, smoke builder | Active |
 | `docs/libraries/standards/moscow-building-dimensional-library-2026.md` | Moscow 2026 tower/building dimensional baselines: floors, cores, depths, slabs, roofs, openings, facade grids | Active |
 | `docs/libraries/standards/moscow-building-dimensional-library-2026.yaml` | Machine-readable defaults and warning flags for Rhino/Grasshopper generators | Active |
+| `docs/libraries/standards/moscow-massing-metric-quick-cards.md` | Fast task-facing metric cards for Moscow massing: office/residential defaults, road/fire access, TEP approximations, warning flags | Active |
 | `docs/libraries/standards/moscow-road-dimensional-library-2026.md` | Moscow 2026 road/street/driveway CAD defaults: lane widths, carriageways, fire access, internal drives, visual modeling rules | Active |
 | `docs/libraries/standards/moscow-architecture-approval-checklist.md` | Moscow architecture approval checklist criteria: visual image, urban frontage, permeability, parking | Active |
+| `docs/libraries/massing/tep-calculation-patterns.md` | Active early-massing TEP/GFA/FAR/height/efficiency formulas, warnings, and Rhino/GH output contract | Active |
 | `docs/workflows/rhino-reference/reference-modeling-gates.md` | Source authority, constructive grammar, section direction, massing-before-detail | Active |
 | `docs/cases/rhino-geometry/bc50-two-tower-stylobate-2026-06-24.md` | Accepted two-tower BC massing precedent: contour roofs/parapets, transparent glass, 1 mm visual lifts, metric board, sunken courtyard bridge rules | Active |
 | `docs/cases/grasshopper/README.md` | Separate Grasshopper case branch: GH graphs, C# Script, plugins, source injection, and MCP `g1_*` failures | Active |
@@ -53,8 +55,6 @@ Missing but desired future libraries:
 
 - `docs/libraries/massing/site-planning-pattern-library.md` - reusable patterns across BC, ЖК,
   mixed-use, TPU, infill, campus.
-- `docs/libraries/massing/tep-calculation-patterns.md` - floor modules, GFA/FAR strategies,
-  podium/tower TEP balancing.
 - `docs/libraries/massing/massing-typology-catalog.md` - compact typology catalog from Moscow
   reference imagery and Obsidian visual research.
 
@@ -161,27 +161,27 @@ local source card
 
 ## Target Information Architecture
 
-Current repo files are still partly historical. The intended long-term shape is:
+Current repo files are organized by role:
 
 ```text
-AI_NAVIGATOR.md
+AI_NAVIGATOR.md          first AI entry and reading hierarchy
+AGENTS.md               compact non-negotiable agent rules
 docs/
-  START_HERE.md
-  repository-map.md
-  library-index.md
-  case-library.md
-  error-ledger.md
-  repo-maintenance-guide.md
-  scenarios/
-  patterns/
-  cases/
-  errors/
-  source-repos/
-  tools/
-decisions/
-scripts/
-  <domain>/
-tests/
+  task-read-maps.md     concrete task -> smallest read set
+  START_HERE.md         human onboarding, not default AI context
+  repository-map.md     file/folder locator
+  library-index.md      library catalog
+  case-digest.md        compact case/error/metric memory
+  case-library.md       full case index
+  workflows/            stage gates and task processes
+  libraries/            reusable metrics, operators, standards
+  cases/                concrete session results
+  errors/               failure libraries
+  research/             source cards and external repo memory
+  tools/                RhinoMCP/GH command and backend docs
+decisions/              accepted dated tradeoffs
+scripts/                reusable promoted scripts
+tests/                  unit tests and fixtures
 ```
 
 Do not move files into this structure casually. First add indexes and stable

@@ -93,6 +93,8 @@ requested.
 | Metric/default | Use for | Source |
 | --- | --- | --- |
 | Moscow building dimensions | Floors, cores, depths, slabs, roofs, facade modules | `docs/libraries/standards/moscow-building-dimensional-library-2026.md` |
+| Moscow massing quick metrics | Fast office/residential presets, road/fire access, TEP assumptions, warning flags | `docs/libraries/standards/moscow-massing-metric-quick-cards.md` |
+| Early TEP approximations | Quick GFA/FAR-like/height/efficiency calculations for massing comparison, not legal TEP | `docs/libraries/massing/tep-calculation-patterns.md` |
 | Moscow road dimensions | Lanes, driveways, fire access, road modeling | `docs/libraries/standards/moscow-road-dimensional-library-2026.md` |
 | Moscow architecture checklist | 3D approval review, evidence, scoring | `docs/libraries/standards/moscow-architecture-approval-checklist.md` |
 | BC50 validation snapshot | Two 50-floor office towers on stylobate | `docs/cases/rhino-geometry/bc50-two-tower-stylobate-2026-06-24.md` |

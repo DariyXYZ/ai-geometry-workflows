@@ -42,6 +42,10 @@ mcp__rhino.list_slots
 
 For architecture massing, units are meters unless the source says otherwise.
 Record the slot, units, and source layers in the case note or final handoff.
+For Moscow massing, prepare a compact `metric_pack` from
+`docs/libraries/standards/moscow-massing-metric-quick-cards.md` before choosing
+floor heights, plate depths, core placeholders, roof guards, fire access, or
+early TEP assumptions.
 
 ## Stage Gates
 
@@ -127,6 +131,11 @@ Intent: massing floors from one approved footprint.
 
 Inputs: footprint curve, floor count, floor-to-floor height, slab thickness,
 optional setback levels.
+
+Before building, resolve a `metric_pack` from the quick metric cards and the
+building dimensional library. At minimum it should state use type, floor-to-floor
+height, approximate floor count/height, slab thickness, core placeholder rule,
+and whether the roof is operated.
 
 Route:
 

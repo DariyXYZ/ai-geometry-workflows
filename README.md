@@ -12,6 +12,9 @@ For direct Rhino modeling, start from
 `docs/tools/rhino/rhino-mcp-command-library.md`. It translates intents such as
 "build a slab", "make roof guards", or "project lamellas" into RhinoMCP /
 RhinoCommon operation sequences and validation gates.
+For Moscow massing metrics, start from
+`docs/libraries/standards/moscow-massing-metric-quick-cards.md` before opening
+longer SP-based dimensional libraries.
 
 ## Start Here
 
@@ -25,15 +28,18 @@ For a human or new machine:
 
 ```text
 docs/START_HERE.md
-docs/task-read-maps.md
-docs/case-digest.md
-docs/repo-knowledge-boundary.md
-docs/repository-map.md
-docs/library-index.md
 ```
 
-Do not read the whole repo first. Pick the smallest scenario read set from
-`docs/task-read-maps.md`.
+Do not read the whole repo first. For task work, use:
+
+```text
+AI_NAVIGATOR.md
+-> docs/task-read-maps.md
+-> one matching task row
+```
+
+Open `docs/repository-map.md` only to locate files and `docs/library-index.md`
+only to discover a library not named by the task row.
 
 ## Active Scenarios
 

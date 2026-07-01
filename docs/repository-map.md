@@ -1,14 +1,15 @@
 # Repository Map
 
-This file tells a new user or AI agent what to read and what to ignore.
+This file maps where repo knowledge lives. Use it to locate files, not as the
+default task-reading order.
 
-## Read First
+## Primary Files
 
 | File | Purpose |
 | --- | --- |
 | `AI_NAVIGATOR.md` | Portable first page for any AI agent using this repo as architecture/geometry memory. |
 | `AGENTS.md` | Minimal agent instructions and non-negotiable rules. |
-| `docs/START_HERE.md` | Main loading path for fresh chats and new computers. |
+| `docs/START_HERE.md` | Human onboarding path for new computers; AI task execution starts from `AI_NAVIGATOR.md` and `docs/task-read-maps.md`. |
 | `docs/task-read-maps.md` | Task-to-read-set router for AI agents using the repo as a skill. |
 | `docs/case-digest.md` | Compact wins, errors, techniques, standards, and current case-derived decisions. |
 | `docs/repo-knowledge-boundary.md` | Boundary between shared repo knowledge and local Obsidian research/capture. |
@@ -32,6 +33,8 @@ This file tells a new user or AI agent what to read and what to ignore.
 | `docs/libraries/grasshopper/grasshopper-architectural-form-patterns.md` | Bridge from architectural massing/form operators to Grasshopper control geometry, native nodes, plugin nodes, and validation gates. |
 | `docs/libraries/grasshopper/grasshopper-architecture-plugin-stack.md` | Routing matrix for choosing GH native nodes, C# Script, RhinoCommon, and architecture plugins. |
 | `docs/libraries/grasshopper/grasshopper-architecture-snippet-library.md` | Fast reusable architecture snippets for floorization, TEP/metrics, and smoke tests. |
+| `docs/libraries/standards/moscow-massing-metric-quick-cards.md` | Fast Moscow massing metric cards: office/residential presets, road/fire access, warning flags, and early TEP assumptions. |
+| `docs/libraries/massing/tep-calculation-patterns.md` | Active early-massing TEP/GFA/FAR/height/efficiency formulas and Rhino/GH output contract. |
 | `docs/libraries/standards/moscow-building-dimensional-library-2026.md` | Moscow 2026 dimensional baseline for tower floors, cores, facade depths, slabs, roofs, openings, and facade grids. |
 | `docs/libraries/standards/moscow-architecture-approval-checklist.md` | Compact checklist criteria from the 2026-06-13 DGP architecture evaluation PDF. |
 | `docs/errors/massing/moscow-bc-massing-error-library.md` | Moscow BC massing failure modes: site fail despite numeric pass, cut routes, box-only variants, accidental intersections. |
@@ -84,71 +87,8 @@ This file tells a new user or AI agent what to read and what to ignore.
 | `NEWS.md` | Chronological changelog/audit trail. Do not read for fast modeling context unless recent repo history matters. |
 | Old team updates | Useful for history, but `development-state.md` and current docs are faster. |
 
-## Scenario Read Sets
-
-### Reference To Model
-
-Read:
-
-- `docs/START_HERE.md`
-- `docs/workflows/rhino-reference/reference-modeling-gates.md`
-- `docs/error-ledger.md`
-- `docs/cases/rhino-geometry/recent-rhino-case-lessons.md`
-- `decisions/2026-05-28-constructive-grammar-before-reference-modeling.md`
-- `decisions/2026-06-01-grove-contour-derived-floor-plates.md`
-
-Optional:
-
-- `docs/research/source-repos/live-obj.md`
-- `docs/research/source-repos/2d-plan-to-3d.md`
-
-### Complex Model Cleanup
-
-Read:
-
-- `docs/development-state.md`
-- `docs/error-ledger.md`
-- `docs/context-system.md`
-- `decisions/2026-05-19-feature-preserving-mesh-reconstruction.md`
-- `decisions/2026-05-20-nurbs-restart-from-named-rails.md`
-
-### Massing And Revisions
-
-Read:
-
-- `docs/workflows/massing/tep-massing-scenario-subtypes.md`
-- `docs/tools/rhino/rhino-mcp-command-library.md` when building or editing Rhino geometry
-- `docs/workflows/massing/architecture-compliance-check.md`
-- `docs/libraries/standards/moscow-architecture-approval-checklist.md`
-- `docs/libraries/massing/form-operator-library.md`
-- `docs/libraries/grasshopper/grasshopper-architectural-form-patterns.md` if Grasshopper will build or iterate the form
-- `docs/libraries/grasshopper/grasshopper-architecture-plugin-stack.md` if plugin/native/C# stack choice matters
-- `docs/libraries/grasshopper/grasshopper-architecture-snippet-library.md` for quick floorization, metrics, and TEP snippets
-- `docs/libraries/standards/moscow-building-dimensional-library-2026.md` before choosing floor heights, core size, facade-to-core depth, slab/package, roof, or window/facade module assumptions
-- `docs/errors/massing/moscow-bc-massing-error-library.md`
-- `docs/libraries/massing/moscow-bc-site-zoning-patterns.md`
-- `docs/development-state.md`
-- `docs/research/development-directions-repo-fit.md`
-- `docs/research/source-repos/live-obj.md`
-- `docs/research/source-repos/spellshape-three-format.md`
-
-### Grasshopper Automation
-
-Read:
-
-- `docs/tools/grasshopper/grasshopper-workflow.md`
-- `docs/cases/grasshopper/README.md`
-- `docs/tools/grasshopper/grasshopper-csharp-script-nodes.md` when writing C# Script nodes
-- `docs/tools/grasshopper/grasshopper-csharp-performance.md` when writing large, automatic-IO, cached, or parallel C# Script nodes
-- `docs/tools/grasshopper/grasshopper-mcp-smoke.md`
-- `docs/libraries/grasshopper/grasshopper-pattern-library.md`
-- `docs/libraries/grasshopper/grasshopper-architectural-form-patterns.md` for building-form and facade-graph tasks
-- `docs/libraries/grasshopper/grasshopper-architecture-plugin-stack.md` for choosing plugins and bundled workflows
-- `docs/libraries/grasshopper/grasshopper-architecture-snippet-library.md` for reusable quick architecture C# snippets
-- `docs/errors/grasshopper/grasshopper-mcp-error-library.md`
-
 ## Rule For Future Agents
 
-Prefer the smallest read set that matches the task. Do not load the whole
-repository by default. If a task changes the workflow, update the matching rule
-file before finishing.
+This is a map, not a task router. For read sets, use `AI_NAVIGATOR.md` and
+`docs/task-read-maps.md`. Do not load the whole repository by default. If a task
+changes the workflow, update the matching rule file before finishing.
