@@ -50,9 +50,15 @@ office:
     floor_heights: { ground: 5.4, podium: 4.5, office_typical: 4.05, technical: 4.2 }
     floor_plate: { tower_width: 42, tower_depth: 32, target_plate_area_m2: 1344 }
     core: { width: 18, depth: 24, core_to_glass_target: 12.5 }
+    elongated_plate_core_strategy:
+      decide_core_count_from_sp_fire_evac_project_logic_first: true
+      equal_area_split_is_first_pass_placement_heuristic_only: true
+      split_first_floor_into_rational_service_zones_after_core_count: true
+      shift_core_to_fit_operated_roof_before_roof_access: true
     structure: { grid_primary: 8.4, facade_module: 1.5 }
     floor_package: { slab: 0.25, raised_floor: 0.12, ceiling_services: 0.60 }
-    roof: { build_up: 0.45, parapet: 1.2 }
+    roof: { build_up: 0.45, parapet: 1.2, parapet_edge_setback: 0.55, parapet_thickness: 0.32 }
+    facade_detail: { visual_panel_outset: 0.09, ground_retail_glass_height: 4.45 }
 
 residential:
   floor_count_bands:
@@ -120,7 +126,13 @@ roof_m:
   intensive_green_total_min: 0.45
   flat_roof_slope_percent: [1.5, 3.0]
   accessible_guard_or_parapet_default: 1.2
+  ai_massing_parapet_edge_setback: [0.50, 0.70]
+  ai_massing_parapet_thickness: [0.32, 0.42]
   plant_screen: [1.5, 3.0]
+
+facade_m:
+  ai_visual_panel_outset: [0.06, 0.10]
+  office_ground_retail_glass_height: [3.5, 4.8]
 
 validation_flags:
   - office_above_50m_needs_high_rise_fire_placeholder

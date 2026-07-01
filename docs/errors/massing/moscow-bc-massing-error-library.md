@@ -501,22 +501,31 @@ Detection:
 - guards overlap facade windows, sit below the roof edge, or float away from
   the roof border;
 - guards are created from segment guesses instead of from the roof border;
+- a continuous parapet is technically closed but sits exactly on the roof edge,
+  erasing the readable roof coping/border and making the top look like a facade
+  cap;
 - accessible roofs/terraces have no stair/lift lobby exit volume;
 - roof exits appear as full-height visible cores rather than small roof-access
   volumes.
 
 Correction:
 
-- Build roof guards from the actual roof border: `DupBorder -> Offset x 2 ->
-  Extrude` or the RhinoCommon equivalent of border curve plus two controlled
-  offsets creating a continuous parapet/guard strip.
+- Build roof guards from the actual roof border. For final review, prefer:
+  `DupBorder -> inward edge setback -> Offset x 2 -> Extrude`.
+  Use the RhinoCommon equivalent of border curve, a controlled inward setback,
+  two nested offsets, and a capped vertical extrusion.
+- Use `DupBorder -> Offset x 2 -> Extrude` only when the parapet/guard is meant
+  to sit directly on the roof edge. If the roof edge should remain visible,
+  add the inward setback first.
+- A good operated-roof massing default is about `0.55 m` edge setback,
+  `0.32-0.42 m` parapet thickness, and `1.18-1.20 m` height.
 - Do not approximate roof guards with independent boxes per edge unless the
   roof is strictly rectangular and corners are explicitly joined. For
   non-orthogonal or stepped roofs, the final guard/parapet must be a continuous
   closed strip made from nested closed roof-border curves.
 - Put roof guards on roof/terrace layers, not facade-detail layers.
-- Keep guards inside or exactly on the roof edge and validate they do not cross
-  the facade plane.
+- Keep guards inside the roof plate or intentionally on the roof edge and
+  validate they do not cross the facade plane.
 - For operated roofs, add small LLY/stair-core roof access volumes during the
   massing stage. They should be visible roofscape elements, not hidden planning
   notes.
@@ -540,13 +549,24 @@ Detection:
   depth, or touches the facade;
 - the number of cores is not justified against floor plate area, length, floor
   count, and core-to-glass depth;
+- the number of cores is justified only by a graphic 50/50 area split, without
+  checking evacuation/fire strategy, occupant load, travel distances, or project
+  code assumptions;
+- a single "second core from N m2" rule is invented without checking the exact
+  SP/fire-safety scenario; for normal office/public floors the first gate is
+  evacuation exits, occupants, travel distance, floor area, height, fire
+  strategy, and project brief, not a universal area number;
 - roof exits do not align with a plausible vertical circulation zone below.
+- cores are placed near the facade first, then roof access boxes are forced
+  above them, creating visible facade scars and awkward interior fragments.
 
 Correction:
 
-- Decide core count before placing roof access volumes. For office massing, use
-  floor plate area, building length, floor count, and core-to-glass depth as
-  the first-pass basis.
+- Decide core count before placing roof access volumes. Core count is a
+  SP/fire/evacuation and project-strategy gate, not a pure geometry split. For
+  office massing, use floor plate area, building length, floor count,
+  core-to-glass depth, occupant-load assumptions, travel distance, and
+  high-rise/fire category as the first-pass basis.
 - Use the dimensional defaults from
   `docs/libraries/standards/moscow-building-dimensional-library-2026.md`:
   efficient office tower plates are roughly `900-1800 m2`, large low-rise /
@@ -555,12 +575,26 @@ Correction:
 - For an elongated office plate above roughly `3000 m2`, or a long stepped
   plate where one core would create poor travel distances and deep leftovers,
   consider two core zones rather than many small random roof boxes.
+- For a fixed elongated footprint, after the required/plausible core count is
+  selected, split the first-floor plate into rational service zones before
+  choosing core positions. Equal-area split is only a first-pass layout
+  heuristic; real projects may need unequal zones because of tenant divisions,
+  fire compartments, people load, travel distances, entrances, or structure.
+  Place each LLY/core near the functional center of its service zone, then
+  check the highest roof/top-floor footprint.
+- If the initial core position cannot reach the operated roof, either stop/cut
+  the core at the relevant terrace level or shift it internally enough that the
+  roof access volume sits on the roof plate. Do not move the core onto the
+  facade to solve roof access.
 - Place core zones in broad internal bands, set back from the facade and terrace
   edges. A core may create one organized service/corridor zone; it must not
   leave unusable slivers around it.
 - Show only the small roof access/headhouse volume at the highest roof that
   each core actually reaches. Keep larger core planning guides hidden unless
   the user asks to review plan efficiency.
+- Keep service-zone split lines, initial core markers, core shifts, and
+  core-to-exit route lines on a helper/route layer. Hide that layer for the
+  final view unless the user is reviewing the planning logic.
 
 ### `MBC-E20` Missing Or Misread LLY Emergency Exits
 
@@ -578,10 +612,14 @@ Detection:
   with the core/service zone behind them;
 - door/opening panels, frames, or other facade elements protrude as boxes
   instead of lying in the local facade plane;
+- door/opening panels are exactly coplanar but use the same material tone as
+  the mass and disappear in the shaded Rhino view;
 - emergency exit panels cut across the ground-floor window/module grid instead
   of occupying a clear facade bay;
 - ground-floor windows remain behind or immediately collide with the LLY exit
   marker;
+- first-floor windows are treated like small upper-floor office windows even
+  though the massing implies retail/cafe frontage;
 - one core zone has only one visible exit direction when the plan clearly needs
   paired evacuation directions;
 - exits become detailed doors, signage, mullions, or shopfronts before massing
@@ -598,11 +636,16 @@ Correction:
   thin frames, and modest threshold pads are enough. Do not create a decorative
   public portal unless the user asks for entrance hierarchy.
 - Door/opening panels and frames must be coplanar with the local facade plane.
-  They may have only a tiny visual thickness; do not model them as perpendicular
-  attached boxes. Horizontal threshold pads/aprons may project outward.
+  They may have only a tiny visual thickness. After the plane is correct, a
+  `0.06-0.10 m` outward local-normal visual offset is acceptable so the element
+  reads in Rhino; do not model them as perpendicular attached boxes. Horizontal
+  threshold pads/aprons may project outward.
 - Coordinate LLY exits with the ground-floor facade module. The exit should
   replace or occupy one clean bay in the window/grid rhythm; adjust neighboring
   first-floor windows locally instead of letting a window sit behind the exit.
+- For BC ground floors with shops/cafes, use taller near-floor glazing than the
+  upper office windows. Do not repeat the small office-window module unchanged
+  at the first floor.
 - Align exits with the core/service zone behind them. If the nearest facade
   point is not viable, move the core guide or report the plan conflict rather
   than placing a random facade accent.

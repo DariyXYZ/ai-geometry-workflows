@@ -46,7 +46,7 @@ requested.
 | BC50 two-tower stylobate | Contour-derived roofs/parapets, straight core overruns, translucent massing glass, 1 mm visual lift, metric board | `docs/cases/rhino-geometry/bc50-two-tower-stylobate-2026-06-24.md` |
 | Moscow river BC V02 | On approved river-edge footprints, use hidden core guides, clean final visibility, recessed transfer shoulders, a supported tower-on-stylobate transition, and a connector deck between tower and lower block | `docs/cases/rhino-geometry/moscow-river-bc-two-footprints-2026-06-29.md` |
 | Moscow river BC user-remodeled V03 | For paired rounded BC towers, use shadow reveals above stylobate, a monolithic two-story cut-through connector, and river-facing sloped sides that converge into one upward silhouette | `docs/cases/rhino-geometry/moscow-river-bc-two-footprints-2026-06-29.md` |
-| Stepped green BC LLY egress | Continuous roof guard rings, two planned core zones, four minimal LLY exits, facade-plane panels, and first-floor grid coordination | `docs/cases/rhino-geometry/stepped-green-bc-llu-egress-2026-06-30.md` |
+| Stepped green BC LLY egress | Core-count gate before service-zone layout, roof-fit core shifts, four minimal exits in the first-floor grid, tiny facade-panel outsets, and inset continuous parapet rings | `docs/cases/rhino-geometry/stepped-green-bc-llu-egress-2026-06-30.md` |
 | Residential OKN complex | Fixed ЖК footprints plus low public OKN block; use height stepping/top setbacks and keep OKN plaza legible | `docs/cases/rhino-geometry/residential-okn-three-block-massing-2026-06-26.md` |
 | Grove at Grand Bay correction | Use authoritative control sections -> temporary loft -> Rhino Contour -> final slabs; contour is slab edge, not glass line | `decisions/2026-06-01-grove-contour-derived-floor-plates.md` |
 | Aqua Tower replay | Floor-by-floor wavy slabs plus grounded base can be a strong video demonstrator | `docs/cases/rhino-geometry/recent-rhino-case-lessons.md` |
@@ -68,9 +68,9 @@ requested.
 | Review text is hard to read | Hide long metric boards; if a label is needed, place a compact horizontal ground label in XY outside the footprint | `docs/errors/massing/moscow-bc-massing-error-library.md`, `docs/cases/rhino-geometry/moscow-river-bc-two-footprints-2026-06-29.md` |
 | Connector reads like a black coffin | Make the link part of a monolithic stylobate/transfer volume with a cut-through; add shadow reveals under rounded towers | `docs/errors/massing/moscow-bc-massing-error-library.md`, `docs/cases/rhino-geometry/moscow-river-bc-two-footprints-2026-06-29.md` |
 | Facade/detail appeared before massing approval | Hide dense window, mullion, railing, storefront, and facade-panel layers until the user accepts the large form | `docs/errors/massing/moscow-bc-massing-error-library.md`, `docs/workflows/massing/tep-massing-scenario-subtypes.md` |
-| Roof guards are ragged or climb onto facade | Build one continuous closed strip from roof border logic: `DupBorder` -> `Offset x 2` -> `Extrude`; do not assemble corners from independent edge boxes | `docs/errors/massing/moscow-bc-massing-error-library.md` |
-| Roof access boxes look random | Decide one/two core zones from plate area, length, and core-to-glass depth; show only roof exits tied to those zones | `docs/errors/massing/moscow-bc-massing-error-library.md`, `docs/libraries/standards/moscow-building-dimensional-library-2026.md` |
-| LLY exits missing or misread as public entrances | Add minimal emergency exits directly from each LLY/core zone; panels/frames lie in the local facade plane and occupy a clean first-floor grid bay | `docs/errors/massing/moscow-bc-massing-error-library.md`, `docs/workflows/massing/tep-massing-scenario-subtypes.md` |
+| Roof guards are ragged or climb onto facade | Build one continuous closed strip from roof border logic: `DupBorder` -> optional inward setback -> `Offset x 2` -> `Extrude`; do not assemble corners from independent edge boxes | `docs/errors/massing/moscow-bc-massing-error-library.md` |
+| Roof access boxes look random | Decide core count from evacuation/fire/project logic first; then split elongated plates into rational LLY service zones and shift cores internally only enough to reach the operated roof | `docs/errors/massing/moscow-bc-massing-error-library.md`, `docs/libraries/standards/moscow-building-dimensional-library-2026.md` |
+| LLY exits missing or misread as public entrances | Add minimal emergency exits directly from each LLY/core zone; panels/frames start from the local facade plane, occupy a clean first-floor bay, and may get only a tiny visual outset | `docs/errors/massing/moscow-bc-massing-error-library.md`, `docs/workflows/massing/tep-massing-scenario-subtypes.md` |
 | Accidental intersections called stylobate | Declare true podium, separate blocks, or gate/bridge condition | `docs/errors/massing/moscow-bc-massing-error-library.md` |
 | Mesh cleanup accepted only because closed | Validate parts, bbox, sections, views, and source fidelity | `docs/error-ledger.md` |
 | GH C# source injection crashed Rhino | Never call `SourceCodeChanged(None)`; paste or use proven bridge | `docs/errors/grasshopper/grasshopper-mcp-error-library.md` |
@@ -80,7 +80,7 @@ requested.
 | Technique | When useful | Source |
 | --- | --- | --- |
 | Contour-derived roof/parapet rings | Non-rectangular tower or stylobate roofs | `docs/cases/rhino-geometry/bc50-two-tower-stylobate-2026-06-24.md` |
-| DupBorder + Offset x2 + Extrude guards | Operated roofs/terraces where guards must follow roof edge cleanly | `docs/errors/massing/moscow-bc-massing-error-library.md` |
+| DupBorder + setback + Offset x2 + Extrude guards | Operated roofs/terraces where parapets must follow roof edge cleanly while leaving a visible roof coping band | `docs/errors/massing/moscow-bc-massing-error-library.md` |
 | Visual lift `0.001 m` | Thin finishes over coplanar surfaces | `docs/errors/massing/moscow-bc-massing-error-library.md` |
 | Public spine + service edge | Scenario 3B site skeletons | `docs/libraries/massing/moscow-bc-site-zoning-patterns.md` |
 | Explicit massing operator | Any Scenario 3 variant | `docs/libraries/massing/form-operator-library.md` |

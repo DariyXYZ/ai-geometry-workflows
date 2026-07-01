@@ -40,7 +40,15 @@ read given zoning
 -> compute TEP gap
 -> choose height distribution
 -> apply architectural operators to building form
--> decide service/core zones from plate area, length, and core-to-glass depth
+-> decide core count from SP/fire/evacuation/project strategy, floor area,
+   people load, travel distance, height, plate length, and core-to-glass depth
+-> do not apply a universal "second core from N m2" shortcut unless the exact
+   functional/fire-safety scenario has been checked
+-> for elongated fixed plates with 2+ selected cores, split the first-floor
+   footprint into rational LLY/core service zones before placing core centers;
+   equal-area split is only a first-pass heuristic, not a rule
+-> compare core centers with the highest roof/top-floor footprint and shift or
+   stop/cut cores before adding roof access boxes
 -> mark minimal LLY/core emergency exits at massing level
 -> validate TEP, height envelope, floor modules
 -> keep dense facade/window/detail layers hidden until massing is accepted
@@ -56,8 +64,12 @@ Allowed moves:
 - chamfers / rounded corners;
 - roof or crown massing;
 - roof access volumes for operated terraces;
-- continuous roof guards/parapets generated from roof borders;
+- continuous roof guards/parapets generated from roof borders, with inward
+  setback before the two thickness offsets when the roof edge should remain
+  visible;
 - hidden 2D core/service-zone guides that justify roof access locations;
+- hidden service-zone split, initial core-marker, core-shift, and core-to-exit
+  route guides that explain why the LLY zones are where they are;
 - minimal LLY/core emergency exits such as small recessed panels, thin frames,
   and threshold pads tied directly to core/service zones;
 - public/address entrance accents only when the user explicitly asks for
@@ -89,17 +101,26 @@ Acceptance:
 - tower-on-stylobate variants have a readable transition zone, not an
   unsupported upper volume hanging off the base;
 - operated roof terraces have continuous guards/parapets from roof borders and
-  visible roof access volumes tied to plausible core/service zones;
+  visible roof access volumes tied to plausible core/service zones; for final
+  parapets use `DupBorder -> inward setback -> Offset x 2 -> Extrude` when the
+  roof coping/edge must remain visible;
 - core/service zones are set back from facades and do not create unusable floor
   fragments;
+- elongated fixed office plates decide core count before layout; if 2+ cores
+  are selected, they use serviced zones or another explicit planning split
+  before core placement, not a blind 50/50 rule;
 - each LLY/core zone has direct, minimal ground-level exit geometry; for a
   two-core elongated office slab, four exits are a good massing default when
   the plan allows two directions per core;
-- facade panels, opening markers, and frames are coplanar with the local facade
-  plane; only threshold pads/aprons project outward horizontally;
+- facade panels, opening markers, and frames are generated from the local facade
+  plane; only a tiny `0.06-0.10 m` local-normal visual outset is allowed after
+  plane validation, and only threshold pads/aprons project outward
+  horizontally;
 - LLY exits are coordinated with the first-floor facade grid: each exit occupies
   a clear bay, and neighboring ground-floor windows are locally adjusted rather
   than hidden behind the exit;
+- first-floor BC storefront/cafe glazing is taller and closer to floor level
+  than upper-office windows;
 - final viewport shows the massing result, not source copies, datums, core
   helpers, guide rays, metric boards, debug objects, old variants, or
   unapproved dense facade/detail layers.

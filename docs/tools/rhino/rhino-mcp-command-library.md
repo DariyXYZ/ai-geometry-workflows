@@ -189,6 +189,7 @@ Preferred manual Rhino command grammar:
 
 ```text
 DupBorder
+-> Setback inward when the roof edge/coping should remain visible
 -> Offset x 2
 -> Extrude
 ```
@@ -197,22 +198,32 @@ RhinoCommon equivalent:
 
 ```text
 duplicate roof border curve
+-> optional Curve.Offset inward by edge setback
 -> Curve.Offset inward/outward by guard thickness
 -> build closed ring from outer and inner loops
 -> extrude guard height, usually 1.05-1.2 m for concept roof safety
 -> cap and assign roof/guard layer
 ```
 
+Use a setback before the two thickness offsets when the parapet should not sit
+on the very edge. A useful operated-roof default is `0.55 m` edge setback,
+`0.32-0.42 m` parapet thickness, and `1.18-1.20 m` height. The outer parapet
+line should remain inside the roof border so the roof slab/coping edge is
+visible in review views.
+
 Validation:
 
 - guard is a continuous closed ring;
 - corners are clean, not separate ragged boxes;
-- guard does not crawl onto the facade plane;
+- guard/parapet stays inside the roof plate or intentionally on the roof edge;
+- guard does not crawl onto the facade plane or cover facade openings;
 - roof access volumes are tied to core/LLY zones.
 
 Failure gates:
 
 - no segmented random parapet blocks;
+- no parapet directly on the roof edge when the brief/review needs an inset
+  coping band;
 - no fences floating above or intersecting facade openings;
 - no one roof-access box per terrace unless the core actually reaches it.
 
@@ -224,6 +235,15 @@ Route:
 
 ```text
 choose core/service zone first
+-> decide core count from SP/fire/evacuation/project strategy, floor area,
+   people load, travel distance, height, length, and core-to-glass depth
+-> do not use a universal "second core from N m2" shortcut; translate the SP
+   check into plausible independent evacuation exits/core zones for this case
+-> for elongated plates with 2+ selected cores, split first-floor footprint into
+   rational service zones; equal-area split is only a first-pass heuristic
+-> place LLY cores near the functional center of each service zone
+-> compare each core against the highest roof/top-floor footprint
+-> shift internally or stop/cut at terrace level if needed
 -> place compact roof exit volume inside the roof plate
 -> align with circulation logic
 -> keep it set back from facade edges
@@ -233,8 +253,13 @@ choose core/service zone first
 Validation:
 
 - core count matches plate length and egress logic;
+- core count is not justified only by a 50/50 graphic split;
+- cores stay in broad internal bands and do not touch the facade;
 - roof access does not create awkward narrow floor strips;
 - roof exit is visible enough for massing but not over-detailed.
+- helper lines may show service-zone split, initial core marker, core shift, and
+  core-to-exit route, but hide them in the final view unless the user wants the
+  planning audit.
 
 ### Build Ground LLY Emergency Exit
 
@@ -247,6 +272,7 @@ find core/LLY zone on plan
 -> choose nearest suitable facade bay
 -> adjust first-floor window grid if needed
 -> create door/panel in local facade plane
+-> optional tiny local-normal visual outset after plane validation
 -> add only minimal threshold pad projecting outward
 ```
 
@@ -255,9 +281,12 @@ Validation:
 - exit is direct from LLY/core zone, not a decorative public portal;
 - four exits are a good default for a long two-core office slab unless the
   source egress plan says otherwise;
-- door/panel geometry is coplanar with the facade;
+- door/panel geometry is generated from the facade plane; a `0.06-0.10 m`
+  outward visual offset is acceptable after validation so it reads in Rhino;
 - threshold pad may project, but the door frame/opening must not float away
   from the facade.
+- for BC retail/cafe ground floors, use taller near-floor glazing next to
+  entries instead of repeating small upper-office windows.
 
 ### Build Facade Plane Opening Or Panel
 
@@ -269,6 +298,7 @@ Route:
 identify local facade plane
 -> project rectangle/module points onto that plane
 -> create planar surface or shallow inset/extrusion normal to that plane
+-> optional tiny local-normal visual outset for readability
 -> keep module inside the facade grid bay
 ```
 
@@ -276,6 +306,8 @@ Validation:
 
 - panel/opening lies in the local facade plane;
 - offsets are along the local normal, not world X/Y guesswork;
+- readability offsets are tiny (`0.06-0.10 m`) and do not turn panels into
+  pasted-on boxes;
 - first-floor entries align with the same grid logic as windows.
 
 Failure gates:

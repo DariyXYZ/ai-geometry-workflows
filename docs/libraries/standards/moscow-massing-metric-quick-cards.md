@@ -18,6 +18,8 @@ and amendments. Fast public check points:
 
 - SP 118.13330.2022 public/office buildings:
   `https://docs.cntd.ru/document/351102147`
+- SP 1.13130.2020 evacuation routes/exits:
+  `https://tiflocentre.ru/documents/sp-1-13130-2020.php`
 - SP 54.13330.2022 apartment buildings:
   `https://docs.cntd.ru/document/351139048`
 - Minstroy documents search for current amendments:
@@ -167,15 +169,26 @@ Fast values:
 | Step height | Usually one or more full floor modules; avoid arbitrary thin ledges. |
 | Terrace guard | Use continuous closed guard ring, 1.2 m default. |
 | Roof access | Only at planned core/LLY zones. |
-| Core count | One compact core for compact plate; two zones for long/stepped slab. |
 | Detail gate | Do not add dense windows before massing approval. |
+| Evacuation/core count gate | Do not invent one universal "second core from N m2" trigger. For office/public floors, read SP 1.13130.2020 as an evacuation-exit, occupant-load, travel-distance, floor-area, height, and fire-strategy check. A two-exit requirement is not the same as a blind 50/50 two-core split. |
+| Core count | One compact core only for compact plates; test two zones for long/stepped slabs. First decide from SP/fire/evacuation/project strategy, occupant load, travel distance, height, plate size/length, and core-to-glass depth; do not derive core count from a 50/50 graphic split. |
+| Core placement | After 2+ cores are required/selected, split first-floor area into rational service zones, place LLY cores near functional zone centers, then shift only enough to reach the highest operated roof. Equal-area split is only a first-pass heuristic. |
+| Inset parapet | `DupBorder -> inward setback -> Offset x 2 -> Extrude`; use about 0.55 m edge setback, 0.32-0.42 m thickness, 1.18-1.2 m height. |
+| First-floor glazing | Use taller retail/cafe glazing near floor level; do not repeat small office windows unchanged at ground floor. |
+| Facade panel readability | Generate windows/entries from the local facade plane first; after validation, a tiny 0.06-0.10 m local-normal outset is allowed for Rhino readability. |
 
 Common failure gates:
 
 - roof guard built from ragged separate boxes;
+- parapet sitting exactly on the roof edge when a visible coping/setback band is
+  needed;
 - roof access boxes scattered on every terrace;
 - core/LLY boxes touching facade or creating narrow leftover strips;
+- using 50/50 area split as if it were an SP rule for the number of cores;
 - entrances added as decorative portals instead of direct LLY/core exits.
+- first-floor windows too small for retail/cafe frontage;
+- window/entry panels either vanish into the facade or become large pasted-on
+  boxes instead of tiny local-normal outsets.
 
 ## Road And Fire Access Card
 

@@ -28,6 +28,9 @@ Key active sources checked:
   with changes through 5.
 - SP 160.1325800.2014 for multifunctional buildings, used with SP 54, SP 118,
   SP 113, SP 59, and other base standards.
+- SP 1.13130.2020 for evacuation routes and exits, as referenced by SP 118 for
+  public/office evacuation design. Use the active amendments before treating
+  core/stair count as a compliance claim.
 - SP 267.1325800.2016 for high-rise buildings and complexes, revision active
   from 2025-01-28.
 - SP 477.1325800.2020 for high-rise fire-safety requirements.
@@ -103,9 +106,25 @@ Core count quick gate for early office massing:
 - Start with one core zone only when the typical floor plate is compact enough
   that the core-to-glass depth stays near `12.5-14.0 m` and the floor plate
   does not create long dead-end office wings.
+- Do not derive required core count from a graphic 50/50 area split. Core count
+  is an evacuation/fire/project-strategy gate: check SP 1.13130 / SP 118 route,
+  occupant load, travel distance, floor area, height/fire category, and project
+  brief before treating one or two cores as accepted.
+- Do not encode a single "second core from N m2" rule for all office/public
+  buildings. For common public/administrative fire classes, SP 1.13130.2020 is
+  primarily an evacuation-exit, occupant-count, travel-distance, and fire-
+  strategy check. Basement/cellar area thresholds are a separate case and
+  should not be copied to normal office floors.
+- In early massing, translate the code check into "prove independent
+  evacuation exits/directions and plausible stair/core zones", not
+  automatically into two identical full cores.
 - For elongated plates above roughly `3000 m2`, or stepped/slab buildings where
   one core would sit far from a large part of the plan, test two core zones
   before placing roof access volumes.
+- After two or more cores are selected, equal-area service-zone splitting can
+  be used as a first-pass placement heuristic. It is not a legal or universal
+  rule; tenant divisions, fire compartments, entry locations, structure, and
+  travel distances may require unequal service zones.
 - Do not place one visible roof access box on every terrace. Place roof exits
   only where a plausible vertical core/service zone reaches an operated roof.
 - Keep core zones inside broad internal bands. They should organize corridor /
@@ -199,6 +218,8 @@ exposed services or UFAD.
 | Pavers on operated roof | 40-60+ mm | practice heuristic / product guidance | Use 60 mm for robust terrace placeholder. |
 | Non-accessible parapet / upstand | 0.6-0.9 m | practice heuristic | Recheck SP 17 and fire/roof safety details. |
 | Accessible roof guard/parapet | 1.2 m | practice heuristic | Use 1.2 m generator default for occupied roof edges. |
+| AI massing inset parapet edge setback | 0.5-0.7 m | generator default | Keeps a readable roof coping/border outside the parapet in Rhino review models. |
+| AI massing parapet thickness | 0.32-0.42 m | generator default | Use for solid guard/parapet rings from `DupBorder -> setback -> Offset x2 -> Extrude`. |
 | Plant screen / roof equipment enclosure | 1.5-3.0 m | practice heuristic | Model as separate screen, not as tenant floor. |
 
 ## Openings, Windows, And Facade Grids
@@ -222,6 +243,8 @@ exposed services or UFAD.
 | Vision glass height | 1.4-2.4 m | practice heuristic | Coordinate with floor-to-floor and spandrel. |
 | Spandrel / opaque band | 0.8-1.2 m | practice heuristic | Can shrink with high-performance facade but keep slab/service zone plausible. |
 | Operable vent panel | project-specific | practice heuristic | Do not assume operability in high-rise facade without fire/MEP strategy. |
+| AI facade panel visual outset | 0.06-0.10 m | generator default | Use only after panel/opening is generated from the local facade plane; prevents same-tone panels from disappearing in Rhino views. |
+| BC ground-floor retail/cafe glazing | 3.5-4.8 m high visual panel | generator default | Use with 5.4 m active ground floor; larger and closer to floor than upper-office windows. |
 
 GOST 23166-2024 is the current general window/balcony block standard. Do not use
 old fixed window-size tables as if they were current design requirements; use
@@ -340,6 +363,8 @@ Stop or warn if:
 - SP 118.13330.2022 and change 5:
   https://tiflocentre.ru/documents/sp-118-13330-2022.php and
   https://normativ.kontur.ru/document?documentId=488894&moduleId=9
+- SP 1.13130.2020 evacuation routes and exits:
+  https://tiflocentre.ru/documents/sp-1-13130-2020.php
 - SP 267.1325800.2016 high-rise design, revision active from 2025-01-28:
   https://tk-expert.ru/lib/1087/ and
   https://nav.tn.ru/documents/regulatory/ast_s_sp_267_1325800_2016/
