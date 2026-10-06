@@ -1,5 +1,7 @@
 # Source Repositories
 
+Для офисных и жилых CAD-планировок: [обзор проектов, лицензий и маршрута Rhino/Revit (2026-10)](../research/cad-floorplan-generation-2026-10.md).
+
 This folder is the compressed memory of external repositories we studied.
 
 Purpose: a new chat or a new computer should not need to reread every GitHub
